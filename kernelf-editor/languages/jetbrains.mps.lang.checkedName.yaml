@@ -1,0 +1,56 @@
+uid: "fe9d76d7-5809-45c9-ae28-a40915b4d6ff"
+name: "jetbrains.mps.lang.checkedName"
+concepts:
+- uid: "mps:fe9d76d7-5809-45c9-ae28-a40915b4d6ff/4844813484172611384"
+  name: "ICheckedNamePolicy"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:fe9d76d7-5809-45c9-ae28-a40915b4d6ff/4844813484172611385"
+  name: "PropertyRefExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodeExpr"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "propertyDeclaration"
+    type: "jetbrains.mps.lang.structure.PropertyDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:fe9d76d7-5809-45c9-ae28-a40915b4d6ff/4844813484172611390"
+  name: "PropertyRefType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+- uid: "mps:fe9d76d7-5809-45c9-ae28-a40915b4d6ff/8697758915834074539"
+  name: "PropertyPointerValueOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:fe9d76d7-5809-45c9-ae28-a40915b4d6ff/8697758915834076725"
+  name: "PropertyPointerType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "dataType"
+    type: "jetbrains.mps.lang.structure.DataTypeDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"

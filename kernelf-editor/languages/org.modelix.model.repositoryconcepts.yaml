@@ -1,0 +1,250 @@
+uid: "0a7577d1-d4e5-431d-98b1-fae38f9aee80"
+name: "org.modelix.model.repositoryconcepts"
+concepts:
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/474657388638618892"
+  name: "Model"
+  abstract: false
+  properties:
+  - uid: null
+    name: "id"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "rootNodes"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "modelImports"
+    type: "org.modelix.model.repositoryconcepts.ModelReference"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "usedLanguages"
+    type: "org.modelix.model.repositoryconcepts.SingleLanguageDependency"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/6402965165736932003"
+  name: "ModelReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "model"
+    type: "org.modelix.model.repositoryconcepts.Model"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/474657388638618895"
+  name: "Module"
+  abstract: false
+  properties:
+  - uid: null
+    name: "id"
+    type: "STRING"
+  - uid: null
+    name: "moduleVersion"
+    type: "STRING"
+  - uid: null
+    name: "compileInMPS"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "facets"
+    type: "org.modelix.model.repositoryconcepts.ModuleFacet"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "models"
+    type: "org.modelix.model.repositoryconcepts.Model"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "dependencies"
+    type: "org.modelix.model.repositoryconcepts.ModuleDependency"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "languageDependencies"
+    type: "org.modelix.model.repositoryconcepts.LanguageDependency"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/5782622473578468308"
+  name: "ModuleReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "module"
+    type: "org.modelix.model.repositoryconcepts.Module"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/4008363636171860313"
+  name: "Project"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "modules"
+    type: "org.modelix.model.repositoryconcepts.Module"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "projectModules"
+    type: "org.modelix.model.repositoryconcepts.ProjectModule"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/474657388638618902"
+  name: "Repository"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "modules"
+    type: "org.modelix.model.repositoryconcepts.Module"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "projects"
+    type: "org.modelix.model.repositoryconcepts.Project"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "tempModules"
+    type: "org.modelix.model.repositoryconcepts.Module"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/7341098702109598211"
+  name: "Solution"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.Module"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/7341098702109598212"
+  name: "Language"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.Module"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/7341098702109598213"
+  name: "DevKit"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.Module"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/2206727074858242403"
+  name: "ModuleFacet"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/2206727074858242406"
+  name: "JavaModuleFacet"
+  abstract: false
+  properties:
+  - uid: null
+    name: "generated"
+    type: "STRING"
+  - uid: null
+    name: "path"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.ModuleFacet"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/2206727074858242415"
+  name: "ModuleDependency"
+  abstract: false
+  properties:
+  - uid: null
+    name: "reexport"
+    type: "STRING"
+  - uid: null
+    name: "uuid"
+    type: "STRING"
+  - uid: null
+    name: "name"
+    type: "STRING"
+  - uid: null
+    name: "explicit"
+    type: "STRING"
+  - uid: null
+    name: "version"
+    type: "STRING"
+  - uid: null
+    name: "scope"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/2206727074858242429"
+  name: "SingleLanguageDependency"
+  abstract: false
+  properties:
+  - uid: null
+    name: "version"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.LanguageDependency"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/4201834143491306084"
+  name: "ProjectModule"
+  abstract: false
+  properties:
+  - uid: null
+    name: "virtualFolder"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.ModuleReference"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/8958347146611575311"
+  name: "LanguageDependency"
+  abstract: true
+  properties:
+  - uid: null
+    name: "uuid"
+    type: "STRING"
+  - uid: null
+    name: "name"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:0a7577d1-d4e5-431d-98b1-fae38f9aee80/8958347146611575318"
+  name: "DevkitDependency"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.modelix.model.repositoryconcepts.LanguageDependency"

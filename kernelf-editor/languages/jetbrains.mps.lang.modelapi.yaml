@@ -1,0 +1,114 @@
+uid: "446c26eb-2b7b-4bf0-9b35-f83fa582753e"
+name: "jetbrains.mps.lang.modelapi"
+concepts:
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/361130699826193247"
+  name: "NodePointer"
+  abstract: false
+  properties:
+  - uid: null
+    name: "nodeId"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "modelRef"
+    type: "jetbrains.mps.lang.modelapi.ModelIdentity"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.modelapi.NodeIdentity"
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/361130699826193248"
+  name: "ModelPointer"
+  abstract: false
+  properties:
+  - uid: null
+    name: "modelId"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "name"
+    type: "jetbrains.mps.lang.modelapi.ModelName"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "moduleRef"
+    type: "jetbrains.mps.lang.modelapi.ModuleIdentity"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.modelapi.ModelIdentity"
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/361130699826193249"
+  name: "ModulePointer"
+  abstract: false
+  properties:
+  - uid: null
+    name: "moduleName"
+    type: "STRING"
+  - uid: null
+    name: "moduleId"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.modelapi.ModuleIdentity"
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/9032177546942789331"
+  name: "ModelIdentity"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/361130699826268407"
+  name: "NodeIdentity"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/361130699826268409"
+  name: "ConceptIdentity"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/679099339649053840"
+  name: "ModelName"
+  abstract: false
+  properties:
+  - uid: null
+    name: "value"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/679099339649067977"
+  name: "ModuleIdentity"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:446c26eb-2b7b-4bf0-9b35-f83fa582753e/4733039728785194814"
+  name: "NamedNodeReference"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "child"
+    type: "jetbrains.mps.lang.modelapi.NamedNodeReference"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "target"
+    type: "jetbrains.mps.lang.core.INamedConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.modelapi.NodeIdentity"

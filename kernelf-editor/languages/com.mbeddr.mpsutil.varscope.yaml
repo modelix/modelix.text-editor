@@ -1,0 +1,18 @@
+uid: "3819ba36-98f4-49ac-b779-34f3a458c09b"
+name: "com.mbeddr.mpsutil.varscope"
+concepts:
+- uid: "mps:3819ba36-98f4-49ac-b779-34f3a458c09b/926589859261493016"
+  name: "IScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:3819ba36-98f4-49ac-b779-34f3a458c09b/926589859261521036"
+  name: "IScopeElement"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"

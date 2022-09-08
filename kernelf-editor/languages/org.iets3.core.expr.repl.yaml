@@ -1,0 +1,516 @@
+uid: "18001c94-33a7-4f68-a7c1-ffddc4b39be1"
+name: "org.iets3.core.expr.repl"
+concepts:
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786952"
+  name: "REPL"
+  abstract: false
+  properties:
+  - uid: null
+    name: "updateDownstream"
+    type: "STRING"
+  - uid: null
+    name: "showDiffs"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "entries"
+    type: "org.iets3.core.expr.repl.IReplEntry"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "sourceNode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  - uid: null
+    name: "sourceScope"
+    type: "com.mbeddr.core.base.IVisibleElementProvider"
+    optional: true
+  extends:
+  - "com.mbeddr.core.base.Chunk"
+  - "org.iets3.core.base.IValidNamedConcept"
+  - "org.iets3.core.expr.base.IRunningInterpreterContext"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786953"
+  name: "DefaultEntry"
+  abstract: false
+  properties:
+  - uid: null
+    name: "hasBeenEvaled"
+    type: "STRING"
+  - uid: null
+    name: "hasError"
+    type: "STRING"
+  - uid: null
+    name: "referenceable"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "expression"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "org.iets3.core.expr.repl.IReplEntry"
+  - "org.iets3.core.base.ICanRunCheckManually"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786993"
+  name: "IReplEntry"
+  abstract: true
+  properties:
+  - uid: null
+    name: "optionalName"
+    type: "STRING"
+  children: []
+  references: []
+  extends: []
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3123720608935236577"
+  name: "ReplEntryRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "entry"
+    type: "org.iets3.core.expr.repl.IReplEntry"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IRef"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6190913826144637839"
+  name: "ReplEntryRefByName"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "entry"
+    type: "org.iets3.core.expr.repl.IReplEntry"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IRef"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826184"
+  name: "LeftBorderCellStyle"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.BorderCellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826185"
+  name: "BottomBorderCellStyle"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.BorderCellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826186"
+  name: "RightBorderCellStyle"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.BorderCellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/8891169595166788142"
+  name: "QuoteExpr"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "cell"
+    type: "org.iets3.core.expr.repl.AbstractCellRef"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractSheetExpr"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826112"
+  name: "BorderCellStyle"
+  abstract: true
+  properties:
+  - uid: null
+    name: "width"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.CellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858263103"
+  name: "CellConstraint"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "constraint"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425755970864"
+  name: "SheetTestItem"
+  abstract: false
+  properties:
+  - uid: null
+    name: "cols"
+    type: "STRING"
+  - uid: null
+    name: "rows"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "sheet"
+    type: "org.iets3.core.expr.repl.Sheet"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.tests.AbstractTestItem"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826183"
+  name: "TopBorderCellStyle"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.BorderCellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478070852422"
+  name: "AbstractRangeExpr"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "from"
+    type: "org.iets3.core.expr.repl.AbstractCellRef"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "to"
+    type: "org.iets3.core.expr.repl.AbstractCellRef"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractSheetExpr"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349123787"
+  name: "Sheet"
+  abstract: false
+  properties:
+  - uid: null
+    name: "NUM_COLS"
+    type: "STRING"
+  - uid: null
+    name: "NUM_ROWS"
+    type: "STRING"
+  - uid: null
+    name: "booleansAreChecks"
+    type: "STRING"
+  - uid: null
+    name: "showValues"
+    type: "STRING"
+  - uid: null
+    name: "templateMode"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "cells"
+    type: "org.iets3.core.expr.repl.Cell"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "template"
+    type: "org.iets3.core.expr.repl.Sheet"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.IContainerOfUniqueNames"
+  - "org.iets3.core.base.ICanRunCheckManually"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116354333364"
+  name: "AbstractCellRef"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "finder"
+    type: "org.iets3.core.expr.repl.AbstractSheetFinder"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "actuals"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425759772067"
+  name: "LabelExpression"
+  abstract: false
+  properties:
+  - uid: null
+    name: "text"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractSheetExpr"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349131336"
+  name: "Cell"
+  abstract: false
+  properties:
+  - uid: null
+    name: "result"
+    type: "STRING"
+  - uid: null
+    name: "locked"
+    type: "STRING"
+  - uid: null
+    name: "template"
+    type: "STRING"
+  - uid: null
+    name: "internal"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "constraint"
+    type: "org.iets3.core.expr.repl.CellConstraint"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "label"
+    type: "org.iets3.core.expr.repl.CellLabel"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "args"
+    type: "org.iets3.core.expr.repl.CellArg"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "styles"
+    type: "org.iets3.core.expr.repl.CellStyle"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714255"
+  name: "SheetType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "template"
+    type: "org.iets3.core.expr.repl.TopLevelSheet"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116352759184"
+  name: "CellArg"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372713"
+  name: "FontStyle"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.CellStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226845"
+  name: "MakeListExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractRangeExpr"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116353424003"
+  name: "CellArgRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.repl.CellArg"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4767524222579030357"
+  name: "SheetEmbedExpr"
+  abstract: false
+  properties:
+  - uid: null
+    name: "cols"
+    type: "STRING"
+  - uid: null
+    name: "rows"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "sheet"
+    type: "org.iets3.core.expr.repl.Sheet"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "template"
+    type: "org.iets3.core.expr.repl.TopLevelSheet"
+    optional: true
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372717"
+  name: "FontBoldStyle"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.FontStyle"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018845679935"
+  name: "NamedSheetFinder"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "sheet"
+    type: "org.iets3.core.expr.repl.TopLevelSheet"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.repl.AbstractSheetFinder"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714356"
+  name: "TopLevelSheet"
+  abstract: false
+  properties:
+  - uid: null
+    name: "template"
+    type: "STRING"
+  - uid: null
+    name: "hideTitle"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "sheet"
+    type: "org.iets3.core.expr.repl.SheetEmbedExpr"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226999"
+  name: "AbstractSheetExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116351589322"
+  name: "NamedCellRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "label"
+    type: "org.iets3.core.expr.repl.CellLabel"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.repl.AbstractCellRef"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858269574"
+  name: "CellConstraintIt"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111815"
+  name: "AbstractSheetFinder"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826111"
+  name: "CellStyle"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350380243"
+  name: "CoordCellRef"
+  abstract: false
+  properties:
+  - uid: null
+    name: "cell"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractCellRef"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111816"
+  name: "UpwardsSheetFinder"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractSheetFinder"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478071884828"
+  name: "MakeRecordExpr"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "record"
+    type: "org.iets3.core.expr.toplevel.RecordType"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.repl.AbstractRangeExpr"
+- uid: "mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760968"
+  name: "CellLabel"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"

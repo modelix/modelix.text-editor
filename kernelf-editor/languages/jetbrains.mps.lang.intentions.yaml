@@ -1,0 +1,216 @@
+uid: "d7a92d38-f7db-40d0-8431-763b0c3c9f20"
+name: "jetbrains.mps.lang.intentions"
+concepts:
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1192794744107"
+  name: "IntentionDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.intentions.BaseIntentionDeclaration"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1192794782375"
+  name: "DescriptionBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1192795771125"
+  name: "IsApplicableBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1192795911897"
+  name: "ExecuteBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1192796902958"
+  name: "ConceptFunctionParameter_node"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1240316299033"
+  name: "QueryBlock"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "paramType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1240322627579"
+  name: "IntentionParameter"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1240395258925"
+  name: "ParameterizedIntentionDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "queryFunction"
+    type: "jetbrains.mps.lang.intentions.QueryBlock"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.intentions.IntentionDeclaration"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/3618415754251190715"
+  name: "ChildFilterFunction"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/3618415754251192144"
+  name: "ConceptFunctionParameter_childNode"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/2522969319638091381"
+  name: "BaseIntentionDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "isErrorIntention"
+    type: "STRING"
+  - uid: null
+    name: "isAvailableInChildNodes"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "descriptionFunction"
+    type: "jetbrains.mps.lang.intentions.DescriptionBlock"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "childFilterFunction"
+    type: "jetbrains.mps.lang.intentions.ChildFilterFunction"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "isApplicableFunction"
+    type: "jetbrains.mps.lang.intentions.IsApplicableBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "executeFunction"
+    type: "jetbrains.mps.lang.intentions.ExecuteBlock"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "forConcept"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+  - "jetbrains.mps.lang.structure.IConceptAspect"
+  - "jetbrains.mps.lang.core.InterfacePart"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/2522969319638198293"
+  name: "SurroundWithIntentionDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.intentions.BaseIntentionDeclaration"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1812109616120608865"
+  name: "ParameterizedDescriptionBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.intentions.DescriptionBlock"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/1812109616120795373"
+  name: "ParameterizedExecuteBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.intentions.ExecuteBlock"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/8214474548715792907"
+  name: "Intention"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "priority"
+    type: "jetbrains.mps.lang.intentions.ErrorIntentionPriority"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "forConcept"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.ClassConcept"
+  - "jetbrains.mps.baseLanguage.lightweightdsl.AutoInitDSLClass"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/7388353295030897530"
+  name: "Parameter"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "parameterType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.InstanceMethodDeclaration"
+  - "jetbrains.mps.baseLanguage.lightweightdsl.MemberInstance"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/4958616572666404607"
+  name: "ForConceptMethodParameter"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ParameterDeclaration"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/6431842707461916181"
+  name: "ErrorIntentionPriority"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.intentions.IntentionPriority"
+- uid: "mps:d7a92d38-f7db-40d0-8431-763b0c3c9f20/6431842707461916183"
+  name: "IntentionPriority"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []

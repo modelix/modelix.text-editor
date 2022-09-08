@@ -1,0 +1,1913 @@
+uid: "83888646-71ce-4f1c-9c53-c54016f6ad4f"
+name: "jetbrains.mps.baseLanguage.collections"
+concepts:
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1151688443754"
+  name: "ListType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1151689724996"
+  name: "SequenceType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1151701983961"
+  name: "SequenceOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1151702311717"
+  name: "ToListOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1153943597977"
+  name: "ForEachStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "variable"
+    type: "jetbrains.mps.baseLanguage.collections.ForEachVariable"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "inputSequence"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractLoopStatement"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1153944233411"
+  name: "ForEachVariableReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "variable"
+    type: "jetbrains.mps.baseLanguage.collections.ForEachVariable"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+  - "jetbrains.mps.baseLanguage.IVariableReference"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1160600644654"
+  name: "ListCreatorWithInit"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1160612413312"
+  name: "AddElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1160666733551"
+  name: "AddAllElementsOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1162934736510"
+  name: "GetElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1162935959151"
+  name: "GetSizeOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1165525191778"
+  name: "GetFirstOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1165530316231"
+  name: "IsEmptyOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1165595910856"
+  name: "GetLastOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1167380149909"
+  name: "RemoveElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1171391069720"
+  name: "GetIndexOfOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1172254888721"
+  name: "ContainsOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1172650591544"
+  name: "SkipOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementsToSkip"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1172664342967"
+  name: "TakeOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementsToTake"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1172667724288"
+  name: "PageOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "toElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1173946412755"
+  name: "RemoveAllElementsOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1175845471038"
+  name: "ReverseOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1176501494711"
+  name: "IsNotEmptyOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1176903168877"
+  name: "UnionOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.BinaryOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1176906603202"
+  name: "BinaryOperation"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "rightExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1176921879268"
+  name: "IntersectOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.BinaryOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1176923520476"
+  name: "ExcludeOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.BinaryOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1178286324487"
+  name: "SortDirection"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.BooleanConstant"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1178894719932"
+  name: "DistinctOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1180964022718"
+  name: "ConcatOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.BinaryOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1184963466173"
+  name: "ToArrayOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1197683403723"
+  name: "MapType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "valueType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1197686869805"
+  name: "HashMapCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "valueType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "initializer"
+    type: "jetbrains.mps.baseLanguage.collections.MapInitializer"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "initSize"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1197932370469"
+  name: "MapElement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "map"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "key"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1201216218329"
+  name: "MapOperationExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "mapOperation"
+    type: "jetbrains.mps.baseLanguage.collections.MapOperation"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1201225890326"
+  name: "MapOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1201306600024"
+  name: "ContainsKeyOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "key"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1201872418428"
+  name: "GetKeysOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1206655653991"
+  name: "MapInitializer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "entries"
+    type: "jetbrains.mps.baseLanguage.collections.MapEntry"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1206655735055"
+  name: "MapEntry"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "key"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "value"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1207233427108"
+  name: "MapRemoveOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "key"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1207236100912"
+  name: "ToIteratorOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1208542034276"
+  name: "MapClearOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1201792049884"
+  name: "TranslateOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1202120902084"
+  name: "WhereOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1202128969694"
+  name: "SelectOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1203518072036"
+  name: "SmartClosureParameterDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.closures.UnboundClosureParameterDeclaration"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1204796164442"
+  name: "InternalSequenceOperation"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "closure"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1204980550705"
+  name: "VisitAllOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1205598340672"
+  name: "DisjunctOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.BinaryOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1205679737078"
+  name: "SortOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "ascending"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1205753243362"
+  name: "ChunkOperation"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "length"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1205753590798"
+  name: "CutOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.ChunkOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1205753630278"
+  name: "TailOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.ChunkOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1209727891789"
+  name: "ComparatorSortOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "ascending"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1224414427926"
+  name: "SequenceCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "initializer"
+    type: "jetbrains.mps.baseLanguage.closures.ClosureLiteral"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1224446583770"
+  name: "SkipStatement"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1224451845108"
+  name: "StopStatement"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1225621920911"
+  name: "InsertElementOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "index"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "element"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1225645868993"
+  name: "SetElementOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "index"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "element"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1225711141656"
+  name: "ListElementAccessExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "list"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "index"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1225727723840"
+  name: "FindFirstOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1225730411176"
+  name: "FindLastOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226511727824"
+  name: "SetType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226516258405"
+  name: "HashSetCreator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226566831166"
+  name: "AbstractSetOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226566855640"
+  name: "AddSetElementOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "argument"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226591481394"
+  name: "RemoveSetElementOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "argument"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226592602759"
+  name: "AddAllSetElementsOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "argument"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226593880804"
+  name: "RemoveAllSetElementsOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "argument"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1226934395923"
+  name: "ClearSetOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227008614712"
+  name: "LinkedListCreator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227022159410"
+  name: "AddFirstElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227022179634"
+  name: "AddLastElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227022196108"
+  name: "RemoveAtElementOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "index"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227022210526"
+  name: "ClearAllElementsOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227026082377"
+  name: "RemoveFirstElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1227026094155"
+  name: "RemoveLastElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToDeque"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1228228912534"
+  name: "DowncastExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1235566554328"
+  name: "AnyOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1235566831861"
+  name: "AllOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1235573135402"
+  name: "SingletonSequenceCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "singletonValue"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237467461002"
+  name: "GetIteratorOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237467705688"
+  name: "IteratorType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237470736245"
+  name: "AbstractIteratorOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237470895604"
+  name: "HasNextOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractIteratorOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237471031357"
+  name: "GetNextOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractIteratorOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237471080820"
+  name: "GetCurrentOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractEnumeratorOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237471163346"
+  name: "MoveNextOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractEnumeratorOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237496250641"
+  name: "EnumeratorType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237497044713"
+  name: "AbstractEnumeratorOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237549269949"
+  name: "GetEnumeratorOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237721394592"
+  name: "AbstractContainerCreator"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "initValue"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "copyFrom"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "initSize"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237783176940"
+  name: "AllConstant"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.IntegerLiteral"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237907129112"
+  name: "ContainsValueOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "value"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1237909114519"
+  name: "GetValuesOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240151247486"
+  name: "ContainerIteratorType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IteratorType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240151544672"
+  name: "RemoveOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractIteratorOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240216724530"
+  name: "LinkedHashMapCreator"
+  abstract: false
+  properties:
+  - uid: null
+    name: "order"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.HashMapCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240217271293"
+  name: "LinkedHashSetCreator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.HashSetCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240239337991"
+  name: "SortedMapType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240239494010"
+  name: "TreeMapCreator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.HashMapCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240239309184"
+  name: "SortedMapOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240239379525"
+  name: "HeadMapOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "toKey"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedMapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240240127120"
+  name: "TailMapOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromKey"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedMapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240240201186"
+  name: "SubMapOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromKey"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "toKey"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedMapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240247491866"
+  name: "SortedSetType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SetType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240247536947"
+  name: "TreeSetCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "comparator"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.HashSetCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240251169236"
+  name: "SortedSetOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240251356173"
+  name: "HeadSetOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "toElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240251565326"
+  name: "TailSetOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240251665173"
+  name: "SubSetOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "toElement"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortedSetOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240325842691"
+  name: "AsSequenceOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractOperation"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240424373525"
+  name: "MappingType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "valueType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240687580870"
+  name: "JoinOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "delimiter"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240824716764"
+  name: "AbstractMappingOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240824834947"
+  name: "ValueAccessOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractMappingOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240825616499"
+  name: "KeyAccessOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractMappingOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240854379201"
+  name: "MappingsSetOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1240906768633"
+  name: "PutAllOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "map"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.MapOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5686963296372475025"
+  name: "QueueType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerType"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5686963296372573083"
+  name: "AbstractContainerType"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "elementType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3357971920378033937"
+  name: "DequeType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.QueueType"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/2141797557972817928"
+  name: "IContainerOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/2141797557973018607"
+  name: "IListOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.ICollectionOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/497032923610827734"
+  name: "IQueueOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IContainerOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6801639034384703212"
+  name: "StackType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerType"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6801639034384909353"
+  name: "IDequeOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6801639034384909355"
+  name: "IStackOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IContainerOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3358009230508699637"
+  name: "PopOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3358009230508699932"
+  name: "PushOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3358009230509514604"
+  name: "PriorityQueueCreator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3358009230509553641"
+  name: "LinkedListType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.ListType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/540871147943773365"
+  name: "SingleArgumentSequenceOperation"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "argument"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/540871147943782829"
+  name: "NoArgumentsSequenceOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/3055999550620853964"
+  name: "RemoveWhereOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IQueueOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToQueue"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/599357942184015200"
+  name: "AlsoSortOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SortOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6126991172893676625"
+  name: "ContainsAllOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5633809102336885303"
+  name: "SubListOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromIndex"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "upToIndex"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5784983078884872741"
+  name: "PeekOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IStackOperation"
+  - "jetbrains.mps.baseLanguage.collections.IDequeOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToStack"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5232196642625574978"
+  name: "HeadListOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "upToIndex"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5232196642625575054"
+  name: "TailListOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "fromIndex"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6099516049394485216"
+  name: "CustomContainerDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "containerType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "runtimeType"
+    type: "jetbrains.mps.baseLanguage.ClassifierType"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "factory"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.GenericDeclaration"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.baseLanguage.IVisible"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6099516049394485324"
+  name: "CustomContainers"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "containerDeclaration"
+    type: "jetbrains.mps.baseLanguage.collections.CustomContainerDeclaration"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1331913329176106419"
+  name: "CustomContainerCreator"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "containerDeclaration"
+    type: "jetbrains.mps.baseLanguage.collections.CustomContainerDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1576845966386891367"
+  name: "CustomMapCreator"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "containerDeclaration"
+    type: "jetbrains.mps.baseLanguage.collections.CustomContainerDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.HashMapCreator"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1153944193378"
+  name: "ForEachVariable"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.baseLanguage.IVariableDeclaration"
+  - "jetbrains.mps.lang.core.IResolveInfo"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1522217801069359738"
+  name: "ReduceLeftOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1522217801069396403"
+  name: "ReduceRightOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1522217801069396578"
+  name: "FoldLeftOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "seed"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/1522217801069421831"
+  name: "FoldRightOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "seed"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.InternalSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/4020503625588385966"
+  name: "GetLastIndexOfOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/9042586985346099698"
+  name: "MultiForEachStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "forEach"
+    type: "jetbrains.mps.baseLanguage.collections.MultiForEachPair"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.AbstractLoopStatement"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/9042586985346099733"
+  name: "MultiForEachPair"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "variable"
+    type: "jetbrains.mps.baseLanguage.collections.MultiForEachVariable"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "input"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/9042586985346099736"
+  name: "MultiForEachVariable"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.baseLanguage.IVariableDeclaration"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/8293956702609956630"
+  name: "MultiForEachVariableReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "variable"
+    type: "jetbrains.mps.baseLanguage.collections.MultiForEachVariable"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/7125221305512719026"
+  name: "CollectionType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.AbstractContainerType"
+  - "jetbrains.mps.baseLanguage.IGenericType"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/4327124999333572296"
+  name: "ICollectionOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IContainerOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/2526372162255441536"
+  name: "AsUnmodifiableOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.ICollectionOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/4611582986551020933"
+  name: "AsSynchronizedOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.ICollectionOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/4611582986551314327"
+  name: "OfTypeOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "requestedType"
+    type: "jetbrains.mps.baseLanguage.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SequenceOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5699792037748043353"
+  name: "TestAddElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/4073682006117732261"
+  name: "TestRemoveElementOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.SingleArgumentSequenceOperation"
+  - "jetbrains.mps.baseLanguage.collections.IListOperation"
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToCollection"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936691958"
+  name: "IApplicableToNothing"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936692983"
+  name: "IApplicableToCollection"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToList"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936692984"
+  name: "IApplicableToList"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToNothing"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936692987"
+  name: "IApplicableToDeque"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToNothing"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936692988"
+  name: "IApplicableToQueue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToDeque"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/5994574781936692989"
+  name: "IApplicableToStack"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.IApplicableToDeque"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/6481445890964205296"
+  name: "MapAsSequenceVarRef"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "original"
+    type: "jetbrains.mps.baseLanguage.VariableReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:83888646-71ce-4f1c-9c53-c54016f6ad4f/31378964227347002"
+  name: "SelectNotNullOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.collections.NoArgumentsSequenceOperation"

@@ -1,0 +1,1591 @@
+uid: "28f9e497-3b42-4291-aeba-0a1039153ab1"
+name: "jetbrains.mps.lang.plugin"
+concepts:
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203071677434"
+  name: "ToolDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "getComponentBlock"
+    type: "jetbrains.mps.lang.plugin.GetComponentBlock"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.BaseToolDeclaration"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203082695294"
+  name: "DoUpdateBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.UpdateBlock"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203082903663"
+  name: "ConceptFunctionParameter_AnActionEvent"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203083511112"
+  name: "ExecuteBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203087890642"
+  name: "ActionGroupDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "caption"
+    type: "STRING"
+  - uid: null
+    name: "mnemonic"
+    type: "STRING"
+  - uid: null
+    name: "isInternal"
+    type: "STRING"
+  - uid: null
+    name: "isPopup"
+    type: "STRING"
+  - uid: null
+    name: "isInvisibleWhenDisabled"
+    type: "STRING"
+  - uid: null
+    name: "isPluginXmlGroup"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "modifier"
+    type: "jetbrains.mps.lang.plugin.ModificationStatement"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "contents"
+    type: "jetbrains.mps.lang.plugin.GroupContents"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.lang.plugin.ActionGroupMember"
+  - "jetbrains.mps.baseLanguage.classifiers.IClassifier"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203088046679"
+  name: "ActionInstance"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "actualParameter"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionGroupMember"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203092361741"
+  name: "ModificationStatement"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "modifiedGroup"
+    type: "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+    optional: false
+  - uid: null
+    name: "point"
+    type: "jetbrains.mps.lang.plugin.GroupAnchor"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203680534665"
+  name: "GroupAnchor"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.plugin.ActionGroupMember"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203851983563"
+  name: "GetNodeBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+  - "jetbrains.mps.lang.plugin.NodesBlock"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203852029150"
+  name: "GetNodesBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+  - "jetbrains.mps.lang.plugin.NodesBlock"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203853034639"
+  name: "ConceptFunctionParameter_node"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.ConceptFunctionParameter_CreatorType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204039194827"
+  name: "ConceptFunctionParameter_OperationContext"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204383956737"
+  name: "InterfaceGroup"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "groupID"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204391079391"
+  name: "ActionGroupMember"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204397573187"
+  name: "InterfaceExtentionPoint"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "pointID"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.GroupAnchor"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204471433283"
+  name: "ToolInstanceExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204477852167"
+  name: "ConceptFunctionParameter_IModule"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.ConceptFunctionParameter_CreatorType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204478074808"
+  name: "ConceptFunctionParameter_MPSProject"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1204908117386"
+  name: "Separator"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionGroupMember"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1205679047295"
+  name: "ActionParameterDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.FieldDeclaration"
+  - "jetbrains.mps.baseLanguage.classifiers.IMember"
+  - "jetbrains.mps.lang.plugin.ActionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1205681149025"
+  name: "UpdateBlock"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1205681243813"
+  name: "IsApplicableBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.UpdateBlock"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1205852320419"
+  name: "ActionType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.classifiers.BaseClassifierType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1206092561075"
+  name: "ActionParameterReferenceOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IMemberOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207145102141"
+  name: "GroupContents"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207145360364"
+  name: "BuildGroupBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+  - "jetbrains.mps.lang.plugin.GroupContents"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207145163717"
+  name: "ElementListContents"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "reference"
+    type: "jetbrains.mps.lang.plugin.ActionGroupMember"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.GroupContents"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207318242772"
+  name: "KeyMapKeystroke"
+  abstract: false
+  properties:
+  - uid: null
+    name: "modifiers"
+    type: "STRING"
+  - uid: null
+    name: "keycode"
+    type: "STRING"
+  - uid: null
+    name: "change"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207490810216"
+  name: "GroupType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "actionGroup"
+    type: "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.classifiers.BaseClassifierType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1208528650020"
+  name: "ToolType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "tool"
+    type: "jetbrains.mps.lang.plugin.BaseToolDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.classifiers.BaseClassifierType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1209911036758"
+  name: "GetGroupOperation"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "group"
+    type: "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210179134063"
+  name: "PreferencesComponentDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "persistenPropertyDeclaration"
+    type: "jetbrains.mps.lang.plugin.PersistentPropertyDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "afterReadBlock"
+    type: "jetbrains.mps.lang.plugin.OnAfterReadBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "beforeWriteBlock"
+    type: "jetbrains.mps.lang.plugin.OnBeforeWriteBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "preferencePage"
+    type: "jetbrains.mps.lang.plugin.PreferencePage"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IClassifier"
+  - "jetbrains.mps.lang.structure.INamedAspect"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210179190070"
+  name: "PersistentPropertyDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.VariableDeclaration"
+  - "jetbrains.mps.baseLanguage.classifiers.IMember"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210180874794"
+  name: "PersistentPropertyReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IMemberOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210184105060"
+  name: "PreferencesComponentType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "componentDeclaration"
+    type: "jetbrains.mps.lang.plugin.PreferencesComponentDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.classifiers.BaseClassifierType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210676672555"
+  name: "OnBeforeWriteBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210676879526"
+  name: "OnAfterReadBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210684385183"
+  name: "PreferencePage"
+  abstract: false
+  properties:
+  - uid: null
+    name: "iconPath"
+    type: "STRING"
+  - uid: null
+    name: "helpTopic"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "component"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "isModifiedBlock"
+    type: "jetbrains.mps.lang.plugin.PreferencePageIsModifiedBlock"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "resetBlock"
+    type: "jetbrains.mps.lang.plugin.PreferencePageResetBlock"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "commitBlock"
+    type: "jetbrains.mps.lang.plugin.PreferencePageCommitBlock"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210686882550"
+  name: "PreferencePageResetBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210686969356"
+  name: "PreferencePageCommitBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210690798207"
+  name: "ConceptFunctionParameter_PreferencePage_component"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1210763550007"
+  name: "PreferencePageIsModifiedBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1213888653896"
+  name: "InitBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1213888677711"
+  name: "DisposeBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1213888797251"
+  name: "ConceptFunctionParameter_Project"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1214307303872"
+  name: "GetComponentBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1217252042208"
+  name: "ActionDataParameterDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "key"
+    type: "jetbrains.mps.baseLanguage.StaticFieldDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IMember"
+  - "jetbrains.mps.lang.plugin.ActionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1217252428768"
+  name: "ActionDataParameterReferenceOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IMemberOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1217413147516"
+  name: "ActionParameter"
+  abstract: true
+  properties:
+  - uid: null
+    name: "isOptional"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "condition"
+    type: "jetbrains.mps.lang.plugin.ActionParameterCondition"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1227008846812"
+  name: "ActionConstructionParameterDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "toStringFunction"
+    type: "jetbrains.mps.lang.plugin.ToStringConceptFunction"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.classifiers.DefaultClassifierFieldDeclaration"
+  - "jetbrains.mps.baseLanguage.classifiers.IMember"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1227008925923"
+  name: "ActionConstructorParameterReferenceOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IMemberOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1227013049127"
+  name: "AddStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "item"
+    type: "jetbrains.mps.lang.plugin.ActionGroupMember"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1227019068586"
+  name: "ToStringConceptFunction"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1227019310584"
+  name: "ToStringParameter"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1239975356883"
+  name: "UpdateGroupBlock"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "updateFunction"
+    type: "jetbrains.mps.lang.plugin.UpdateGroupFunction"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "enumerateFunction"
+    type: "jetbrains.mps.lang.plugin.EnumerateChildrenFunction"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.GroupContents"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1239975436002"
+  name: "UpdateGroupFunction"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1239975563668"
+  name: "EnumerateChildrenFunction"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1562714432501166197"
+  name: "KeymapChangesDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "keymap"
+    type: "STRING"
+  - uid: null
+    name: "isPluginXmlKeymap"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "shortcutChange"
+    type: "jetbrains.mps.lang.plugin.ShortcutChange"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1562714432501166198"
+  name: "SimpleShortcutChange"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keystroke"
+    type: "jetbrains.mps.lang.plugin.KeyMapKeystroke"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ShortcutChange"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/6193305307616715384"
+  name: "ShortcutChange"
+  abstract: true
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/6193305307616734266"
+  name: "ParameterizedShortcutChange"
+  abstract: false
+  properties:
+  - uid: null
+    name: "change"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+  - "jetbrains.mps.lang.plugin.ShortcutChange"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/394857668356997867"
+  name: "SimpleActionPlace"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionPlaceSpecification"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/394857668356997868"
+  name: "ActionPlaceSpecification"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/394857668357022342"
+  name: "ToolActionPlace"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionPlaceSpecification"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/394857668357342104"
+  name: "EverywhereActionPlace"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionPlaceSpecification"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5854436268949437205"
+  name: "ConceptFunctionParameter_Model"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.ConceptFunctionParameter_CreatorType"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5854436268949437211"
+  name: "ConceptFunctionParameter_CreatorType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/6547237850567458268"
+  name: "BaseToolDeclaration"
+  abstract: true
+  properties:
+  - uid: null
+    name: "caption"
+    type: "STRING"
+  - uid: null
+    name: "number"
+    type: "STRING"
+  - uid: null
+    name: "position"
+    type: "STRING"
+  - uid: null
+    name: "icon"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "methodDeclaration"
+    type: "jetbrains.mps.baseLanguage.classifiers.DefaultClassifierMethodDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "fieldDeclaration"
+    type: "jetbrains.mps.baseLanguage.classifiers.DefaultClassifierFieldDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "toolInitBlock"
+    type: "jetbrains.mps.lang.plugin.InitBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "toolDisposeBlock"
+    type: "jetbrains.mps.lang.plugin.DisposeBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "toolIcon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "shortcut"
+    type: "jetbrains.mps.lang.plugin.AbstractToolShortcut"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IClassifier"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5896642449625981893"
+  name: "TabbedToolDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.BaseToolDeclaration"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5896642449625987000"
+  name: "AddTabOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "tab"
+    type: "jetbrains.mps.lang.plugin.ToolTab"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.TabbedToolOperation"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5818192529492099570"
+  name: "CloseTabOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "componentExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.TabbedToolOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1862809785209122566"
+  name: "GetSelectedTabOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.TabbedToolOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/8096638938275438668"
+  name: "TabbedToolOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/485694842828664424"
+  name: "SmartDisposeClosureParameterDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.closures.UnboundClosureParameterDeclaration"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/6938053545825350222"
+  name: "ToolTab"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "componentExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "titleExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "iconExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "disposeTabClosure"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3339131993542057767"
+  name: "BaseProjectOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3205675194086589964"
+  name: "ActionAccessOperation"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3205675194086686068"
+  name: "GroupAccessOperation"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "group"
+    type: "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5023285075122009364"
+  name: "IdeaInitializerDescriptor"
+  abstract: false
+  properties:
+  - uid: null
+    name: "id"
+    type: "STRING"
+  - uid: null
+    name: "descripttion"
+    type: "STRING"
+  - uid: null
+    name: "version"
+    type: "STRING"
+  - uid: null
+    name: "vendor"
+    type: "STRING"
+  - uid: null
+    name: "vendorUrl"
+    type: "STRING"
+  - uid: null
+    name: "vendorLogo"
+    type: "STRING"
+  - uid: null
+    name: "ideaVersion"
+    type: "STRING"
+  - uid: null
+    name: "loadModules"
+    type: "STRING"
+  - uid: null
+    name: "handleErrors"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "dependency"
+    type: "jetbrains.mps.lang.plugin.PluginDependency"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "actions"
+    type: "jetbrains.mps.lang.plugin.IdeaActionsDescriptor"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/8817525066851790100"
+  name: "KeyStrokeType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Type"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1821622352985038318"
+  name: "ActionParameterReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.VariableReference"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/8131292300541727132"
+  name: "AddKeystrokeStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "stroke"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070611750"
+  name: "CreateNodeAspectBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070611759"
+  name: "EditorTab"
+  abstract: false
+  properties:
+  - uid: null
+    name: "shortcutChar"
+    type: "STRING"
+  - uid: null
+    name: "commandOnCreate"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "order"
+    type: "jetbrains.mps.lang.plugin.OrderConstraints"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "listenBlock"
+    type: "jetbrains.mps.lang.plugin.ListenBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "baseNodeBlock"
+    type: "jetbrains.mps.lang.plugin.BaseNodeBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "isApplicableBlock"
+    type: "jetbrains.mps.lang.plugin.IsApplicableTabBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "nodesBlock"
+    type: "jetbrains.mps.lang.plugin.NodesBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "createTabBlock"
+    type: "jetbrains.mps.lang.plugin.CreateTabBlock"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "baseNodeConcept"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070612962"
+  name: "NodesBlock"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070613135"
+  name: "IsApplicableTabBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070657672"
+  name: "BaseNodeBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3743831881070657680"
+  name: "ListenBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/2450897840534683973"
+  name: "OrderConstraints"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/2450897840534683975"
+  name: "Order"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "tab"
+    type: "jetbrains.mps.lang.plugin.EditorTabReference"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.OrderConstraints"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/2450897840534683979"
+  name: "EditorTabReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "editorTab"
+    type: "jetbrains.mps.lang.plugin.EditorTab"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/2450897840534688273"
+  name: "OrderReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "order"
+    type: "jetbrains.mps.lang.plugin.Order"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.OrderConstraints"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1203071646776"
+  name: "ActionDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "caption"
+    type: "STRING"
+  - uid: null
+    name: "ID"
+    type: "STRING"
+  - uid: null
+    name: "overrides"
+    type: "STRING"
+  - uid: null
+    name: "description"
+    type: "STRING"
+  - uid: null
+    name: "mnemonic"
+    type: "STRING"
+  - uid: null
+    name: "isAlwaysVisible"
+    type: "STRING"
+  - uid: null
+    name: "outsideCommandExecution"
+    type: "STRING"
+  - uid: null
+    name: "requiredAccess"
+    type: "STRING"
+  - uid: null
+    name: "fillActionContext"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "updateBlock"
+    type: "jetbrains.mps.lang.plugin.UpdateBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "executeFunction"
+    type: "jetbrains.mps.lang.plugin.ExecuteBlock"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "methodDeclaration"
+    type: "jetbrains.mps.baseLanguage.classifiers.DefaultClassifierMethodDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "parameter"
+    type: "jetbrains.mps.lang.plugin.ActionParameter"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "constructionParameter"
+    type: "jetbrains.mps.lang.plugin.ActionConstructionParameterDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "places"
+    type: "jetbrains.mps.lang.plugin.ActionPlaceSpecification"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.classifiers.IClassifier"
+  - "jetbrains.mps.lang.checkedName.ICheckedNamePolicy"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+  - "jetbrains.mps.lang.core.ICanSuppressErrors"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1988288734101112751"
+  name: "ButtonCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1988288734101112747"
+  name: "PopupCreator"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "group"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1988288734101108470"
+  name: "ToolbarCreator"
+  abstract: false
+  properties:
+  - uid: null
+    name: "isHorizontal"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "group"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1640281869714699879"
+  name: "CreateTabBlock"
+  abstract: false
+  properties:
+  - uid: null
+    name: "commandOnCreate"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "conceptsBlock"
+    type: "jetbrains.mps.lang.plugin.ConceptsBlock"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "createBlock"
+    type: "jetbrains.mps.lang.plugin.CreateBlock"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5538333046911298739"
+  name: "CustomCondition"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+  - "jetbrains.mps.lang.plugin.ActionParameterCondition"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5538333046911348647"
+  name: "ParameterCondition_ConceptFunctionParameter"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5538333046911348652"
+  name: "ActionParameterCondition"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5538333046911348654"
+  name: "RequiredCondition"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionParameterCondition"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5678361901872075170"
+  name: "EditableModel"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionParameterCondition"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5864553086652219113"
+  name: "PluginDependency"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5864553086652219116"
+  name: "IdeaPluginDependency"
+  abstract: false
+  properties:
+  - uid: null
+    name: "pluginId"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.PluginDependency"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/203415309825565488"
+  name: "MPSPluginDependency"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "plugin"
+    type: "jetbrains.mps.lang.plugin.IdeaInitializerDescriptor"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.plugin.PluginDependency"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/331224023792854814"
+  name: "IdeaActionsDescriptor"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keymapsRef"
+    type: "jetbrains.mps.lang.plugin.KeymapRef"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "actionGroups"
+    type: "jetbrains.mps.lang.plugin.ActionGroupRef"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/331224023792854815"
+  name: "ActionGroupRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "group"
+    type: "jetbrains.mps.lang.plugin.ActionGroupDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/331224023792855166"
+  name: "KeymapRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "keymap"
+    type: "jetbrains.mps.lang.plugin.KeymapChangesDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/3205778618063718746"
+  name: "IdeaConfigurationXml"
+  abstract: false
+  properties:
+  - uid: null
+    name: "outputPath"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "actions"
+    type: "jetbrains.mps.lang.plugin.IdeaActionsDescriptor"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1050311802978903937"
+  name: "ConceptCondition"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "concept"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.plugin.ActionParameterCondition"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1207145475354"
+  name: "AddElementStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1512255007353869532"
+  name: "NonDumbAwareActions"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "actions"
+    type: "jetbrains.mps.lang.plugin.ActionReference"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/1512255007353869535"
+  name: "ActionReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "actionDeclaration"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/4295816563224240545"
+  name: "PinTabOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "componentExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.TabbedToolOperation"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/5386424596292331400"
+  name: "UnpinTabOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "componentExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.TabbedToolOperation"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/7459370737647652607"
+  name: "ConceptsBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/7459370737647652609"
+  name: "CreateBlock"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/7459370737647671570"
+  name: "ConceptFunctionParameter_SConceptClass"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunctionParameter"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/471625927503601957"
+  name: "CustomToolShortcut"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "changes"
+    type: "jetbrains.mps.lang.plugin.AbstractToolKeystroke"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.AbstractToolShortcut"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/471625927503601927"
+  name: "NumberToolShortcut"
+  abstract: false
+  properties:
+  - uid: null
+    name: "number"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.AbstractToolShortcut"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/471625927503603120"
+  name: "ToolKeystroke"
+  abstract: false
+  properties:
+  - uid: null
+    name: "keymap"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "keystroke"
+    type: "jetbrains.mps.lang.plugin.KeyMapKeystroke"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.plugin.AbstractToolKeystroke"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/471625927506494666"
+  name: "AbstractToolKeystroke"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:28f9e497-3b42-4291-aeba-0a1039153ab1/471625927503509889"
+  name: "AbstractToolShortcut"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"

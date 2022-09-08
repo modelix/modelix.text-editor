@@ -1,0 +1,873 @@
+uid: "2f7e2e35-6e74-4c43-9fa5-2465d68f5996"
+name: "org.iets3.core.expr.collections"
+concepts:
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339749509"
+  name: "CollectionType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "sizeConstraint"
+    type: "org.iets3.core.expr.collections.CollectionSizeSpec"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "baseType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.ICollectionType"
+  - "org.iets3.core.expr.base.ITypeSupportsDefaultValue"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339757344"
+  name: "ListType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.CollectionType"
+  - "org.iets3.core.expr.collections.IOrderedCollection"
+  - "org.iets3.core.expr.base.IParameterizedTypeSupportsEquals"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339759319"
+  name: "ListLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "typeConstraint"
+    type: "org.iets3.core.expr.collections.ElementTypeConstraintSingle"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "elements"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339790458"
+  name: "ICollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339795488"
+  name: "NoArgCollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339796915"
+  name: "SizeOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339840476"
+  name: "IsEmptyOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848519"
+  name: "IOrderedCollection"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ICollectionType"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848559"
+  name: "IOrderedCollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850572"
+  name: "FirstOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850588"
+  name: "IElementTyped"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339853806"
+  name: "LastOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340004826"
+  name: "AtOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340020764"
+  name: "OneArgCollectionOp"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340021069"
+  name: "IContextTypedCollOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340640412"
+  name: "MapOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.lambda.IShortLambdaContainer"
+  - "org.iets3.core.expr.collections.IProvideIndex"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340715406"
+  name: "WhereOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgPredicateCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.collections.IProvideIndex"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265511400449"
+  name: "DistinctOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265513219132"
+  name: "AsImmutableListOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514323710"
+  name: "ContainsOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514351708"
+  name: "OneCollBaseTypedArgCollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515327232"
+  name: "OneArgPredicateCollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.lambda.IShortLambdaContainer"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515619803"
+  name: "AnyOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgPredicateCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265518788050"
+  name: "AllOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgPredicateCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520080263"
+  name: "SetType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.CollectionType"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520081293"
+  name: "SetLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "typeConstraint"
+    type: "org.iets3.core.expr.collections.ElementTypeConstraintSingle"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "elements"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IStructuredSyntax"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265522211270"
+  name: "AsImmutableSetOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5849458724932670346"
+  name: "BracketOp"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "index"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.UnaryExpression"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163110902"
+  name: "MapType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "valueType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.MapLikeType"
+  - "org.iets3.core.expr.base.ITypeSupportsDefaultValue"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111272"
+  name: "MapLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "typeConstraint"
+    type: "org.iets3.core.expr.collections.ElementTypeConstraintMap"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "elements"
+    type: "org.iets3.core.expr.collections.KeyValuePair"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IStructuredSyntax"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111273"
+  name: "KeyValuePair"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "key"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "val"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163555724"
+  name: "MapWithOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.IMapOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163714133"
+  name: "MapWithoutOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.IMapOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046587930249"
+  name: "MaxOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046594451299"
+  name: "SumOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046596642164"
+  name: "FirstNOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046597818717"
+  name: "LastNOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890435239346753529"
+  name: "SimpleSortOp"
+  abstract: false
+  properties:
+  - uid: null
+    name: "order"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7740953487940081584"
+  name: "MinOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IElementTyped"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179783739"
+  name: "ListWithOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.IListOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179855331"
+  name: "SetWithOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ISetOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031077039769"
+  name: "ElementTypeConstraintSingle"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "typeConstraint"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031078300776"
+  name: "ElementTypeConstraintMap"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "typeConstraint1"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "typeConstraint2"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1330041117646892901"
+  name: "CollectionSizeSpec"
+  abstract: false
+  properties:
+  - uid: null
+    name: "min"
+    type: "STRING"
+  - uid: null
+    name: "max"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3989687177013570767"
+  name: "UpToTarget"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "max"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4618483580248255217"
+  name: "UnpackOptionsOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/75413091695536841"
+  name: "IndexExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441616112342"
+  name: "IProvideIndex"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441620016186"
+  name: "ForeachOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.lambda.IShortLambdaContainer"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2554784455264825928"
+  name: "FlattenOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6414340278546763815"
+  name: "AsSingletonList"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213698520477"
+  name: "AbstractStringListJoiner"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213695398904"
+  name: "StringJoinOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.AbstractStringListJoiner"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213697900736"
+  name: "StringTerminateOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.AbstractStringListJoiner"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3831047747134047985"
+  name: "SetWithoutOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ISetOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6095949300270588116"
+  name: "IsNotEmptyOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338319"
+  name: "FoldLeftOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.FoldOp"
+  - "org.iets3.core.expr.collections.IProvideIndex"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338320"
+  name: "FoldOp"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "seed"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "combiner"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ICollectionOp"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123213992448"
+  name: "AsMapOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123215615666"
+  name: "MapSizeOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123216554083"
+  name: "FindFirstOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgPredicateCollectionOp"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/362871314062739301"
+  name: "ListWithAllOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.collections.IListOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221899372124"
+  name: "MapLikeType"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "keyType_DEPRECATED"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "valueType_DEPRECATED"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561707151"
+  name: "ListInsertOp"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "index"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876255273"
+  name: "MapKeysOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876240958"
+  name: "MapValuesOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561696122"
+  name: "ListWithoutOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.IListOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876236259"
+  name: "MapContainsKeyOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.IMapOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675865128281"
+  name: "IMapOneArgOp"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/527291771330968213"
+  name: "ISetOneArgOp"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221900249273"
+  name: "IListOneArgOp"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "arg"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356043012"
+  name: "AllWithIndexOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.TwoArgPredicateCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356045611"
+  name: "TwoArgPredicateCollectionOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4481921169623440367"
+  name: "AnyWithIndexOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.TwoArgPredicateCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/393796118209799325"
+  name: "TailOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261017737777"
+  name: "ReverseOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.NoArgCollectionOp"
+  - "org.iets3.core.expr.collections.IContextTypedCollOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261030611861"
+  name: "SetUnionOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ISetOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261038438968"
+  name: "SetDiffOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ISetOneArgOp"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/531692237848496057"
+  name: "ListPickOp"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "selectorList"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327605"
+  name: "IndexOfOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.collections.IOrderedCollectionOp"

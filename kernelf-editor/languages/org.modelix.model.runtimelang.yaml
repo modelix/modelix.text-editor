@@ -1,0 +1,41 @@
+uid: "b6980ebd-f01d-459d-a952-38740f6313b4"
+name: "org.modelix.model.runtimelang"
+concepts:
+- uid: "mps:b6980ebd-f01d-459d-a952-38740f6313b4/7113393488488348863"
+  name: "ModelServerInfo"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "repositories"
+    type: "org.modelix.model.runtimelang.RepositoryInfo"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:b6980ebd-f01d-459d-a952-38740f6313b4/7113393488488348864"
+  name: "RepositoryInfo"
+  abstract: false
+  properties:
+  - uid: null
+    name: "id"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "branches"
+    type: "org.modelix.model.runtimelang.BranchInfo"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:b6980ebd-f01d-459d-a952-38740f6313b4/7113393488488348865"
+  name: "BranchInfo"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"

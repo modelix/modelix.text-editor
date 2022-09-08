@@ -1,0 +1,4 @@
+rootProject.name = 'modelix.kernelf'
+
+include 'kernelf-editor'
+

@@ -1,0 +1,25 @@
+uid: "7bcf9284-ca29-484f-a3b3-2855bdd813ad"
+name: "org.iets3.core.expr.simpleTypes.tests"
+concepts:
+- uid: "mps:7bcf9284-ca29-484f-a3b3-2855bdd813ad/1360296727230407275"
+  name: "RandomVectorProducer"
+  abstract: false
+  properties:
+  - uid: null
+    name: "count"
+    type: "STRING"
+  - uid: null
+    name: "onlyInteresing"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.tests.TestDataProducer"
+- uid: "mps:7bcf9284-ca29-484f-a3b3-2855bdd813ad/543046448977223537"
+  name: "EqClassProducer"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.tests.TestDataProducer"

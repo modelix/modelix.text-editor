@@ -1,0 +1,354 @@
+uid: "3a13115c-633c-4c5c-bbcc-75c4219e9555"
+name: "jetbrains.mps.lang.quotation"
+concepts:
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196350785110"
+  name: "AbstractAntiquotation"
+  abstract: true
+  properties:
+  - uid: null
+    name: "label"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.IMetaLevelChanger"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196350785112"
+  name: "Antiquotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.quotation.AbstractAntiquotation"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196350785113"
+  name: "Quotation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "quotedNode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "modelToCreate"
+    type: "jetbrains.mps.lang.quotation.ModelNodeInitializer"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "modelToCreate_old"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "nodeId_old"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+  - "jetbrains.mps.lang.core.IMetaLevelChanger"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196350785117"
+  name: "ReferenceAntiquotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.LinkAttribute"
+  - "jetbrains.mps.lang.quotation.AbstractAntiquotation"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196350785118"
+  name: "ListAntiquotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.quotation.AbstractAntiquotation"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1196866233735"
+  name: "PropertyAntiquotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.PropertyAttribute"
+  - "jetbrains.mps.lang.quotation.AbstractAntiquotation"
+  - "jetbrains.mps.lang.quotation.StringToTypedValueMigrationInfo"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/5455284157993911077"
+  name: "NodeBuilderInitProperty"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "initValue"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "property"
+    type: "jetbrains.mps.lang.structure.PropertyDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitPart"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/8182547171709738802"
+  name: "NodeBuilderList"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodes"
+    type: "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/5455284157993863837"
+  name: "NodeBuilder"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "quotedNode"
+    type: "jetbrains.mps.lang.quotation.NodeBuilderNode"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "modelToCreate_old"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "modelToCreate"
+    type: "jetbrains.mps.lang.quotation.ModelNodeInitializer"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+  - "jetbrains.mps.lang.quotation.INodeBuilderContainer"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/5455284157994012186"
+  name: "NodeBuilderInitLink"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "initValue"
+    type: "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "link"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitPart"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/8182547171709614739"
+  name: "NodeBuilderRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "target"
+    type: "jetbrains.mps.lang.core.INamedConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/8182547171709752110"
+  name: "NodeBuilderExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitValueChild"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/5455284157993863840"
+  name: "NodeBuilderNode"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "values"
+    type: "jetbrains.mps.lang.quotation.NodeBuilderInitPart"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "concept"
+    type: "jetbrains.mps.lang.structure.ConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitLinkValue"
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitValueChild"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/5455284157993911097"
+  name: "NodeBuilderInitPart"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/8389748773577451463"
+  name: "GeneratorInternal_PropertyDescriptor"
+  abstract: false
+  properties:
+  - uid: null
+    name: "propertyValue"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "propertyIdentity"
+    type: "jetbrains.mps.lang.smodel.PropertyId"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/2652588855789590333"
+  name: "GeneratorInternal_ReferenceDescriptor"
+  abstract: false
+  properties:
+  - uid: null
+    name: "targetNodeId"
+    type: "STRING"
+  - uid: null
+    name: "targetModel"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "linkId"
+    type: "jetbrains.mps.lang.smodel.ReferenceLinkId"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "role"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/2038730470042956328"
+  name: "GeneratorInternal_InternalReferenceHolder"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "linkId"
+    type: "jetbrains.mps.lang.smodel.ReferenceLinkId"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "role"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    optional: true
+  - uid: null
+    name: "sourceNode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: false
+  - uid: null
+    name: "targetNode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/4056363777117001481"
+  name: "StringToTypedValueMigrationInfo"
+  abstract: true
+  properties:
+  - uid: null
+    name: "stringValueMigrated"
+    type: "STRING"
+  children: []
+  references: []
+  extends: []
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1595412875168045824"
+  name: "NodeBuilderInitLinkValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/3316618969910743150"
+  name: "ModelNodeInitializer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "modelToCreate"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "nodeId"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/8642609567145363710"
+  name: "NodeBuilderInitValueChild"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/6985522012210239874"
+  name: "NodeBuilderInitPropertyValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/6985522012210254362"
+  name: "NodeBuilderPropertyExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.quotation.NodeBuilderInitPropertyValue"
+  - "jetbrains.mps.lang.core.IWrapper"
+- uid: "mps:3a13115c-633c-4c5c-bbcc-75c4219e9555/1010197743173864766"
+  name: "INodeBuilderContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []

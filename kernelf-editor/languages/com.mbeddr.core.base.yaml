@@ -1,0 +1,917 @@
+uid: "d4280a54-f6df-4383-aa41-d1b2bffa7eb1"
+name: "com.mbeddr.core.base"
+concepts:
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7024921229555594291"
+  name: "IIdentifierNamedConcept"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.core.IResolveInfo"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7024921229556133800"
+  name: "ICommentable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7024921229556133803"
+  name: "ICommentedCode"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "commentedCode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+  - "com.mbeddr.mpsutil.blutil.IDeprecatedLangConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3857533489766146428"
+  name: "ElementDocumentation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "text"
+    type: "com.mbeddr.core.base.TextBlock"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "com.mbeddr.core.base.ITextBlockOwner"
+  - "com.mbeddr.core.base.ISearchSupport"
+  - "com.mbeddr.core.base.IIsDocumentationComment"
+  - "jetbrains.mps.lang.core.IWrapper"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3857533489766146432"
+  name: "IDocumentable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4459718605982007336"
+  name: "IConfigurationItem"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.ILOCCountProvider"
+  - "com.mbeddr.core.base.IDocumentable"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4459718605982007337"
+  name: "IConfigurationContainer"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "configurationItems"
+    type: "com.mbeddr.core.base.IConfigurationItem"
+    multiple: true
+    optional: true
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8628579007224192794"
+  name: "INameFirstCharLowerCase"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8628579007224193610"
+  name: "INameFirstCharUpperCase"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8628579007224193612"
+  name: "INameAllUpperCase"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5095889050031055796"
+  name: "IContainerOfUniqueNames"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5095889050032705070"
+  name: "IConfigurationItemWithProcessor"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IConfigurationItem"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7534202261664852649"
+  name: "IIsDocumentationComment"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/1049346859912912067"
+  name: "IEmpty"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+  - "com.mbeddr.core.base.IHideFromOutline"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/1656687801206572012"
+  name: "IRequiresConfigItem"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/9035511730050139084"
+  name: "IConfigurationItemWithImport"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IConfigurationItem"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7123462210702867708"
+  name: "ILOCCountProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8428744930541856329"
+  name: "IModuleContentRef"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IReference"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/1908346841499857570"
+  name: "IShowUpInOutline"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/1908346841499892479"
+  name: "IOutlineRoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/1908346841499937386"
+  name: "IHideFromOutline"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3578942323568389911"
+  name: "IGeneratesCodeForIDE"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IKeepAliveInGeneration"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5959167564566976062"
+  name: "VisibilityControllingAttribute"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/117464341934617033"
+  name: "IVisualizationParticipant"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4052432714772706104"
+  name: "CDocWord"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "de.slisson.mps.richtext.IWord"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8375407818529178006"
+  name: "TextBlock"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "text"
+    type: "de.slisson.mps.richtext.Text"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8624890525768344447"
+  name: "ITextBlockOwner"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/349463322506397155"
+  name: "ISearchSupport"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4577779292081684434"
+  name: "IKeepAliveInGeneration"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/865293814733114043"
+  name: "AssessmentContainer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "assessments"
+    type: "com.mbeddr.core.base.Assessment"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "com.mbeddr.core.base.Chunk"
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+  - "com.mbeddr.core.base.IMbeddrIDERoot"
+  - "com.mbeddr.core.base.IKeepAliveInGeneration"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/865293814733114044"
+  name: "Assessment"
+  abstract: false
+  properties:
+  - uid: null
+    name: "mustBeOk"
+    type: "STRING"
+  - uid: null
+    name: "hideOkOnes"
+    type: "STRING"
+  - uid: null
+    name: "sorted"
+    type: "STRING"
+  - uid: null
+    name: "lastUpdatedOn"
+    type: "STRING"
+  - uid: null
+    name: "lastUdpatedBy"
+    type: "STRING"
+  - uid: null
+    name: "exportAsXML"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "query"
+    type: "com.mbeddr.core.base.AssessmentQuery"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "results"
+    type: "com.mbeddr.core.base.AssessmentResultEntry"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "summaries"
+    type: "com.mbeddr.core.base.AssessmentSummary"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+  - "com.mbeddr.core.base.IDocumentable"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/865293814733115675"
+  name: "AssessmentQuery"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/865293814733118686"
+  name: "AssessmentResultEntry"
+  abstract: false
+  properties:
+  - uid: null
+    name: "status"
+    type: "STRING"
+  - uid: null
+    name: "markedOk"
+    type: "STRING"
+  - uid: null
+    name: "isNew"
+    type: "STRING"
+  - uid: null
+    name: "lastFound"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "result"
+    type: "com.mbeddr.core.base.AssessmentResult"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "comment"
+    type: "com.mbeddr.core.base.TextBlock"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/865293814733133833"
+  name: "AssessmentResult"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3815661793603643701"
+  name: "VisualizationQuery"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentQuery"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3815661793603643767"
+  name: "VisualizationResult"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "visualizable"
+    type: "com.mbeddr.mpsutil.plantuml.node.IVisualizable"
+    optional: false
+  extends:
+  - "com.mbeddr.core.base.AssessmentResult"
+  - "com.mbeddr.mpsutil.plantuml.node.IVisualizable"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/671216505796427448"
+  name: "AssessmentSummary"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/671216505796623802"
+  name: "DefaultAssessmentSummary"
+  abstract: false
+  properties:
+  - uid: null
+    name: "totalCount"
+    type: "STRING"
+  - uid: null
+    name: "ok"
+    type: "STRING"
+  - uid: null
+    name: "newlyAdded"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentSummary"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/13085436577882829"
+  name: "IMbeddrIDERoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8076351743304603872"
+  name: "IReference"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7139820346881179811"
+  name: "IVisibleElementProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7139820346881560230"
+  name: "Chunk"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "constraints"
+    type: "com.mbeddr.core.base.ChunkDependencyConstraint"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+  - "com.mbeddr.core.base.ILOCCountProvider"
+  - "com.mbeddr.core.base.ITreeViewRoot"
+  - "com.mbeddr.core.base.IDetectCycle"
+  - "com.mbeddr.mpsutil.jung.IJGraphProvider"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7139820346881807063"
+  name: "IChunkDependency"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.ILOCCountProvider"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7139820346887661189"
+  name: "IVisibleElementAdapter"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/9074180702631615490"
+  name: "IRequiresHeaderImport"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3111692391937249048"
+  name: "IControlledNamedConcept"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3111692391937281265"
+  name: "ControlledNameAttribute"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "suffix"
+    type: "com.mbeddr.core.base.NameSuffix"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "nameController"
+    type: "com.mbeddr.core.base.IControlledName"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.PropertyAttribute"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3111692391937282006"
+  name: "IControlledName"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IIdentifierNamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3111692391938352250"
+  name: "IControlledNameProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8399788025237663326"
+  name: "ControlledNameAssQuery"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentQuery"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8399788025237724652"
+  name: "ControlledNameAssResult"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "cnc"
+    type: "com.mbeddr.core.base.IControlledNamedConcept"
+    optional: false
+  extends:
+  - "com.mbeddr.core.base.AssessmentResult"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/2843190776579063025"
+  name: "NameSuffix"
+  abstract: false
+  properties:
+  - uid: null
+    name: "suffix"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/747084250476811597"
+  name: "DefaultGenericChunkDependency"
+  abstract: false
+  properties:
+  - uid: null
+    name: "reexport"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "chunk"
+    type: "com.mbeddr.core.base.Chunk"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.IChunkDependency"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/6867589085886993301"
+  name: "EmptyChunkDependency"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.IEmpty"
+  - "com.mbeddr.core.base.IChunkDependency"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/651821299954673486"
+  name: "IValueDebuggable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/143519404622828937"
+  name: "ChunkDependencyConstraint"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/2113102233502540990"
+  name: "DebugKey"
+  abstract: false
+  properties:
+  - uid: null
+    name: "value"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8998906896747633114"
+  name: "ITreeViewable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/176285146686936640"
+  name: "ITreeViewRoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.ITreeViewable"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/806361095877923648"
+  name: "CheckHashAssessmentQuery"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentQuery"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/806361095877986078"
+  name: "CheckHashAssessmentResult"
+  abstract: false
+  properties:
+  - uid: null
+    name: "kind"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "exref"
+    type: "com.mbeddr.core.base.IExtRef"
+    optional: false
+  extends:
+  - "com.mbeddr.core.base.AssessmentResult"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/806361095879159361"
+  name: "IExtRef"
+  abstract: true
+  properties:
+  - uid: null
+    name: "extID"
+    type: "STRING"
+  - uid: null
+    name: "hash"
+    type: "STRING"
+  - uid: null
+    name: "lastUpdated"
+    type: "STRING"
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5939454523704167063"
+  name: "IDetectCycle"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4527669556367956681"
+  name: "IInstantiatedOnlyInGenerators"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/3630807745796755534"
+  name: "ITemporaryConcept"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7941623276298081733"
+  name: "IHierarchicalStructure"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IHierarchicalStructureBase"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7941623276301385191"
+  name: "IHierarchicalStructureRoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IHierarchicalStructureBase"
+  - "com.mbeddr.core.base.ITreeViewRoot"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7941623276301458573"
+  name: "IHierarchicalStructureBase"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.ITreeViewable"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8490595898229124356"
+  name: "AssessmentScope"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8490595898229124557"
+  name: "CurrentModelScope"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8490595898229129994"
+  name: "CurrentModelScopeAndImported"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/8490595898229164171"
+  name: "ChunkScope"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "chunk"
+    type: "com.mbeddr.core.base.Chunk"
+    optional: false
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/2003025719968189746"
+  name: "SolutionRelativeHashedFilePicker"
+  abstract: false
+  properties:
+  - uid: null
+    name: "descr"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.filepicker.SolutionRelativeFilePicker"
+  - "com.mbeddr.core.base.IExtRef"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/6277307617439377002"
+  name: "ProjectScope"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5277057488631769179"
+  name: "Metric"
+  abstract: true
+  properties:
+  - uid: null
+    name: "data"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7461599630140238044"
+  name: "ISuppressStaticEvalWarnings"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4457953124921400219"
+  name: "ITriggerCommenting"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4453399216978440143"
+  name: "KeepAliveInGeneration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4791464552504159411"
+  name: "GenericUnitProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/6777508457269193876"
+  name: "SuppressAllWarnings"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.SuppressWarningKind"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5213617122587427321"
+  name: "SuppressWarningKind"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/7787579437361950085"
+  name: "SuppressWarnings"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "kinds"
+    type: "com.mbeddr.core.base.SuppressWarningKind"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/2163583947472877426"
+  name: "ICallable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/313223590430445909"
+  name: "ICannotLiveInDocModel"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5227231181399633032"
+  name: "IHasQualifiedName"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/4055601364878550401"
+  name: "ISupportsLocalLanguage"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5708877824206638437"
+  name: "ListOfModelsScope"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "models_old"
+    type: "jetbrains.mps.lang.smodel.ModelReferenceExpression"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "models"
+    type: "jetbrains.mps.lang.modelapi.ModelIdentity"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5582042358567829547"
+  name: "ModuleScope"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "module"
+    type: "jetbrains.mps.lang.smodel.ModuleRefExpression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5582042358567952621"
+  name: "VirtualFolderScope"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "filter"
+    type: "com.mbeddr.core.base.VirtualFolderFilter"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "com.mbeddr.core.base.AssessmentScope"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5582042358568216364"
+  name: "VirtualFolderFilter"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5582042358568216892"
+  name: "StartsWithFilter"
+  abstract: false
+  properties:
+  - uid: null
+    name: "string"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.VirtualFolderFilter"
+- uid: "mps:d4280a54-f6df-4383-aa41-d1b2bffa7eb1/5582042358568237714"
+  name: "RegExFilter"
+  abstract: false
+  properties:
+  - uid: null
+    name: "regEx"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.VirtualFolderFilter"

@@ -1,0 +1,853 @@
+uid: "71934284-d7d1-45ee-a054-8c072591085f"
+name: "org.iets3.core.expr.toplevel"
+concepts:
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/4790956042240148643"
+  name: "Function"
+  abstract: false
+  properties:
+  - uid: null
+    name: "ext_old"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.lambda.IFunctionLike"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+  - "org.iets3.core.expr.base.IDocumentableWordProvider"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.ITraceRoot"
+  - "org.iets3.core.expr.lambda.IJoinedBlockContext"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.core.expr.base.IVoidContext"
+  - "org.iets3.analysis.base.ISolvable"
+  - "org.iets3.core.expr.lambda.IAllowLocalVariables"
+  - "org.iets3.core.expr.base.IProgramLocationProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/4790956042240570348"
+  name: "FunctionCall"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.ISSConstrainedValueRef"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+  - "org.iets3.core.expr.lambda.IFunctionCall"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.ITraceRoot"
+  - "org.iets3.analysis.base.ISolvable"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/4790956042240790396"
+  name: "FunRef"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.lambda.IFunctionRef"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/2861782275883406867"
+  name: "IFunctionScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/2861782275883475449"
+  name: "IToplevelExprContent"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.base.IValidNamedConcept"
+  - "org.iets3.core.expr.base.IContainmentStackMember"
+  - "com.mbeddr.core.base.IDocumentable"
+  - "com.mbeddr.core.base.ICommentable"
+  - "com.mbeddr.core.base.IHasQualifiedName"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/2861782275883762391"
+  name: "ExtensionFunctionCall"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "args"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "extFun"
+    type: "org.iets3.core.expr.lambda.IFunctionLike"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+  - "org.iets3.analysis.base.ISolvable"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7089558164906249676"
+  name: "Constant"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "value"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+  - "org.iets3.core.expr.base.IOptionallyTyped"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "com.mbeddr.core.base.IDetectCycle"
+  - "org.iets3.core.expr.base.ITraceRoot"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.analysis.base.ISolvable"
+  - "jetbrains.mps.lang.core.ISmartReferent"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7089558164907769200"
+  name: "IConstantScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/543569365051789113"
+  name: "ConstantRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "constant"
+    type: "org.iets3.core.expr.toplevel.Constant"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IIsSingleSymbol"
+  - "org.iets3.core.expr.base.ISSConstrainedValueRef"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.IRef"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/543569365052765011"
+  name: "EmptyToplevelContent"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+  - "com.mbeddr.core.base.IEmpty"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8811147530084018358"
+  name: "RecordDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "members_old"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "refFlag"
+    type: "org.iets3.core.expr.toplevel.ReferenceableFlag"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.AbstractTypeDeclaration"
+  - "org.iets3.core.expr.toplevel.IRecordDeclaration"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8811147530084018361"
+  name: "RecordMember"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IRecordMember"
+  - "org.iets3.core.expr.base.ITyped"
+  - "com.mbeddr.core.base.IDocumentable"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8811147530084018370"
+  name: "RecordType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "record"
+    type: "org.iets3.core.expr.toplevel.IRecordDeclaration"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.toplevel.IRecordType"
+  - "org.iets3.core.expr.base.ITypeSupportsDefaultValue"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8811147530084261867"
+  name: "IRecordScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8811147530085329320"
+  name: "RecordLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "memberValues"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IStructuredSyntax"
+  - "org.iets3.core.expr.base.ITyped"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "org.iets3.core.expr.base.ILiteral"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7740953487933794886"
+  name: "SectionMarker"
+  abstract: false
+  properties:
+  - uid: null
+    name: "label"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7740953487936183912"
+  name: "Typedef"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "originalType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.AbstractTypeDeclaration"
+  - "org.iets3.core.expr.base.IContracted"
+  - "com.mbeddr.core.base.IDetectCycle"
+  - "org.iets3.core.expr.toplevel.IRecordMemberScopeProvider"
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+  - "org.iets3.analysis.base.ISolvable"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7740953487936183984"
+  name: "ITypedefScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7740953487936184022"
+  name: "TypedefType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "typedef"
+    type: "org.iets3.core.expr.toplevel.Typedef"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.ISSDelegatingType"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/3315773615451992747"
+  name: "TypedefContractValExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.ISSItValueRef"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/1024425597324739336"
+  name: "RecordMemberRefInConstraint"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "member"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/1249392911699110107"
+  name: "RecordChangeTarget"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "setters"
+    type: "org.iets3.core.expr.toplevel.NewValueSetter"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/1249392911699110134"
+  name: "NewValueSetter"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "newValue"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "member"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/820361861852634100"
+  name: "OldValueExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/820361861853869169"
+  name: "OldMemberRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "member"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7061117989422575278"
+  name: "EnumDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "qualified"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "literals"
+    type: "org.iets3.core.expr.toplevel.EnumLiteral"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.AbstractTypeDeclaration"
+  - "com.mbeddr.core.base.IContainerOfUniqueNames"
+  - "jetbrains.mps.lang.core.ISmartReferent"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7061117989422575313"
+  name: "EnumLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "value"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7061117989422575803"
+  name: "EnumType"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "enum"
+    type: "org.iets3.core.expr.toplevel.EnumDeclaration"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.ITypeSupportsDefaultValue"
+  - "org.iets3.core.expr.base.ITypeSupportsProposals"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7061117989422575939"
+  name: "IEnumScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7061117989422577349"
+  name: "EnumLiteralRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "literal"
+    type: "org.iets3.core.expr.toplevel.EnumLiteral"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/4577412849441593498"
+  name: "EnumValueAccessor"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/602952467876375079"
+  name: "IRecordMember"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.path.IMember"
+  - "org.iets3.core.base.IValidNamedConcept"
+  - "org.iets3.core.expr.base.ITypeable"
+  - "com.mbeddr.core.base.ICommentable"
+  - "org.iets3.core.expr.base.IContracted"
+  - "com.mbeddr.core.base.IDocumentable"
+  - "org.iets3.core.expr.base.IProgramLocationProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/602952467877559919"
+  name: "IRecordDeclaration"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "members"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+  - "com.mbeddr.core.base.IContainerOfUniqueNames"
+  - "org.iets3.core.expr.base.IContracted"
+  - "org.iets3.core.expr.toplevel.IRecordMemberScopeProvider"
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+  - "com.mbeddr.core.base.IDetectCycle"
+  - "org.iets3.core.expr.base.IDocumentableWordProvider"
+  - "org.iets3.core.expr.base.IProgramLocationProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8718374282852222512"
+  name: "AbstractTypeDeclaration"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+  - "org.iets3.core.expr.base.IDocumentableWordProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7849023854690216373"
+  name: "IRecordMemberScopeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/6527211908667934109"
+  name: "EnumIsTarget"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "literal"
+    type: "org.iets3.core.expr.toplevel.EnumLiteral"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/543569365052711055"
+  name: "Library"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "contents"
+    type: "org.iets3.core.expr.toplevel.IToplevelExprContent"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "imports"
+    type: "com.mbeddr.core.base.DefaultGenericChunkDependency"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "com.mbeddr.core.base.Chunk"
+  - "com.mbeddr.core.base.IContainerOfUniqueNames"
+  - "org.iets3.core.expr.base.IContainmentStackMember"
+  - "org.iets3.core.expr.base.IDocumentableWordContainer"
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.analysis.base.IUseSolver"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/7782108600709718604"
+  name: "ReferenceableFlag"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "idMember"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266727747051"
+  name: "GroupType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "memberType"
+    type: "org.iets3.core.expr.toplevel.IRecordType"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266727773586"
+  name: "GroupByOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.collections.OneArgCollectionOp"
+  - "org.iets3.core.expr.lambda.IShortLambdaContainer"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266728974042"
+  name: "GroupKeyTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266729562040"
+  name: "GroupMembersTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266741050575"
+  name: "InlineRecordType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "members"
+    type: "org.iets3.core.expr.toplevel.IRecordMember"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266741050660"
+  name: "ProjectOp"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "members"
+    type: "org.iets3.core.expr.toplevel.ProjectMember"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.collections.ICollectionOp"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266741050664"
+  name: "ProjectMember"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266742524311"
+  name: "ProjectIt"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8293738266746101180"
+  name: "InlineRecordMemberAccess"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5070313213710413779"
+  name: "BuilderExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "adapted"
+    type: "org.iets3.core.expr.toplevel.BuilderAdapter"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "elements"
+    type: "org.iets3.core.expr.toplevel.BuilderElement"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5070313213710413791"
+  name: "BuilderElement"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5070313213710413804"
+  name: "FieldSetter"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "value"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references:
+  - uid: null
+    name: "field"
+    type: "jetbrains.mps.lang.core.INamedConcept"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.toplevel.BuilderElement"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5070313213710414376"
+  name: "BuilderAdapter"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5070313213710414386"
+  name: "RecordTypeAdapter"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.toplevel.IRecordType"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.BuilderAdapter"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/411710798111758079"
+  name: "IFunctionContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/411710798111762102"
+  name: "AbstractFunctionAdapter"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "fun"
+    type: "org.iets3.core.expr.toplevel.Function"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/1665826838185532528"
+  name: "ITopLevelContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.toplevel.IToplevelExprContent"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/4328199741083502486"
+  name: "IRecordType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.path.ICanHaveMembersType"
+  - "org.iets3.core.expr.base.IReferenceableType"
+  - "org.iets3.core.expr.base.IComplexTypeSupportsEquals"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/3788552209995580869"
+  name: "IToplevelExprContentContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/3788552209995580872"
+  name: "AbstractToplevelExprAdapter"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "toplevelExprContent"
+    type: "org.iets3.core.expr.toplevel.IToplevelExprContent"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/336196204780206752"
+  name: "IFunctionLikeContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IVisibleElementProvider"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/336196204780206756"
+  name: "AbstractFunctionLikeAdapter"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "functionLike"
+    type: "org.iets3.core.expr.lambda.IFunctionLike"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5912816019932129331"
+  name: "EmptyMember"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.toplevel.IRecordMember"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+  - "com.mbeddr.core.base.IEmpty"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8006404979731136903"
+  name: "EnumIsInTarget"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "selectors"
+    type: "org.iets3.core.expr.toplevel.EnumIsInSelector"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/8006404979731140557"
+  name: "EnumIsInSelector"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "literal"
+    type: "org.iets3.core.expr.toplevel.EnumLiteral"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/438389604712151896"
+  name: "IDeclarationExtensionContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/5250171600077389559"
+  name: "QualifierRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "enum"
+    type: "org.iets3.core.expr.toplevel.EnumDeclaration"
+    optional: false
+  - uid: null
+    name: "lit"
+    type: "org.iets3.core.expr.toplevel.EnumLiteral"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/2945473592442820328"
+  name: "AllLitList"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "enumType"
+    type: "org.iets3.core.expr.toplevel.EnumType"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:71934284-d7d1-45ee-a054-8c072591085f/217046401488995528"
+  name: "EnumIndexOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"

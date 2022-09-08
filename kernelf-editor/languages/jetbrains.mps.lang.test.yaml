@@ -1,0 +1,1064 @@
+uid: "8585453e-6bfb-4d80-98de-b16074f1d86c"
+name: "jetbrains.mps.lang.test"
+concepts:
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1210673684636"
+  name: "TestNodeAnnotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractTestNodeAnnotation"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1210674524691"
+  name: "TestNodeReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "declaration"
+    type: "jetbrains.mps.lang.test.TestNodeAnnotation"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1211979288880"
+  name: "AssertMatch"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "before"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "after"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+  - "jetbrains.mps.baseLanguage.unitTest.MessageHolder"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1214846310980"
+  name: "AbstractNodeAssert"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "nodeToCheck"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215075719096"
+  name: "CheckNodeForErrors"
+  abstract: false
+  properties:
+  - uid: null
+    name: "includeSelf"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeAssert"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215507671101"
+  name: "NodeErrorCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "errorRef"
+    type: "jetbrains.mps.lang.test.ReportErrorStatementReference"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeErrorCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215511704609"
+  name: "NodeWarningCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "warningRef"
+    type: "jetbrains.mps.lang.test.WarningStatementReference"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeWarningCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215525678776"
+  name: "NodeReachable"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215526290564"
+  name: "NodeTypeCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215601147424"
+  name: "NodeCheckOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.INodesTestMethod"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215603922101"
+  name: "NodeOperationsContainer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodeOperations"
+    type: "jetbrains.mps.lang.test.NodeCheckOperation"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractTestNodeAnnotation"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215607067978"
+  name: "CheckNodeForErrorMessagesOperation"
+  abstract: false
+  properties:
+  - uid: null
+    name: "allowErrors"
+    type: "STRING"
+  - uid: null
+    name: "allowWarnings"
+    type: "STRING"
+  - uid: null
+    name: "includeSelf"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215611834554"
+  name: "CheckDataFlowOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215612918969"
+  name: "NodeUnreachable"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215614394933"
+  name: "VariableInitialized"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "var"
+    type: "jetbrains.mps.baseLanguage.VariableReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1215616993394"
+  name: "VariableAlive"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "var"
+    type: "jetbrains.mps.baseLanguage.VariableReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1216913645126"
+  name: "NodesTestCase"
+  abstract: false
+  properties:
+  - uid: null
+    name: "needsNoWriteAction"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "nodesToCheck"
+    type: "jetbrains.mps.lang.test.TestNode"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "beforeTests"
+    type: "jetbrains.mps.lang.test.BeforeTestsMethod"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "afterTests"
+    type: "jetbrains.mps.lang.test.AfterTestsMethod"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "testMethods"
+    type: "jetbrains.mps.lang.test.NodesTestMethod"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "methods"
+    type: "jetbrains.mps.baseLanguage.classifiers.DefaultClassifierMethodDeclaration"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestCase"
+  - "jetbrains.mps.baseLanguage.classifiers.IClassifier"
+  - "jetbrains.mps.lang.test.TestProjectAware"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1216913689992"
+  name: "NodesTestMethod"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.BaseMethodDeclaration"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestMethod"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1216989428737"
+  name: "TestNode"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodeToCheck"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.ITestAnnotationsContainer"
+  - "jetbrains.mps.lang.core.ICanSuppressErrors"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1217425837708"
+  name: "CheckNodeDataflow"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeAssert"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1225467090849"
+  name: "ProjectExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1225469856668"
+  name: "ModelExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1225978065297"
+  name: "SimpleNodeTest"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodesTestMethod"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1225989773458"
+  name: "InvokeIntentionStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "parameter"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "intention"
+    type: "jetbrains.mps.lang.intentions.IntentionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1227003183644"
+  name: "EditorOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1228584180295"
+  name: "AbstractTestNodeAnnotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1227182079811"
+  name: "TypeKeyStatement"
+  abstract: false
+  properties:
+  - uid: null
+    name: "keys"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1228934484974"
+  name: "PressKeyStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "keyStrokes"
+    type: "jetbrains.mps.lang.plugin.KeyMapKeystroke"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1229187653856"
+  name: "EditorTestCase"
+  abstract: false
+  properties:
+  - uid: null
+    name: "description"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "testNodeBefore"
+    type: "jetbrains.mps.lang.test.TestNode"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "testNodeResult"
+    type: "jetbrains.mps.lang.test.TestNode"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "nodeToEdit"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "result"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "code"
+    type: "jetbrains.mps.baseLanguage.StatementList"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "logEvents"
+    type: "jetbrains.mps.lang.test.LogEvent"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestMethod"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestCase"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+  - "jetbrains.mps.lang.core.ICanSuppressErrors"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+  - "jetbrains.mps.baseLanguage.IStatementListContainer"
+  - "jetbrains.mps.baseLanguage.IMethodLike"
+  - "jetbrains.mps.lang.test.TestProjectAware"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1229194968594"
+  name: "AnonymousCellAnnotation"
+  abstract: false
+  properties:
+  - uid: null
+    name: "cellId"
+    type: "STRING"
+  - uid: null
+    name: "caretPosition"
+    type: "STRING"
+  - uid: null
+    name: "isLastPosition"
+    type: "STRING"
+  - uid: null
+    name: "useLabelSelection"
+    type: "STRING"
+  - uid: null
+    name: "selectionStart"
+    type: "STRING"
+  - uid: null
+    name: "selectionEnd"
+    type: "STRING"
+  - uid: null
+    name: "isInInspector"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "nodeRangeSelectionStart"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  - uid: null
+    name: "nodeRangeSelectionEnd"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.test.AbstractTestNodeAnnotation"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1230224281548"
+  name: "MockAnnotation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractTestNodeAnnotation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/95706764259116183"
+  name: "NodeTypeSetCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2685915532175039858"
+  name: "ExpressionContainer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5773579205429617809"
+  name: "SwitchToInspector"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5773579205429866751"
+  name: "EditorComponentExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5097124989038916362"
+  name: "TestInfo"
+  abstract: false
+  properties:
+  - uid: null
+    name: "projectPath"
+    type: "STRING"
+  - uid: null
+    name: "reOpenProject"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7011073693661765739"
+  name: "InvokeActionStatement"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "actionReference"
+    type: "jetbrains.mps.lang.test.ActionReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1101347953350122484"
+  name: "ActionReference"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1101347953350122758"
+  name: "BootstrapActionReference"
+  abstract: false
+  properties:
+  - uid: null
+    name: "actionId"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.ActionReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4239542196496927193"
+  name: "MPSActionReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "action"
+    type: "jetbrains.mps.lang.plugin.ActionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.test.ActionReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4395293866213195846"
+  name: "NodeExpectedTypeCheckOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeTypeCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/511191073233700873"
+  name: "ScopesTest"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodes"
+    type: "jetbrains.mps.lang.test.ScopesExpectedNode"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "checkingReference"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.test.AbstractTestNodeAnnotation"
+  - "jetbrains.mps.lang.test.INodesTestMethod"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/3655334166513314291"
+  name: "ScopesExpectedNode"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "ref"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4307182653741890820"
+  name: "NodeRuleCheckOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeRuleCheckOperation"
+  - "jetbrains.mps.lang.test.IReferenceAttachable"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4531408400484511853"
+  name: "ReportErrorStatementReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.IRuleReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4531408400486526326"
+  name: "WarningStatementReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.IRuleReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/428590876651279930"
+  name: "NodeTypeSystemErrorCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "equationRef"
+    type: "jetbrains.mps.lang.test.TypesystemEquationReference"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeTypeSystemRuleCheckOperation"
+  - "jetbrains.mps.lang.test.IReferenceAttachable"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8578280453507219248"
+  name: "ICheckForExpectedRule"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8578280453509464010"
+  name: "NodeTypeSystemWarningCheckOperation"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeTypeSystemRuleCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5348336190815082969"
+  name: "NodeTypeSystemRuleCheckOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeRuleCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2893471348147803052"
+  name: "IReferenceAttachable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7691029917083831655"
+  name: "UnknownRuleReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.IRuleReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7691029917083872157"
+  name: "IRuleReference"
+  abstract: true
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "declaration"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: false
+  extends: []
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7835233914436786109"
+  name: "NodeUnknownErrorCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "errorRef"
+    type: "jetbrains.mps.lang.test.UnknownRuleReference"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeErrorCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7835233914436803226"
+  name: "AbstractNodeErrorCheckOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeRuleCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/7835233914439520906"
+  name: "AbstractNodeRuleCheckOperation"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "expectedMessage"
+    type: "jetbrains.mps.lang.test.ExpectedMessageContainer"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeCheckOperation"
+  - "jetbrains.mps.lang.test.ICheckForExpectedRule"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8333855927540283103"
+  name: "NodeConstraintsErrorCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "errorRef"
+    type: "jetbrains.mps.lang.test.UnknownRuleReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeErrorCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8333855927564181193"
+  name: "AbstractNodeWarningCheckOperation"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeRuleCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8333855927564208813"
+  name: "NodeConstraintsWarningCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "warningRef"
+    type: "jetbrains.mps.lang.test.UnknownRuleReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeWarningCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8333855927564286208"
+  name: "NodeUnknownWarningCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "warningRef"
+    type: "jetbrains.mps.lang.test.UnknownRuleReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.AbstractNodeWarningCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/210559400605421433"
+  name: "PressMouseStatement"
+  abstract: false
+  properties:
+  - uid: null
+    name: "x"
+    type: "STRING"
+  - uid: null
+    name: "y"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "statementList"
+    type: "jetbrains.mps.baseLanguage.StatementList"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/210559400608047267"
+  name: "DragMouseStatement"
+  abstract: false
+  properties:
+  - uid: null
+    name: "x"
+    type: "STRING"
+  - uid: null
+    name: "y"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/8101092317677916964"
+  name: "UntypedExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5219531754069546544"
+  name: "LogEvent"
+  abstract: false
+  properties:
+  - uid: null
+    name: "level"
+    type: "STRING"
+  - uid: null
+    name: "message"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2153278993334166130"
+  name: "NodeInfoCheckOperation"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "statementRef"
+    type: "jetbrains.mps.lang.test.InfoStatementReference"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.NodeRuleCheckOperation"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2153278993334181113"
+  name: "InfoStatementReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.IRuleReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2153278993333631257"
+  name: "MockScopeProvider"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "entries"
+    type: "jetbrains.mps.lang.test.ScopeEntry"
+    multiple: true
+    optional: false
+  - uid: null
+    name: "node"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.ScopeProvider"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2153278993333648098"
+  name: "ScopeEntry"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "nodes"
+    type: "jetbrains.mps.lang.test.NamedNodeReference"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "kind"
+    type: "jetbrains.mps.lang.core.INamedConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2153278993333862929"
+  name: "NamedNodeReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "node"
+    type: "jetbrains.mps.lang.core.INamedConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1517788251554588461"
+  name: "INodesTestMethod"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.unitTest.ITestMethod"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/592868908271422361"
+  name: "IsIntentionApplicableExpression"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "intention"
+    type: "jetbrains.mps.lang.intentions.IntentionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5476670926298696679"
+  name: "MigrationTestCase"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "inputNodes"
+    type: "jetbrains.mps.lang.test.TestNode"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "outputNodes"
+    type: "jetbrains.mps.lang.test.TestNode"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "migration"
+    type: "jetbrains.mps.lang.test.MigrationReference"
+    multiple: true
+    optional: false
+  - uid: null
+    name: "option"
+    type: "jetbrains.mps.lang.test.MigrationTestOption"
+    multiple: true
+    optional: true
+  references:
+  - uid: null
+    name: "migration_old"
+    type: "jetbrains.mps.lang.migration.IMigrationUnit"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.baseLanguage.IValidIdentifier"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestCase"
+  - "jetbrains.mps.baseLanguage.unitTest.ITestMethod"
+  - "jetbrains.mps.lang.test.TestProjectAware"
+  - "jetbrains.mps.lang.core.ImplementationPart"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2325284917965760583"
+  name: "BeforeTestsMethod"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2325284917965760584"
+  name: "AfterTestsMethod"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.ConceptFunction"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/6626913010124185481"
+  name: "MigrationReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "migration"
+    type: "jetbrains.mps.lang.migration.IMigrationUnit"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/813341629406803928"
+  name: "IsActionApplicableExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "actionReference"
+    type: "jetbrains.mps.lang.test.ActionReference"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1227269295333560277"
+  name: "InvokeSurroundWithIntentionStatement"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "intention"
+    type: "jetbrains.mps.lang.intentions.SurroundWithIntentionDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/6109541130559846558"
+  name: "MigrationTestOption"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/6109541130560494643"
+  name: "IgnoreMigrationDataOption"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.MigrationTestOption"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/1225972903834011965"
+  name: "ITestAnnotationsContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/710597951278798236"
+  name: "ExpectedMessageContainer"
+  abstract: false
+  properties:
+  - uid: null
+    name: "text"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/4649457259824807647"
+  name: "TypesystemEquationReference"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.test.IRuleReference"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/6410786926916602977"
+  name: "StableIdOption"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.test.MigrationTestOption"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/5266358701722203952"
+  name: "ApplyQuickFix"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "quickfix"
+    type: "jetbrains.mps.lang.typesystem.TypesystemIntention"
+    optional: true
+  extends:
+  - "jetbrains.mps.baseLanguage.Statement"
+- uid: "mps:8585453e-6bfb-4d80-98de-b16074f1d86c/2291269767871117666"
+  name: "TestProjectAware"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []

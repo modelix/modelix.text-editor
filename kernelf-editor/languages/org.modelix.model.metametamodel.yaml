@@ -1,0 +1,111 @@
+uid: "bffdf123-0d7b-471b-a52b-fa3d3a024664"
+name: "org.modelix.model.metametamodel"
+concepts:
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392047"
+  name: "Language"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "concepts"
+    type: "org.modelix.model.metametamodel.Concept"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "org.modelix.model.metametamodel.IHasUID"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392048"
+  name: "Concept"
+  abstract: false
+  properties:
+  - uid: null
+    name: "abstract"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "properties"
+    type: "org.modelix.model.metametamodel.Property"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "containmentLinks"
+    type: "org.modelix.model.metametamodel.ContainmentLink"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "referenceLinks"
+    type: "org.modelix.model.metametamodel.ReferenceLink"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "superConcepts"
+    type: "org.modelix.model.metametamodel.ConceptReference"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "org.modelix.model.metametamodel.IHasUID"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392049"
+  name: "Property"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.modelix.model.metametamodel.IRole"
+  - "org.modelix.model.metametamodel.IHasUID"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392050"
+  name: "ReferenceLink"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.modelix.model.metametamodel.IRole"
+  - "org.modelix.model.metametamodel.IHasUID"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392051"
+  name: "ContainmentLink"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.modelix.model.metametamodel.IRole"
+  - "org.modelix.model.metametamodel.IHasUID"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392052"
+  name: "IRole"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/1156406402210392074"
+  name: "ConceptReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "concept"
+    type: "org.modelix.model.metametamodel.Concept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:bffdf123-0d7b-471b-a52b-fa3d3a024664/6877684971379608804"
+  name: "IHasUID"
+  abstract: true
+  properties:
+  - uid: null
+    name: "uid"
+    type: "STRING"
+  children: []
+  references: []
+  extends: []

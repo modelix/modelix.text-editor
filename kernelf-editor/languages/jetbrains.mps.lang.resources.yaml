@@ -1,0 +1,292 @@
+uid: "982eb8df-2c96-4bd7-9963-11712ea622e5"
+name: "jetbrains.mps.lang.resources"
+concepts:
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029883"
+  name: "FileIcon"
+  abstract: false
+  properties:
+  - uid: null
+    name: "file"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "iconExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.Icon"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029885"
+  name: "OldIconBundle"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "icons"
+    type: "jetbrains.mps.lang.resources.OldIconDeclaration"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029888"
+  name: "OldIconDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "iconExpression"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029891"
+  name: "IconExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029895"
+  name: "OldIconReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "declaration"
+    type: "jetbrains.mps.lang.resources.OldIconDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/8974276187400029898"
+  name: "Resource"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/5979521222239143262"
+  name: "IconResourceExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541318894"
+  name: "Icon"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.resources.Resource"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541674821"
+  name: "TextIcon"
+  abstract: false
+  properties:
+  - uid: null
+    name: "iconId"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "layers"
+    type: "jetbrains.mps.lang.resources.IconLayerDescription"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.Icon"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541675104"
+  name: "Circle"
+  abstract: false
+  properties:
+  - uid: null
+    name: "r"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.resources.Primitive"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541675105"
+  name: "Rect"
+  abstract: false
+  properties:
+  - uid: null
+    name: "r"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.resources.Primitive"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541675109"
+  name: "IconLayerDescription"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541681841"
+  name: "Primitive"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "fillColor"
+    type: "jetbrains.mps.lang.resources.Color"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "borderColor"
+    type: "jetbrains.mps.lang.resources.Color"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.IconLayerDescription"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/2756621024541681849"
+  name: "Text"
+  abstract: false
+  properties:
+  - uid: null
+    name: "text"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "color"
+    type: "jetbrains.mps.lang.resources.Color"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.IconLayerDescription"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/831924260440060775"
+  name: "Image"
+  abstract: false
+  properties:
+  - uid: null
+    name: "file"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.IconLayerDescription"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/1860120738943552477"
+  name: "ColorLiteral"
+  abstract: false
+  properties:
+  - uid: null
+    name: "val"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.resources.Color"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/1860120738943552478"
+  name: "Color"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/562388756444790046"
+  name: "ConceptIconResourceExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "concept"
+    type: "jetbrains.mps.lang.smodel.IRefConceptArg"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "concept_old"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: true
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/562388756444896282"
+  name: "NodeIconResourceExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "node"
+    type: "jetbrains.mps.baseLanguage.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.baseLanguage.Expression"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/5177162104569058199"
+  name: "HelpURL"
+  abstract: false
+  properties:
+  - uid: null
+    name: "url"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "baseURL"
+    type: "jetbrains.mps.lang.resources.BaseURL"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/4726480899534317142"
+  name: "BaseURLFunction"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "calculator"
+    type: "jetbrains.mps.baseLanguage.closures.ClosureLiteral"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.resources.BaseURL"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/4726480899534370999"
+  name: "BaseURL"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.structure.INamedAspect"
+- uid: "mps:982eb8df-2c96-4bd7-9963-11712ea622e5/4726480899534371000"
+  name: "BaseURLLiteral"
+  abstract: false
+  properties:
+  - uid: null
+    name: "url"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.resources.BaseURL"

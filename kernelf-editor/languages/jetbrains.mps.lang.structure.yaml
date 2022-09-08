@@ -1,0 +1,543 @@
+uid: "c72da2b9-7cce-4447-8389-f407dc1158b7"
+name: "jetbrains.mps.lang.structure"
+concepts:
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288298"
+  name: "LinkDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "role"
+    type: "STRING"
+  - uid: null
+    name: "metaClass"
+    type: "STRING"
+  - uid: null
+    name: "sourceCardinality"
+    type: "STRING"
+  - uid: null
+    name: "unordered"
+    type: "STRING"
+  - uid: null
+    name: "linkId"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "specializedLink"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    optional: true
+  - uid: null
+    name: "target"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+  - "jetbrains.mps.lang.structure.IStructureDeprecatable"
+  - "jetbrains.mps.lang.structure.INamedStructureElement"
+  - "jetbrains.mps.lang.structure.DocumentationObjective"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288299"
+  name: "PropertyDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "propertyId"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "dataType"
+    type: "jetbrains.mps.lang.structure.DataTypeDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+  - "jetbrains.mps.lang.structure.INamedStructureElement"
+  - "jetbrains.mps.lang.structure.IStructureDeprecatable"
+  - "jetbrains.mps.lang.structure.DocumentationObjective"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1082978164218"
+  name: "DataTypeDeclaration"
+  abstract: true
+  properties:
+  - uid: null
+    name: "datatypeId"
+    type: "STRING"
+  - uid: null
+    name: "languageId"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.structure.INamedStructureElement"
+  - "jetbrains.mps.lang.structure.IStructureDeprecatable"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1082978499127"
+  name: "ConstrainedDataTypeDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "constraint"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.structure.DataTypeDeclaration"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1083171877298"
+  name: "EnumerationMemberDeclaration_Old"
+  abstract: false
+  properties:
+  - uid: null
+    name: "internalValue"
+    type: "STRING"
+  - uid: null
+    name: "externalValue"
+    type: "STRING"
+  - uid: null
+    name: "javaIdentifier"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1083243159079"
+  name: "PrimitiveDataTypeDeclaration"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.structure.DataTypeDeclaration"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1169125787135"
+  name: "AbstractConceptDeclaration"
+  abstract: true
+  properties:
+  - uid: null
+    name: "oldHelpURL"
+    type: "STRING"
+  - uid: null
+    name: "conceptAlias"
+    type: "STRING"
+  - uid: null
+    name: "conceptShortDescription"
+    type: "STRING"
+  - uid: null
+    name: "abstract"
+    type: "STRING"
+  - uid: null
+    name: "final"
+    type: "STRING"
+  - uid: null
+    name: "intConceptId"
+    type: "STRING"
+  - uid: null
+    name: "conceptId"
+    type: "STRING"
+  - uid: null
+    name: "languageId"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "linkDeclaration"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "propertyDeclaration"
+    type: "jetbrains.mps.lang.structure.PropertyDeclaration"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "helpURL"
+    type: "jetbrains.mps.lang.resources.HelpURL"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "sourceNode"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.structure.INamedStructureElement"
+  - "jetbrains.mps.lang.core.InterfacePart"
+  - "jetbrains.mps.lang.structure.IStructureDeprecatable"
+  - "jetbrains.mps.lang.structure.DocumentationObjective"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1169125989551"
+  name: "InterfaceConceptDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "extends"
+    type: "jetbrains.mps.lang.structure.InterfaceConceptReference"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1169127622168"
+  name: "InterfaceConceptReference"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "intfc"
+    type: "jetbrains.mps.lang.structure.InterfaceConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1224240836180"
+  name: "DeprecatedNodeAnnotation"
+  abstract: false
+  properties:
+  - uid: null
+    name: "build"
+    type: "STRING"
+  - uid: null
+    name: "comment"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1224848324737"
+  name: "IStructureDeprecatable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.IDeprecatable"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/2621449412040133764"
+  name: "IConceptAspect"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/2992811758677295509"
+  name: "AttributeInfo"
+  abstract: false
+  properties:
+  - uid: null
+    name: "role"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "multiple"
+    type: "jetbrains.mps.lang.structure.AttributeInfo_IsMultiple"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "attributed"
+    type: "jetbrains.mps.lang.structure.AttributeInfo_AttributedConcept"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/6054523464626862044"
+  name: "AttributeInfo_IsMultiple"
+  abstract: false
+  properties:
+  - uid: null
+    name: "value"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/6054523464627964745"
+  name: "AttributeInfo_AttributedConcept"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "concept"
+    type: "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/5717188120689018936"
+  name: "ReferenceLinkDeclartionScopeKind"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/5717188120689019441"
+  name: "AggregationLinkDeclarationScopeKind"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7862711839422615221"
+  name: "DocumentationObjectiveRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "target"
+    type: "jetbrains.mps.lang.structure.DocumentationObjective"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7862711839422615214"
+  name: "DocumentationObjective"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7862711839422615209"
+  name: "DocumentedNodeAnnotation"
+  abstract: false
+  properties:
+  - uid: null
+    name: "text"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "seeAlso"
+    type: "jetbrains.mps.lang.structure.DocumentationObjectiveRef"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/8842732777748207592"
+  name: "SmartReferenceAttribute"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "refPresentationTemplate"
+    type: "jetbrains.mps.lang.structure.RefPresentationTemplate"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "charactersticReference"
+    type: "jetbrains.mps.lang.structure.LinkDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/8842732777748464990"
+  name: "RefPresentationTemplate"
+  abstract: false
+  properties:
+  - uid: null
+    name: "prefix"
+    type: "STRING"
+  - uid: null
+    name: "suffix"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1082978164219"
+  name: "EnumerationDataTypeDeclaration_Old"
+  abstract: false
+  properties:
+  - uid: null
+    name: "memberIdentifierPolicy"
+    type: "STRING"
+  - uid: null
+    name: "hasNoDefaultMember"
+    type: "STRING"
+  - uid: null
+    name: "noValueText"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "member"
+    type: "jetbrains.mps.lang.structure.EnumerationMemberDeclaration_Old"
+    multiple: true
+    optional: false
+  references:
+  - uid: null
+    name: "memberDataType"
+    type: "jetbrains.mps.lang.structure.PrimitiveDataTypeDeclaration"
+    optional: false
+  - uid: null
+    name: "defaultMember"
+    type: "jetbrains.mps.lang.structure.EnumerationMemberDeclaration_Old"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.structure.DataTypeDeclaration"
+  - "jetbrains.mps.lang.structure.IEnumeration"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489090640"
+  name: "ConceptDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "rootable"
+    type: "STRING"
+  - uid: null
+    name: "iconPath"
+    type: "STRING"
+  - uid: null
+    name: "staticScope"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "implements"
+    type: "jetbrains.mps.lang.structure.InterfaceConceptReference"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "icon"
+    type: "jetbrains.mps.lang.resources.Icon"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "extends"
+    type: "jetbrains.mps.lang.structure.ConceptDeclaration"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.structure.AbstractConceptDeclaration"
+  - "jetbrains.mps.lang.core.ISmartReferent"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/3348158742936976479"
+  name: "EnumerationDeclaration"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "members"
+    type: "jetbrains.mps.lang.structure.EnumerationMemberDeclaration"
+    multiple: true
+    optional: false
+  references:
+  - uid: null
+    name: "defaultMember"
+    type: "jetbrains.mps.lang.structure.EnumerationMemberDeclaration"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.structure.DataTypeDeclaration"
+  - "jetbrains.mps.lang.structure.IEnumeration"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/3348158742936976480"
+  name: "EnumerationMemberDeclaration"
+  abstract: false
+  properties:
+  - uid: null
+    name: "presentation"
+    type: "STRING"
+  - uid: null
+    name: "memberId"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "oldMember"
+    type: "jetbrains.mps.lang.structure.EnumerationMemberDeclaration_Old"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.structure.INamedStructureElement"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1075010451653667301"
+  name: "IEnumeration"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880629653"
+  name: "INamedStructureElement"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.structure.IStructureElement"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880706270"
+  name: "IStructureElement"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162884797030"
+  name: "EnumMigrationInfo"
+  abstract: false
+  properties:
+  - uid: null
+    name: "nameOpMigration"
+    type: "STRING"
+  - uid: null
+    name: "valueOpMigration"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "oldEnum"
+    type: "jetbrains.mps.lang.structure.EnumerationDataTypeDeclaration_Old"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/6491077959632463275"
+  name: "EnumPropertyMigrationInfo"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "oldProperty"
+    type: "jetbrains.mps.lang.structure.PropertyDeclaration"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.core.ISuppressErrors"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/3355805929432017219"
+  name: "EnumCustomMethodReplacementInfo"
+  abstract: false
+  properties:
+  - uid: null
+    name: "kind"
+    type: "STRING"
+  children: []
+  references:
+  - uid: null
+    name: "enum"
+    type: "jetbrains.mps.lang.structure.EnumerationDeclaration"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/418049251856799813"
+  name: "ExperimentalAPINodeAttribute"
+  abstract: false
+  properties:
+  - uid: null
+    name: "build"
+    type: "STRING"
+  - uid: null
+    name: "comment"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "jetbrains.mps.lang.core.INamedConcept"
+  - "jetbrains.mps.lang.core.InterfacePart"
+- uid: "mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283296"
+  name: "INamedAspect"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"

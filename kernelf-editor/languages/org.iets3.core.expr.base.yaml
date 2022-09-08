@@ -1,0 +1,1835 @@
+uid: "cfaa4966-b7d5-4b69-b66a-309a6e1a7290"
+name: "org.iets3.core.expr.base"
+concepts:
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7425695345928347719"
+  name: "Expression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "com.mbeddr.core.base.ICommentable"
+  - "com.mbeddr.core.base.IDocumentable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7425695345928349204"
+  name: "Type"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "jetbrains.mps.lang.core.IType"
+  - "com.mbeddr.core.base.ICommentable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7425695345928515123"
+  name: "PrimitiveType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156576277"
+  name: "BinaryExpression"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "left"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "right"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMainSlot"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156578546"
+  name: "PlusExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryArithmeticExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156578671"
+  name: "MulExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryArithmeticExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156652453"
+  name: "MinusExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryArithmeticExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156652603"
+  name: "DivExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryArithmeticExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687762"
+  name: "BinaryArithmeticExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687763"
+  name: "BinaryComparisonExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687764"
+  name: "GreaterExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryComparisonExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687889"
+  name: "GreaterEqualsExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryComparisonExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687890"
+  name: "LessExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryComparisonExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156687891"
+  name: "LessEqualsExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryComparisonExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156723687"
+  name: "BinaryLogicalExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156723899"
+  name: "LogicalOrExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryLogicalExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156724025"
+  name: "LogicalAndExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryLogicalExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156760985"
+  name: "BinaryEqualityExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156761033"
+  name: "EqualsExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryEqualityExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156761034"
+  name: "NotEqualsExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryEqualityExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156802409"
+  name: "UnaryExpression"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156802410"
+  name: "LogicalNotExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.UnaryExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837156855227"
+  name: "UnaryMinusExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.UnaryExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5115872837157187871"
+  name: "ParensExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1514143479005139333"
+  name: "LogicalImpliesExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryLogicalExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/9002563722476995145"
+  name: "DotExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "target"
+    type: "org.iets3.core.expr.base.IDotTarget"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.UnaryExpression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.ICanBeLValue"
+  - "org.iets3.core.expr.base.ISSConstrainedValueRef"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/9002563722476995146"
+  name: "IDotTarget"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8379605524044170035"
+  name: "PrimitiveLiteral"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.ILiteral"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7416522108621683377"
+  name: "IRef"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7849560302565679722"
+  name: "IfExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "condition"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "thenPart"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "elsePart"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "elseSection"
+    type: "org.iets3.core.expr.base.IfElseSection"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IBigExpression"
+  - "org.iets3.core.expr.base.ITypeFromMultiple"
+  - "org.iets3.core.expr.base.IOptionDerefContext"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.IMainSlot"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+  - "org.iets3.core.expr.base.IProvidePathConstraints"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7849560302565692340"
+  name: "IBigExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IWantNewLine"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8092372783983747124"
+  name: "IReducableExpression"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8092372783983858717"
+  name: "ReductionInspector"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "reduced"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8092372783984279054"
+  name: "TracerExpression"
+  abstract: false
+  properties:
+  - uid: null
+    name: "traceLabel"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "traced"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references:
+  - uid: null
+    name: "target"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2807135271608265973"
+  name: "NoneLiteral"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "optionalBaseType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2807135271607940261"
+  name: "NoneType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1059200196223309235"
+  name: "SomeValExpr"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "someQuery"
+    type: "org.iets3.core.expr.base.IsSomeExpression"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2807135271607939856"
+  name: "OptionType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "baseType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "com.mbeddr.mpsutil.interpreter.IInterpreterWrapperType"
+  - "org.iets3.core.expr.base.ITypeSupportsDefaultValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2807135271608145920"
+  name: "IsSomeExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.base.IOptionallyNamed"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8448265401162061756"
+  name: "LogicalIffExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryLogicalExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/125444643124876487"
+  name: "IIsSingleSymbol"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606559981270"
+  name: "ErrorLiteral"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.base.IValidNamedConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606560895472"
+  name: "ErrorExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "error"
+    type: "org.iets3.core.expr.base.ErrorLiteral"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606561852052"
+  name: "SuccessType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "baseType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.IAttemptType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606561852365"
+  name: "GenericErrorType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.IAttemptType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606561852396"
+  name: "SpecificErrorType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "error"
+    type: "org.iets3.core.expr.base.ErrorLiteral"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.IAttemptType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1919538606562038159"
+  name: "IAttemptType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.IInterpreterWrapperType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6481804410366698223"
+  name: "AttemptType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "successType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "errorLiterals"
+    type: "org.iets3.core.expr.base.ErrorLiteral"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+  - "org.iets3.core.expr.base.IAttemptType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6481804410367226920"
+  name: "TryExpression"
+  abstract: false
+  properties:
+  - uid: null
+    name: "complete"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "successClause"
+    type: "org.iets3.core.expr.base.TrySuccessClause"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "errorClauses"
+    type: "org.iets3.core.expr.base.TryErrorClause"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.base.IOptionallyNamed"
+  - "org.iets3.core.expr.base.ITypeFromMultiple"
+  - "org.iets3.core.expr.base.IMainSlot"
+  - "org.iets3.core.expr.base.IStructuredSyntax"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6481804410367607231"
+  name: "TrySuccessClause"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7089558164905593724"
+  name: "IOptionallyTyped"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IContextAssistantTypeProvider"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7089558164908491660"
+  name: "EmptyExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "com.mbeddr.core.base.IEmpty"
+  - "org.iets3.core.expr.base.IWantNewLine"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7089558164909884363"
+  name: "TryErrorClause"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "errorLiteral"
+    type: "org.iets3.core.expr.base.ErrorLiteral"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7089558164910719190"
+  name: "SuccessValueExpr"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "try"
+    type: "org.iets3.core.expr.base.TryExpression"
+    optional: false
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1206081519717706522"
+  name: "ITypeFromMultiple"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3281846772293355652"
+  name: "CastExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "expectedType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.analysis.base.ISolvable"
+  - "org.iets3.core.expr.base.ISSConstrainedValueRef"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8811147530087029174"
+  name: "IStructuredSyntax"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IWantNewLine"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877888703"
+  name: "ExprInContract"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877810851"
+  name: "IContracted"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "contract"
+    type: "org.iets3.core.expr.base.Contract"
+    multiple: false
+    optional: true
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7249175668709475545"
+  name: "IContainmentStackMember"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.INamedConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877811180"
+  name: "Postcondition"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ContractItem"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877811181"
+  name: "Invariant"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ContractItem"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877811041"
+  name: "Contract"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "items"
+    type: "org.iets3.core.expr.base.ContractItem"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877811036"
+  name: "ContractItem"
+  abstract: true
+  properties:
+  - uid: null
+    name: "warning"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "err"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408877811037"
+  name: "Precondition"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ContractItem"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/867786408882279828"
+  name: "PlainConstraint"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ContractItem"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3352322994211036342"
+  name: "OneOfTarget"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "values"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IDeclarativelyInterpretable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2245119349904068784"
+  name: "RangeTarget"
+  abstract: false
+  properties:
+  - uid: null
+    name: "upperExcluding"
+    type: "STRING"
+  - uid: null
+    name: "lowerExcluding"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "min"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "max"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.IDeclarativelyInterpretable"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1019070541450015930"
+  name: "TupleType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "elementTypes"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: true
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1019070541450016346"
+  name: "TupleValue"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "values"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.ICanBeLValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2527679671886479690"
+  name: "TupleAccessExpr"
+  abstract: false
+  properties:
+  - uid: null
+    name: "index"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "tuple"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7971844778466793028"
+  name: "AlternativesExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "alternatives"
+    type: "org.iets3.core.expr.base.AltOption"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IBigExpression"
+  - "org.iets3.core.expr.base.IReducableExpression"
+  - "org.iets3.core.expr.base.ITypeFromMultiple"
+  - "org.iets3.core.expr.base.IContainmentStackMember"
+  - "com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage"
+  - "org.iets3.analysis.base.ISolvable"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+  - "org.iets3.core.expr.base.IProvidePathConstraints"
+  - "org.iets3.core.expr.base.IValidOtherwiseContainer"
+  - "org.iets3.core.expr.base.IOptionDerefContext"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7971844778466793051"
+  name: "AltOption"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "when"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "then"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IContainmentStackMember"
+  - "org.iets3.core.expr.base.IValidOtherwiseContainer"
+  - "com.mbeddr.core.base.IDocumentable"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "com.mbeddr.core.base.ICommentable"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "org.iets3.core.expr.base.IMayAllowEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6381079423399017846"
+  name: "IOptionDerefContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IScopeFilterer"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3829047245302399306"
+  name: "ISingleSymbolRef"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IIsSingleSymbol"
+  - "org.iets3.core.expr.base.IRef"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3829047245302401610"
+  name: "IScopeFilterer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3829047245309363370"
+  name: "OptionOrExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7791618349053901166"
+  name: "IMayHaveEffect"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/508719611255975992"
+  name: "IBlockLike"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8219602584757553931"
+  name: "CheckTypeConstraintsExpr"
+  abstract: false
+  properties:
+  - uid: null
+    name: "failIfInvalid"
+    type: "STRING"
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "tp"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8219602584757554015"
+  name: "ValidityType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8219602584758209317"
+  name: "OkTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8219602584758531613"
+  name: "ErrorTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8219602584770724049"
+  name: "ImplicitValidityValExpr"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.ISSItValueRef"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5822258191940088521"
+  name: "IValidOtherwiseContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7071042522334260296"
+  name: "ITyped"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ITypeable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3913100176250796213"
+  name: "IIgnoreTrivialErrorsContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/543855896735511983"
+  name: "IDeclarativelyInterpretable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6527211908668936592"
+  name: "IDocumentableWordProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.core.base.IDocumentable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6527211908668938616"
+  name: "DocWordRef"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "node"
+    type: "org.iets3.core.base.IValidNamedConcept"
+    optional: false
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "de.slisson.mps.richtext.IWord"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6527211908672525240"
+  name: "IDocumentableWordContainer"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3908189377504169836"
+  name: "IHasBaseType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6571046568849029819"
+  name: "ISSConstrainedValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6571046568849029820"
+  name: "ISSConstrainedValueRef"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7093020903919699057"
+  name: "ISSItValueRef"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7093020903927062949"
+  name: "ISSDelegatingType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6859926652464625057"
+  name: "ICollectionType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IHasBaseType"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1813872364117842299"
+  name: "ConstraintAndErrorNode"
+  abstract: false
+  properties: []
+  children: []
+  references:
+  - uid: null
+    name: "expression"
+    type: "org.iets3.core.expr.base.Expression"
+    optional: true
+  - uid: null
+    name: "source"
+    type: "jetbrains.mps.lang.core.BaseConcept"
+    optional: true
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7782108600708168956"
+  name: "ReferenceType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "baseType"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7782108600708210942"
+  name: "IReferenceableType"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7782108600709141067"
+  name: "MakeRefTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7782108600710395780"
+  name: "ILiteral"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.ITrivialNode"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7782108600712067692"
+  name: "DeRefTarget"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/9142018459473556821"
+  name: "JoinType"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "types"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6095949300264944876"
+  name: "IJoinTypeContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8505972469205863874"
+  name: "ITraceRoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1102067954003609289"
+  name: "IMultiTraceRoot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/4934857995792117654"
+  name: "Revealer"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "condition"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.NodeAttribute"
+  - "com.mbeddr.mpsutil.interpreter.IReveal"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7631603674206286466"
+  name: "IControlAdvancedFeatures_old"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/952298261448780116"
+  name: "IMayAllowEffect"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/162522551948891781"
+  name: "IMainSlot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3878179565988505489"
+  name: "IMayReadMutableState"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1134276681297127890"
+  name: "IWantNewLine"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3878179565981658347"
+  name: "IAllowsDocInChildExpressions"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8237981399425912554"
+  name: "IVoidContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5571545316364799282"
+  name: "PragmaExpression"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5571545316364803538"
+  name: "PragmaDisableCaching"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.PragmaExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5043470053404793105"
+  name: "IRunningInterpreterContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6932772747669876272"
+  name: "DefaultValueExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6932772747669856399"
+  name: "ITypeSupportsDefaultValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/4886573260948603548"
+  name: "IContextTypeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/411710798114972602"
+  name: "FailExpr"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "message"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "contextExpression"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/4886573260948604727"
+  name: "ThisExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/606861080870797309"
+  name: "IfElseSection"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8237981399425912525"
+  name: "VoidType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/195141004745586068"
+  name: "ICanBeLValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5227231181400542768"
+  name: "INameQualifier"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2850607030358693529"
+  name: "SimpleExpressionValueInspector"
+  abstract: false
+  properties:
+  - uid: null
+    name: "onlyLast"
+    type: "STRING"
+  - uid: null
+    name: "showOnTop"
+    type: "STRING"
+  - uid: null
+    name: "showOnConsole"
+    type: "STRING"
+  - uid: null
+    name: "optionalLabel"
+    type: "STRING"
+  children: []
+  references: []
+  extends:
+  - "com.mbeddr.mpsutil.interpreter.ValueInspector"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/4443886968505207936"
+  name: "IProvidePathConstraints"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/6044555027808714586"
+  name: "ModExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryArithmeticExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/1185099853503726569"
+  name: "IAssertConstraints"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5955298286257997823"
+  name: "ColonCast"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+  - "org.iets3.core.expr.base.ISSConstrainedValueRef"
+  - "org.iets3.core.expr.base.ISSConstrainedValue"
+  - "org.iets3.analysis.base.ISolvable"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5974679004769488538"
+  name: "SuccessExpression"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8266215269008046728"
+  name: "INeverAllowDot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2152957725070409762"
+  name: "AbstractMinMaxExpression"
+  abstract: true
+  properties: []
+  children:
+  - uid: null
+    name: "values"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2152957725070518938"
+  name: "MinExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.AbstractMinMaxExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2152957725070518937"
+  name: "MaxExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.AbstractMinMaxExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/369777186288917319"
+  name: "ITypeOverridingContext"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3593191807001111860"
+  name: "NonStrictEqualsExpression"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryEqualityExpression"
+  - "org.iets3.analysis.base.ICanBeMappedToSolver"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/195141004745644975"
+  name: "AssignmentExpr"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.BinaryExpression"
+  - "org.iets3.core.expr.base.IMayHaveEffect"
+  - "com.mbeddr.mpsutil.interpreter.ITracerFrame"
+  - "org.iets3.core.expr.base.IWantNewLine"
+  - "org.iets3.core.expr.base.IContextAssistantTypeProvider"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466384889590"
+  name: "IProgramLocationProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466385888301"
+  name: "ProgramLocationType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466385889548"
+  name: "ProgramLocationOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466385900735"
+  name: "ProgramLocationUrlOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ProgramLocationOp"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466384402682"
+  name: "MessageValueType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5299123466398246930"
+  name: "InlineMessage"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "text"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/672388678113750644"
+  name: "ITypeSupportsProposals"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/672388678117471179"
+  name: "IContextAssistantTypeProvider"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8006404979729416973"
+  name: "OrTag"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.OperatorTag"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8560722270290706287"
+  name: "MulTag"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.OperatorTag"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8560722270289800014"
+  name: "PlusTag"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.OperatorTag"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5338017450510303355"
+  name: "OperatorGroup"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expressions"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: true
+    optional: true
+  - uid: null
+    name: "tag"
+    type: "org.iets3.core.expr.base.OperatorTag"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5338017450510303356"
+  name: "OperatorTag"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5338017450510309031"
+  name: "AndTag"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.OperatorTag"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2390066428848651932"
+  name: "BangOp"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "optionValue"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.UnaryExpression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5706483968284528352"
+  name: "ITypeable"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8435714728543612220"
+  name: "ConvenientBoolean"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "value"
+    type: "org.iets3.core.expr.base.ConvenientBooleanValue"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8435714728543612221"
+  name: "ConvenientBooleanValue"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8435714728543612222"
+  name: "AlwaysValue"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ConvenientBooleanValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8435714728543612253"
+  name: "NeverValue"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ConvenientBooleanValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8435714728543612284"
+  name: "ConvenientValueCond"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "expr"
+    type: "org.iets3.core.expr.base.Expression"
+    multiple: false
+    optional: false
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ConvenientBooleanValue"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/8946943035394495000"
+  name: "IParameterizedTypeSupportsEquals"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7549708508605912547"
+  name: "IContextTypedOp"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.IDotTarget"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/9078496479923905756"
+  name: "RevealerThis"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5032482955836171565"
+  name: "IAllowDeletionOfDot"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/5032482955834438679"
+  name: "IAllowDotOnLeft"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3889855429449957987"
+  name: "HasValueOp"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "jetbrains.mps.lang.core.BaseConcept"
+  - "org.iets3.core.expr.base.IDotTarget"
+  - "org.iets3.core.expr.base.ITargetThatCanDealWithNix"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3889855429450038473"
+  name: "EmptyValue"
+  abstract: false
+  properties: []
+  children:
+  - uid: null
+    name: "type"
+    type: "org.iets3.core.expr.base.Type"
+    multiple: false
+    optional: true
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Expression"
+  - "org.iets3.core.expr.base.IEmptyLiteral"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/2417394483940924214"
+  name: "ITargetThatCanDealWithNix"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/3984696641266738408"
+  name: "EmptyType"
+  abstract: false
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.Type"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/915344943735946072"
+  name: "IEmptyLiteral"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends:
+  - "org.iets3.core.expr.base.ILiteral"
+- uid: "mps:cfaa4966-b7d5-4b69-b66a-309a6e1a7290/7520958096812440715"
+  name: "IComplexTypeSupportsEquals"
+  abstract: true
+  properties: []
+  children: []
+  references: []
+  extends: []
