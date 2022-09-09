@@ -19,6 +19,7 @@ import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
+import org.modelix.editor.EditorEngine
 import org.modelix.editor.languageEditors
 import org.modelix.metamodel.GeneratedConcept
 
@@ -204,6 +205,11 @@ class KernelfEditor {
             noSpace()
             concept.target.cell()
         }
+        conceptEditor(language.UnaryMinusExpression) {
+            "-".cell()
+            noSpace()
+            concept.expr.cell()
+        }
         conceptEditor(language.IfElseSection) {
             "else".cell()
             concept.expr.cell()
@@ -276,18 +282,18 @@ class KernelfEditor {
 
     val richtext = languageEditors(L_de_slisson_mps_richtext) {
         conceptEditor(language.Text) {
-            concept.words.cell()
+            concept.words.horizontal()
         }
         conceptEditor(language.Word) {
             concept.escapedValue.cell()
         }
     }
 
-    fun register() {
-        tests.register()
-        toplevel.register()
-        simpleTypes.register()
-        base.register()
-        richtext.register()
+    fun register(editorEngine: EditorEngine) {
+        tests.register(editorEngine)
+        toplevel.register(editorEngine)
+        simpleTypes.register(editorEngine)
+        base.register(editorEngine)
+        richtext.register(editorEngine)
     }
 }
