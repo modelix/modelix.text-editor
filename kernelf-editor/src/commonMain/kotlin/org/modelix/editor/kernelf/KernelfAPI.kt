@@ -39,7 +39,7 @@ object KernelfAPI {
 
             renderedRootNodes = mpsRootNodes.map {
                 val cell = editorEngine.createCell(it)
-                LayoutedCells().also { cell.layoutText(it) }.toString()
+                LayoutedCells().also { cell.layout(it) }.toHtml()
             }
         }
         return renderedRootNodes.joinToString("\n\n########################################################\n")
