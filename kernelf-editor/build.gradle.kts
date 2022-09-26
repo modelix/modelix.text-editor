@@ -24,8 +24,9 @@ val generatorOutputDir = file("src/commonMain/kotlin_gen")
 
 kotlin {
     jvm()
-    js() {
+    js(IR) {
         browser {}
+        binaries.executable()
         nodejs {
             testTask {
                 useMocha {
@@ -43,6 +44,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+                implementation("org.modelix:model-client:$modelixCoreVersion")
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -61,7 +63,6 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation("org.modelix:metamodel-generator:$modelixCoreVersion")
-                implementation("org.modelix:model-client:$modelixCoreVersion")
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
             }

@@ -15,6 +15,7 @@ package org.modelix.editor.kernelf
 
 import de.slisson.mps.richtext.L_de_slisson_mps_richtext
 import jetbrains.mps.lang.core.N_INamedConcept
+import jetbrains.mps.lang.test.L_jetbrains_mps_lang_test
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
@@ -22,8 +23,9 @@ import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.languageEditors
 import org.modelix.metamodel.GeneratedConcept
+import kotlin.js.JsExport
 
-
+@JsExport
 class KernelfEditor {
 
 
@@ -194,7 +196,9 @@ class KernelfEditor {
         conceptEditor(language.StringToIntTarget) {
             "toInt".cell()
         }
-
+        conceptEditor(language.StringType) {
+            "string".cell()
+        }
     }
 
     val base = languageEditors(L_org_iets3_core_expr_base) {
@@ -278,6 +282,13 @@ class KernelfEditor {
             symbol.cell()
             concept.right.cell()
         }
+        conceptEditor(language.DefaultValueExpression) {
+            "default".cell()
+            noSpace()
+            parentheses {
+                concept.type.cell()
+            }
+        }
     }
 
     val richtext = languageEditors(L_de_slisson_mps_richtext) {
@@ -285,7 +296,27 @@ class KernelfEditor {
             concept.words.horizontal()
         }
         conceptEditor(language.Word) {
-            concept.escapedValue.cell()
+            concept.escapedValue.cell {
+                placeholderText("")
+            }
+        }
+    }
+
+    val mpsLangTest = languageEditors(L_jetbrains_mps_lang_test) {
+        conceptEditor(language.TestInfo) {
+            vertical {
+                horizontal {
+                    "Project Path  :".cell()
+                    concept.projectPath.cell()
+                }
+                horizontal {
+                    "ReOpen Project:".cell()
+                    concept.reOpenProject.cell {
+                        placeholderText("false")
+                    }
+                }
+            }
+
         }
     }
 
@@ -295,5 +326,6 @@ class KernelfEditor {
         simpleTypes.register(editorEngine)
         base.register(editorEngine)
         richtext.register(editorEngine)
+        mpsLangTest.register(editorEngine)
     }
 }
