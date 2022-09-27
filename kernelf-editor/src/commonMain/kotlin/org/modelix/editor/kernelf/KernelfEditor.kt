@@ -20,6 +20,7 @@ import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
+import org.modelix.editor.CellTemplateBuilder
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.languageEditors
 import org.modelix.metamodel.GeneratedConcept
@@ -39,7 +40,9 @@ class KernelfEditor {
             concept.contents.vertical()
         }
         conceptEditor(language.TestCase) {
-            "test case".cell()
+            "test case".cell {
+                iets3keyword()
+            }
             concept.name.cell()
             foldable("{...}") {
                 // TODO test status
@@ -60,7 +63,9 @@ class KernelfEditor {
                 concept.optionalName.cell()
                 "=".cell()
             }
-            "assert".cell()
+            "assert".cell {
+                iets3keyword()
+            }
             concept.actual.cell()
             concept.strict.flagCell()
             concept.op.cell()
@@ -76,7 +81,9 @@ class KernelfEditor {
 
         }
         conceptEditor(language.EqualsTestOp) {
-            "equals".cell()
+            "equals".cell {
+                iets3keyword()
+            }
         }
         conceptEditor(language.NoneExpr) {
             "none".cell()
@@ -94,9 +101,15 @@ class KernelfEditor {
         }
     }
 
+    private fun CellTemplateBuilder<*, *>.iets3keyword() {
+        textColor("DarkBlue")
+    }
+
     val toplevel = languageEditors(L_org_iets3_core_expr_toplevel) {
         conceptEditor(language.Constant) {
-            "val".cell()
+            "val".cell {
+                iets3keyword()
+            }
             concept.name.cell()
             optional {
                 ":".cell()
@@ -115,14 +128,18 @@ class KernelfEditor {
 
     val simpleTypes = languageEditors(L_org_iets3_core_expr_simpleTypes) {
         conceptEditor(language.StringLiteral) {
-            "\"".cell()
-            noSpace()
-            concept.value.cell()
-            noSpace()
-            "\"".cell()
+            horizontal {
+                textColor("DarkGreen")
+                "\"".cell()
+                noSpace()
+                concept.value.cell()
+                noSpace()
+                "\"".cell()
+            }
         }
         conceptEditor(language.NumberLiteral) {
             concept.value.cell {
+                textColor("DarkMagenta")
                 validateValue { it.toDoubleOrNull() != null }
             }
         }
@@ -215,13 +232,19 @@ class KernelfEditor {
             concept.expr.cell()
         }
         conceptEditor(language.IfElseSection) {
-            "else".cell()
+            "else".cell {
+                iets3keyword()
+            }
             concept.expr.cell()
         }
         conceptEditor(language.IfExpression) {
-            "if".cell()
+            "if".cell {
+                iets3keyword()
+            }
             concept.condition.cell()
-            "then".cell()
+            "then".cell {
+                iets3keyword()
+            }
             concept.thenPart.cell()
             optional {
                 concept.elseSection.cell()

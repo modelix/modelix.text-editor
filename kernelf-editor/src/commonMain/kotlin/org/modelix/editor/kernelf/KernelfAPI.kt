@@ -42,6 +42,6 @@ object KernelfAPI {
                 LayoutedCells().also { cell.layout(it) }.toHtml()
             }
         }
-        return renderedRootNodes.joinToString("\n\n########################################################\n")
+        return renderedRootNodes.joinToString("\n<hr/>\n")
     }
 }
