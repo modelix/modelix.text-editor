@@ -1,0 +1,37 @@
+<html>
+<head>
+<!--    <script type="module" src="kernelf-editor/build/distributions/kernelf-editor.js"></script>-->
+    <script src="require.js"></script>
+    <script type="application/javascript">
+        require(['../kernelf-editor/build/distributions/kernelf-editor.js'], function(kernelf) {
+            function readTextFile(file, callback) {
+                var rawFile = new XMLHttpRequest();
+                rawFile.overrideMimeType("application/json");
+                rawFile.open("GET", file, true);
+                rawFile.onreadystatechange = function() {
+                    if (rawFile.readyState === 4 && rawFile.status == "200") {
+                        callback(rawFile.responseText);
+                    }
+                }
+                rawFile.send(null);
+            }
+
+            readTextFile("../kernelf-editor/models/test.in.expr.os.strings@tests.json", function(text){
+                let data = JSON.parse(text);
+                let rendered = kernelf.org.modelix.editor.kernelf.KernelfAPI.renderJsonAsText(text)
+                document.getElementById("editor-container").innerHTML = rendered
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div id="editor-container"></div>
+
+</body>
+</html>

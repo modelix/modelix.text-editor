@@ -15,6 +15,11 @@ object KernelfAPI {
     init {
         KernelfLanguages.languages.forEach { it.register() }
     }
+
+    fun renderJsonAsText(json: String): String {
+        return renderModelAsText(ModelData.fromJson(json))
+    }
+
     fun renderModelAsText(modelData: ModelData): String {
         val editorEngine = EditorEngine()
         KernelfEditor().register(editorEngine)
