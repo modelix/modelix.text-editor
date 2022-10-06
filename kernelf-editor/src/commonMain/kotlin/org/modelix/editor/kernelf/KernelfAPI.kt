@@ -1,6 +1,10 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
+import kotlinx.html.consumers.DelayedConsumer
+import kotlinx.html.div
+import kotlinx.html.hr
+import kotlinx.html.stream.HTMLStreamBuilder
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.LayoutedCells
 import org.modelix.kernelf.KernelfLanguages
@@ -16,37 +20,38 @@ object KernelfAPI {
         KernelfLanguages.languages.forEach { it.register() }
     }
 
-    fun renderJsonAsText(json: String): String {
-        return renderModelAsText(ModelData.fromJson(json))
+    fun renderJsonAsHtmlText(json: String): String {
+        return renderModelAsHtmlText(ModelData.fromJson(json))
     }
 
-    fun renderModelAsText(modelData: ModelData): String {
+    fun renderModelAsHtmlText(modelData: ModelData): String {
         val editorEngine = EditorEngine()
         KernelfEditor().register(editorEngine)
 
         val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree())
         modelData.load(branch)
         val rootNode = ModelFacade.getRootNode(branch)
-        lateinit var renderedRootNodes: List<String>
+        val sb = StringBuilder()
         ModelFacade.readNode(rootNode) {
             val modules = rootNode.getChildren("modules")
                 .map { TypedLanguagesRegistry.wrapNode(it) }
                 .filterIsInstance<N_Module>()
-            println("Modules: ${modules.map { it.name }}")
             val models = modules.flatMap { it.models }
-            println("Models: ${models.map { it.name }}")
             val mpsRootNodes = models.flatMap { it.rootNodes }
-            println("MPS Root Nodes: $mpsRootNodes")
-
             mpsRootNodes.filterIsInstance<N_INamedConcept>().forEach { ts ->
                 println(ts.name)
             }
 
-            renderedRootNodes = mpsRootNodes.map {
-                val cell = editorEngine.createCell(it)
-                LayoutedCells().also { cell.layout(it) }.toHtml()
+            DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
+                mpsRootNodes.forEachIndexed { index, rootNode ->
+                    if (index > 0) {
+                        hr {  }
+                    }
+                    val cell = editorEngine.createCell(rootNode)
+                    LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
+                }
             }
         }
-        return renderedRootNodes.joinToString("\n<hr/>\n")
+        return sb.toString()
     }
 }

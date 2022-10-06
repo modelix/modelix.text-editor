@@ -18,13 +18,13 @@
 
             readTextFile("../kernelf-editor/models/test.in.expr.os.strings@tests.json", function(text){
                 let data = JSON.parse(text);
-                let rendered = kernelf.org.modelix.editor.kernelf.KernelfAPI.renderJsonAsText(text)
+                let rendered = kernelf.org.modelix.editor.kernelf.KernelfAPI.renderJsonAsHtmlText(text)
                 document.getElementById("editor-container").innerHTML = rendered
             });
         });
     </script>
     <style>
-        body {
+        #editor-container {
             font-family: monospace;
         }
     </style>

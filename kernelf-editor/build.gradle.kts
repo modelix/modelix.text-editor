@@ -19,6 +19,7 @@ plugins {
 val modelixCoreVersion: String by rootProject
 val kotlinLoggingVersion: String by rootProject
 val kotlinCoroutinesVersion: String by rootProject
+val kotlinxHtmlVersion: String by rootProject
 
 val generatorOutputDir = file("src/commonMain/kotlin_gen")
 
@@ -45,6 +46,7 @@ kotlin {
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
                 implementation("org.modelix:model-client:$modelixCoreVersion")
+                //implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
             }
             kotlin.srcDir(generatorOutputDir)
         }

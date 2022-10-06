@@ -252,6 +252,7 @@ class KernelfEditor {
         }
         conceptEditor(language.IsSomeExpression) {
             "isSome".cell()
+            noSpace()
             parentheses {
                 concept.expr.cell()
             }
