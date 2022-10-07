@@ -38,6 +38,9 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.js.ExperimentalJsExport")
+        }
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
@@ -90,8 +93,16 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
             .filter { it.extension.toLowerCase() == "yaml" }
             .map { LanguageData.fromFile(it) }
             .toList()
+        val filter = ConceptsFilter(languages)
+        val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")
+        languages.filter { lang -> includedLanguagePrefixes.any { lang.name.startsWith(it) } }.forEach { lang ->
+            lang.concepts.forEach { concept ->
+                filter.includeConcept(lang.name + "." + concept.name)
+            }
+        }
+        filter.includeConcept("jetbrains.mps.lang.test.TestInfo")
         val generator = MetaModelGenerator(generatorOutputDir.toPath())
-        generator.generate(languages)
+        generator.generate(languages, filter)
         generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages")
     }
 }
