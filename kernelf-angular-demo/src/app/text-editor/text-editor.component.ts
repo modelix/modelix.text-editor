@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import * as kernelf from 'kernelf-editor';
-import SampleJson from '../../assets/test.in.expr.os.strings_tests.json';
+import {Component, Input, OnInit} from '@angular/core';
+import { org, jetbrains } from 'kernelf-editor';
 import {DomSanitizer} from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 
@@ -11,16 +10,21 @@ import { PipeTransform, Pipe } from "@angular/core";
 })
 export class TextEditorComponent implements OnInit {
 
+  @Input()
+  public node!: jetbrains.mps.lang.core.N_BaseConcept
+
   constructor() {
   }
 
   ngOnInit(): void {
   }
 
-  public renderKernelf(): string {
-    let data = JSON.stringify(SampleJson)
-    let htmlText = kernelf.org.modelix.editor.kernelf.KernelfAPI.renderJsonAsHtmlText(data);
-    return htmlText;
+  public renderEditor(): string {
+    return org.modelix.editor.kernelf.KernelfAPI.renderNodeAsHtmlText(this.node.unwrap());
+  }
+
+  public getTitle(): string {
+    return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.node)
   }
 }
 

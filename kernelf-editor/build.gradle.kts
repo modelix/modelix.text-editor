@@ -22,6 +22,7 @@ val kotlinCoroutinesVersion: String by rootProject
 val kotlinxHtmlVersion: String by rootProject
 
 val generatorOutputDir = file("src/commonMain/kotlin_gen")
+val tsGeneratorOutputDir = file("../kernelf-angular-demo/src/gen")
 
 kotlin {
     jvm()
@@ -88,28 +89,35 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
     val languagesDir = file("languages")
     inputs.dir(languagesDir)
     outputs.dir(generatorOutputDir)
+    outputs.dir(tsGeneratorOutputDir)
     doLast {
-        val languages = languagesDir.walk()
+        var languages: LanguageSet = LanguageSet(languagesDir.walk()
             .filter { it.extension.toLowerCase() == "yaml" }
             .map { LanguageData.fromFile(it) }
-            .toList()
-        val filter = ConceptsFilter(languages)
-        val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")
-        languages.filter { lang -> includedLanguagePrefixes.any { lang.name.startsWith(it) } }.forEach { lang ->
-            lang.concepts.forEach { concept ->
-                filter.includeConcept(lang.name + "." + concept.name)
+            .toList())
+        languages = languages.filter {
+            val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")
+            languages.getLanguages().filter { lang -> includedLanguagePrefixes.any { lang.name.startsWith(it) } }.forEach { lang ->
+                lang.getConceptsInLanguage().forEach { concept ->
+                    includeConcept(concept.fqName)
+                }
             }
+            includeConcept("jetbrains.mps.lang.test.TestInfo")
         }
-        filter.includeConcept("jetbrains.mps.lang.test.TestInfo")
+
         val generator = MetaModelGenerator(generatorOutputDir.toPath())
-        generator.generate(languages, filter)
+        generator.generate(languages)
         generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages")
+
+        val tsGenerator = TypescriptMMGenerator(tsGeneratorOutputDir.toPath())
+        tsGenerator.generate(languages)
     }
 }
 
 val cleanGeneratedMetaModelSources = tasks.create("cleanGeneratedMetaModelSources") {
     doLast {
         generatorOutputDir.deleteRecursively()
+        tsGeneratorOutputDir.deleteRecursively()
     }
 }
 

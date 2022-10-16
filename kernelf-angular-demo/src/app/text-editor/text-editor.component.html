@@ -1,7 +1,5 @@
 <div>
-  <div class="editor-container" [innerHTML]="renderKernelf() | safeHtml">
+  <h1>{{ getTitle() }}</h1>
+  <div class="editor-container" [innerHTML]="renderEditor() | safeHtml">
   </div>
-<!--  <div>
-    <pre [innerText]="renderKernelf()"></pre>
-  </div>-->
 </div>

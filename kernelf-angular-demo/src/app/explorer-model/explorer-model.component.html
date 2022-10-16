@@ -1,0 +1,4 @@
+<div>
+  Model: {{ node.name }}
+  <app-text-editor *ngFor="let rootNode of getRootNodes()" [node]="rootNode"></app-text-editor>
+</div>

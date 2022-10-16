@@ -277,12 +277,12 @@ class KernelfEditor {
         }
         conceptEditor(language.SomeValExpr) {
             concept.someQuery.cell(presentation = {
-                expr.get {exprNode ->
+                expr.read {exprNode ->
                     if (exprNode == null) {
                         null
                     } else {
-                        exprNode._node.getReferenceRoles()
-                            .map { exprNode._node.getReferenceTarget(it) }
+                        exprNode.unwrap().getReferenceRoles()
+                            .map { exprNode.unwrap().getReferenceTarget(it) }
                             .filterIsInstance<N_INamedConcept>()
                             .map { it.name }
                             .firstOrNull()

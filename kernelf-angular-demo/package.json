@@ -21,7 +21,8 @@
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4",
-    "kernelf-editor": "file:../build/js/packages/modelix.kernelf-kernelf-editor"
+    "kernelf-editor": "file:../build/js/packages/modelix.kernelf-kernelf-editor",
+    "ts-model-api": "file:../../modelix.core/ts-model-api"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.1",
