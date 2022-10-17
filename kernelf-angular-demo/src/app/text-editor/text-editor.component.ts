@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { org, jetbrains } from 'kernelf-editor';
+import { org } from 'kernelf-editor';
 import {DomSanitizer} from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
+import {TypedNode} from "../../../../../modelix.core/ts-model-api";
 
 @Component({
   selector: 'app-text-editor',
@@ -11,7 +12,7 @@ import { PipeTransform, Pipe } from "@angular/core";
 export class TextEditorComponent implements OnInit {
 
   @Input()
-  public node!: jetbrains.mps.lang.core.N_BaseConcept
+  public node!: any; // org.modelix.model.api.INode or TypedNode
 
   constructor() {
   }
@@ -19,12 +20,16 @@ export class TextEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public getUnwrappedNode(): any {
+    return this.node instanceof TypedNode ? this.node.node : this.node
+  }
+
   public renderEditor(): string {
-    return org.modelix.editor.kernelf.KernelfAPI.renderNodeAsHtmlText(this.node.unwrap());
+    return org.modelix.editor.kernelf.KernelfAPI.renderNodeAsHtmlText(this.getUnwrappedNode());
   }
 
   public getTitle(): string {
-    return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.node)
+    return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.getUnwrappedNode())
   }
 }
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { org, jetbrains } from 'kernelf-editor';
+import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_model_repositoryconcepts";
 
 @Component({
   selector: 'app-explorer-model',
@@ -9,14 +9,10 @@ import { org, jetbrains } from 'kernelf-editor';
 export class ExplorerModelComponent implements OnInit {
 
   @Input()
-  public node!: org.modelix.model.repositoryconcepts.N_Model;
+  public node!: L_org_modelix_model_repositoryconcepts.Model;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  public getRootNodes(): Array<jetbrains.mps.lang.core.N_BaseConcept> {
-    return this.node.rootNodes.asArray();
   }
 }

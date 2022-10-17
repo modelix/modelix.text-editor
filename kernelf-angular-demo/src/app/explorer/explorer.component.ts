@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { org } from 'kernelf-editor';
 import SampleJson from "../../assets/test.in.expr.os.strings_tests.json";
+import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_model_repositoryconcepts";
+import {LanguageRegistry} from "../../../../../modelix.core/ts-model-api";
 
 @Component({
   selector: 'app-explorer',
@@ -10,7 +12,7 @@ import SampleJson from "../../assets/test.in.expr.os.strings_tests.json";
 export class ExplorerComponent implements OnInit {
 
   @Input()
-  public node: org.modelix.model.api.INode | undefined;
+  public node: any | undefined; // org.modelix.model.api.INode
 
   constructor() { }
 
@@ -21,8 +23,9 @@ export class ExplorerComponent implements OnInit {
     }
   }
 
-  public getModules(): Array<org.modelix.model.repositoryconcepts.N_Module> {
+  public getModules(): Array<L_org_modelix_model_repositoryconcepts.Module> {
     if (this.node === undefined) return []
-    return org.modelix.editor.kernelf.KernelfAPI.getModules(this.node)
+    let modelixNodes: Array<any> = org.modelix.editor.kernelf.KernelfAPI.getModules(this.node);
+    return modelixNodes.map(n => LanguageRegistry.INSTANCE.wrapNode(org.modelix.model.api.nodeToJs(n)) as L_org_modelix_model_repositoryconcepts.Module)
   }
 }
