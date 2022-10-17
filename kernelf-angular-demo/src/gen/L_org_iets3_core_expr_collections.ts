@@ -2,13 +2,103 @@ import {
   ChildListAccessor,
   SingleChildAccessor,
   GeneratedLanguage,
+  INodeJS,
   TypedNode
 } from "ts-model-api";
 
-export class L_org_iets3_core_expr_collections extends GeneratedLanguage {
+import {L_jetbrains_mps_lang_core} from "./L_jetbrains_mps_lang_core";
+import {L_org_iets3_core_expr_base} from "./L_org_iets3_core_expr_base";
+
+export namespace L_org_iets3_core_expr_collections {
+
+  export class L_org_iets3_core_expr_collections extends GeneratedLanguage {
+    public static INSTANCE: L_org_iets3_core_expr_collections = new L_org_iets3_core_expr_collections();
+
     constructor() {
-        super("org.iets3.core.expr.collections")
+      super("org.iets3.core.expr.collections")
+
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339749509", (node: INodeJS) => new CollectionType(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339757344", (node: INodeJS) => new ListType(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339759319", (node: INodeJS) => new ListLiteral(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339790458", (node: INodeJS) => new ICollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339795488", (node: INodeJS) => new NoArgCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339796915", (node: INodeJS) => new SizeOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339840476", (node: INodeJS) => new IsEmptyOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848519", (node: INodeJS) => new IOrderedCollection(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848559", (node: INodeJS) => new IOrderedCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850572", (node: INodeJS) => new FirstOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850588", (node: INodeJS) => new IElementTyped(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339853806", (node: INodeJS) => new LastOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340004826", (node: INodeJS) => new AtOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340020764", (node: INodeJS) => new OneArgCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340021069", (node: INodeJS) => new IContextTypedCollOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340640412", (node: INodeJS) => new MapOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340715406", (node: INodeJS) => new WhereOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265511400449", (node: INodeJS) => new DistinctOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265513219132", (node: INodeJS) => new AsImmutableListOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514323710", (node: INodeJS) => new ContainsOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514351708", (node: INodeJS) => new OneCollBaseTypedArgCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515327232", (node: INodeJS) => new OneArgPredicateCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515619803", (node: INodeJS) => new AnyOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265518788050", (node: INodeJS) => new AllOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520080263", (node: INodeJS) => new SetType(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520081293", (node: INodeJS) => new SetLiteral(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265522211270", (node: INodeJS) => new AsImmutableSetOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5849458724932670346", (node: INodeJS) => new BracketOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163110902", (node: INodeJS) => new MapType(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111272", (node: INodeJS) => new MapLiteral(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111273", (node: INodeJS) => new KeyValuePair(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163555724", (node: INodeJS) => new MapWithOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163714133", (node: INodeJS) => new MapWithoutOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046587930249", (node: INodeJS) => new MaxOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046594451299", (node: INodeJS) => new SumOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046596642164", (node: INodeJS) => new FirstNOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046597818717", (node: INodeJS) => new LastNOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890435239346753529", (node: INodeJS) => new SimpleSortOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7740953487940081584", (node: INodeJS) => new MinOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179783739", (node: INodeJS) => new ListWithOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179855331", (node: INodeJS) => new SetWithOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031077039769", (node: INodeJS) => new ElementTypeConstraintSingle(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031078300776", (node: INodeJS) => new ElementTypeConstraintMap(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1330041117646892901", (node: INodeJS) => new CollectionSizeSpec(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3989687177013570767", (node: INodeJS) => new UpToTarget(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4618483580248255217", (node: INodeJS) => new UnpackOptionsOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/75413091695536841", (node: INodeJS) => new IndexExpr(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441616112342", (node: INodeJS) => new IProvideIndex(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441620016186", (node: INodeJS) => new ForeachOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2554784455264825928", (node: INodeJS) => new FlattenOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6414340278546763815", (node: INodeJS) => new AsSingletonList(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213698520477", (node: INodeJS) => new AbstractStringListJoiner(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213695398904", (node: INodeJS) => new StringJoinOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213697900736", (node: INodeJS) => new StringTerminateOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3831047747134047985", (node: INodeJS) => new SetWithoutOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6095949300270588116", (node: INodeJS) => new IsNotEmptyOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338319", (node: INodeJS) => new FoldLeftOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338320", (node: INodeJS) => new FoldOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123213992448", (node: INodeJS) => new AsMapOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123215615666", (node: INodeJS) => new MapSizeOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123216554083", (node: INodeJS) => new FindFirstOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/362871314062739301", (node: INodeJS) => new ListWithAllOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221899372124", (node: INodeJS) => new MapLikeType(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561707151", (node: INodeJS) => new ListInsertOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876255273", (node: INodeJS) => new MapKeysOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876240958", (node: INodeJS) => new MapValuesOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561696122", (node: INodeJS) => new ListWithoutOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876236259", (node: INodeJS) => new MapContainsKeyOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675865128281", (node: INodeJS) => new IMapOneArgOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/527291771330968213", (node: INodeJS) => new ISetOneArgOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221900249273", (node: INodeJS) => new IListOneArgOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356043012", (node: INodeJS) => new AllWithIndexOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356045611", (node: INodeJS) => new TwoArgPredicateCollectionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4481921169623440367", (node: INodeJS) => new AnyWithIndexOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/393796118209799325", (node: INodeJS) => new TailOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261017737777", (node: INodeJS) => new ReverseOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261030611861", (node: INodeJS) => new SetUnionOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261038438968", (node: INodeJS) => new SetDiffOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/531692237848496057", (node: INodeJS) => new ListPickOp(node))
+      this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327605", (node: INodeJS) => new IndexOfOp(node))
     }
+
     /*
     public getConcepts() {
         return [this.CollectionType, this.ListType, this.ListLiteral, this.ICollectionOp, this.NoArgCollectionOp, this.SizeOp, this.IsEmptyOp, this.IOrderedCollection, this.IOrderedCollectionOp, this.FirstOp, this.IElementTyped, this.LastOp, this.AtOp, this.OneArgCollectionOp, this.IContextTypedCollOp, this.MapOp, this.WhereOp, this.DistinctOp, this.AsImmutableListOp, this.ContainsOp, this.OneCollBaseTypedArgCollectionOp, this.OneArgPredicateCollectionOp, this.AnyOp, this.AllOp, this.SetType, this.SetLiteral, this.AsImmutableSetOp, this.BracketOp, this.MapType, this.MapLiteral, this.KeyValuePair, this.MapWithOp, this.MapWithoutOp, this.MaxOp, this.SumOp, this.FirstNOp, this.LastNOp, this.SimpleSortOp, this.MinOp, this.ListWithOp, this.SetWithOp, this.ElementTypeConstraintSingle, this.ElementTypeConstraintMap, this.CollectionSizeSpec, this.UpToTarget, this.UnpackOptionsOp, this.IndexExpr, this.IProvideIndex, this.ForeachOp, this.FlattenOp, this.AsSingletonList, this.AbstractStringListJoiner, this.StringJoinOp, this.StringTerminateOp, this.SetWithoutOp, this.IsNotEmptyOp, this.FoldLeftOp, this.FoldOp, this.AsMapOp, this.MapSizeOp, this.FindFirstOp, this.ListWithAllOp, this.MapLikeType, this.ListInsertOp, this.MapKeysOp, this.MapValuesOp, this.ListWithoutOp, this.MapContainsKeyOp, this.IMapOneArgOp, this.ISetOneArgOp, this.IListOneArgOp, this.AllWithIndexOp, this.TwoArgPredicateCollectionOp, this.AnyWithIndexOp, this.TailOp, this.ReverseOp, this.SetUnionOp, this.SetDiffOp, this.ListPickOp, this.IndexOfOp]
@@ -94,1214 +184,1525 @@ export class L_org_iets3_core_expr_collections extends GeneratedLanguage {
     public ListPickOp: _C_Impl_ListPickOp = _C_Impl_ListPickOp
     public IndexOfOp: _C_Impl_IndexOfOp = _C_Impl_IndexOfOp
     */
-}
+  }
 
-            export class CollectionType extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+  export const Language = L_org_iets3_core_expr_collections.INSTANCE
 
-export class ListType extends TypedNode {
-                    public sizeConstraint: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "sizeConstraint")
-    public baseType: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "baseType")
+  export class CollectionType extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class ListLiteral extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class ICollectionOp extends TypedNode {
-    
-}
+  export class ListType extends TypedNode {
+    public sizeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
+    public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "baseType")
 
-export class NoArgCollectionOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class SizeOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class IsEmptyOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class IOrderedCollection extends TypedNode {
-    
-}
-
-export class IOrderedCollectionOp extends TypedNode {
-    
-}
-
-export class FirstOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class IElementTyped extends TypedNode {
-    
-}
-
-export class LastOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class AtOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class OneArgCollectionOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class IContextTypedCollOp extends TypedNode {
-    
-}
-
-export class MapOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+  export class ListLiteral extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class WhereOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ICollectionOp extends TypedNode {
+
+  }
+
+  export class NoArgCollectionOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class DistinctOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AsImmutableListOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class ContainsOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SizeOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class OneCollBaseTypedArgCollectionOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IsEmptyOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class OneArgPredicateCollectionOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IOrderedCollection extends TypedNode {
+
+  }
+
+  export class IOrderedCollectionOp extends TypedNode {
+
+  }
+
+  export class FirstOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AnyOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IElementTyped extends TypedNode {
+
+  }
+
+  export class LastOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AllOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AtOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class SetType extends TypedNode {
-                    public sizeConstraint: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "sizeConstraint")
-    public baseType: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "baseType")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class OneArgCollectionOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class SetLiteral extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AsImmutableSetOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class BracketOp extends TypedNode {
-                    public expr: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "expr")
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IContextTypedCollOp extends TypedNode {
+
+  }
+
+  export class MapOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class MapType extends TypedNode {
-                    public keyType_DEPRECATED: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
-    public valueType_DEPRECATED: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class WhereOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class MapLiteral extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class KeyValuePair extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class MapWithOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
 
-export class MapWithoutOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class MaxOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class SumOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class FirstNOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+  export class DistinctOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class LastNOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AsImmutableListOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class SimpleSortOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class MinOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+  export class ContainsOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
 
-export class ListWithOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
-
-export class SetWithOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
-
-export class ElementTypeConstraintSingle extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class ElementTypeConstraintMap extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class CollectionSizeSpec extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class UpToTarget extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class UnpackOptionsOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class IndexExpr extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class IProvideIndex extends TypedNode {
-    
-}
-
-export class ForeachOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class FlattenOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AsSingletonList extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AbstractStringListJoiner extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class OneCollBaseTypedArgCollectionOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class StringJoinOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class OneArgPredicateCollectionOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class StringTerminateOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AnyOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class SetWithoutOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
 
-export class IsNotEmptyOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class FoldLeftOp extends TypedNode {
-                    public seed: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "seed")
-    public combiner: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "combiner")
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AllOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class FoldOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AsMapOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class MapSizeOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class FindFirstOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SetType extends TypedNode {
+    public sizeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
+    public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "baseType")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class ListWithAllOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class MapLikeType extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class ListInsertOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class MapKeysOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class MapValuesOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
-
-export class ListWithoutOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
-
-export class MapContainsKeyOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
-
-export class IMapOneArgOp extends TypedNode {
-    
-}
-
-export class ISetOneArgOp extends TypedNode {
-    
-}
-
-export class IListOneArgOp extends TypedNode {
-    
-}
-
-export class AllWithIndexOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+  export class SetLiteral extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class TwoArgPredicateCollectionOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AsImmutableSetOp extends TypedNode {
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class AnyWithIndexOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class BracketOp extends TypedNode {
+    public expr: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "expr")
+
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class TailOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class ReverseOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class SetUnionOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
 
-export class SetDiffOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class ListPickOp extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
-    }
-    public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
-    }
-    public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
-    }
-    public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
-    }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
+  export class MapType extends TypedNode {
+    public keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
+    public valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
 
-export class IndexOfOp extends TypedNode {
-                    public arg: SingleChildAccessor<TypedNode> = new SingleChildAccessor(this.node, "arg")
     public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MapLiteral extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class KeyValuePair extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MapWithOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class MapWithoutOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class MaxOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SumOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class FirstNOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class LastNOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SimpleSortOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MinOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ListWithOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class SetWithOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class ElementTypeConstraintSingle extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ElementTypeConstraintMap extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class CollectionSizeSpec extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class UpToTarget extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class UnpackOptionsOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IndexExpr extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IProvideIndex extends TypedNode {
+
+  }
+
+  export class ForeachOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class FlattenOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AsSingletonList extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AbstractStringListJoiner extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class StringJoinOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class StringTerminateOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SetWithoutOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class IsNotEmptyOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class FoldLeftOp extends TypedNode {
+    public seed: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "seed")
+    public combiner: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "combiner")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class FoldOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AsMapOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MapSizeOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class FindFirstOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ListWithAllOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class MapLikeType extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ListInsertOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MapKeysOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class MapValuesOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ListWithoutOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class MapContainsKeyOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class IMapOneArgOp extends TypedNode {
+
+  }
+
+  export class ISetOneArgOp extends TypedNode {
+
+  }
+
+  export class IListOneArgOp extends TypedNode {
+
+  }
+
+  export class AllWithIndexOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class TwoArgPredicateCollectionOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class AnyWithIndexOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class TailOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class ReverseOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class SetUnionOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class SetDiffOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+  }
+
+  export class ListPickOp extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
+
+  export class IndexOfOp extends TypedNode {
+    public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
+    }
+
+    public get shortDescription(): string | undefined {
+      return this.node.getPropertyValue("shortDescription")
+    }
+
+    public set virtualPackage(value: string | undefined) {
+      this.node.setPropertyValue("virtualPackage", value)
+    }
+
+    public get virtualPackage(): string | undefined {
+      return this.node.getPropertyValue("virtualPackage")
+    }
+
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 }

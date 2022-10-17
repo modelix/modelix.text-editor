@@ -7,6 +7,8 @@ import {SafeHtmlPipe, TextEditorComponent} from './text-editor/text-editor.compo
 import { ExplorerComponent } from './explorer/explorer.component';
 import { ExplorerModuleComponent } from './explorer-module/explorer-module.component';
 import { ExplorerModelComponent } from './explorer-model/explorer-model.component';
+import {registerLanguages} from "../gen";
+import {LanguageRegistry} from "../../../../modelix.core/ts-model-api";
 
 @NgModule({
   declarations: [
@@ -25,3 +27,5 @@ import { ExplorerModelComponent } from './explorer-model/explorer-model.componen
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+registerLanguages()

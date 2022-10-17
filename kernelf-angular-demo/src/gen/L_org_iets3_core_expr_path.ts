@@ -2,13 +2,27 @@ import {
   ChildListAccessor,
   SingleChildAccessor,
   GeneratedLanguage,
+  INodeJS,
   TypedNode
 } from "ts-model-api";
 
-export class L_org_iets3_core_expr_path extends GeneratedLanguage {
+import {L_jetbrains_mps_lang_core} from "./L_jetbrains_mps_lang_core";
+
+export namespace L_org_iets3_core_expr_path {
+
+  export class L_org_iets3_core_expr_path extends GeneratedLanguage {
+    public static INSTANCE: L_org_iets3_core_expr_path = new L_org_iets3_core_expr_path();
+
     constructor() {
-        super("org.iets3.core.expr.path")
+      super("org.iets3.core.expr.path")
+
+      this.nodeWrappers.set("mps:f3eafff0-30d2-46d6-9150-f0f3b880ce27/7814222126785170799", (node: INodeJS) => new ICanHaveMembersType(node))
+      this.nodeWrappers.set("mps:f3eafff0-30d2-46d6-9150-f0f3b880ce27/7814222126785170970", (node: INodeJS) => new IMember(node))
+      this.nodeWrappers.set("mps:f3eafff0-30d2-46d6-9150-f0f3b880ce27/7814222126786013807", (node: INodeJS) => new PathElement(node))
+      this.nodeWrappers.set("mps:f3eafff0-30d2-46d6-9150-f0f3b880ce27/5046612484462007436", (node: INodeJS) => new IComparablePathPart(node))
+      this.nodeWrappers.set("mps:f3eafff0-30d2-46d6-9150-f0f3b880ce27/4886573260946854791", (node: INodeJS) => new IPathPart(node))
     }
+
     /*
     public getConcepts() {
         return [this.ICanHaveMembersType, this.IMember, this.PathElement, this.IComparablePathPart, this.IPathPart]
@@ -19,47 +33,57 @@ export class L_org_iets3_core_expr_path extends GeneratedLanguage {
     public IComparablePathPart: _C_Impl_IComparablePathPart = _C_Impl_IComparablePathPart
     public IPathPart: _C_Impl_IPathPart = _C_Impl_IPathPart
     */
-}
+  }
 
-            export class ICanHaveMembersType extends TypedNode {
-    
-}
+  export const Language = L_org_iets3_core_expr_path.INSTANCE
 
-export class IMember extends TypedNode {
-                    public set name(value: string | undefined) {
-        this.node.setPropertyValue("name", value)
+  export class ICanHaveMembersType extends TypedNode {
+
+  }
+
+  export class IMember extends TypedNode {
+    public set name(value: string | undefined) {
+      this.node.setPropertyValue("name", value)
     }
+
     public get name(): string | undefined {
-        return this.node.getPropertyValue("name")
+      return this.node.getPropertyValue("name")
     }
+
     public set resolveInfo(value: string | undefined) {
-        this.node.setPropertyValue("resolveInfo", value)
+      this.node.setPropertyValue("resolveInfo", value)
     }
+
     public get resolveInfo(): string | undefined {
-        return this.node.getPropertyValue("resolveInfo")
+      return this.node.getPropertyValue("resolveInfo")
     }
-}
+  }
 
-export class PathElement extends TypedNode {
-                    public set shortDescription(value: string | undefined) {
-        this.node.setPropertyValue("shortDescription", value)
+  export class PathElement extends TypedNode {
+    public set shortDescription(value: string | undefined) {
+      this.node.setPropertyValue("shortDescription", value)
     }
+
     public get shortDescription(): string | undefined {
-        return this.node.getPropertyValue("shortDescription")
+      return this.node.getPropertyValue("shortDescription")
     }
+
     public set virtualPackage(value: string | undefined) {
-        this.node.setPropertyValue("virtualPackage", value)
+      this.node.setPropertyValue("virtualPackage", value)
     }
+
     public get virtualPackage(): string | undefined {
-        return this.node.getPropertyValue("virtualPackage")
+      return this.node.getPropertyValue("virtualPackage")
     }
-    public smodelAttribute: ChildListAccessor<TypedNode> = new ChildListAccessor(this.node, "smodelAttribute")
-}
 
-export class IComparablePathPart extends TypedNode {
-    
-}
+    public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+  }
 
-export class IPathPart extends TypedNode {
-    
+  export class IComparablePathPart extends TypedNode {
+
+  }
+
+  export class IPathPart extends TypedNode {
+
+  }
 }
