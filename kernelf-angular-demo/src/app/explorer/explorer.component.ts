@@ -25,7 +25,7 @@ export class ExplorerComponent implements OnInit {
 
   public getModules(): Array<L_org_modelix_model_repositoryconcepts.Module> {
     if (this.node === undefined) return []
-    let modelixNodes: Array<any> = org.modelix.editor.kernelf.KernelfAPI.getModules(this.node);
-    return modelixNodes.map(n => LanguageRegistry.INSTANCE.wrapNode(org.modelix.model.api.nodeToJs(n)) as L_org_modelix_model_repositoryconcepts.Module)
+    let modules: Array<any /* INode */> = org.modelix.editor.kernelf.KernelfAPI.getModules(this.node);
+    return modules.map(n => LanguageRegistry.INSTANCE.wrapNode(org.modelix.model.api.JSNodeConverter.nodeToJs(n)) as L_org_modelix_model_repositoryconcepts.Module)
   }
 }

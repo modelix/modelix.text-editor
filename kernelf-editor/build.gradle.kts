@@ -109,7 +109,7 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
 
         val generator = MetaModelGenerator(generatorOutputDir.toPath())
         generator.generate(languages)
-        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages")
+        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages", languages)
 
         val tsGenerator = TypescriptMMGenerator(tsGeneratorOutputDir.toPath())
         tsGenerator.generate(languages)

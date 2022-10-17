@@ -58,8 +58,13 @@ object KernelfAPI {
         return renderNodeAsHtmlText(rootNode)
     }
 
-    fun nodeToString(node: ITypedNode): String {
-        return (if (node is N_INamedConcept) node.name else null) ?: node._concept._concept.getLongName()
+    fun nodeToString(node: Any): String {
+        val typedNode = when (node) {
+            is ITypedNode -> node
+            is INode -> node.typed()
+            else -> throw IllegalArgumentException("Unsupported node type: $node")
+        }
+        return (if (typedNode is N_INamedConcept) typedNode.name else null) ?: typedNode._concept._concept.getLongName()
     }
 
     fun findTestSuites(rootNode: INode): Array<N_TestSuite> {
@@ -73,11 +78,12 @@ object KernelfAPI {
         }
     }
 
-    fun getModules(rootNode: INode): Array<N_Module> {
+    fun getModules(rootNode: INode): Array<INode> {
         return ModelFacade.readNode(rootNode) {
             val modules = rootNode.getChildren("modules")
                 .map { TypedLanguagesRegistry.wrapNode(it) }
                 .filterIsInstance<N_Module>()
+                .map { it.unwrap() }
             modules.toTypedArray()
         }
     }

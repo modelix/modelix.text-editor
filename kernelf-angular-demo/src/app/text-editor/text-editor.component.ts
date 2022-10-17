@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { org } from 'kernelf-editor';
-import {DomSanitizer} from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
-import {TypedNode} from "../../../../../modelix.core/ts-model-api";
+import { TypedNode, INodeJS } from "../../../../../modelix.core/ts-model-api";
 
 @Component({
   selector: 'app-text-editor',
@@ -12,7 +12,7 @@ import {TypedNode} from "../../../../../modelix.core/ts-model-api";
 export class TextEditorComponent implements OnInit {
 
   @Input()
-  public node!: any; // org.modelix.model.api.INode or TypedNode
+  public node!: any; // org.modelix.model.api.INode or TypedNode or INodeJS
 
   constructor() {
   }
@@ -21,7 +21,9 @@ export class TextEditorComponent implements OnInit {
   }
 
   public getUnwrappedNode(): any {
-    return this.node instanceof TypedNode ? this.node.node : this.node
+    if (this.node instanceof TypedNode) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node.node)
+    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node)
+    return this.node
   }
 
   public renderEditor(): string {
