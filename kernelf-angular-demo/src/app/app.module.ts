@@ -9,6 +9,7 @@ import { ExplorerModuleComponent } from './explorer-module/explorer-module.compo
 import { ExplorerModelComponent } from './explorer-model/explorer-model.component';
 import {registerLanguages} from "../gen";
 import {LanguageRegistry} from "../../../../modelix.core/ts-model-api";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -19,10 +20,11 @@ import {LanguageRegistry} from "../../../../modelix.core/ts-model-api";
     ExplorerModuleComponent,
     ExplorerModelComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

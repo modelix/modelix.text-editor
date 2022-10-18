@@ -10,13 +10,13 @@ import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_mo
 export class ExplorerModuleComponent implements OnInit {
 
   @Input()
-  public node!: L_org_modelix_model_repositoryconcepts.Module;
+  public node!: L_org_modelix_model_repositoryconcepts.N_Module;
 
   constructor() {
 
   }
 
-  public getModels(): Array<L_org_modelix_model_repositoryconcepts.Model> {
+  public getModels(): Array<L_org_modelix_model_repositoryconcepts.N_Model> {
     return this.node.models.asArray()
   }
 

@@ -1,5 +1,7 @@
 <div>
-  <h1>{{ getTitle() }}</h1>
+  <h3>{{ getTitle() }}</h3>
+  <div><input #nameField (change)="nodeName = nameField.value" (keyup)="nodeName = nameField.value" [value]="nodeName"
+              type="text"/></div>
   <div class="editor-container" [innerHTML]="renderEditor() | safeHtml">
   </div>
 </div>

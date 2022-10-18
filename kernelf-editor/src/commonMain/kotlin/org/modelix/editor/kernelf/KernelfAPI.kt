@@ -27,9 +27,11 @@ object KernelfAPI {
         return renderModelAsHtmlText(ModelData.fromJson(json))
     }
 
-    fun loadModelFromJson(json: String): INode {
+    fun loadModelFromJson(json: String): INode = loadModelsFromJson(arrayOf(json))
+
+    fun loadModelsFromJson(json: Array<String>): INode {
         val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree())
-        ModelData.fromJson(json).load(branch)
+        json.forEach { ModelData.fromJson(it).load(branch)  }
         val rootNode = ModelFacade.getRootNode(branch)
         return rootNode
     }
@@ -86,5 +88,11 @@ object KernelfAPI {
                 .map { it.unwrap() }
             modules.toTypedArray()
         }
+    }
+
+    fun unwrapNode(node: Any): Any {
+        if (node is INode) return node
+        if (node is ITypedNode) return node.unwrap()
+        return node
     }
 }

@@ -3,7 +3,8 @@
               SingleChildAccessor,
               GeneratedLanguage,
               INodeJS,
-              TypedNode
+              TypedNode,
+              ITypedNode
             } from "ts-model-api";
             
             
@@ -15,8 +16,8 @@
                 constructor() {
                     super("jetbrains.mps.lang.smodel")
                     
-                    this.nodeWrappers.set("mps:7866978e-a0f0-4cc7-81bc-4d213d9375e1/3542851458883437336", (node: INodeJS) => new LanguageIdentity(node))
-this.nodeWrappers.set("mps:7866978e-a0f0-4cc7-81bc-4d213d9375e1/5769081855527239153", (node: INodeJS) => new AbstractLanguageIdentity(node))
+                    this.nodeWrappers.set("mps:7866978e-a0f0-4cc7-81bc-4d213d9375e1/3542851458883437336", (node: INodeJS) => new _N_TypedImpl_LanguageIdentity(node))
+this.nodeWrappers.set("mps:7866978e-a0f0-4cc7-81bc-4d213d9375e1/5769081855527239153", (node: INodeJS) => new _N_TypedImpl_AbstractLanguageIdentity(node))
                 }
                 /*
                 public getConcepts() {
@@ -28,15 +29,37 @@ this.nodeWrappers.set("mps:7866978e-a0f0-4cc7-81bc-4d213d9375e1/5769081855527239
             }
             export const INSTANCE = L_jetbrains_mps_lang_smodel.INSTANCE
             
-                        export class LanguageIdentity extends TypedNode {
+                                    export interface N_LanguageIdentity extends N_AbstractLanguageIdentity {
+                            _is_jetbrains_mps_lang_smodel_LanguageIdentity: boolean
+                            
+                        }
+                        
+                        export namespace N_LanguageIdentity {
+                            export function isInstance(node: ITypedNode): node is N_LanguageIdentity {
+                                return '_is_jetbrains_mps_lang_smodel_LanguageIdentity' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LanguageIdentity extends TypedNode implements N_LanguageIdentity {
+                            public _is_jetbrains_mps_lang_smodel_LanguageIdentity: boolean = true
+            public _is_jetbrains_mps_lang_smodel_AbstractLanguageIdentity: boolean = true
+                            
+                        }
+                        
+            
+            export interface N_AbstractLanguageIdentity extends ITypedNode {
+                _is_jetbrains_mps_lang_smodel_AbstractLanguageIdentity: boolean
                 
-                
-                // super concept: jetbrains.mps.lang.smodel.AbstractLanguageIdentity 
             }
             
-            export class AbstractLanguageIdentity extends TypedNode {
-                
-                
+            export namespace N_AbstractLanguageIdentity {
+                export function isInstance(node: ITypedNode): node is N_AbstractLanguageIdentity {
+                    return '_is_jetbrains_mps_lang_smodel_AbstractLanguageIdentity' in node;
+                }
+            }
+            
+            export class _N_TypedImpl_AbstractLanguageIdentity extends TypedNode implements N_AbstractLanguageIdentity {
+                public _is_jetbrains_mps_lang_smodel_AbstractLanguageIdentity: boolean = true
                 
             }
             }

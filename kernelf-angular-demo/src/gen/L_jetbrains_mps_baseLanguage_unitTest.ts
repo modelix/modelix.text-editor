@@ -3,10 +3,11 @@
               SingleChildAccessor,
               GeneratedLanguage,
               INodeJS,
-              TypedNode
+              TypedNode,
+              ITypedNode
             } from "ts-model-api";
             
-            
+            import {L_jetbrains_mps_baseLanguage} from "./L_jetbrains_mps_baseLanguage";
             
             export namespace L_jetbrains_mps_baseLanguage_unitTest {
             
@@ -15,9 +16,9 @@
                 constructor() {
                     super("jetbrains.mps.baseLanguage.unitTest")
                     
-                    this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1215620452633", (node: INodeJS) => new ITestable(node))
-this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216130694486", (node: INodeJS) => new ITestCase(node))
-this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216134482493", (node: INodeJS) => new ITestMethod(node))
+                    this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1215620452633", (node: INodeJS) => new _N_TypedImpl_ITestable(node))
+this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216130694486", (node: INodeJS) => new _N_TypedImpl_ITestCase(node))
+this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216134482493", (node: INodeJS) => new _N_TypedImpl_ITestMethod(node))
                 }
                 /*
                 public getConcepts() {
@@ -30,13 +31,39 @@ this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216134482493", 
             }
             export const INSTANCE = L_jetbrains_mps_baseLanguage_unitTest.INSTANCE
             
-                        export class ITestable extends TypedNode {
-                
-                
+                        export interface N_ITestable extends ITypedNode {
+                _is_jetbrains_mps_baseLanguage_unitTest_ITestable: boolean
                 
             }
+            
+            export namespace N_ITestable {
+                export function isInstance(node: ITypedNode): node is N_ITestable {
+                    return '_is_jetbrains_mps_baseLanguage_unitTest_ITestable' in node;
+                }
+            }
+            
+            export class _N_TypedImpl_ITestable extends TypedNode implements N_ITestable {
+                public _is_jetbrains_mps_baseLanguage_unitTest_ITestable: boolean = true
+                
+            }
+            
                         
-                        export class ITestCase extends TypedNode {
+                        export interface N_ITestCase extends N_ITestable, L_jetbrains_mps_baseLanguage.N_IValidIdentifier {
+                            _is_jetbrains_mps_baseLanguage_unitTest_ITestCase: boolean
+                            canNotRunInProcess: string | undefined
+                        }
+                        
+                        export namespace N_ITestCase {
+                            export function isInstance(node: ITypedNode): node is N_ITestCase {
+                                return '_is_jetbrains_mps_baseLanguage_unitTest_ITestCase' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ITestCase extends TypedNode implements N_ITestCase {
+                            public _is_jetbrains_mps_baseLanguage_unitTest_ITestCase: boolean = true
+            public _is_jetbrains_mps_baseLanguage_unitTest_ITestable: boolean = true
+            public _is_jetbrains_mps_baseLanguage_IValidIdentifier: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
                                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -49,16 +76,23 @@ this.nodeWrappers.set("mps:f61473f9-130f-42f6-b98d-6c438812c2f6/1216134482493", 
                             public get canNotRunInProcess(): string | undefined {
                                 return this.node.getPropertyValue("canNotRunInProcess")
                             }
-                            // feature: canNotRunInProcess 
-            // feature: name 
-                            // super concept: jetbrains.mps.baseLanguage.unitTest.ITestable 
-            // super concept: jetbrains.mps.baseLanguage.IValidIdentifier 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
                         }
-            
-            export class ITestMethod extends TypedNode {
-                
-                
-                // super concept: jetbrains.mps.baseLanguage.unitTest.ITestable 
-            }
+                        
+                        
+                        export interface N_ITestMethod extends N_ITestable {
+                            _is_jetbrains_mps_baseLanguage_unitTest_ITestMethod: boolean
+                            
+                        }
+                        
+                        export namespace N_ITestMethod {
+                            export function isInstance(node: ITypedNode): node is N_ITestMethod {
+                                return '_is_jetbrains_mps_baseLanguage_unitTest_ITestMethod' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ITestMethod extends TypedNode implements N_ITestMethod {
+                            public _is_jetbrains_mps_baseLanguage_unitTest_ITestMethod: boolean = true
+            public _is_jetbrains_mps_baseLanguage_unitTest_ITestable: boolean = true
+                            
+                        }
             }

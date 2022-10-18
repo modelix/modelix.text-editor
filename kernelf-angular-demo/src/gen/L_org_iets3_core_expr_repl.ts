@@ -3,13 +3,15 @@
               SingleChildAccessor,
               GeneratedLanguage,
               INodeJS,
-              TypedNode
+              TypedNode,
+              ITypedNode
             } from "ts-model-api";
             
             import {L_org_iets3_core_base} from "./L_org_iets3_core_base";
 import {L_jetbrains_mps_lang_core} from "./L_jetbrains_mps_lang_core";
 import {L_org_iets3_core_expr_toplevel} from "./L_org_iets3_core_expr_toplevel";
 import {L_com_mbeddr_core_base} from "./L_com_mbeddr_core_base";
+import {L_org_iets3_core_expr_tests} from "./L_org_iets3_core_expr_tests";
 import {L_org_iets3_core_expr_base} from "./L_org_iets3_core_expr_base";
             
             export namespace L_org_iets3_core_expr_repl {
@@ -19,42 +21,42 @@ import {L_org_iets3_core_expr_base} from "./L_org_iets3_core_expr_base";
                 constructor() {
                     super("org.iets3.core.expr.repl")
                     
-                    this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786952", (node: INodeJS) => new REPL(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786953", (node: INodeJS) => new DefaultEntry(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786993", (node: INodeJS) => new IReplEntry(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3123720608935236577", (node: INodeJS) => new ReplEntryRef(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6190913826144637839", (node: INodeJS) => new ReplEntryRefByName(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826184", (node: INodeJS) => new LeftBorderCellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826185", (node: INodeJS) => new BottomBorderCellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826186", (node: INodeJS) => new RightBorderCellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/8891169595166788142", (node: INodeJS) => new QuoteExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826112", (node: INodeJS) => new BorderCellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858263103", (node: INodeJS) => new CellConstraint(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425755970864", (node: INodeJS) => new SheetTestItem(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826183", (node: INodeJS) => new TopBorderCellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478070852422", (node: INodeJS) => new AbstractRangeExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349123787", (node: INodeJS) => new Sheet(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116354333364", (node: INodeJS) => new AbstractCellRef(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425759772067", (node: INodeJS) => new LabelExpression(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349131336", (node: INodeJS) => new Cell(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714255", (node: INodeJS) => new SheetType(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116352759184", (node: INodeJS) => new CellArg(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372713", (node: INodeJS) => new FontStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226845", (node: INodeJS) => new MakeListExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116353424003", (node: INodeJS) => new CellArgRef(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4767524222579030357", (node: INodeJS) => new SheetEmbedExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372717", (node: INodeJS) => new FontBoldStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018845679935", (node: INodeJS) => new NamedSheetFinder(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714356", (node: INodeJS) => new TopLevelSheet(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226999", (node: INodeJS) => new AbstractSheetExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116351589322", (node: INodeJS) => new NamedCellRef(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858269574", (node: INodeJS) => new CellConstraintIt(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111815", (node: INodeJS) => new AbstractSheetFinder(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826111", (node: INodeJS) => new CellStyle(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350380243", (node: INodeJS) => new CoordCellRef(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111816", (node: INodeJS) => new UpwardsSheetFinder(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478071884828", (node: INodeJS) => new MakeRecordExpr(node))
-this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760968", (node: INodeJS) => new CellLabel(node))
+                    this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786952", (node: INodeJS) => new _N_TypedImpl_REPL(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786953", (node: INodeJS) => new _N_TypedImpl_DefaultEntry(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/1240669143552786993", (node: INodeJS) => new _N_TypedImpl_IReplEntry(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3123720608935236577", (node: INodeJS) => new _N_TypedImpl_ReplEntryRef(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6190913826144637839", (node: INodeJS) => new _N_TypedImpl_ReplEntryRefByName(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826184", (node: INodeJS) => new _N_TypedImpl_LeftBorderCellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826185", (node: INodeJS) => new _N_TypedImpl_BottomBorderCellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826186", (node: INodeJS) => new _N_TypedImpl_RightBorderCellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/8891169595166788142", (node: INodeJS) => new _N_TypedImpl_QuoteExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826112", (node: INodeJS) => new _N_TypedImpl_BorderCellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858263103", (node: INodeJS) => new _N_TypedImpl_CellConstraint(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425755970864", (node: INodeJS) => new _N_TypedImpl_SheetTestItem(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826183", (node: INodeJS) => new _N_TypedImpl_TopBorderCellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478070852422", (node: INodeJS) => new _N_TypedImpl_AbstractRangeExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349123787", (node: INodeJS) => new _N_TypedImpl_Sheet(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116354333364", (node: INodeJS) => new _N_TypedImpl_AbstractCellRef(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425759772067", (node: INodeJS) => new _N_TypedImpl_LabelExpression(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116349131336", (node: INodeJS) => new _N_TypedImpl_Cell(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714255", (node: INodeJS) => new _N_TypedImpl_SheetType(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116352759184", (node: INodeJS) => new _N_TypedImpl_CellArg(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372713", (node: INodeJS) => new _N_TypedImpl_FontStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226845", (node: INodeJS) => new _N_TypedImpl_MakeListExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116353424003", (node: INodeJS) => new _N_TypedImpl_CellArgRef(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4767524222579030357", (node: INodeJS) => new _N_TypedImpl_SheetEmbedExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920862372717", (node: INodeJS) => new _N_TypedImpl_FontBoldStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018845679935", (node: INodeJS) => new _N_TypedImpl_NamedSheetFinder(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920860714356", (node: INodeJS) => new _N_TypedImpl_TopLevelSheet(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425750226999", (node: INodeJS) => new _N_TypedImpl_AbstractSheetExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116351589322", (node: INodeJS) => new _N_TypedImpl_NamedCellRef(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/4139771920858269574", (node: INodeJS) => new _N_TypedImpl_CellConstraintIt(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111815", (node: INodeJS) => new _N_TypedImpl_AbstractSheetFinder(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5953575425758826111", (node: INodeJS) => new _N_TypedImpl_CellStyle(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350380243", (node: INodeJS) => new _N_TypedImpl_CoordCellRef(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/3922243018843111816", (node: INodeJS) => new _N_TypedImpl_UpwardsSheetFinder(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/5733544478071884828", (node: INodeJS) => new _N_TypedImpl_MakeRecordExpr(node))
+this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760968", (node: INodeJS) => new _N_TypedImpl_CellLabel(node))
                 }
                 /*
                 public getConcepts() {
@@ -100,8 +102,37 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
             }
             export const INSTANCE = L_org_iets3_core_expr_repl.INSTANCE
             
-                                    export class REPL extends TypedNode {
-                                            public constraints: ChildListAccessor<L_com_mbeddr_core_base.ChunkDependencyConstraint> = new ChildListAccessor(this.node, "constraints")
+                                    export interface N_REPL extends L_com_mbeddr_core_base.N_Chunk, L_org_iets3_core_base.N_IValidNamedConcept, L_org_iets3_core_expr_base.N_IRunningInterpreterContext {
+                            _is_org_iets3_core_expr_repl_REPL: boolean
+                            updateDownstream: string | undefined
+            showDiffs: string | undefined
+            entries: ChildListAccessor<N_IReplEntry>
+                                
+                                
+                        }
+                        
+                        export namespace N_REPL {
+                            export function isInstance(node: ITypedNode): node is N_REPL {
+                                return '_is_org_iets3_core_expr_repl_REPL' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_REPL extends TypedNode implements N_REPL {
+                            public _is_org_iets3_core_expr_repl_REPL: boolean = true
+            public _is_com_mbeddr_core_base_Chunk: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_IIdentifierNamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IResolveInfo: boolean = true
+            public _is_com_mbeddr_core_base_IVisibleElementProvider: boolean = true
+            public _is_com_mbeddr_core_base_ILOCCountProvider: boolean = true
+            public _is_com_mbeddr_core_base_ITreeViewRoot: boolean = true
+            public _is_com_mbeddr_core_base_ITreeViewable: boolean = true
+            public _is_com_mbeddr_core_base_IDetectCycle: boolean = true
+            public _is_com_mbeddr_mpsutil_jung_IJGraphProvider: boolean = true
+            public _is_org_iets3_core_base_IValidNamedConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IRunningInterpreterContext: boolean = true
+                                            public constraints: ChildListAccessor<L_com_mbeddr_core_base.N_ChunkDependencyConstraint> = new ChildListAccessor(this.node, "constraints")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -114,7 +145,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -139,35 +170,33 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get showDiffs(): string | undefined {
                                 return this.node.getPropertyValue("showDiffs")
                             }
-                            public entries: ChildListAccessor<L_org_iets3_core_expr_repl.IReplEntry> = new ChildListAccessor(this.node, "entries")
+                            public entries: ChildListAccessor<N_IReplEntry> = new ChildListAccessor(this.node, "entries")
                                                 
-                            // feature: updateDownstream 
-            // feature: showDiffs 
-            // feature: entries 
-            // feature: sourceNode 
-            // feature: sourceScope 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-            // feature: resolveInfo 
-            // feature: constraints 
-                            // super concept: com.mbeddr.core.base.Chunk 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.IIdentifierNamedConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.core.IResolveInfo 
-            // super concept: com.mbeddr.core.base.IVisibleElementProvider 
-            // super concept: com.mbeddr.core.base.ILOCCountProvider 
-            // super concept: com.mbeddr.core.base.ITreeViewRoot 
-            // super concept: com.mbeddr.core.base.ITreeViewable 
-            // super concept: com.mbeddr.core.base.IDetectCycle 
-            // super concept: com.mbeddr.mpsutil.jung.IJGraphProvider 
-            // super concept: org.iets3.core.base.IValidNamedConcept 
-            // super concept: org.iets3.core.expr.base.IRunningInterpreterContext 
                         }
                         
-                        export class DefaultEntry extends TypedNode {
+                        
+                        export interface N_DefaultEntry extends L_jetbrains_mps_lang_core.N_BaseConcept, L_jetbrains_mps_lang_core.N_INamedConcept, N_IReplEntry, L_org_iets3_core_base.N_ICanRunCheckManually, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_repl_DefaultEntry: boolean
+                            hasBeenEvaled: string | undefined
+            hasError: string | undefined
+            referenceable: string | undefined
+            expression: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_DefaultEntry {
+                            export function isInstance(node: ITypedNode): node is N_DefaultEntry {
+                                return '_is_org_iets3_core_expr_repl_DefaultEntry' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_DefaultEntry extends TypedNode implements N_DefaultEntry {
+                            public _is_org_iets3_core_expr_repl_DefaultEntry: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_org_iets3_core_expr_repl_IReplEntry: boolean = true
+            public _is_org_iets3_core_base_ICanRunCheckManually: boolean = true
+            public _is_org_iets3_core_base_ICanStoreCheckResult: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -180,7 +209,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -211,36 +240,50 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get referenceable(): string | undefined {
                                 return this.node.getPropertyValue("referenceable")
                             }
-                            public expression: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "expression")
-                            // feature: hasBeenEvaled 
-            // feature: hasError 
-            // feature: referenceable 
-            // feature: expression 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-            // feature: optionalName 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: org.iets3.core.expr.repl.IReplEntry 
-            // super concept: org.iets3.core.base.ICanRunCheckManually 
-            // super concept: org.iets3.core.base.ICanStoreCheckResult 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
+                            public expression: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "expression")
                         }
+                        
             
-            export class IReplEntry extends TypedNode {
+            export interface N_IReplEntry extends ITypedNode {
+                _is_org_iets3_core_expr_repl_IReplEntry: boolean
+                optionalName: string | undefined
+            }
+            
+            export namespace N_IReplEntry {
+                export function isInstance(node: ITypedNode): node is N_IReplEntry {
+                    return '_is_org_iets3_core_expr_repl_IReplEntry' in node;
+                }
+            }
+            
+            export class _N_TypedImpl_IReplEntry extends TypedNode implements N_IReplEntry {
+                public _is_org_iets3_core_expr_repl_IReplEntry: boolean = true
                                 public set optionalName(value: string | undefined) {
                     this.node.setPropertyValue("optionalName", value)
                 }
                 public get optionalName(): string | undefined {
                     return this.node.getPropertyValue("optionalName")
                 }
-                // feature: optionalName 
-                
             }
+            
                         
-                        export class ReplEntryRef extends TypedNode {
+                        export interface N_ReplEntryRef extends L_org_iets3_core_expr_base.N_Expression, L_org_iets3_core_expr_base.N_IRef {
+                            _is_org_iets3_core_expr_repl_ReplEntryRef: boolean
+                                                
+                        }
+                        
+                        export namespace N_ReplEntryRef {
+                            export function isInstance(node: ITypedNode): node is N_ReplEntryRef {
+                                return '_is_org_iets3_core_expr_repl_ReplEntryRef' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ReplEntryRef extends TypedNode implements N_ReplEntryRef {
+                            public _is_org_iets3_core_expr_repl_ReplEntryRef: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IRef: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -253,19 +296,28 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: entry 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IRef 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class ReplEntryRefByName extends TypedNode {
+                        
+                        export interface N_ReplEntryRefByName extends L_org_iets3_core_expr_base.N_Expression, L_org_iets3_core_expr_base.N_IRef {
+                            _is_org_iets3_core_expr_repl_ReplEntryRefByName: boolean
+                                                
+                        }
+                        
+                        export namespace N_ReplEntryRefByName {
+                            export function isInstance(node: ITypedNode): node is N_ReplEntryRefByName {
+                                return '_is_org_iets3_core_expr_repl_ReplEntryRefByName' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ReplEntryRefByName extends TypedNode implements N_ReplEntryRefByName {
+                            public _is_org_iets3_core_expr_repl_ReplEntryRefByName: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IRef: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -278,19 +330,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: entry 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IRef 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class LeftBorderCellStyle extends TypedNode {
+                        
+                        export interface N_LeftBorderCellStyle extends N_BorderCellStyle {
+                            _is_org_iets3_core_expr_repl_LeftBorderCellStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_LeftBorderCellStyle {
+                            export function isInstance(node: ITypedNode): node is N_LeftBorderCellStyle {
+                                return '_is_org_iets3_core_expr_repl_LeftBorderCellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LeftBorderCellStyle extends TypedNode implements N_LeftBorderCellStyle {
+                            public _is_org_iets3_core_expr_repl_LeftBorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_BorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set width(value: string | undefined) {
                                 this.node.setPropertyValue("width", value)
                             }
@@ -309,14 +368,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.BorderCellStyle 
-            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class BottomBorderCellStyle extends TypedNode {
+                        
+                        export interface N_BottomBorderCellStyle extends N_BorderCellStyle {
+                            _is_org_iets3_core_expr_repl_BottomBorderCellStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_BottomBorderCellStyle {
+                            export function isInstance(node: ITypedNode): node is N_BottomBorderCellStyle {
+                                return '_is_org_iets3_core_expr_repl_BottomBorderCellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_BottomBorderCellStyle extends TypedNode implements N_BottomBorderCellStyle {
+                            public _is_org_iets3_core_expr_repl_BottomBorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_BorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set width(value: string | undefined) {
                                 this.node.setPropertyValue("width", value)
                             }
@@ -335,14 +406,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.BorderCellStyle 
-            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class RightBorderCellStyle extends TypedNode {
+                        
+                        export interface N_RightBorderCellStyle extends N_BorderCellStyle {
+                            _is_org_iets3_core_expr_repl_RightBorderCellStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_RightBorderCellStyle {
+                            export function isInstance(node: ITypedNode): node is N_RightBorderCellStyle {
+                                return '_is_org_iets3_core_expr_repl_RightBorderCellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_RightBorderCellStyle extends TypedNode implements N_RightBorderCellStyle {
+                            public _is_org_iets3_core_expr_repl_RightBorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_BorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set width(value: string | undefined) {
                                 this.node.setPropertyValue("width", value)
                             }
@@ -361,14 +444,28 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.BorderCellStyle 
-            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class QuoteExpr extends TypedNode {
+                        
+                        export interface N_QuoteExpr extends N_AbstractSheetExpr {
+                            _is_org_iets3_core_expr_repl_QuoteExpr: boolean
+                            cell: SingleChildAccessor<N_AbstractCellRef>
+                        }
+                        
+                        export namespace N_QuoteExpr {
+                            export function isInstance(node: ITypedNode): node is N_QuoteExpr {
+                                return '_is_org_iets3_core_expr_repl_QuoteExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_QuoteExpr extends TypedNode implements N_QuoteExpr {
+                            public _is_org_iets3_core_expr_repl_QuoteExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -381,17 +478,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public cell: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "cell")
-                            // feature: cell 
-                            // super concept: org.iets3.core.expr.repl.AbstractSheetExpr 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public cell: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "cell")
                         }
                         
-                        export class BorderCellStyle extends TypedNode {
+                        
+                        export interface N_BorderCellStyle extends N_CellStyle {
+                            _is_org_iets3_core_expr_repl_BorderCellStyle: boolean
+                            width: string | undefined
+                        }
+                        
+                        export namespace N_BorderCellStyle {
+                            export function isInstance(node: ITypedNode): node is N_BorderCellStyle {
+                                return '_is_org_iets3_core_expr_repl_BorderCellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_BorderCellStyle extends TypedNode implements N_BorderCellStyle {
+                            public _is_org_iets3_core_expr_repl_BorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -404,19 +510,31 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set width(value: string | undefined) {
                                 this.node.setPropertyValue("width", value)
                             }
                             public get width(): string | undefined {
                                 return this.node.getPropertyValue("width")
                             }
-                            // feature: width 
-                            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
                         }
                         
-                        export class CellConstraint extends TypedNode {
+                        
+                        export interface N_CellConstraint extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_repl_CellConstraint: boolean
+                            type: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+            constraint: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_CellConstraint {
+                            export function isInstance(node: ITypedNode): node is N_CellConstraint {
+                                return '_is_org_iets3_core_expr_repl_CellConstraint' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellConstraint extends TypedNode implements N_CellConstraint {
+                            public _is_org_iets3_core_expr_repl_CellConstraint: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -429,15 +547,46 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public type: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "type")
-                            public constraint: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "constraint")
-                            // feature: type 
-            // feature: constraint 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public type: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "type")
+                            public constraint: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "constraint")
                         }
                         
-                        export class SheetTestItem extends TypedNode {
+                        
+                        export interface N_SheetTestItem extends L_org_iets3_core_expr_tests.N_AbstractTestItem {
+                            _is_org_iets3_core_expr_repl_SheetTestItem: boolean
+                            cols: string | undefined
+            rows: string | undefined
+            sheet: SingleChildAccessor<N_Sheet>
+                        }
+                        
+                        export namespace N_SheetTestItem {
+                            export function isInstance(node: ITypedNode): node is N_SheetTestItem {
+                                return '_is_org_iets3_core_expr_repl_SheetTestItem' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SheetTestItem extends TypedNode implements N_SheetTestItem {
+                            public _is_org_iets3_core_expr_repl_SheetTestItem: boolean = true
+            public _is_org_iets3_core_expr_tests_AbstractTestItem: boolean = true
+            public _is_jetbrains_mps_lang_test_NodeCheckOperation: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_test_INodesTestMethod: boolean = true
+            public _is_jetbrains_mps_baseLanguage_unitTest_ITestMethod: boolean = true
+            public _is_jetbrains_mps_baseLanguage_unitTest_ITestable: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_org_iets3_core_base_ICanRunCheckManually: boolean = true
+            public _is_org_iets3_core_base_ICanStoreCheckResult: boolean = true
+            public _is_org_iets3_core_base_IOptionallyNamed: boolean = true
+            public _is_org_iets3_core_base_IValidNamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IResolveInfo: boolean = true
+            public _is_jetbrains_mps_lang_core_ISmartReferent: boolean = true
+            public _is_org_iets3_core_expr_base_IContainmentStackMember: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_ITraceRoot: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
                                             public set isIgnored(value: string | undefined) {
                                 this.node.setPropertyValue("isIgnored", value)
                             }
@@ -456,14 +605,14 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
                             public get name(): string | undefined {
                                 return this.node.getPropertyValue("name")
                             }
-                            public optionalName: SingleChildAccessor<L_org_iets3_core_base.OptionalNameSpecifier> = new SingleChildAccessor(this.node, "optionalName")
+                            public optionalName: SingleChildAccessor<L_org_iets3_core_base.N_OptionalNameSpecifier> = new SingleChildAccessor(this.node, "optionalName")
                             public set resolveInfo(value: string | undefined) {
                                 this.node.setPropertyValue("resolveInfo", value)
                             }
@@ -482,32 +631,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get rows(): string | undefined {
                                 return this.node.getPropertyValue("rows")
                             }
-                            public sheet: SingleChildAccessor<L_org_iets3_core_expr_repl.Sheet> = new SingleChildAccessor(this.node, "sheet")
-                            // feature: cols 
-            // feature: rows 
-            // feature: sheet 
-                            // super concept: org.iets3.core.expr.tests.AbstractTestItem 
-            // super concept: jetbrains.mps.lang.test.NodeCheckOperation 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.test.INodesTestMethod 
-            // super concept: jetbrains.mps.baseLanguage.unitTest.ITestMethod 
-            // super concept: jetbrains.mps.baseLanguage.unitTest.ITestable 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: org.iets3.core.base.ICanRunCheckManually 
-            // super concept: org.iets3.core.base.ICanStoreCheckResult 
-            // super concept: org.iets3.core.base.IOptionallyNamed 
-            // super concept: org.iets3.core.base.IValidNamedConcept 
-            // super concept: jetbrains.mps.lang.core.IResolveInfo 
-            // super concept: jetbrains.mps.lang.core.ISmartReferent 
-            // super concept: org.iets3.core.expr.base.IContainmentStackMember 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.ITraceRoot 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
+                            public sheet: SingleChildAccessor<N_Sheet> = new SingleChildAccessor(this.node, "sheet")
                         }
                         
-                        export class TopBorderCellStyle extends TypedNode {
+                        
+                        export interface N_TopBorderCellStyle extends N_BorderCellStyle {
+                            _is_org_iets3_core_expr_repl_TopBorderCellStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_TopBorderCellStyle {
+                            export function isInstance(node: ITypedNode): node is N_TopBorderCellStyle {
+                                return '_is_org_iets3_core_expr_repl_TopBorderCellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_TopBorderCellStyle extends TypedNode implements N_TopBorderCellStyle {
+                            public _is_org_iets3_core_expr_repl_TopBorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_BorderCellStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set width(value: string | undefined) {
                                 this.node.setPropertyValue("width", value)
                             }
@@ -526,14 +669,29 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.BorderCellStyle 
-            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class AbstractRangeExpr extends TypedNode {
+                        
+                        export interface N_AbstractRangeExpr extends N_AbstractSheetExpr {
+                            _is_org_iets3_core_expr_repl_AbstractRangeExpr: boolean
+                            from: SingleChildAccessor<N_AbstractCellRef>
+            to: SingleChildAccessor<N_AbstractCellRef>
+                        }
+                        
+                        export namespace N_AbstractRangeExpr {
+                            export function isInstance(node: ITypedNode): node is N_AbstractRangeExpr {
+                                return '_is_org_iets3_core_expr_repl_AbstractRangeExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractRangeExpr extends TypedNode implements N_AbstractRangeExpr {
+                            public _is_org_iets3_core_expr_repl_AbstractRangeExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -546,19 +704,38 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public from: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "from")
-                            public to: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "to")
-                            // feature: from 
-            // feature: to 
-                            // super concept: org.iets3.core.expr.repl.AbstractSheetExpr 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public from: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "from")
+                            public to: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "to")
                         }
                         
-                        export class Sheet extends TypedNode {
+                        
+                        export interface N_Sheet extends L_jetbrains_mps_lang_core.N_BaseConcept, L_com_mbeddr_core_base.N_IContainerOfUniqueNames, L_org_iets3_core_base.N_ICanRunCheckManually, L_org_iets3_core_base.N_IValidNamedConcept {
+                            _is_org_iets3_core_expr_repl_Sheet: boolean
+                            NUM_COLS: string | undefined
+            NUM_ROWS: string | undefined
+            booleansAreChecks: string | undefined
+            showValues: string | undefined
+            templateMode: string | undefined
+            cells: ChildListAccessor<N_Cell>
+                                
+                        }
+                        
+                        export namespace N_Sheet {
+                            export function isInstance(node: ITypedNode): node is N_Sheet {
+                                return '_is_org_iets3_core_expr_repl_Sheet' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_Sheet extends TypedNode implements N_Sheet {
+                            public _is_org_iets3_core_expr_repl_Sheet: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_IContainerOfUniqueNames: boolean = true
+            public _is_org_iets3_core_base_ICanRunCheckManually: boolean = true
+            public _is_org_iets3_core_base_ICanStoreCheckResult: boolean = true
+            public _is_org_iets3_core_base_IValidNamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IResolveInfo: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -571,7 +748,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -614,29 +791,28 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get templateMode(): string | undefined {
                                 return this.node.getPropertyValue("templateMode")
                             }
-                            public cells: ChildListAccessor<L_org_iets3_core_expr_repl.Cell> = new ChildListAccessor(this.node, "cells")
-                            // feature: NUM_COLS 
-            // feature: NUM_ROWS 
-            // feature: booleansAreChecks 
-            // feature: showValues 
-            // feature: templateMode 
-            // feature: cells 
-            // feature: template 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-            // feature: resolveInfo 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.IContainerOfUniqueNames 
-            // super concept: org.iets3.core.base.ICanRunCheckManually 
-            // super concept: org.iets3.core.base.ICanStoreCheckResult 
-            // super concept: org.iets3.core.base.IValidNamedConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.core.IResolveInfo 
+                            public cells: ChildListAccessor<N_Cell> = new ChildListAccessor(this.node, "cells")
                         }
                         
-                        export class AbstractCellRef extends TypedNode {
+                        
+                        export interface N_AbstractCellRef extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_repl_AbstractCellRef: boolean
+                            finder: SingleChildAccessor<N_AbstractSheetFinder>
+            actuals: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_AbstractCellRef {
+                            export function isInstance(node: ITypedNode): node is N_AbstractCellRef {
+                                return '_is_org_iets3_core_expr_repl_AbstractCellRef' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractCellRef extends TypedNode implements N_AbstractCellRef {
+                            public _is_org_iets3_core_expr_repl_AbstractCellRef: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -649,18 +825,30 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public finder: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
-                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.Expression> = new ChildListAccessor(this.node, "actuals")
-                            // feature: finder 
-            // feature: actuals 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public finder: SingleChildAccessor<N_AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
+                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression> = new ChildListAccessor(this.node, "actuals")
                         }
                         
-                        export class LabelExpression extends TypedNode {
+                        
+                        export interface N_LabelExpression extends N_AbstractSheetExpr {
+                            _is_org_iets3_core_expr_repl_LabelExpression: boolean
+                            text: string | undefined
+                        }
+                        
+                        export namespace N_LabelExpression {
+                            export function isInstance(node: ITypedNode): node is N_LabelExpression {
+                                return '_is_org_iets3_core_expr_repl_LabelExpression' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LabelExpression extends TypedNode implements N_LabelExpression {
+                            public _is_org_iets3_core_expr_repl_LabelExpression: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -673,22 +861,38 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set text(value: string | undefined) {
                                 this.node.setPropertyValue("text", value)
                             }
                             public get text(): string | undefined {
                                 return this.node.getPropertyValue("text")
                             }
-                            // feature: text 
-                            // super concept: org.iets3.core.expr.repl.AbstractSheetExpr 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
                         }
                         
-                        export class Cell extends TypedNode {
+                        
+                        export interface N_Cell extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_repl_Cell: boolean
+                            result: string | undefined
+            locked: string | undefined
+            template: string | undefined
+            internal: string | undefined
+            constraint: SingleChildAccessor<N_CellConstraint>
+            expr: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+            label: SingleChildAccessor<N_CellLabel>
+            args: ChildListAccessor<N_CellArg>
+            styles: ChildListAccessor<N_CellStyle>
+                        }
+                        
+                        export namespace N_Cell {
+                            export function isInstance(node: ITypedNode): node is N_Cell {
+                                return '_is_org_iets3_core_expr_repl_Cell' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_Cell extends TypedNode implements N_Cell {
+                            public _is_org_iets3_core_expr_repl_Cell: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -701,7 +905,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set result(value: string | undefined) {
                                 this.node.setPropertyValue("result", value)
                             }
@@ -726,24 +930,31 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get internal(): string | undefined {
                                 return this.node.getPropertyValue("internal")
                             }
-                            public constraint: SingleChildAccessor<L_org_iets3_core_expr_repl.CellConstraint> = new SingleChildAccessor(this.node, "constraint")
-                            public expr: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "expr")
-                            public label: SingleChildAccessor<L_org_iets3_core_expr_repl.CellLabel> = new SingleChildAccessor(this.node, "label")
-                            public args: ChildListAccessor<L_org_iets3_core_expr_repl.CellArg> = new ChildListAccessor(this.node, "args")
-                            public styles: ChildListAccessor<L_org_iets3_core_expr_repl.CellStyle> = new ChildListAccessor(this.node, "styles")
-                            // feature: result 
-            // feature: locked 
-            // feature: template 
-            // feature: internal 
-            // feature: constraint 
-            // feature: expr 
-            // feature: label 
-            // feature: args 
-            // feature: styles 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public constraint: SingleChildAccessor<N_CellConstraint> = new SingleChildAccessor(this.node, "constraint")
+                            public expr: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "expr")
+                            public label: SingleChildAccessor<N_CellLabel> = new SingleChildAccessor(this.node, "label")
+                            public args: ChildListAccessor<N_CellArg> = new ChildListAccessor(this.node, "args")
+                            public styles: ChildListAccessor<N_CellStyle> = new ChildListAccessor(this.node, "styles")
                         }
                         
-                        export class SheetType extends TypedNode {
+                        
+                        export interface N_SheetType extends L_org_iets3_core_expr_base.N_Type {
+                            _is_org_iets3_core_expr_repl_SheetType: boolean
+                                                
+                        }
+                        
+                        export namespace N_SheetType {
+                            export function isInstance(node: ITypedNode): node is N_SheetType {
+                                return '_is_org_iets3_core_expr_repl_SheetType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SheetType extends TypedNode implements N_SheetType {
+                            public _is_org_iets3_core_expr_repl_SheetType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -756,15 +967,27 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: template 
-                            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class CellArg extends TypedNode {
+                        
+                        export interface N_CellArg extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_base.N_IValidNamedConcept {
+                            _is_org_iets3_core_expr_repl_CellArg: boolean
+                            type: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_CellArg {
+                            export function isInstance(node: ITypedNode): node is N_CellArg {
+                                return '_is_org_iets3_core_expr_repl_CellArg' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellArg extends TypedNode implements N_CellArg {
+                            public _is_org_iets3_core_expr_repl_CellArg: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_base_IValidNamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IResolveInfo: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -777,7 +1000,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -790,20 +1013,25 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get resolveInfo(): string | undefined {
                                 return this.node.getPropertyValue("resolveInfo")
                             }
-                            public type: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "type")
-                            // feature: type 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-            // feature: resolveInfo 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.base.IValidNamedConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.core.IResolveInfo 
+                            public type: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "type")
                         }
                         
-                        export class FontStyle extends TypedNode {
+                        
+                        export interface N_FontStyle extends N_CellStyle {
+                            _is_org_iets3_core_expr_repl_FontStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_FontStyle {
+                            export function isInstance(node: ITypedNode): node is N_FontStyle {
+                                return '_is_org_iets3_core_expr_repl_FontStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FontStyle extends TypedNode implements N_FontStyle {
+                            public _is_org_iets3_core_expr_repl_FontStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -816,15 +1044,31 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class MakeListExpr extends TypedNode {
-                                            public from: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "from")
-                            public to: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "to")
+                        
+                        export interface N_MakeListExpr extends N_AbstractRangeExpr {
+                            _is_org_iets3_core_expr_repl_MakeListExpr: boolean
+                            
+                        }
+                        
+                        export namespace N_MakeListExpr {
+                            export function isInstance(node: ITypedNode): node is N_MakeListExpr {
+                                return '_is_org_iets3_core_expr_repl_MakeListExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MakeListExpr extends TypedNode implements N_MakeListExpr {
+                            public _is_org_iets3_core_expr_repl_MakeListExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractRangeExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+                                            public from: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "from")
+                            public to: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "to")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -837,17 +1081,27 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.AbstractRangeExpr 
-            // super concept: org.iets3.core.expr.repl.AbstractSheetExpr 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class CellArgRef extends TypedNode {
+                        
+                        export interface N_CellArgRef extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_repl_CellArgRef: boolean
+                                                
+                        }
+                        
+                        export namespace N_CellArgRef {
+                            export function isInstance(node: ITypedNode): node is N_CellArgRef {
+                                return '_is_org_iets3_core_expr_repl_CellArgRef' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellArgRef extends TypedNode implements N_CellArgRef {
+                            public _is_org_iets3_core_expr_repl_CellArgRef: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -860,15 +1114,30 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: arg 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class SheetEmbedExpr extends TypedNode {
+                        
+                        export interface N_SheetEmbedExpr extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_repl_SheetEmbedExpr: boolean
+                            cols: string | undefined
+            rows: string | undefined
+            sheet: SingleChildAccessor<N_Sheet>
+                                
+                        }
+                        
+                        export namespace N_SheetEmbedExpr {
+                            export function isInstance(node: ITypedNode): node is N_SheetEmbedExpr {
+                                return '_is_org_iets3_core_expr_repl_SheetEmbedExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SheetEmbedExpr extends TypedNode implements N_SheetEmbedExpr {
+                            public _is_org_iets3_core_expr_repl_SheetEmbedExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -881,7 +1150,7 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set cols(value: string | undefined) {
                                 this.node.setPropertyValue("cols", value)
                             }
@@ -894,38 +1163,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get rows(): string | undefined {
                                 return this.node.getPropertyValue("rows")
                             }
-                            public sheet: SingleChildAccessor<L_org_iets3_core_expr_repl.Sheet> = new SingleChildAccessor(this.node, "sheet")
-                            // feature: cols 
-            // feature: rows 
-            // feature: sheet 
-            // feature: template 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public sheet: SingleChildAccessor<N_Sheet> = new SingleChildAccessor(this.node, "sheet")
                         }
                         
-                        export class FontBoldStyle extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        
+                        export interface N_FontBoldStyle extends N_FontStyle {
+                            _is_org_iets3_core_expr_repl_FontBoldStyle: boolean
                             
-                            // super concept: org.iets3.core.expr.repl.FontStyle 
-            // super concept: org.iets3.core.expr.repl.CellStyle 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
                         }
                         
-                        export class NamedSheetFinder extends TypedNode {
+                        export namespace N_FontBoldStyle {
+                            export function isInstance(node: ITypedNode): node is N_FontBoldStyle {
+                                return '_is_org_iets3_core_expr_repl_FontBoldStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FontBoldStyle extends TypedNode implements N_FontBoldStyle {
+                            public _is_org_iets3_core_expr_repl_FontBoldStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_FontStyle: boolean = true
+            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -938,13 +1195,25 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: sheet 
-                            // super concept: org.iets3.core.expr.repl.AbstractSheetFinder 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class TopLevelSheet extends TypedNode {
+                        
+                        export interface N_NamedSheetFinder extends N_AbstractSheetFinder {
+                            _is_org_iets3_core_expr_repl_NamedSheetFinder: boolean
+                                                
+                        }
+                        
+                        export namespace N_NamedSheetFinder {
+                            export function isInstance(node: ITypedNode): node is N_NamedSheetFinder {
+                                return '_is_org_iets3_core_expr_repl_NamedSheetFinder' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_NamedSheetFinder extends TypedNode implements N_NamedSheetFinder {
+                            public _is_org_iets3_core_expr_repl_NamedSheetFinder: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetFinder: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -957,7 +1226,47 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_TopLevelSheet extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_toplevel.N_IToplevelExprContent {
+                            _is_org_iets3_core_expr_repl_TopLevelSheet: boolean
+                            template: string | undefined
+            hideTitle: string | undefined
+            sheet: SingleChildAccessor<N_SheetEmbedExpr>
+                        }
+                        
+                        export namespace N_TopLevelSheet {
+                            export function isInstance(node: ITypedNode): node is N_TopLevelSheet {
+                                return '_is_org_iets3_core_expr_repl_TopLevelSheet' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_TopLevelSheet extends TypedNode implements N_TopLevelSheet {
+                            public _is_org_iets3_core_expr_repl_TopLevelSheet: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_toplevel_IToplevelExprContent: boolean = true
+            public _is_org_iets3_core_base_IValidNamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IResolveInfo: boolean = true
+            public _is_org_iets3_core_expr_base_IContainmentStackMember: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IHasQualifiedName: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -982,27 +1291,27 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get hideTitle(): string | undefined {
                                 return this.node.getPropertyValue("hideTitle")
                             }
-                            public sheet: SingleChildAccessor<L_org_iets3_core_expr_repl.SheetEmbedExpr> = new SingleChildAccessor(this.node, "sheet")
-                            // feature: template 
-            // feature: hideTitle 
-            // feature: sheet 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-            // feature: resolveInfo 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.toplevel.IToplevelExprContent 
-            // super concept: org.iets3.core.base.IValidNamedConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.core.IResolveInfo 
-            // super concept: org.iets3.core.expr.base.IContainmentStackMember 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IHasQualifiedName 
+                            public sheet: SingleChildAccessor<N_SheetEmbedExpr> = new SingleChildAccessor(this.node, "sheet")
                         }
                         
-                        export class AbstractSheetExpr extends TypedNode {
+                        
+                        export interface N_AbstractSheetExpr extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean
+                            
+                        }
+                        
+                        export namespace N_AbstractSheetExpr {
+                            export function isInstance(node: ITypedNode): node is N_AbstractSheetExpr {
+                                return '_is_org_iets3_core_expr_repl_AbstractSheetExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractSheetExpr extends TypedNode implements N_AbstractSheetExpr {
+                            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1015,17 +1324,30 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class NamedCellRef extends TypedNode {
-                                            public finder: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
-                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.Expression> = new ChildListAccessor(this.node, "actuals")
+                        
+                        export interface N_NamedCellRef extends N_AbstractCellRef {
+                            _is_org_iets3_core_expr_repl_NamedCellRef: boolean
+                                                
+                        }
+                        
+                        export namespace N_NamedCellRef {
+                            export function isInstance(node: ITypedNode): node is N_NamedCellRef {
+                                return '_is_org_iets3_core_expr_repl_NamedCellRef' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_NamedCellRef extends TypedNode implements N_NamedCellRef {
+                            public _is_org_iets3_core_expr_repl_NamedCellRef: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractCellRef: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+                                            public finder: SingleChildAccessor<N_AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
+                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression> = new ChildListAccessor(this.node, "actuals")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1038,16 +1360,27 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: label 
-                            // super concept: org.iets3.core.expr.repl.AbstractCellRef 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class CellConstraintIt extends TypedNode {
+                        
+                        export interface N_CellConstraintIt extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_repl_CellConstraintIt: boolean
+                            
+                        }
+                        
+                        export namespace N_CellConstraintIt {
+                            export function isInstance(node: ITypedNode): node is N_CellConstraintIt {
+                                return '_is_org_iets3_core_expr_repl_CellConstraintIt' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellConstraintIt extends TypedNode implements N_CellConstraintIt {
+                            public _is_org_iets3_core_expr_repl_CellConstraintIt: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1060,53 +1393,90 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
-            
-            export class AbstractSheetFinder extends TypedNode {
-                                public set shortDescription(value: string | undefined) {
-                    this.node.setPropertyValue("shortDescription", value)
-                }
-                public get shortDescription(): string | undefined {
-                    return this.node.getPropertyValue("shortDescription")
-                }
-                public set virtualPackage(value: string | undefined) {
-                    this.node.setPropertyValue("virtualPackage", value)
-                }
-                public get virtualPackage(): string | undefined {
-                    return this.node.getPropertyValue("virtualPackage")
-                }
-                public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                
-                // super concept: jetbrains.mps.lang.core.BaseConcept 
-            }
-            
-            export class CellStyle extends TypedNode {
-                                public set shortDescription(value: string | undefined) {
-                    this.node.setPropertyValue("shortDescription", value)
-                }
-                public get shortDescription(): string | undefined {
-                    return this.node.getPropertyValue("shortDescription")
-                }
-                public set virtualPackage(value: string | undefined) {
-                    this.node.setPropertyValue("virtualPackage", value)
-                }
-                public get virtualPackage(): string | undefined {
-                    return this.node.getPropertyValue("virtualPackage")
-                }
-                public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                
-                // super concept: jetbrains.mps.lang.core.BaseConcept 
-            }
                         
-                        export class CoordCellRef extends TypedNode {
-                                            public finder: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
-                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.Expression> = new ChildListAccessor(this.node, "actuals")
+                        
+                        export interface N_AbstractSheetFinder extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_repl_AbstractSheetFinder: boolean
+                            
+                        }
+                        
+                        export namespace N_AbstractSheetFinder {
+                            export function isInstance(node: ITypedNode): node is N_AbstractSheetFinder {
+                                return '_is_org_iets3_core_expr_repl_AbstractSheetFinder' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractSheetFinder extends TypedNode implements N_AbstractSheetFinder {
+                            public _is_org_iets3_core_expr_repl_AbstractSheetFinder: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_CellStyle extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_repl_CellStyle: boolean
+                            
+                        }
+                        
+                        export namespace N_CellStyle {
+                            export function isInstance(node: ITypedNode): node is N_CellStyle {
+                                return '_is_org_iets3_core_expr_repl_CellStyle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellStyle extends TypedNode implements N_CellStyle {
+                            public _is_org_iets3_core_expr_repl_CellStyle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_CoordCellRef extends N_AbstractCellRef {
+                            _is_org_iets3_core_expr_repl_CoordCellRef: boolean
+                            cell: string | undefined
+                        }
+                        
+                        export namespace N_CoordCellRef {
+                            export function isInstance(node: ITypedNode): node is N_CoordCellRef {
+                                return '_is_org_iets3_core_expr_repl_CoordCellRef' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CoordCellRef extends TypedNode implements N_CoordCellRef {
+                            public _is_org_iets3_core_expr_repl_CoordCellRef: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractCellRef: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+                                            public finder: SingleChildAccessor<N_AbstractSheetFinder> = new SingleChildAccessor(this.node, "finder")
+                            public actuals: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression> = new ChildListAccessor(this.node, "actuals")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1119,22 +1489,31 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set cell(value: string | undefined) {
                                 this.node.setPropertyValue("cell", value)
                             }
                             public get cell(): string | undefined {
                                 return this.node.getPropertyValue("cell")
                             }
-                            // feature: cell 
-                            // super concept: org.iets3.core.expr.repl.AbstractCellRef 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
                         }
                         
-                        export class UpwardsSheetFinder extends TypedNode {
+                        
+                        export interface N_UpwardsSheetFinder extends N_AbstractSheetFinder {
+                            _is_org_iets3_core_expr_repl_UpwardsSheetFinder: boolean
+                            
+                        }
+                        
+                        export namespace N_UpwardsSheetFinder {
+                            export function isInstance(node: ITypedNode): node is N_UpwardsSheetFinder {
+                                return '_is_org_iets3_core_expr_repl_UpwardsSheetFinder' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_UpwardsSheetFinder extends TypedNode implements N_UpwardsSheetFinder {
+                            public _is_org_iets3_core_expr_repl_UpwardsSheetFinder: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetFinder: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1147,15 +1526,31 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.repl.AbstractSheetFinder 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class MakeRecordExpr extends TypedNode {
-                                            public from: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "from")
-                            public to: SingleChildAccessor<L_org_iets3_core_expr_repl.AbstractCellRef> = new SingleChildAccessor(this.node, "to")
+                        
+                        export interface N_MakeRecordExpr extends N_AbstractRangeExpr {
+                            _is_org_iets3_core_expr_repl_MakeRecordExpr: boolean
+                            record: SingleChildAccessor<L_org_iets3_core_expr_toplevel.N_RecordType>
+                        }
+                        
+                        export namespace N_MakeRecordExpr {
+                            export function isInstance(node: ITypedNode): node is N_MakeRecordExpr {
+                                return '_is_org_iets3_core_expr_repl_MakeRecordExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MakeRecordExpr extends TypedNode implements N_MakeRecordExpr {
+                            public _is_org_iets3_core_expr_repl_MakeRecordExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractRangeExpr: boolean = true
+            public _is_org_iets3_core_expr_repl_AbstractSheetExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+                                            public from: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "from")
+                            public to: SingleChildAccessor<N_AbstractCellRef> = new SingleChildAccessor(this.node, "to")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1168,18 +1563,26 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public record: SingleChildAccessor<L_org_iets3_core_expr_toplevel.RecordType> = new SingleChildAccessor(this.node, "record")
-                            // feature: record 
-                            // super concept: org.iets3.core.expr.repl.AbstractRangeExpr 
-            // super concept: org.iets3.core.expr.repl.AbstractSheetExpr 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public record: SingleChildAccessor<L_org_iets3_core_expr_toplevel.N_RecordType> = new SingleChildAccessor(this.node, "record")
                         }
                         
-                        export class CellLabel extends TypedNode {
+                        
+                        export interface N_CellLabel extends L_jetbrains_mps_lang_core.N_BaseConcept, L_jetbrains_mps_lang_core.N_INamedConcept {
+                            _is_org_iets3_core_expr_repl_CellLabel: boolean
+                            
+                        }
+                        
+                        export namespace N_CellLabel {
+                            export function isInstance(node: ITypedNode): node is N_CellLabel {
+                                return '_is_org_iets3_core_expr_repl_CellLabel' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CellLabel extends TypedNode implements N_CellLabel {
+                            public _is_org_iets3_core_expr_repl_CellLabel: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1192,18 +1595,12 @@ this.nodeWrappers.set("mps:18001c94-33a7-4f68-a7c1-ffddc4b39be1/6371013116350760
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
                             public get name(): string | undefined {
                                 return this.node.getPropertyValue("name")
                             }
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
                         }
             }

@@ -3,7 +3,8 @@ import {
   SingleChildAccessor,
   GeneratedLanguage,
   INodeJS,
-  TypedNode
+  TypedNode,
+  ITypedNode
 } from "ts-model-api";
 
 
@@ -15,7 +16,7 @@ export class L_com_mbeddr_mpsutil_jung extends GeneratedLanguage {
     constructor() {
         super("com.mbeddr.mpsutil.jung")
         
-        this.nodeWrappers.set("mps:d09a16fb-1d68-4a92-a5a4-20b4b2f86a62/6388491840914066147", (node: INodeJS) => new IJGraphProvider(node))
+        this.nodeWrappers.set("mps:d09a16fb-1d68-4a92-a5a4-20b4b2f86a62/6388491840914066147", (node: INodeJS) => new _N_TypedImpl_IJGraphProvider(node))
     }
     /*
     public getConcepts() {
@@ -26,9 +27,19 @@ export class L_com_mbeddr_mpsutil_jung extends GeneratedLanguage {
 }
 export const INSTANCE = L_com_mbeddr_mpsutil_jung.INSTANCE
 
-            export class IJGraphProvider extends TypedNode {
+            export interface N_IJGraphProvider extends ITypedNode {
+    _is_com_mbeddr_mpsutil_jung_IJGraphProvider: boolean
     
-    
+}
+
+export namespace N_IJGraphProvider {
+    export function isInstance(node: ITypedNode): node is N_IJGraphProvider {
+        return '_is_com_mbeddr_mpsutil_jung_IJGraphProvider' in node;
+    }
+}
+
+export class _N_TypedImpl_IJGraphProvider extends TypedNode implements N_IJGraphProvider {
+    public _is_com_mbeddr_mpsutil_jung_IJGraphProvider: boolean = true
     
 }
 }

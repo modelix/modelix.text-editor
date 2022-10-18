@@ -3,11 +3,14 @@
               SingleChildAccessor,
               GeneratedLanguage,
               INodeJS,
-              TypedNode
+              TypedNode,
+              ITypedNode
             } from "ts-model-api";
             
             import {L_jetbrains_mps_lang_core} from "./L_jetbrains_mps_lang_core";
+import {L_com_mbeddr_mpsutil_interpreter} from "./L_com_mbeddr_mpsutil_interpreter";
 import {L_org_iets3_core_expr_base} from "./L_org_iets3_core_expr_base";
+import {L_org_iets3_core_expr_lambda} from "./L_org_iets3_core_expr_lambda";
             
             export namespace L_org_iets3_core_expr_collections {
             
@@ -16,86 +19,86 @@ import {L_org_iets3_core_expr_base} from "./L_org_iets3_core_expr_base";
                 constructor() {
                     super("org.iets3.core.expr.collections")
                     
-                    this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339749509", (node: INodeJS) => new CollectionType(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339757344", (node: INodeJS) => new ListType(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339759319", (node: INodeJS) => new ListLiteral(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339790458", (node: INodeJS) => new ICollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339795488", (node: INodeJS) => new NoArgCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339796915", (node: INodeJS) => new SizeOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339840476", (node: INodeJS) => new IsEmptyOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848519", (node: INodeJS) => new IOrderedCollection(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848559", (node: INodeJS) => new IOrderedCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850572", (node: INodeJS) => new FirstOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850588", (node: INodeJS) => new IElementTyped(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339853806", (node: INodeJS) => new LastOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340004826", (node: INodeJS) => new AtOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340020764", (node: INodeJS) => new OneArgCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340021069", (node: INodeJS) => new IContextTypedCollOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340640412", (node: INodeJS) => new MapOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340715406", (node: INodeJS) => new WhereOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265511400449", (node: INodeJS) => new DistinctOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265513219132", (node: INodeJS) => new AsImmutableListOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514323710", (node: INodeJS) => new ContainsOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514351708", (node: INodeJS) => new OneCollBaseTypedArgCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515327232", (node: INodeJS) => new OneArgPredicateCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515619803", (node: INodeJS) => new AnyOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265518788050", (node: INodeJS) => new AllOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520080263", (node: INodeJS) => new SetType(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520081293", (node: INodeJS) => new SetLiteral(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265522211270", (node: INodeJS) => new AsImmutableSetOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5849458724932670346", (node: INodeJS) => new BracketOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163110902", (node: INodeJS) => new MapType(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111272", (node: INodeJS) => new MapLiteral(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111273", (node: INodeJS) => new KeyValuePair(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163555724", (node: INodeJS) => new MapWithOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163714133", (node: INodeJS) => new MapWithoutOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046587930249", (node: INodeJS) => new MaxOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046594451299", (node: INodeJS) => new SumOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046596642164", (node: INodeJS) => new FirstNOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046597818717", (node: INodeJS) => new LastNOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890435239346753529", (node: INodeJS) => new SimpleSortOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7740953487940081584", (node: INodeJS) => new MinOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179783739", (node: INodeJS) => new ListWithOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179855331", (node: INodeJS) => new SetWithOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031077039769", (node: INodeJS) => new ElementTypeConstraintSingle(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031078300776", (node: INodeJS) => new ElementTypeConstraintMap(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1330041117646892901", (node: INodeJS) => new CollectionSizeSpec(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3989687177013570767", (node: INodeJS) => new UpToTarget(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4618483580248255217", (node: INodeJS) => new UnpackOptionsOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/75413091695536841", (node: INodeJS) => new IndexExpr(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441616112342", (node: INodeJS) => new IProvideIndex(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441620016186", (node: INodeJS) => new ForeachOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2554784455264825928", (node: INodeJS) => new FlattenOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6414340278546763815", (node: INodeJS) => new AsSingletonList(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213698520477", (node: INodeJS) => new AbstractStringListJoiner(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213695398904", (node: INodeJS) => new StringJoinOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213697900736", (node: INodeJS) => new StringTerminateOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3831047747134047985", (node: INodeJS) => new SetWithoutOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6095949300270588116", (node: INodeJS) => new IsNotEmptyOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338319", (node: INodeJS) => new FoldLeftOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338320", (node: INodeJS) => new FoldOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123213992448", (node: INodeJS) => new AsMapOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123215615666", (node: INodeJS) => new MapSizeOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123216554083", (node: INodeJS) => new FindFirstOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/362871314062739301", (node: INodeJS) => new ListWithAllOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221899372124", (node: INodeJS) => new MapLikeType(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561707151", (node: INodeJS) => new ListInsertOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876255273", (node: INodeJS) => new MapKeysOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876240958", (node: INodeJS) => new MapValuesOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561696122", (node: INodeJS) => new ListWithoutOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876236259", (node: INodeJS) => new MapContainsKeyOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675865128281", (node: INodeJS) => new IMapOneArgOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/527291771330968213", (node: INodeJS) => new ISetOneArgOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221900249273", (node: INodeJS) => new IListOneArgOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356043012", (node: INodeJS) => new AllWithIndexOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356045611", (node: INodeJS) => new TwoArgPredicateCollectionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4481921169623440367", (node: INodeJS) => new AnyWithIndexOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/393796118209799325", (node: INodeJS) => new TailOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261017737777", (node: INodeJS) => new ReverseOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261030611861", (node: INodeJS) => new SetUnionOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261038438968", (node: INodeJS) => new SetDiffOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/531692237848496057", (node: INodeJS) => new ListPickOp(node))
-this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327605", (node: INodeJS) => new IndexOfOp(node))
+                    this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339749509", (node: INodeJS) => new _N_TypedImpl_CollectionType(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339757344", (node: INodeJS) => new _N_TypedImpl_ListType(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339759319", (node: INodeJS) => new _N_TypedImpl_ListLiteral(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339790458", (node: INodeJS) => new _N_TypedImpl_ICollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339795488", (node: INodeJS) => new _N_TypedImpl_NoArgCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339796915", (node: INodeJS) => new _N_TypedImpl_SizeOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339840476", (node: INodeJS) => new _N_TypedImpl_IsEmptyOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848519", (node: INodeJS) => new _N_TypedImpl_IOrderedCollection(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339848559", (node: INodeJS) => new _N_TypedImpl_IOrderedCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850572", (node: INodeJS) => new _N_TypedImpl_FirstOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339850588", (node: INodeJS) => new _N_TypedImpl_IElementTyped(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283339853806", (node: INodeJS) => new _N_TypedImpl_LastOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340004826", (node: INodeJS) => new _N_TypedImpl_AtOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340020764", (node: INodeJS) => new _N_TypedImpl_OneArgCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340021069", (node: INodeJS) => new _N_TypedImpl_IContextTypedCollOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340640412", (node: INodeJS) => new _N_TypedImpl_MapOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7554398283340715406", (node: INodeJS) => new _N_TypedImpl_WhereOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265511400449", (node: INodeJS) => new _N_TypedImpl_DistinctOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265513219132", (node: INodeJS) => new _N_TypedImpl_AsImmutableListOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514323710", (node: INodeJS) => new _N_TypedImpl_ContainsOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265514351708", (node: INodeJS) => new _N_TypedImpl_OneCollBaseTypedArgCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515327232", (node: INodeJS) => new _N_TypedImpl_OneArgPredicateCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265515619803", (node: INodeJS) => new _N_TypedImpl_AnyOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265518788050", (node: INodeJS) => new _N_TypedImpl_AllOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520080263", (node: INodeJS) => new _N_TypedImpl_SetType(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265520081293", (node: INodeJS) => new _N_TypedImpl_SetLiteral(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8872269265522211270", (node: INodeJS) => new _N_TypedImpl_AsImmutableSetOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5849458724932670346", (node: INodeJS) => new _N_TypedImpl_BracketOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163110902", (node: INodeJS) => new _N_TypedImpl_MapType(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111272", (node: INodeJS) => new _N_TypedImpl_MapLiteral(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163111273", (node: INodeJS) => new _N_TypedImpl_KeyValuePair(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163555724", (node: INodeJS) => new _N_TypedImpl_MapWithOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8448265401163714133", (node: INodeJS) => new _N_TypedImpl_MapWithoutOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046587930249", (node: INodeJS) => new _N_TypedImpl_MaxOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046594451299", (node: INodeJS) => new _N_TypedImpl_SumOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046596642164", (node: INodeJS) => new _N_TypedImpl_FirstNOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5585772046597818717", (node: INodeJS) => new _N_TypedImpl_LastNOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890435239346753529", (node: INodeJS) => new _N_TypedImpl_SimpleSortOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7740953487940081584", (node: INodeJS) => new _N_TypedImpl_MinOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179783739", (node: INodeJS) => new _N_TypedImpl_ListWithOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2156530943179855331", (node: INodeJS) => new _N_TypedImpl_SetWithOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031077039769", (node: INodeJS) => new _N_TypedImpl_ElementTypeConstraintSingle(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/8694548031078300776", (node: INodeJS) => new _N_TypedImpl_ElementTypeConstraintMap(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1330041117646892901", (node: INodeJS) => new _N_TypedImpl_CollectionSizeSpec(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3989687177013570767", (node: INodeJS) => new _N_TypedImpl_UpToTarget(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4618483580248255217", (node: INodeJS) => new _N_TypedImpl_UnpackOptionsOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/75413091695536841", (node: INodeJS) => new _N_TypedImpl_IndexExpr(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441616112342", (node: INodeJS) => new _N_TypedImpl_IProvideIndex(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/9097157441620016186", (node: INodeJS) => new _N_TypedImpl_ForeachOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/2554784455264825928", (node: INodeJS) => new _N_TypedImpl_FlattenOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6414340278546763815", (node: INodeJS) => new _N_TypedImpl_AsSingletonList(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213698520477", (node: INodeJS) => new _N_TypedImpl_AbstractStringListJoiner(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213695398904", (node: INodeJS) => new _N_TypedImpl_StringJoinOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5070313213697900736", (node: INodeJS) => new _N_TypedImpl_StringTerminateOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/3831047747134047985", (node: INodeJS) => new _N_TypedImpl_SetWithoutOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/6095949300270588116", (node: INodeJS) => new _N_TypedImpl_IsNotEmptyOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338319", (node: INodeJS) => new _N_TypedImpl_FoldLeftOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4931785860342338320", (node: INodeJS) => new _N_TypedImpl_FoldOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123213992448", (node: INodeJS) => new _N_TypedImpl_AsMapOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123215615666", (node: INodeJS) => new _N_TypedImpl_MapSizeOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/24388123216554083", (node: INodeJS) => new _N_TypedImpl_FindFirstOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/362871314062739301", (node: INodeJS) => new _N_TypedImpl_ListWithAllOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221899372124", (node: INodeJS) => new _N_TypedImpl_MapLikeType(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561707151", (node: INodeJS) => new _N_TypedImpl_ListInsertOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876255273", (node: INodeJS) => new _N_TypedImpl_MapKeysOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876240958", (node: INodeJS) => new _N_TypedImpl_MapValuesOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/890442848561696122", (node: INodeJS) => new _N_TypedImpl_ListWithoutOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675876236259", (node: INodeJS) => new _N_TypedImpl_MapContainsKeyOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/7757419675865128281", (node: INodeJS) => new _N_TypedImpl_IMapOneArgOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/527291771330968213", (node: INodeJS) => new _N_TypedImpl_ISetOneArgOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5291952221900249273", (node: INodeJS) => new _N_TypedImpl_IListOneArgOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356043012", (node: INodeJS) => new _N_TypedImpl_AllWithIndexOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/444732437356045611", (node: INodeJS) => new _N_TypedImpl_TwoArgPredicateCollectionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/4481921169623440367", (node: INodeJS) => new _N_TypedImpl_AnyWithIndexOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/393796118209799325", (node: INodeJS) => new _N_TypedImpl_TailOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261017737777", (node: INodeJS) => new _N_TypedImpl_ReverseOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261030611861", (node: INodeJS) => new _N_TypedImpl_SetUnionOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/5396945261038438968", (node: INodeJS) => new _N_TypedImpl_SetDiffOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/531692237848496057", (node: INodeJS) => new _N_TypedImpl_ListPickOp(node))
+this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327605", (node: INodeJS) => new _N_TypedImpl_IndexOfOp(node))
                 }
                 /*
                 public getConcepts() {
@@ -185,7 +188,27 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
             }
             export const INSTANCE = L_org_iets3_core_expr_collections.INSTANCE
             
-                                    export class CollectionType extends TypedNode {
+                                    export interface N_CollectionType extends L_org_iets3_core_expr_base.N_Type, L_org_iets3_core_expr_base.N_ICollectionType, L_org_iets3_core_expr_base.N_ITypeSupportsDefaultValue {
+                            _is_org_iets3_core_expr_collections_CollectionType: boolean
+                            sizeConstraint: SingleChildAccessor<N_CollectionSizeSpec>
+            baseType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_CollectionType {
+                            export function isInstance(node: ITypedNode): node is N_CollectionType {
+                                return '_is_org_iets3_core_expr_collections_CollectionType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CollectionType extends TypedNode implements N_CollectionType {
+                            public _is_org_iets3_core_expr_collections_CollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_org_iets3_core_expr_base_ICollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_IHasBaseType: boolean = true
+            public _is_org_iets3_core_expr_base_ITypeSupportsDefaultValue: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -198,26 +221,37 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public sizeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
-                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "baseType")
-                            // feature: sizeConstraint 
-            // feature: baseType 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: org.iets3.core.expr.base.ICollectionType 
-            // super concept: org.iets3.core.expr.base.IHasBaseType 
-            // super concept: org.iets3.core.expr.base.ITypeSupportsDefaultValue 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public sizeConstraint: SingleChildAccessor<N_CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
+                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "baseType")
                         }
                         
-                        export class ListType extends TypedNode {
-                                            public sizeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
-                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "baseType")
+                        
+                        export interface N_ListType extends N_CollectionType, N_IOrderedCollection, L_org_iets3_core_expr_base.N_IParameterizedTypeSupportsEquals {
+                            _is_org_iets3_core_expr_collections_ListType: boolean
+                            
+                        }
+                        
+                        export namespace N_ListType {
+                            export function isInstance(node: ITypedNode): node is N_ListType {
+                                return '_is_org_iets3_core_expr_collections_ListType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListType extends TypedNode implements N_ListType {
+                            public _is_org_iets3_core_expr_collections_ListType: boolean = true
+            public _is_org_iets3_core_expr_collections_CollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_org_iets3_core_expr_base_ICollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_IHasBaseType: boolean = true
+            public _is_org_iets3_core_expr_base_ITypeSupportsDefaultValue: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollection: boolean = true
+            public _is_org_iets3_core_expr_base_IParameterizedTypeSupportsEquals: boolean = true
+                                            public sizeConstraint: SingleChildAccessor<N_CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
+                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "baseType")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -230,25 +264,30 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: sizeConstraint 
-            // feature: baseType 
-                            // super concept: org.iets3.core.expr.collections.CollectionType 
-            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: org.iets3.core.expr.base.ICollectionType 
-            // super concept: org.iets3.core.expr.base.IHasBaseType 
-            // super concept: org.iets3.core.expr.base.ITypeSupportsDefaultValue 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollection 
-            // super concept: org.iets3.core.expr.base.IParameterizedTypeSupportsEquals 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class ListLiteral extends TypedNode {
+                        
+                        export interface N_ListLiteral extends L_org_iets3_core_expr_base.N_Expression, L_com_mbeddr_mpsutil_interpreter.N_ICanHaveTestCoverage, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_ListLiteral: boolean
+                            typeConstraint: SingleChildAccessor<N_ElementTypeConstraintSingle>
+            elements: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_ListLiteral {
+                            export function isInstance(node: ITypedNode): node is N_ListLiteral {
+                                return '_is_org_iets3_core_expr_collections_ListLiteral' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListLiteral extends TypedNode implements N_ListLiteral {
+                            public _is_org_iets3_core_expr_collections_ListLiteral: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ICanHaveTestCoverage: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -261,30 +300,48 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.ElementTypeConstraintSingle> = new SingleChildAccessor(this.node, "typeConstraint")
-                            public elements: ChildListAccessor<L_org_iets3_core_expr_base.Expression> = new ChildListAccessor(this.node, "elements")
-                            // feature: typeConstraint 
-            // feature: elements 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public typeConstraint: SingleChildAccessor<N_ElementTypeConstraintSingle> = new SingleChildAccessor(this.node, "typeConstraint")
+                            public elements: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression> = new ChildListAccessor(this.node, "elements")
                         }
                         
-                        export class ICollectionOp extends TypedNode {
+                        
+                        export interface N_ICollectionOp extends L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_ICollectionOp: boolean
                             
-                            
-                            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class NoArgCollectionOp extends TypedNode {
+                        export namespace N_ICollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_ICollectionOp {
+                                return '_is_org_iets3_core_expr_collections_ICollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ICollectionOp extends TypedNode implements N_ICollectionOp {
+                            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                            
+                        }
+                        
+                        
+                        export interface N_NoArgCollectionOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ICollectionOp {
+                            _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean
+                            
+                        }
+                        
+                        export namespace N_NoArgCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_NoArgCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_NoArgCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_NoArgCollectionOp extends TypedNode implements N_NoArgCollectionOp {
+                            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -297,17 +354,28 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class SizeOp extends TypedNode {
+                        
+                        export interface N_SizeOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_SizeOp: boolean
+                            
+                        }
+                        
+                        export namespace N_SizeOp {
+                            export function isInstance(node: ITypedNode): node is N_SizeOp {
+                                return '_is_org_iets3_core_expr_collections_SizeOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SizeOp extends TypedNode implements N_SizeOp {
+                            public _is_org_iets3_core_expr_collections_SizeOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -320,16 +388,28 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class IsEmptyOp extends TypedNode {
+                        
+                        export interface N_IsEmptyOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_IsEmptyOp: boolean
+                            
+                        }
+                        
+                        export namespace N_IsEmptyOp {
+                            export function isInstance(node: ITypedNode): node is N_IsEmptyOp {
+                                return '_is_org_iets3_core_expr_collections_IsEmptyOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IsEmptyOp extends TypedNode implements N_IsEmptyOp {
+                            public _is_org_iets3_core_expr_collections_IsEmptyOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -342,31 +422,69 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class IOrderedCollection extends TypedNode {
+                        
+                        export interface N_IOrderedCollection extends L_org_iets3_core_expr_base.N_ICollectionType {
+                            _is_org_iets3_core_expr_collections_IOrderedCollection: boolean
                             
-                            
-                            // super concept: org.iets3.core.expr.base.ICollectionType 
-            // super concept: org.iets3.core.expr.base.IHasBaseType 
                         }
                         
-                        export class IOrderedCollectionOp extends TypedNode {
-                            
-                            
-                            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
+                        export namespace N_IOrderedCollection {
+                            export function isInstance(node: ITypedNode): node is N_IOrderedCollection {
+                                return '_is_org_iets3_core_expr_collections_IOrderedCollection' in node;
+                            }
                         }
                         
-                        export class FirstOp extends TypedNode {
+                        export class _N_TypedImpl_IOrderedCollection extends TypedNode implements N_IOrderedCollection {
+                            public _is_org_iets3_core_expr_collections_IOrderedCollection: boolean = true
+            public _is_org_iets3_core_expr_base_ICollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_IHasBaseType: boolean = true
+                            
+                        }
+                        
+                        
+                        export interface N_IOrderedCollectionOp extends N_ICollectionOp {
+                            _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean
+                            
+                        }
+                        
+                        export namespace N_IOrderedCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_IOrderedCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_IOrderedCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IOrderedCollectionOp extends TypedNode implements N_IOrderedCollectionOp {
+                            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                            
+                        }
+                        
+                        
+                        export interface N_FirstOp extends N_NoArgCollectionOp, N_IElementTyped, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_FirstOp: boolean
+                            
+                        }
+                        
+                        export namespace N_FirstOp {
+                            export function isInstance(node: ITypedNode): node is N_FirstOp {
+                                return '_is_org_iets3_core_expr_collections_FirstOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FirstOp extends TypedNode implements N_FirstOp {
+                            public _is_org_iets3_core_expr_collections_FirstOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -379,28 +497,50 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class IElementTyped extends TypedNode {
+                        
+                        export interface N_IElementTyped extends N_ICollectionOp {
+                            _is_org_iets3_core_expr_collections_IElementTyped: boolean
                             
-                            
-                            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class LastOp extends TypedNode {
+                        export namespace N_IElementTyped {
+                            export function isInstance(node: ITypedNode): node is N_IElementTyped {
+                                return '_is_org_iets3_core_expr_collections_IElementTyped' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IElementTyped extends TypedNode implements N_IElementTyped {
+                            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                            
+                        }
+                        
+                        
+                        export interface N_LastOp extends N_NoArgCollectionOp, N_IElementTyped, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_LastOp: boolean
+                            
+                        }
+                        
+                        export namespace N_LastOp {
+                            export function isInstance(node: ITypedNode): node is N_LastOp {
+                                return '_is_org_iets3_core_expr_collections_LastOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LastOp extends TypedNode implements N_LastOp {
+                            public _is_org_iets3_core_expr_collections_LastOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -413,21 +553,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class AtOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        
+                        export interface N_AtOp extends N_OneArgCollectionOp, N_IElementTyped, N_IOrderedCollectionOp, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_collections_AtOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AtOp {
+                            export function isInstance(node: ITypedNode): node is N_AtOp {
+                                return '_is_org_iets3_core_expr_collections_AtOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AtOp extends TypedNode implements N_AtOp {
+                            public _is_org_iets3_core_expr_collections_AtOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -440,22 +591,27 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class OneArgCollectionOp extends TypedNode {
+                        
+                        export interface N_OneArgCollectionOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ICollectionOp {
+                            _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean
+                            arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_OneArgCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_OneArgCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_OneArgCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_OneArgCollectionOp extends TypedNode implements N_OneArgCollectionOp {
+                            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -468,137 +624,54 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: arg 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                         }
                         
-                        export class IContextTypedCollOp extends TypedNode {
+                        
+                        export interface N_IContextTypedCollOp extends N_ICollectionOp {
+                            _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean
                             
+                        }
+                        
+                        export namespace N_IContextTypedCollOp {
+                            export function isInstance(node: ITypedNode): node is N_IContextTypedCollOp {
+                                return '_is_org_iets3_core_expr_collections_IContextTypedCollOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IContextTypedCollOp extends TypedNode implements N_IContextTypedCollOp {
+                            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
                             
-                            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class MapOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.collections.IProvideIndex 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
                         
-                        export class WhereOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: arg 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.OneArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.collections.IProvideIndex 
-                        }
-                        
-                        export class DistinctOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-                        }
-                        
-                        export class AsImmutableListOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_MapOp extends N_OneArgCollectionOp, L_org_iets3_core_expr_lambda.N_IShortLambdaContainer, N_IProvideIndex, L_org_iets3_core_expr_base.N_IMayAllowEffect, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_MapOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class ContainsOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export namespace N_MapOp {
+                            export function isInstance(node: ITypedNode): node is N_MapOp {
+                                return '_is_org_iets3_core_expr_collections_MapOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapOp extends TypedNode implements N_MapOp {
+                            public _is_org_iets3_core_expr_collections_MapOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_collections_IProvideIndex: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -611,19 +684,35 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_WhereOp extends N_OneArgPredicateCollectionOp, N_IContextTypedCollOp, N_IProvideIndex, L_org_iets3_core_expr_base.N_IMayHaveEffect, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_collections_WhereOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
                         }
                         
-                        export class OneCollBaseTypedArgCollectionOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export namespace N_WhereOp {
+                            export function isInstance(node: ITypedNode): node is N_WhereOp {
+                                return '_is_org_iets3_core_expr_collections_WhereOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_WhereOp extends TypedNode implements N_WhereOp {
+                            public _is_org_iets3_core_expr_collections_WhereOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_IProvideIndex: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -636,78 +725,30 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class OneArgPredicateCollectionOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
                         
-                        export class AnyOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_DistinctOp extends N_NoArgCollectionOp, N_IContextTypedCollOp {
+                            _is_org_iets3_core_expr_collections_DistinctOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.OneArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
                         }
                         
-                        export class AllOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_DistinctOp {
+                            export function isInstance(node: ITypedNode): node is N_DistinctOp {
+                                return '_is_org_iets3_core_expr_collections_DistinctOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_DistinctOp extends TypedNode implements N_DistinctOp {
+                            public _is_org_iets3_core_expr_collections_DistinctOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -719,23 +760,29 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_AsImmutableListOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_AsImmutableListOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.OneArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
                         }
                         
-                        export class SetType extends TypedNode {
-                                            public sizeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
-                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "baseType")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_AsImmutableListOp {
+                            export function isInstance(node: ITypedNode): node is N_AsImmutableListOp {
+                                return '_is_org_iets3_core_expr_collections_AsImmutableListOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AsImmutableListOp extends TypedNode implements N_AsImmutableListOp {
+                            public _is_org_iets3_core_expr_collections_AsImmutableListOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -747,20 +794,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_ContainsOp extends N_OneCollBaseTypedArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_ContainsOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.CollectionType 
-            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: org.iets3.core.expr.base.ICollectionType 
-            // super concept: org.iets3.core.expr.base.IHasBaseType 
-            // super concept: org.iets3.core.expr.base.ITypeSupportsDefaultValue 
                         }
                         
-                        export class SetLiteral extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
+                        export namespace N_ContainsOp {
+                            export function isInstance(node: ITypedNode): node is N_ContainsOp {
+                                return '_is_org_iets3_core_expr_collections_ContainsOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ContainsOp extends TypedNode implements N_ContainsOp {
+                            public _is_org_iets3_core_expr_collections_ContainsOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -772,47 +831,30 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.ElementTypeConstraintSingle> = new SingleChildAccessor(this.node, "typeConstraint")
-                            public elements: ChildListAccessor<L_org_iets3_core_expr_base.Expression> = new ChildListAccessor(this.node, "elements")
-                            // feature: typeConstraint 
-            // feature: elements 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IStructuredSyntax 
-            // super concept: org.iets3.core.expr.base.IWantNewLine 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class AsImmutableSetOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        
+                        export interface N_OneCollBaseTypedArgCollectionOp extends N_OneArgCollectionOp, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class BracketOp extends TypedNode {
-                                            public expr: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "expr")
+                        export namespace N_OneCollBaseTypedArgCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_OneCollBaseTypedArgCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_OneCollBaseTypedArgCollectionOp extends TypedNode implements N_OneCollBaseTypedArgCollectionOp {
+                            public _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -825,20 +867,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public index: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "index")
-                            // feature: index 
-                            // super concept: org.iets3.core.expr.base.UnaryExpression 
-            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class MapType extends TypedNode {
-                                            public keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
-                            public valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
+                        
+                        export interface N_OneArgPredicateCollectionOp extends N_OneArgCollectionOp, L_org_iets3_core_expr_lambda.N_IShortLambdaContainer, L_org_iets3_core_expr_base.N_IMayAllowEffect, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean
+                            
+                        }
+                        
+                        export namespace N_OneArgPredicateCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_OneArgPredicateCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_OneArgPredicateCollectionOp extends TypedNode implements N_OneArgPredicateCollectionOp {
+                            public _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -851,189 +905,33 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public keyType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "keyType")
-                            public valueType: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "valueType")
-                            // feature: keyType 
-            // feature: valueType 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: keyType_DEPRECATED 
-            // feature: valueType_DEPRECATED 
-                            // super concept: org.iets3.core.expr.collections.MapLikeType 
-            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: org.iets3.core.expr.base.ITypeSupportsDefaultValue 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class MapLiteral extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_collections.ElementTypeConstraintMap> = new SingleChildAccessor(this.node, "typeConstraint")
-                            public elements: ChildListAccessor<L_org_iets3_core_expr_collections.KeyValuePair> = new ChildListAccessor(this.node, "elements")
-                            // feature: typeConstraint 
-            // feature: elements 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IStructuredSyntax 
-            // super concept: org.iets3.core.expr.base.IWantNewLine 
-            // super concept: com.mbeddr.mpsutil.interpreter.ICanHaveTestCoverage 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                        
+                        export interface N_AnyOp extends N_OneArgPredicateCollectionOp {
+                            _is_org_iets3_core_expr_collections_AnyOp: boolean
+                            
                         }
                         
-                        export class KeyValuePair extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
+                        export namespace N_AnyOp {
+                            export function isInstance(node: ITypedNode): node is N_AnyOp {
+                                return '_is_org_iets3_core_expr_collections_AnyOp' in node;
                             }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public key: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "key")
-                            public val: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "val")
-                            // feature: key 
-            // feature: val 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
                         }
                         
-                        export class MapWithOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.IMapOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class MapWithoutOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.IMapOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class MaxOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-            // super concept: org.iets3.core.expr.base.ISSConstrainedValue 
-                        }
-                        
-                        export class SumOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-                        }
-                        
-                        export class FirstNOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export class _N_TypedImpl_AnyOp extends TypedNode implements N_AnyOp {
+                            public _is_org_iets3_core_expr_collections_AnyOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1046,22 +944,33 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class LastNOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        
+                        export interface N_AllOp extends N_OneArgPredicateCollectionOp {
+                            _is_org_iets3_core_expr_collections_AllOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AllOp {
+                            export function isInstance(node: ITypedNode): node is N_AllOp {
+                                return '_is_org_iets3_core_expr_collections_AllOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AllOp extends TypedNode implements N_AllOp {
+                            public _is_org_iets3_core_expr_collections_AllOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1074,21 +983,70 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class SimpleSortOp extends TypedNode {
+                        
+                        export interface N_SetType extends N_CollectionType {
+                            _is_org_iets3_core_expr_collections_SetType: boolean
+                            
+                        }
+                        
+                        export namespace N_SetType {
+                            export function isInstance(node: ITypedNode): node is N_SetType {
+                                return '_is_org_iets3_core_expr_collections_SetType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetType extends TypedNode implements N_SetType {
+                            public _is_org_iets3_core_expr_collections_SetType: boolean = true
+            public _is_org_iets3_core_expr_collections_CollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_org_iets3_core_expr_base_ICollectionType: boolean = true
+            public _is_org_iets3_core_expr_base_IHasBaseType: boolean = true
+            public _is_org_iets3_core_expr_base_ITypeSupportsDefaultValue: boolean = true
+                                            public sizeConstraint: SingleChildAccessor<N_CollectionSizeSpec> = new SingleChildAccessor(this.node, "sizeConstraint")
+                            public baseType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "baseType")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_SetLiteral extends L_org_iets3_core_expr_base.N_Expression, L_org_iets3_core_expr_base.N_IStructuredSyntax, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_SetLiteral: boolean
+                            typeConstraint: SingleChildAccessor<N_ElementTypeConstraintSingle>
+            elements: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_SetLiteral {
+                            export function isInstance(node: ITypedNode): node is N_SetLiteral {
+                                return '_is_org_iets3_core_expr_collections_SetLiteral' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetLiteral extends TypedNode implements N_SetLiteral {
+                            public _is_org_iets3_core_expr_collections_SetLiteral: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IStructuredSyntax: boolean = true
+            public _is_org_iets3_core_expr_base_IWantNewLine: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1101,26 +1059,477 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public typeConstraint: SingleChildAccessor<N_ElementTypeConstraintSingle> = new SingleChildAccessor(this.node, "typeConstraint")
+                            public elements: ChildListAccessor<L_org_iets3_core_expr_base.N_Expression> = new ChildListAccessor(this.node, "elements")
+                        }
+                        
+                        
+                        export interface N_AsImmutableSetOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_AsImmutableSetOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AsImmutableSetOp {
+                            export function isInstance(node: ITypedNode): node is N_AsImmutableSetOp {
+                                return '_is_org_iets3_core_expr_collections_AsImmutableSetOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AsImmutableSetOp extends TypedNode implements N_AsImmutableSetOp {
+                            public _is_org_iets3_core_expr_collections_AsImmutableSetOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_BracketOp extends L_org_iets3_core_expr_base.N_UnaryExpression {
+                            _is_org_iets3_core_expr_collections_BracketOp: boolean
+                            index: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_BracketOp {
+                            export function isInstance(node: ITypedNode): node is N_BracketOp {
+                                return '_is_org_iets3_core_expr_collections_BracketOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_BracketOp extends TypedNode implements N_BracketOp {
+                            public _is_org_iets3_core_expr_collections_BracketOp: boolean = true
+            public _is_org_iets3_core_expr_base_UnaryExpression: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public expr: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "expr")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public index: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "index")
+                        }
+                        
+                        
+                        export interface N_MapType extends N_MapLikeType, L_org_iets3_core_expr_base.N_ITypeSupportsDefaultValue {
+                            _is_org_iets3_core_expr_collections_MapType: boolean
+                            keyType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+            valueType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_MapType {
+                            export function isInstance(node: ITypedNode): node is N_MapType {
+                                return '_is_org_iets3_core_expr_collections_MapType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapType extends TypedNode implements N_MapType {
+                            public _is_org_iets3_core_expr_collections_MapType: boolean = true
+            public _is_org_iets3_core_expr_collections_MapLikeType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_org_iets3_core_expr_base_ITypeSupportsDefaultValue: boolean = true
+                                            public keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
+                            public valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public keyType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "keyType")
+                            public valueType: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "valueType")
+                        }
+                        
+                        
+                        export interface N_MapLiteral extends L_org_iets3_core_expr_base.N_Expression, L_org_iets3_core_expr_base.N_IStructuredSyntax, L_com_mbeddr_mpsutil_interpreter.N_ICanHaveTestCoverage, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_MapLiteral: boolean
+                            typeConstraint: SingleChildAccessor<N_ElementTypeConstraintMap>
+            elements: ChildListAccessor<N_KeyValuePair>
+                        }
+                        
+                        export namespace N_MapLiteral {
+                            export function isInstance(node: ITypedNode): node is N_MapLiteral {
+                                return '_is_org_iets3_core_expr_collections_MapLiteral' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapLiteral extends TypedNode implements N_MapLiteral {
+                            public _is_org_iets3_core_expr_collections_MapLiteral: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IStructuredSyntax: boolean = true
+            public _is_org_iets3_core_expr_base_IWantNewLine: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ICanHaveTestCoverage: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public typeConstraint: SingleChildAccessor<N_ElementTypeConstraintMap> = new SingleChildAccessor(this.node, "typeConstraint")
+                            public elements: ChildListAccessor<N_KeyValuePair> = new ChildListAccessor(this.node, "elements")
+                        }
+                        
+                        
+                        export interface N_KeyValuePair extends L_org_iets3_core_expr_base.N_Expression, L_org_iets3_core_expr_base.N_IMayAllowEffect, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_KeyValuePair: boolean
+                            key: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+            val: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_KeyValuePair {
+                            export function isInstance(node: ITypedNode): node is N_KeyValuePair {
+                                return '_is_org_iets3_core_expr_collections_KeyValuePair' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_KeyValuePair extends TypedNode implements N_KeyValuePair {
+                            public _is_org_iets3_core_expr_collections_KeyValuePair: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public key: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "key")
+                            public val: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "val")
+                        }
+                        
+                        
+                        export interface N_MapWithOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_IMapOneArgOp {
+                            _is_org_iets3_core_expr_collections_MapWithOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapWithOp {
+                            export function isInstance(node: ITypedNode): node is N_MapWithOp {
+                                return '_is_org_iets3_core_expr_collections_MapWithOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapWithOp extends TypedNode implements N_MapWithOp {
+                            public _is_org_iets3_core_expr_collections_MapWithOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_IMapOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_MapWithoutOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_IMapOneArgOp {
+                            _is_org_iets3_core_expr_collections_MapWithoutOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapWithoutOp {
+                            export function isInstance(node: ITypedNode): node is N_MapWithoutOp {
+                                return '_is_org_iets3_core_expr_collections_MapWithoutOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapWithoutOp extends TypedNode implements N_MapWithoutOp {
+                            public _is_org_iets3_core_expr_collections_MapWithoutOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_IMapOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_MaxOp extends N_NoArgCollectionOp, N_IElementTyped, L_org_iets3_core_expr_base.N_ISSConstrainedValue {
+                            _is_org_iets3_core_expr_collections_MaxOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MaxOp {
+                            export function isInstance(node: ITypedNode): node is N_MaxOp {
+                                return '_is_org_iets3_core_expr_collections_MaxOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MaxOp extends TypedNode implements N_MaxOp {
+                            public _is_org_iets3_core_expr_collections_MaxOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_base_ISSConstrainedValue: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_SumOp extends N_NoArgCollectionOp, N_IElementTyped {
+                            _is_org_iets3_core_expr_collections_SumOp: boolean
+                            
+                        }
+                        
+                        export namespace N_SumOp {
+                            export function isInstance(node: ITypedNode): node is N_SumOp {
+                                return '_is_org_iets3_core_expr_collections_SumOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SumOp extends TypedNode implements N_SumOp {
+                            public _is_org_iets3_core_expr_collections_SumOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_FirstNOp extends N_OneArgCollectionOp, N_IContextTypedCollOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_FirstNOp: boolean
+                            
+                        }
+                        
+                        export namespace N_FirstNOp {
+                            export function isInstance(node: ITypedNode): node is N_FirstNOp {
+                                return '_is_org_iets3_core_expr_collections_FirstNOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FirstNOp extends TypedNode implements N_FirstNOp {
+                            public _is_org_iets3_core_expr_collections_FirstNOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_LastNOp extends N_OneArgCollectionOp, N_IContextTypedCollOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_LastNOp: boolean
+                            
+                        }
+                        
+                        export namespace N_LastNOp {
+                            export function isInstance(node: ITypedNode): node is N_LastNOp {
+                                return '_is_org_iets3_core_expr_collections_LastNOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LastNOp extends TypedNode implements N_LastNOp {
+                            public _is_org_iets3_core_expr_collections_LastNOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_SimpleSortOp extends N_NoArgCollectionOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_SimpleSortOp: boolean
+                            order: string | undefined
+                        }
+                        
+                        export namespace N_SimpleSortOp {
+                            export function isInstance(node: ITypedNode): node is N_SimpleSortOp {
+                                return '_is_org_iets3_core_expr_collections_SimpleSortOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SimpleSortOp extends TypedNode implements N_SimpleSortOp {
+                            public _is_org_iets3_core_expr_collections_SimpleSortOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set order(value: string | undefined) {
                                 this.node.setPropertyValue("order", value)
                             }
                             public get order(): string | undefined {
                                 return this.node.getPropertyValue("order")
                             }
-                            // feature: order 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
                         }
                         
-                        export class MinOp extends TypedNode {
+                        
+                        export interface N_MinOp extends N_NoArgCollectionOp, N_IElementTyped, L_org_iets3_core_expr_base.N_ISSConstrainedValue {
+                            _is_org_iets3_core_expr_collections_MinOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MinOp {
+                            export function isInstance(node: ITypedNode): node is N_MinOp {
+                                return '_is_org_iets3_core_expr_collections_MinOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MinOp extends TypedNode implements N_MinOp {
+                            public _is_org_iets3_core_expr_collections_MinOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IElementTyped: boolean = true
+            public _is_org_iets3_core_expr_base_ISSConstrainedValue: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1133,20 +1542,28 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IElementTyped 
-            // super concept: org.iets3.core.expr.base.ISSConstrainedValue 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class ListWithOp extends TypedNode {
+                        
+                        export interface N_ListWithOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_IListOneArgOp {
+                            _is_org_iets3_core_expr_collections_ListWithOp: boolean
+                            
+                        }
+                        
+                        export namespace N_ListWithOp {
+                            export function isInstance(node: ITypedNode): node is N_ListWithOp {
+                                return '_is_org_iets3_core_expr_collections_ListWithOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListWithOp extends TypedNode implements N_ListWithOp {
+                            public _is_org_iets3_core_expr_collections_ListWithOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_IListOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1159,20 +1576,29 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.IListOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                         }
                         
-                        export class SetWithOp extends TypedNode {
+                        
+                        export interface N_SetWithOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ISetOneArgOp {
+                            _is_org_iets3_core_expr_collections_SetWithOp: boolean
+                            
+                        }
+                        
+                        export namespace N_SetWithOp {
+                            export function isInstance(node: ITypedNode): node is N_SetWithOp {
+                                return '_is_org_iets3_core_expr_collections_SetWithOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetWithOp extends TypedNode implements N_SetWithOp {
+                            public _is_org_iets3_core_expr_collections_SetWithOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1185,39 +1611,25 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ISetOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                         }
-            
-            export class ElementTypeConstraintSingle extends TypedNode {
-                                public set shortDescription(value: string | undefined) {
-                    this.node.setPropertyValue("shortDescription", value)
-                }
-                public get shortDescription(): string | undefined {
-                    return this.node.getPropertyValue("shortDescription")
-                }
-                public set virtualPackage(value: string | undefined) {
-                    this.node.setPropertyValue("virtualPackage", value)
-                }
-                public get virtualPackage(): string | undefined {
-                    return this.node.getPropertyValue("virtualPackage")
-                }
-                public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                public typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "typeConstraint")
-                // feature: typeConstraint 
-                // super concept: jetbrains.mps.lang.core.BaseConcept 
-            }
                         
-                        export class ElementTypeConstraintMap extends TypedNode {
+                        
+                        export interface N_ElementTypeConstraintSingle extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_collections_ElementTypeConstraintSingle: boolean
+                            typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_ElementTypeConstraintSingle {
+                            export function isInstance(node: ITypedNode): node is N_ElementTypeConstraintSingle {
+                                return '_is_org_iets3_core_expr_collections_ElementTypeConstraintSingle' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ElementTypeConstraintSingle extends TypedNode implements N_ElementTypeConstraintSingle {
+                            public _is_org_iets3_core_expr_collections_ElementTypeConstraintSingle: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1230,15 +1642,26 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public typeConstraint1: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "typeConstraint1")
-                            public typeConstraint2: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "typeConstraint2")
-                            // feature: typeConstraint1 
-            // feature: typeConstraint2 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public typeConstraint: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "typeConstraint")
                         }
                         
-                        export class CollectionSizeSpec extends TypedNode {
+                        
+                        export interface N_ElementTypeConstraintMap extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_collections_ElementTypeConstraintMap: boolean
+                            typeConstraint1: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+            typeConstraint2: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_ElementTypeConstraintMap {
+                            export function isInstance(node: ITypedNode): node is N_ElementTypeConstraintMap {
+                                return '_is_org_iets3_core_expr_collections_ElementTypeConstraintMap' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ElementTypeConstraintMap extends TypedNode implements N_ElementTypeConstraintMap {
+                            public _is_org_iets3_core_expr_collections_ElementTypeConstraintMap: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1251,7 +1674,40 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public typeConstraint1: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "typeConstraint1")
+                            public typeConstraint2: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "typeConstraint2")
+                        }
+                        
+                        
+                        export interface N_CollectionSizeSpec extends L_jetbrains_mps_lang_core.N_BaseConcept {
+                            _is_org_iets3_core_expr_collections_CollectionSizeSpec: boolean
+                            min: string | undefined
+            max: string | undefined
+                        }
+                        
+                        export namespace N_CollectionSizeSpec {
+                            export function isInstance(node: ITypedNode): node is N_CollectionSizeSpec {
+                                return '_is_org_iets3_core_expr_collections_CollectionSizeSpec' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_CollectionSizeSpec extends TypedNode implements N_CollectionSizeSpec {
+                            public _is_org_iets3_core_expr_collections_CollectionSizeSpec: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set min(value: string | undefined) {
                                 this.node.setPropertyValue("min", value)
                             }
@@ -1264,12 +1720,26 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get max(): string | undefined {
                                 return this.node.getPropertyValue("max")
                             }
-                            // feature: min 
-            // feature: max 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
                         }
                         
-                        export class UpToTarget extends TypedNode {
+                        
+                        export interface N_UpToTarget extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_UpToTarget: boolean
+                            max: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_UpToTarget {
+                            export function isInstance(node: ITypedNode): node is N_UpToTarget {
+                                return '_is_org_iets3_core_expr_collections_UpToTarget' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_UpToTarget extends TypedNode implements N_UpToTarget {
+                            public _is_org_iets3_core_expr_collections_UpToTarget: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1282,145 +1752,118 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public max: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "max")
-                            // feature: max 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public max: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "max")
                         }
                         
-                        export class UnpackOptionsOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-                        }
                         
-                        export class IndexExpr extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_UnpackOptionsOp extends N_NoArgCollectionOp, N_IContextTypedCollOp {
+                            _is_org_iets3_core_expr_collections_UnpackOptionsOp: boolean
                             
-                            // super concept: org.iets3.core.expr.base.Expression 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: com.mbeddr.core.base.ICommentable 
-            // super concept: com.mbeddr.core.base.IDocumentable 
                         }
+                        
+                        export namespace N_UnpackOptionsOp {
+                            export function isInstance(node: ITypedNode): node is N_UnpackOptionsOp {
+                                return '_is_org_iets3_core_expr_collections_UnpackOptionsOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_UnpackOptionsOp extends TypedNode implements N_UnpackOptionsOp {
+                            public _is_org_iets3_core_expr_collections_UnpackOptionsOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_IndexExpr extends L_org_iets3_core_expr_base.N_Expression {
+                            _is_org_iets3_core_expr_collections_IndexExpr: boolean
+                            
+                        }
+                        
+                        export namespace N_IndexExpr {
+                            export function isInstance(node: ITypedNode): node is N_IndexExpr {
+                                return '_is_org_iets3_core_expr_collections_IndexExpr' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IndexExpr extends TypedNode implements N_IndexExpr {
+                            public _is_org_iets3_core_expr_collections_IndexExpr: boolean = true
+            public _is_org_iets3_core_expr_base_Expression: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+            public _is_com_mbeddr_core_base_IDocumentable: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
             
-            export class IProvideIndex extends TypedNode {
-                
-                
+            export interface N_IProvideIndex extends ITypedNode {
+                _is_org_iets3_core_expr_collections_IProvideIndex: boolean
                 
             }
+            
+            export namespace N_IProvideIndex {
+                export function isInstance(node: ITypedNode): node is N_IProvideIndex {
+                    return '_is_org_iets3_core_expr_collections_IProvideIndex' in node;
+                }
+            }
+            
+            export class _N_TypedImpl_IProvideIndex extends TypedNode implements N_IProvideIndex {
+                public _is_org_iets3_core_expr_collections_IProvideIndex: boolean = true
+                
+            }
+            
                         
-                        export class ForeachOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class FlattenOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_ForeachOp extends N_OneArgCollectionOp, N_IContextTypedCollOp, L_org_iets3_core_expr_lambda.N_IShortLambdaContainer, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_ForeachOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class AsSingletonList extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
+                        export namespace N_ForeachOp {
+                            export function isInstance(node: ITypedNode): node is N_ForeachOp {
+                                return '_is_org_iets3_core_expr_collections_ForeachOp' in node;
                             }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class AbstractStringListJoiner extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export class _N_TypedImpl_ForeachOp extends TypedNode implements N_ForeachOp {
+                            public _is_org_iets3_core_expr_collections_ForeachOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1433,20 +1876,29 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_FlattenOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_FlattenOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
                         }
                         
-                        export class StringJoinOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_FlattenOp {
+                            export function isInstance(node: ITypedNode): node is N_FlattenOp {
+                                return '_is_org_iets3_core_expr_collections_FlattenOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FlattenOp extends TypedNode implements N_FlattenOp {
+                            public _is_org_iets3_core_expr_collections_FlattenOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -1458,21 +1910,27 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_AsSingletonList extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_AsSingletonList: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.AbstractStringListJoiner 
-            // super concept: org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
                         }
                         
-                        export class StringTerminateOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_AsSingletonList {
+                            export function isInstance(node: ITypedNode): node is N_AsSingletonList {
+                                return '_is_org_iets3_core_expr_collections_AsSingletonList' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AsSingletonList extends TypedNode implements N_AsSingletonList {
+                            public _is_org_iets3_core_expr_collections_AsSingletonList: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -1484,20 +1942,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_AbstractStringListJoiner extends N_OneCollBaseTypedArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_AbstractStringListJoiner: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.AbstractStringListJoiner 
-            // super concept: org.iets3.core.expr.collections.OneCollBaseTypedArgCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
                         }
                         
-                        export class SetWithoutOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
+                        export namespace N_AbstractStringListJoiner {
+                            export function isInstance(node: ITypedNode): node is N_AbstractStringListJoiner {
+                                return '_is_org_iets3_core_expr_collections_AbstractStringListJoiner' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractStringListJoiner extends TypedNode implements N_AbstractStringListJoiner {
+                            public _is_org_iets3_core_expr_collections_AbstractStringListJoiner: boolean = true
+            public _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -1509,44 +1979,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ISetOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class IsNotEmptyOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        
+                        export interface N_StringJoinOp extends N_AbstractStringListJoiner {
+                            _is_org_iets3_core_expr_collections_StringJoinOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class FoldLeftOp extends TypedNode {
-                                            public seed: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "seed")
-                            public combiner: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "combiner")
+                        export namespace N_StringJoinOp {
+                            export function isInstance(node: ITypedNode): node is N_StringJoinOp {
+                                return '_is_org_iets3_core_expr_collections_StringJoinOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_StringJoinOp extends TypedNode implements N_StringJoinOp {
+                            public _is_org_iets3_core_expr_collections_StringJoinOp: boolean = true
+            public _is_org_iets3_core_expr_collections_AbstractStringListJoiner: boolean = true
+            public _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1559,95 +2017,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: seed 
-            // feature: combiner 
-                            // super concept: org.iets3.core.expr.collections.FoldOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.collections.IProvideIndex 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class FoldOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public seed: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "seed")
-                            public combiner: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "combiner")
-                            // feature: seed 
-            // feature: combiner 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-                        }
                         
-                        export class AsMapOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_StringTerminateOp extends N_AbstractStringListJoiner {
+                            _is_org_iets3_core_expr_collections_StringTerminateOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class MapSizeOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
+                        export namespace N_StringTerminateOp {
+                            export function isInstance(node: ITypedNode): node is N_StringTerminateOp {
+                                return '_is_org_iets3_core_expr_collections_StringTerminateOp' in node;
                             }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class FindFirstOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export class _N_TypedImpl_StringTerminateOp extends TypedNode implements N_StringTerminateOp {
+                            public _is_org_iets3_core_expr_collections_StringTerminateOp: boolean = true
+            public _is_org_iets3_core_expr_collections_AbstractStringListJoiner: boolean = true
+            public _is_org_iets3_core_expr_collections_OneCollBaseTypedArgCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -1660,245 +2055,29 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: arg 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.OneArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.lambda.IShortLambdaContainer 
-            // super concept: org.iets3.core.expr.base.IMayAllowEffect 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
                         
-                        export class ListWithAllOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-            // super concept: org.iets3.core.expr.collections.IListOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-                        }
                         
-                        export class MapLikeType extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
-                            public valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.Type> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
-                            // feature: keyType_DEPRECATED 
-            // feature: valueType_DEPRECATED 
-                            // super concept: org.iets3.core.expr.base.Type 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.IType 
-            // super concept: com.mbeddr.core.base.ICommentable 
-                        }
-                        
-                        export class ListInsertOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public index: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "index")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: index 
-            // feature: arg 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-                        }
-                        
-                        export class MapKeysOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-                        }
-                        
-                        export class MapValuesOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-                        }
-                        
-                        export class ListWithoutOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.IListOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class MapContainsKeyOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.IMapOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class IMapOneArgOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: arg 
-                            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class ISetOneArgOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: arg 
-                            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class IListOneArgOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: arg 
-                            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class AllWithIndexOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        export interface N_SetWithoutOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ISetOneArgOp {
+                            _is_org_iets3_core_expr_collections_SetWithoutOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.TwoArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class TwoArgPredicateCollectionOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_SetWithoutOp {
+                            export function isInstance(node: ITypedNode): node is N_SetWithoutOp {
+                                return '_is_org_iets3_core_expr_collections_SetWithoutOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetWithoutOp extends TypedNode implements N_SetWithoutOp {
+                            public _is_org_iets3_core_expr_collections_SetWithoutOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -1910,18 +2089,30 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_IsNotEmptyOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_IsNotEmptyOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class AnyWithIndexOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            public set shortDescription(value: string | undefined) {
+                        export namespace N_IsNotEmptyOp {
+                            export function isInstance(node: ITypedNode): node is N_IsNotEmptyOp {
+                                return '_is_org_iets3_core_expr_collections_IsNotEmptyOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IsNotEmptyOp extends TypedNode implements N_IsNotEmptyOp {
+                            public _is_org_iets3_core_expr_collections_IsNotEmptyOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
                             public get shortDescription(): string | undefined {
@@ -1933,146 +2124,32 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_FoldLeftOp extends N_FoldOp, N_IProvideIndex {
+                            _is_org_iets3_core_expr_collections_FoldLeftOp: boolean
                             
-                            // super concept: org.iets3.core.expr.collections.TwoArgPredicateCollectionOp 
-            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
                         }
                         
-                        export class TailOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
+                        export namespace N_FoldLeftOp {
+                            export function isInstance(node: ITypedNode): node is N_FoldLeftOp {
+                                return '_is_org_iets3_core_expr_collections_FoldLeftOp' in node;
                             }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
                         }
                         
-                        export class ReverseOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: org.iets3.core.expr.collections.NoArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IContextTypedCollOp 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
-                        }
-                        
-                        export class SetUnionOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ISetOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class SetDiffOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ISetOneArgOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.base.IMayHaveEffect 
-                        }
-                        
-                        export class ListPickOp extends TypedNode {
-                                            public set shortDescription(value: string | undefined) {
-                                this.node.setPropertyValue("shortDescription", value)
-                            }
-                            public get shortDescription(): string | undefined {
-                                return this.node.getPropertyValue("shortDescription")
-                            }
-                            public set virtualPackage(value: string | undefined) {
-                                this.node.setPropertyValue("virtualPackage", value)
-                            }
-                            public get virtualPackage(): string | undefined {
-                                return this.node.getPropertyValue("virtualPackage")
-                            }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            public selectorList: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "selectorList")
-                            // feature: selectorList 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-                        }
-                        
-                        export class IndexOfOp extends TypedNode {
-                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.Expression> = new SingleChildAccessor(this.node, "arg")
+                        export class _N_TypedImpl_FoldLeftOp extends TypedNode implements N_FoldLeftOp {
+                            public _is_org_iets3_core_expr_collections_FoldLeftOp: boolean = true
+            public _is_org_iets3_core_expr_collections_FoldOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_collections_IProvideIndex: boolean = true
+                                            public seed: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "seed")
+                            public combiner: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "combiner")
                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -2085,16 +2162,766 @@ this.nodeWrappers.set("mps:2f7e2e35-6e74-4c43-9fa5-2465d68f5996/1406572792884327
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
-                            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: arg 
-                            // super concept: org.iets3.core.expr.collections.OneArgCollectionOp 
-            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: org.iets3.core.expr.collections.ICollectionOp 
-            // super concept: org.iets3.core.expr.base.IDotTarget 
-            // super concept: com.mbeddr.mpsutil.interpreter.ITracerFrame 
-            // super concept: org.iets3.core.expr.collections.IOrderedCollectionOp 
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_FoldOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ICollectionOp, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_collections_FoldOp: boolean
+                            seed: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+            combiner: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_FoldOp {
+                            export function isInstance(node: ITypedNode): node is N_FoldOp {
+                                return '_is_org_iets3_core_expr_collections_FoldOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FoldOp extends TypedNode implements N_FoldOp {
+                            public _is_org_iets3_core_expr_collections_FoldOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public seed: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "seed")
+                            public combiner: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "combiner")
+                        }
+                        
+                        
+                        export interface N_AsMapOp extends N_NoArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_AsMapOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AsMapOp {
+                            export function isInstance(node: ITypedNode): node is N_AsMapOp {
+                                return '_is_org_iets3_core_expr_collections_AsMapOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AsMapOp extends TypedNode implements N_AsMapOp {
+                            public _is_org_iets3_core_expr_collections_AsMapOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_MapSizeOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_MapSizeOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapSizeOp {
+                            export function isInstance(node: ITypedNode): node is N_MapSizeOp {
+                                return '_is_org_iets3_core_expr_collections_MapSizeOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapSizeOp extends TypedNode implements N_MapSizeOp {
+                            public _is_org_iets3_core_expr_collections_MapSizeOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_FindFirstOp extends N_OneArgPredicateCollectionOp, L_org_iets3_core_expr_base.N_IMayHaveEffect, L_org_iets3_core_expr_base.N_IMayAllowEffect {
+                            _is_org_iets3_core_expr_collections_FindFirstOp: boolean
+                            
+                        }
+                        
+                        export namespace N_FindFirstOp {
+                            export function isInstance(node: ITypedNode): node is N_FindFirstOp {
+                                return '_is_org_iets3_core_expr_collections_FindFirstOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_FindFirstOp extends TypedNode implements N_FindFirstOp {
+                            public _is_org_iets3_core_expr_collections_FindFirstOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_lambda_IShortLambdaContainer: boolean = true
+            public _is_org_iets3_core_expr_base_IMayAllowEffect: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_ListWithAllOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IMayHaveEffect, N_IListOneArgOp {
+                            _is_org_iets3_core_expr_collections_ListWithAllOp: boolean
+                            
+                        }
+                        
+                        export namespace N_ListWithAllOp {
+                            export function isInstance(node: ITypedNode): node is N_ListWithAllOp {
+                                return '_is_org_iets3_core_expr_collections_ListWithAllOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListWithAllOp extends TypedNode implements N_ListWithAllOp {
+                            public _is_org_iets3_core_expr_collections_ListWithAllOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+            public _is_org_iets3_core_expr_collections_IListOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_MapLikeType extends L_org_iets3_core_expr_base.N_Type {
+                            _is_org_iets3_core_expr_collections_MapLikeType: boolean
+                            keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+            valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type>
+                        }
+                        
+                        export namespace N_MapLikeType {
+                            export function isInstance(node: ITypedNode): node is N_MapLikeType {
+                                return '_is_org_iets3_core_expr_collections_MapLikeType' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapLikeType extends TypedNode implements N_MapLikeType {
+                            public _is_org_iets3_core_expr_collections_MapLikeType: boolean = true
+            public _is_org_iets3_core_expr_base_Type: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_IType: boolean = true
+            public _is_com_mbeddr_core_base_ICommentable: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public keyType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "keyType_DEPRECATED")
+                            public valueType_DEPRECATED: SingleChildAccessor<L_org_iets3_core_expr_base.N_Type> = new SingleChildAccessor(this.node, "valueType_DEPRECATED")
+                        }
+                        
+                        
+                        export interface N_ListInsertOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_ListInsertOp: boolean
+                            index: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+            arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_ListInsertOp {
+                            export function isInstance(node: ITypedNode): node is N_ListInsertOp {
+                                return '_is_org_iets3_core_expr_collections_ListInsertOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListInsertOp extends TypedNode implements N_ListInsertOp {
+                            public _is_org_iets3_core_expr_collections_ListInsertOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public index: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "index")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_MapKeysOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_MapKeysOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapKeysOp {
+                            export function isInstance(node: ITypedNode): node is N_MapKeysOp {
+                                return '_is_org_iets3_core_expr_collections_MapKeysOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapKeysOp extends TypedNode implements N_MapKeysOp {
+                            public _is_org_iets3_core_expr_collections_MapKeysOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_MapValuesOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_MapValuesOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapValuesOp {
+                            export function isInstance(node: ITypedNode): node is N_MapValuesOp {
+                                return '_is_org_iets3_core_expr_collections_MapValuesOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapValuesOp extends TypedNode implements N_MapValuesOp {
+                            public _is_org_iets3_core_expr_collections_MapValuesOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_ListWithoutOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_IListOneArgOp {
+                            _is_org_iets3_core_expr_collections_ListWithoutOp: boolean
+                            
+                        }
+                        
+                        export namespace N_ListWithoutOp {
+                            export function isInstance(node: ITypedNode): node is N_ListWithoutOp {
+                                return '_is_org_iets3_core_expr_collections_ListWithoutOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListWithoutOp extends TypedNode implements N_ListWithoutOp {
+                            public _is_org_iets3_core_expr_collections_ListWithoutOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_IListOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_MapContainsKeyOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_IMapOneArgOp {
+                            _is_org_iets3_core_expr_collections_MapContainsKeyOp: boolean
+                            
+                        }
+                        
+                        export namespace N_MapContainsKeyOp {
+                            export function isInstance(node: ITypedNode): node is N_MapContainsKeyOp {
+                                return '_is_org_iets3_core_expr_collections_MapContainsKeyOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_MapContainsKeyOp extends TypedNode implements N_MapContainsKeyOp {
+                            public _is_org_iets3_core_expr_collections_MapContainsKeyOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_IMapOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_IMapOneArgOp extends L_org_iets3_core_expr_base.N_IDotTarget, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_IMapOneArgOp: boolean
+                            arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_IMapOneArgOp {
+                            export function isInstance(node: ITypedNode): node is N_IMapOneArgOp {
+                                return '_is_org_iets3_core_expr_collections_IMapOneArgOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IMapOneArgOp extends TypedNode implements N_IMapOneArgOp {
+                            public _is_org_iets3_core_expr_collections_IMapOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_ISetOneArgOp extends L_org_iets3_core_expr_base.N_IDotTarget, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean
+                            arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_ISetOneArgOp {
+                            export function isInstance(node: ITypedNode): node is N_ISetOneArgOp {
+                                return '_is_org_iets3_core_expr_collections_ISetOneArgOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ISetOneArgOp extends TypedNode implements N_ISetOneArgOp {
+                            public _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_IListOneArgOp extends L_org_iets3_core_expr_base.N_IDotTarget, L_org_iets3_core_expr_base.N_IMayHaveEffect {
+                            _is_org_iets3_core_expr_collections_IListOneArgOp: boolean
+                            arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_IListOneArgOp {
+                            export function isInstance(node: ITypedNode): node is N_IListOneArgOp {
+                                return '_is_org_iets3_core_expr_collections_IListOneArgOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IListOneArgOp extends TypedNode implements N_IListOneArgOp {
+                            public _is_org_iets3_core_expr_collections_IListOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_AllWithIndexOp extends N_TwoArgPredicateCollectionOp {
+                            _is_org_iets3_core_expr_collections_AllWithIndexOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AllWithIndexOp {
+                            export function isInstance(node: ITypedNode): node is N_AllWithIndexOp {
+                                return '_is_org_iets3_core_expr_collections_AllWithIndexOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AllWithIndexOp extends TypedNode implements N_AllWithIndexOp {
+                            public _is_org_iets3_core_expr_collections_AllWithIndexOp: boolean = true
+            public _is_org_iets3_core_expr_collections_TwoArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_TwoArgPredicateCollectionOp extends N_OneArgCollectionOp {
+                            _is_org_iets3_core_expr_collections_TwoArgPredicateCollectionOp: boolean
+                            
+                        }
+                        
+                        export namespace N_TwoArgPredicateCollectionOp {
+                            export function isInstance(node: ITypedNode): node is N_TwoArgPredicateCollectionOp {
+                                return '_is_org_iets3_core_expr_collections_TwoArgPredicateCollectionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_TwoArgPredicateCollectionOp extends TypedNode implements N_TwoArgPredicateCollectionOp {
+                            public _is_org_iets3_core_expr_collections_TwoArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_AnyWithIndexOp extends N_TwoArgPredicateCollectionOp {
+                            _is_org_iets3_core_expr_collections_AnyWithIndexOp: boolean
+                            
+                        }
+                        
+                        export namespace N_AnyWithIndexOp {
+                            export function isInstance(node: ITypedNode): node is N_AnyWithIndexOp {
+                                return '_is_org_iets3_core_expr_collections_AnyWithIndexOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AnyWithIndexOp extends TypedNode implements N_AnyWithIndexOp {
+                            public _is_org_iets3_core_expr_collections_AnyWithIndexOp: boolean = true
+            public _is_org_iets3_core_expr_collections_TwoArgPredicateCollectionOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_TailOp extends N_NoArgCollectionOp, N_IContextTypedCollOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_TailOp: boolean
+                            
+                        }
+                        
+                        export namespace N_TailOp {
+                            export function isInstance(node: ITypedNode): node is N_TailOp {
+                                return '_is_org_iets3_core_expr_collections_TailOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_TailOp extends TypedNode implements N_TailOp {
+                            public _is_org_iets3_core_expr_collections_TailOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_ReverseOp extends N_NoArgCollectionOp, N_IContextTypedCollOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_ReverseOp: boolean
+                            
+                        }
+                        
+                        export namespace N_ReverseOp {
+                            export function isInstance(node: ITypedNode): node is N_ReverseOp {
+                                return '_is_org_iets3_core_expr_collections_ReverseOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ReverseOp extends TypedNode implements N_ReverseOp {
+                            public _is_org_iets3_core_expr_collections_ReverseOp: boolean = true
+            public _is_org_iets3_core_expr_collections_NoArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IContextTypedCollOp: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                        }
+                        
+                        
+                        export interface N_SetUnionOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ISetOneArgOp {
+                            _is_org_iets3_core_expr_collections_SetUnionOp: boolean
+                            
+                        }
+                        
+                        export namespace N_SetUnionOp {
+                            export function isInstance(node: ITypedNode): node is N_SetUnionOp {
+                                return '_is_org_iets3_core_expr_collections_SetUnionOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetUnionOp extends TypedNode implements N_SetUnionOp {
+                            public _is_org_iets3_core_expr_collections_SetUnionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_SetDiffOp extends L_jetbrains_mps_lang_core.N_BaseConcept, N_ISetOneArgOp {
+                            _is_org_iets3_core_expr_collections_SetDiffOp: boolean
+                            
+                        }
+                        
+                        export namespace N_SetDiffOp {
+                            export function isInstance(node: ITypedNode): node is N_SetDiffOp {
+                                return '_is_org_iets3_core_expr_collections_SetDiffOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_SetDiffOp extends TypedNode implements N_SetDiffOp {
+                            public _is_org_iets3_core_expr_collections_SetDiffOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ISetOneArgOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_base_IMayHaveEffect: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                        }
+                        
+                        
+                        export interface N_ListPickOp extends L_jetbrains_mps_lang_core.N_BaseConcept, L_org_iets3_core_expr_base.N_IDotTarget {
+                            _is_org_iets3_core_expr_collections_ListPickOp: boolean
+                            selectorList: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression>
+                        }
+                        
+                        export namespace N_ListPickOp {
+                            export function isInstance(node: ITypedNode): node is N_ListPickOp {
+                                return '_is_org_iets3_core_expr_collections_ListPickOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_ListPickOp extends TypedNode implements N_ListPickOp {
+                            public _is_org_iets3_core_expr_collections_ListPickOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+                                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public selectorList: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "selectorList")
+                        }
+                        
+                        
+                        export interface N_IndexOfOp extends N_OneArgCollectionOp, N_IOrderedCollectionOp {
+                            _is_org_iets3_core_expr_collections_IndexOfOp: boolean
+                            
+                        }
+                        
+                        export namespace N_IndexOfOp {
+                            export function isInstance(node: ITypedNode): node is N_IndexOfOp {
+                                return '_is_org_iets3_core_expr_collections_IndexOfOp' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IndexOfOp extends TypedNode implements N_IndexOfOp {
+                            public _is_org_iets3_core_expr_collections_IndexOfOp: boolean = true
+            public _is_org_iets3_core_expr_collections_OneArgCollectionOp: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_org_iets3_core_expr_collections_ICollectionOp: boolean = true
+            public _is_org_iets3_core_expr_base_IDotTarget: boolean = true
+            public _is_com_mbeddr_mpsutil_interpreter_ITracerFrame: boolean = true
+            public _is_org_iets3_core_expr_collections_IOrderedCollectionOp: boolean = true
+                                            public arg: SingleChildAccessor<L_org_iets3_core_expr_base.N_Expression> = new SingleChildAccessor(this.node, "arg")
+                            public set shortDescription(value: string | undefined) {
+                                this.node.setPropertyValue("shortDescription", value)
+                            }
+                            public get shortDescription(): string | undefined {
+                                return this.node.getPropertyValue("shortDescription")
+                            }
+                            public set virtualPackage(value: string | undefined) {
+                                this.node.setPropertyValue("virtualPackage", value)
+                            }
+                            public get virtualPackage(): string | undefined {
+                                return this.node.getPropertyValue("virtualPackage")
+                            }
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                         }
             }

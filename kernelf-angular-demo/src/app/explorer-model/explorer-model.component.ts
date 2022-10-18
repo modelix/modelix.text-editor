@@ -9,7 +9,7 @@ import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_mo
 export class ExplorerModelComponent implements OnInit {
 
   @Input()
-  public node!: L_org_modelix_model_repositoryconcepts.Model;
+  public node!: L_org_modelix_model_repositoryconcepts.N_Model;
 
   constructor() { }
 

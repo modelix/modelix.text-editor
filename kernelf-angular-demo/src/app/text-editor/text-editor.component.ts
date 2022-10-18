@@ -2,7 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import { org } from 'kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
-import { TypedNode, INodeJS } from "../../../../../modelix.core/ts-model-api";
+import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "../../../../../modelix.core/ts-model-api";
+import {L_jetbrains_mps_lang_core} from "../../gen/L_jetbrains_mps_lang_core";
 
 @Component({
   selector: 'app-text-editor',
@@ -20,10 +21,30 @@ export class TextEditorComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public get nodeName(): string {
+    let name = this.getNamedConcept()?.name;
+    return name === undefined ? "" : name
+  }
+
+  public set nodeName(value: string) {
+    let named = this.getNamedConcept();
+    if (named !== undefined) named.name = value
+  }
+
   public getUnwrappedNode(): any {
     if (this.node instanceof TypedNode) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node.node)
     if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node)
-    return this.node
+    return this.node // INode
+  }
+
+  public getJSNode(): INodeJS {
+    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return this.node as INodeJS
+    return org.modelix.model.api.JSNodeConverter.nodeToJs(this.getUnwrappedNode())
+  }
+
+  public getTypedNode(): ITypedNode {
+    if (this.node instanceof TypedNode) return this.node
+    return LanguageRegistry.INSTANCE.wrapNode(this.getJSNode())
   }
 
   public renderEditor(): string {
@@ -32,6 +53,11 @@ export class TextEditorComponent implements OnInit {
 
   public getTitle(): string {
     return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.getUnwrappedNode())
+  }
+
+  public getNamedConcept(): L_jetbrains_mps_lang_core.N_INamedConcept | undefined {
+    let typedNode = this.getTypedNode();
+    return L_jetbrains_mps_lang_core.N_INamedConcept.isInstance(typedNode) ? typedNode : undefined
   }
 }
 

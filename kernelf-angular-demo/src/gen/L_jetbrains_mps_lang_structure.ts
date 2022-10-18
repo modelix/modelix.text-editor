@@ -3,7 +3,8 @@
               SingleChildAccessor,
               GeneratedLanguage,
               INodeJS,
-              TypedNode
+              TypedNode,
+              ITypedNode
             } from "ts-model-api";
             
             import {L_jetbrains_mps_lang_core} from "./L_jetbrains_mps_lang_core";
@@ -16,15 +17,15 @@ import {L_jetbrains_mps_lang_resources} from "./L_jetbrains_mps_lang_resources";
                 constructor() {
                     super("jetbrains.mps.lang.structure")
                     
-                    this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288298", (node: INodeJS) => new LinkDeclaration(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288299", (node: INodeJS) => new PropertyDeclaration(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1082978164218", (node: INodeJS) => new DataTypeDeclaration(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1169125787135", (node: INodeJS) => new AbstractConceptDeclaration(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1224848324737", (node: INodeJS) => new IStructureDeprecatable(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7862711839422615214", (node: INodeJS) => new DocumentationObjective(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880629653", (node: INodeJS) => new INamedStructureElement(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880706270", (node: INodeJS) => new IStructureElement(node))
-this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283296", (node: INodeJS) => new INamedAspect(node))
+                    this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288298", (node: INodeJS) => new _N_TypedImpl_LinkDeclaration(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1071489288299", (node: INodeJS) => new _N_TypedImpl_PropertyDeclaration(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1082978164218", (node: INodeJS) => new _N_TypedImpl_DataTypeDeclaration(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1169125787135", (node: INodeJS) => new _N_TypedImpl_AbstractConceptDeclaration(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1224848324737", (node: INodeJS) => new _N_TypedImpl_IStructureDeprecatable(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7862711839422615214", (node: INodeJS) => new _N_TypedImpl_DocumentationObjective(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880629653", (node: INodeJS) => new _N_TypedImpl_INamedStructureElement(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/1588368162880706270", (node: INodeJS) => new _N_TypedImpl_IStructureElement(node))
+this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283296", (node: INodeJS) => new _N_TypedImpl_INamedAspect(node))
                 }
                 /*
                 public getConcepts() {
@@ -43,7 +44,33 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
             }
             export const INSTANCE = L_jetbrains_mps_lang_structure.INSTANCE
             
-                                    export class LinkDeclaration extends TypedNode {
+                                    export interface N_LinkDeclaration extends L_jetbrains_mps_lang_core.N_BaseConcept, L_jetbrains_mps_lang_core.N_InterfacePart, N_IStructureDeprecatable, N_INamedStructureElement, N_DocumentationObjective {
+                            _is_jetbrains_mps_lang_structure_LinkDeclaration: boolean
+                            role: string | undefined
+            metaClass: string | undefined
+            sourceCardinality: string | undefined
+            unordered: string | undefined
+            linkId: string | undefined
+                                
+                                
+                        }
+                        
+                        export namespace N_LinkDeclaration {
+                            export function isInstance(node: ITypedNode): node is N_LinkDeclaration {
+                                return '_is_jetbrains_mps_lang_structure_LinkDeclaration' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_LinkDeclaration extends TypedNode implements N_LinkDeclaration {
+                            public _is_jetbrains_mps_lang_structure_LinkDeclaration: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_InterfacePart: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_core_IDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_structure_DocumentationObjective: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -56,7 +83,7 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -94,28 +121,31 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                                 return this.node.getPropertyValue("linkId")
                             }
                                                 
-                            // feature: role 
-            // feature: metaClass 
-            // feature: sourceCardinality 
-            // feature: unordered 
-            // feature: linkId 
-            // feature: specializedLink 
-            // feature: target 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.InterfacePart 
-            // super concept: jetbrains.mps.lang.structure.IStructureDeprecatable 
-            // super concept: jetbrains.mps.lang.core.IDeprecatable 
-            // super concept: jetbrains.mps.lang.structure.INamedStructureElement 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.structure.IStructureElement 
-            // super concept: jetbrains.mps.lang.structure.DocumentationObjective 
                         }
                         
-                        export class PropertyDeclaration extends TypedNode {
+                        
+                        export interface N_PropertyDeclaration extends L_jetbrains_mps_lang_core.N_BaseConcept, L_jetbrains_mps_lang_core.N_InterfacePart, N_INamedStructureElement, N_IStructureDeprecatable, N_DocumentationObjective {
+                            _is_jetbrains_mps_lang_structure_PropertyDeclaration: boolean
+                            propertyId: string | undefined
+                                
+                        }
+                        
+                        export namespace N_PropertyDeclaration {
+                            export function isInstance(node: ITypedNode): node is N_PropertyDeclaration {
+                                return '_is_jetbrains_mps_lang_structure_PropertyDeclaration' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_PropertyDeclaration extends TypedNode implements N_PropertyDeclaration {
+                            public _is_jetbrains_mps_lang_structure_PropertyDeclaration: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_core_InterfacePart: boolean = true
+            public _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_core_IDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_structure_DocumentationObjective: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -128,7 +158,7 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -141,23 +171,29 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get propertyId(): string | undefined {
                                 return this.node.getPropertyValue("propertyId")
                             }
-                            // feature: propertyId 
-            // feature: dataType 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.core.InterfacePart 
-            // super concept: jetbrains.mps.lang.structure.INamedStructureElement 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.structure.IStructureElement 
-            // super concept: jetbrains.mps.lang.structure.IStructureDeprecatable 
-            // super concept: jetbrains.mps.lang.core.IDeprecatable 
-            // super concept: jetbrains.mps.lang.structure.DocumentationObjective 
                         }
                         
-                        export class DataTypeDeclaration extends TypedNode {
+                        
+                        export interface N_DataTypeDeclaration extends L_jetbrains_mps_lang_core.N_BaseConcept, N_INamedStructureElement, N_IStructureDeprecatable {
+                            _is_jetbrains_mps_lang_structure_DataTypeDeclaration: boolean
+                            datatypeId: string | undefined
+            languageId: string | undefined
+                        }
+                        
+                        export namespace N_DataTypeDeclaration {
+                            export function isInstance(node: ITypedNode): node is N_DataTypeDeclaration {
+                                return '_is_jetbrains_mps_lang_structure_DataTypeDeclaration' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_DataTypeDeclaration extends TypedNode implements N_DataTypeDeclaration {
+                            public _is_jetbrains_mps_lang_structure_DataTypeDeclaration: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_core_IDeprecatable: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -170,7 +206,7 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -189,21 +225,41 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get languageId(): string | undefined {
                                 return this.node.getPropertyValue("languageId")
                             }
-                            // feature: datatypeId 
-            // feature: languageId 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.structure.INamedStructureElement 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.structure.IStructureElement 
-            // super concept: jetbrains.mps.lang.structure.IStructureDeprecatable 
-            // super concept: jetbrains.mps.lang.core.IDeprecatable 
                         }
                         
-                        export class AbstractConceptDeclaration extends TypedNode {
+                        
+                        export interface N_AbstractConceptDeclaration extends L_jetbrains_mps_lang_core.N_BaseConcept, N_INamedStructureElement, L_jetbrains_mps_lang_core.N_InterfacePart, N_IStructureDeprecatable, N_DocumentationObjective {
+                            _is_jetbrains_mps_lang_structure_AbstractConceptDeclaration: boolean
+                            oldHelpURL: string | undefined
+            conceptAlias: string | undefined
+            conceptShortDescription: string | undefined
+            abstract: string | undefined
+            final: string | undefined
+            intConceptId: string | undefined
+            conceptId: string | undefined
+            languageId: string | undefined
+            linkDeclaration: ChildListAccessor<N_LinkDeclaration>
+            propertyDeclaration: ChildListAccessor<N_PropertyDeclaration>
+            helpURL: SingleChildAccessor<L_jetbrains_mps_lang_resources.N_HelpURL>
+                                
+                        }
+                        
+                        export namespace N_AbstractConceptDeclaration {
+                            export function isInstance(node: ITypedNode): node is N_AbstractConceptDeclaration {
+                                return '_is_jetbrains_mps_lang_structure_AbstractConceptDeclaration' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_AbstractConceptDeclaration extends TypedNode implements N_AbstractConceptDeclaration {
+                            public _is_jetbrains_mps_lang_structure_AbstractConceptDeclaration: boolean = true
+            public _is_jetbrains_mps_lang_core_BaseConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_InterfacePart: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_core_IDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_structure_DocumentationObjective: boolean = true
                                             public set shortDescription(value: string | undefined) {
                                 this.node.setPropertyValue("shortDescription", value)
                             }
@@ -216,7 +272,7 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get virtualPackage(): string | undefined {
                                 return this.node.getPropertyValue("virtualPackage")
                             }
-                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
+                            public smodelAttribute: ChildListAccessor<L_jetbrains_mps_lang_core.N_Attribute> = new ChildListAccessor(this.node, "smodelAttribute")
                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
@@ -271,73 +327,107 @@ this.nodeWrappers.set("mps:c72da2b9-7cce-4447-8389-f407dc1158b7/7954147563045283
                             public get languageId(): string | undefined {
                                 return this.node.getPropertyValue("languageId")
                             }
-                            public linkDeclaration: ChildListAccessor<L_jetbrains_mps_lang_structure.LinkDeclaration> = new ChildListAccessor(this.node, "linkDeclaration")
-                            public propertyDeclaration: ChildListAccessor<L_jetbrains_mps_lang_structure.PropertyDeclaration> = new ChildListAccessor(this.node, "propertyDeclaration")
-                            public helpURL: SingleChildAccessor<L_jetbrains_mps_lang_resources.HelpURL> = new SingleChildAccessor(this.node, "helpURL")
-                            // feature: oldHelpURL 
-            // feature: conceptAlias 
-            // feature: conceptShortDescription 
-            // feature: abstract 
-            // feature: final 
-            // feature: intConceptId 
-            // feature: conceptId 
-            // feature: languageId 
-            // feature: linkDeclaration 
-            // feature: propertyDeclaration 
-            // feature: helpURL 
-            // feature: sourceNode 
-            // feature: shortDescription 
-            // feature: virtualPackage 
-            // feature: smodelAttribute 
-            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.BaseConcept 
-            // super concept: jetbrains.mps.lang.structure.INamedStructureElement 
-            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.structure.IStructureElement 
-            // super concept: jetbrains.mps.lang.core.InterfacePart 
-            // super concept: jetbrains.mps.lang.structure.IStructureDeprecatable 
-            // super concept: jetbrains.mps.lang.core.IDeprecatable 
-            // super concept: jetbrains.mps.lang.structure.DocumentationObjective 
+                            public linkDeclaration: ChildListAccessor<N_LinkDeclaration> = new ChildListAccessor(this.node, "linkDeclaration")
+                            public propertyDeclaration: ChildListAccessor<N_PropertyDeclaration> = new ChildListAccessor(this.node, "propertyDeclaration")
+                            public helpURL: SingleChildAccessor<L_jetbrains_mps_lang_resources.N_HelpURL> = new SingleChildAccessor(this.node, "helpURL")
                         }
-            
-            export class IStructureDeprecatable extends TypedNode {
-                
-                
-                // super concept: jetbrains.mps.lang.core.IDeprecatable 
-            }
-            
-            export class DocumentationObjective extends TypedNode {
-                
-                
-                
-            }
                         
-                        export class INamedStructureElement extends TypedNode {
+                        
+                        export interface N_IStructureDeprecatable extends L_jetbrains_mps_lang_core.N_IDeprecatable {
+                            _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean
+                            
+                        }
+                        
+                        export namespace N_IStructureDeprecatable {
+                            export function isInstance(node: ITypedNode): node is N_IStructureDeprecatable {
+                                return '_is_jetbrains_mps_lang_structure_IStructureDeprecatable' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_IStructureDeprecatable extends TypedNode implements N_IStructureDeprecatable {
+                            public _is_jetbrains_mps_lang_structure_IStructureDeprecatable: boolean = true
+            public _is_jetbrains_mps_lang_core_IDeprecatable: boolean = true
+                            
+                        }
+                        
+            
+            export interface N_DocumentationObjective extends ITypedNode {
+                _is_jetbrains_mps_lang_structure_DocumentationObjective: boolean
+                
+            }
+            
+            export namespace N_DocumentationObjective {
+                export function isInstance(node: ITypedNode): node is N_DocumentationObjective {
+                    return '_is_jetbrains_mps_lang_structure_DocumentationObjective' in node;
+                }
+            }
+            
+            export class _N_TypedImpl_DocumentationObjective extends TypedNode implements N_DocumentationObjective {
+                public _is_jetbrains_mps_lang_structure_DocumentationObjective: boolean = true
+                
+            }
+            
+                        
+                        export interface N_INamedStructureElement extends L_jetbrains_mps_lang_core.N_INamedConcept, N_IStructureElement {
+                            _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean
+                            
+                        }
+                        
+                        export namespace N_INamedStructureElement {
+                            export function isInstance(node: ITypedNode): node is N_INamedStructureElement {
+                                return '_is_jetbrains_mps_lang_structure_INamedStructureElement' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_INamedStructureElement extends TypedNode implements N_INamedStructureElement {
+                            public _is_jetbrains_mps_lang_structure_INamedStructureElement: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+            public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
                                             public set name(value: string | undefined) {
                                 this.node.setPropertyValue("name", value)
                             }
                             public get name(): string | undefined {
                                 return this.node.getPropertyValue("name")
                             }
-                            // feature: name 
-                            // super concept: jetbrains.mps.lang.core.INamedConcept 
-            // super concept: jetbrains.mps.lang.structure.IStructureElement 
                         }
+                        
             
-            export class IStructureElement extends TypedNode {
-                
-                
+            export interface N_IStructureElement extends ITypedNode {
+                _is_jetbrains_mps_lang_structure_IStructureElement: boolean
                 
             }
             
-            export class INamedAspect extends TypedNode {
-                                public set name(value: string | undefined) {
-                    this.node.setPropertyValue("name", value)
+            export namespace N_IStructureElement {
+                export function isInstance(node: ITypedNode): node is N_IStructureElement {
+                    return '_is_jetbrains_mps_lang_structure_IStructureElement' in node;
                 }
-                public get name(): string | undefined {
-                    return this.node.getPropertyValue("name")
-                }
-                
-                // super concept: jetbrains.mps.lang.core.INamedConcept 
             }
+            
+            export class _N_TypedImpl_IStructureElement extends TypedNode implements N_IStructureElement {
+                public _is_jetbrains_mps_lang_structure_IStructureElement: boolean = true
+                
+            }
+            
+                        
+                        export interface N_INamedAspect extends L_jetbrains_mps_lang_core.N_INamedConcept {
+                            _is_jetbrains_mps_lang_structure_INamedAspect: boolean
+                            
+                        }
+                        
+                        export namespace N_INamedAspect {
+                            export function isInstance(node: ITypedNode): node is N_INamedAspect {
+                                return '_is_jetbrains_mps_lang_structure_INamedAspect' in node;
+                            }
+                        }
+                        
+                        export class _N_TypedImpl_INamedAspect extends TypedNode implements N_INamedAspect {
+                            public _is_jetbrains_mps_lang_structure_INamedAspect: boolean = true
+            public _is_jetbrains_mps_lang_core_INamedConcept: boolean = true
+                                            public set name(value: string | undefined) {
+                                this.node.setPropertyValue("name", value)
+                            }
+                            public get name(): string | undefined {
+                                return this.node.getPropertyValue("name")
+                            }
+                        }
             }
