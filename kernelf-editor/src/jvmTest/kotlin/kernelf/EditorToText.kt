@@ -11,7 +11,7 @@ class EditorToText {
     fun toText() {
         val yamlFile = File("models/test.in.expr.os.strings@tests.yaml")
         val data = modelDataFromYaml(yamlFile.readText())
-        val modelAsText = KernelfAPI.renderModelAsText(data)
+        val modelAsText = KernelfAPI.renderModelAsHtmlText(data)
         println(modelAsText)
     }
 

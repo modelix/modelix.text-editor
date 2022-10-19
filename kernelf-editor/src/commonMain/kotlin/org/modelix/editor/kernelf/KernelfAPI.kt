@@ -57,7 +57,9 @@ object KernelfAPI {
         val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree())
         modelData.load(branch)
         val rootNode = ModelFacade.getRootNode(branch)
-        return renderNodeAsHtmlText(rootNode)
+        return rootNode.allChildren
+            .filter { it.getConceptReference() != null }
+            .joinToString("\n") { renderNodeAsHtmlText(it) }
     }
 
     fun nodeToString(node: Any): String {

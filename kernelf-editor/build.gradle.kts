@@ -76,7 +76,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api("org.modelix:model-api:$modelixCoreVersion")
-                api(npm("ts-model-api", rootDir.parentFile.resolve("modelix.core/ts-model-api")))
             }
         }
         val jsTest by getting {
