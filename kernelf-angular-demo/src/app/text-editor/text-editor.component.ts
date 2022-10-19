@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import { org } from 'kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
-import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "../../../../../modelix.core/ts-model-api";
+import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
 import {L_jetbrains_mps_lang_core} from "../../gen/L_jetbrains_mps_lang_core";
 
 @Component({

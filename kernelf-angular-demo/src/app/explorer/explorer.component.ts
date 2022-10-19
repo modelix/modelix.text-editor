@@ -3,7 +3,7 @@ import { org } from 'kernelf-editor';
 import Model_iets3_strings from "../../assets/test.in.expr.os.strings@tests.json";
 import Model_iets3_base from "../../assets/test.in.expr.os.base@tests.json";
 import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_model_repositoryconcepts";
-import {LanguageRegistry} from "../../../../../modelix.core/ts-model-api";
+import {LanguageRegistry} from "@modelix/ts-model-api";
 
 @Component({
   selector: 'app-explorer',

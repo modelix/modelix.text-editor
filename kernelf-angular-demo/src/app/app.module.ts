@@ -8,7 +8,6 @@ import { ExplorerComponent } from './explorer/explorer.component';
 import { ExplorerModuleComponent } from './explorer-module/explorer-module.component';
 import { ExplorerModelComponent } from './explorer-model/explorer-model.component';
 import {registerLanguages} from "../gen";
-import {LanguageRegistry} from "../../../../modelix.core/ts-model-api";
 import {FormsModule} from "@angular/forms";
 
 @NgModule({

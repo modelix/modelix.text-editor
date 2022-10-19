@@ -1,3 +1,4 @@
+import com.github.gradle.node.npm.task.NpmInstallTask
 import com.github.gradle.node.task.NodeTask
 
 plugins {
@@ -21,4 +22,17 @@ tasks.named("npm_run_build") {
 
 tasks.named("assemble") {
   dependsOn("npm_run_build")
+}
+
+val githubTokenToNpmrc = tasks.create("githubTokenToNpmrc") {
+  val token = if (rootProject.hasProperty("gpr.token")) rootProject.property("gpr.token") else null
+  projectDir.resolve(".npmrc").appendText("""
+
+    //npm.pkg.github.com/:_authToken=$token
+
+  """.trimIndent())
+}
+
+tasks.withType<NpmInstallTask> {
+  dependsOn(githubTokenToNpmrc)
 }
