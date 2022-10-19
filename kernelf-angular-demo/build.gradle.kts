@@ -26,13 +26,14 @@ tasks.named("assemble") {
 
 val githubTokenToNpmrc = tasks.create("githubTokenToNpmrc") {
   val token = if (rootProject.hasProperty("gpr.token")) rootProject.property("gpr.token") else null
-  projectDir.resolve(".npmrc").appendText("""
-
-    //npm.pkg.github.com/:_authToken=$token
-
-  """.trimIndent())
+  val file = projectDir.resolve(".npmrc")
+  var lines = file.readText().lines()
+  lines = lines.filter { !it.startsWith("//npm.pkg.github.com/") }
+  lines += "//npm.pkg.github.com/:_authToken=$token"
+  file.writeText(lines.joinToString("\n"))
 }
 
 tasks.withType<NpmInstallTask> {
   dependsOn(githubTokenToNpmrc)
+  dependsOn(":kernelf-editor:generateMetaModelSources")
 }
