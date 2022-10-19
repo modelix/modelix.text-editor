@@ -36,4 +36,5 @@ val githubTokenToNpmrc = tasks.create("githubTokenToNpmrc") {
 tasks.withType<NpmInstallTask> {
   dependsOn(githubTokenToNpmrc)
   dependsOn(":kernelf-editor:generateMetaModelSources")
+  dependsOn(":kernelf-editor:jsBrowserDistribution")
 }
