@@ -24,11 +24,13 @@ tasks.named("assemble") {
 }
 
 val copyGithubToken = tasks.create("copyGithubToken") {
-  if (System.getenv("GITHUB_TOKEN").isNullOrEmpty()) {
-    val token = if (rootProject.hasProperty("gpr.token")) "" + rootProject.property("gpr.token") else null
-    if (!token.isNullOrEmpty()) {
-      projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token")
-    }
+  val token = if (rootProject.hasProperty("gpr.token")) {
+    "" + rootProject.property("gpr.token")
+  } else {
+    System.getenv("GITHUB_TOKEN")
+  }
+  if (!token.isNullOrEmpty()) {
+    projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token")
   }
 }
 
