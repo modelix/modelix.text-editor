@@ -1,5 +1,4 @@
 import com.github.gradle.node.npm.task.NpmInstallTask
-import com.github.gradle.node.task.NodeTask
 
 plugins {
   base
@@ -24,17 +23,17 @@ tasks.named("assemble") {
   dependsOn("npm_run_build")
 }
 
-val githubTokenToNpmrc = tasks.create("githubTokenToNpmrc") {
-  val token = if (rootProject.hasProperty("gpr.token")) rootProject.property("gpr.token") else null
-  val file = projectDir.resolve(".npmrc")
-  var lines = file.readText().lines()
-  lines = lines.filter { !it.startsWith("//npm.pkg.github.com/") }
-  lines += "//npm.pkg.github.com/:_authToken=$token"
-  file.writeText(lines.joinToString("\n"))
+val copyGithubToken = tasks.create("copyGithubToken") {
+  if (System.getenv("GITHUB_TOKEN").isNullOrEmpty()) {
+    val token = if (rootProject.hasProperty("gpr.token")) "" + rootProject.property("gpr.token") else null
+    if (!token.isNullOrEmpty()) {
+      projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token")
+    }
+  }
 }
 
 tasks.withType<NpmInstallTask> {
-  dependsOn(githubTokenToNpmrc)
+  dependsOn(copyGithubToken)
   dependsOn(":kernelf-editor:generateMetaModelSources")
   dependsOn(":kernelf-editor:jsBrowserDistribution")
 }
