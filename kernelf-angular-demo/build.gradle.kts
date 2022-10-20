@@ -31,7 +31,7 @@ val copyGithubToken = tasks.create("copyGithubToken") {
       System.getenv("GITHUB_TOKEN")
     }
     if (!token.isNullOrEmpty()) {
-      projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token")
+      projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token\nNPM_CONFIG_GITHUB_TOKEN=$token")
     }
   }
 }
