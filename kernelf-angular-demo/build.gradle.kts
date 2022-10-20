@@ -31,7 +31,11 @@ val copyGithubToken = tasks.create("copyGithubToken") {
       System.getenv("GITHUB_TOKEN")
     }
     if (!token.isNullOrEmpty()) {
-      projectDir.resolve(".env").writeText("GITHUB_TOKEN=$token\nNPM_CONFIG_GITHUB_TOKEN=$token")
+      projectDir.resolve(".npmrc").writeText("""
+        @modelix:registry=https://npm.pkg.github.com
+        //npm.pkg.github.com/:_authToken=$token
+      """.trimIndent())
+
     }
   }
 }

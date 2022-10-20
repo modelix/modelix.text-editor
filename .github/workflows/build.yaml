@@ -24,5 +24,4 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_CONFIG_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }}
