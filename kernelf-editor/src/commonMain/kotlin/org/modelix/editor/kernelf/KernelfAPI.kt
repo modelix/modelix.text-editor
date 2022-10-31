@@ -23,6 +23,8 @@ object KernelfAPI {
         KernelfLanguages.languages.forEach { it.register() }
     }
 
+    private val nodeRenderer: (ITypedNode) -> String = createNodeRenderer()
+
     fun renderJsonAsHtmlText(json: String): String {
         return renderModelAsHtmlText(ModelData.fromJson(json))
     }
@@ -41,16 +43,22 @@ object KernelfAPI {
     }
 
     fun renderTypedNodeAsHtmlText(rootNode: ITypedNode): String {
+        return nodeRenderer(rootNode)
+    }
+
+    private fun createNodeRenderer(): (ITypedNode)->String {
         val editorEngine = EditorEngine()
         KernelfEditor().register(editorEngine)
-        val sb = StringBuilder()
-        ModelFacade.readNode(rootNode.unwrap()) {
-            DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
-                val cell = editorEngine.createCell(rootNode)
-                LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
+        return { rootNode ->
+            val sb = StringBuilder()
+            ModelFacade.readNode(rootNode.unwrap()) {
+                DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
+                    val cell = editorEngine.createCell(rootNode)
+                    LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
+                }
             }
+            sb.toString()
         }
-        return sb.toString()
     }
 
     fun renderModelAsHtmlText(modelData: ModelData): String {
