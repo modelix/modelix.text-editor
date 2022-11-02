@@ -7,23 +7,24 @@ import kotlinx.html.hr
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.EditorEngine
+import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.LayoutedCells
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.*
 import org.modelix.model.repositoryconcepts.N_Module
 import org.modelix.model.ModelFacade
-import org.modelix.model.api.IBranch
-import org.modelix.model.api.ILanguageRepository
-import org.modelix.model.api.INode
+import org.modelix.model.api.*
+import org.modelix.model.client.IdGenerator
 import kotlin.js.JsExport
 
 @JsExport
 object KernelfAPI {
+    private val editorEngine = EditorEngine()
+
     init {
         KernelfLanguages.languages.forEach { it.register() }
+        KernelfEditor().register(editorEngine)
     }
-
-    private val nodeRenderer: (ITypedNode) -> String = createNodeRenderer()
 
     fun renderJsonAsHtmlText(json: String): String {
         return renderModelAsHtmlText(ModelData.fromJson(json))
@@ -32,7 +33,10 @@ object KernelfAPI {
     fun loadModelFromJson(json: String): INode = loadModelsFromJson(arrayOf(json))
 
     fun loadModelsFromJson(json: Array<String>): INode {
-        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree())
+        //val branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(0xabcdef)))
+        val branch = IncrementalBranch(ModelFacade.toLocalBranch(ModelFacade.newLocalTree()))
+        // TODO call IncrementalBranch.dispose
+
         json.forEach { ModelData.fromJson(it).load(branch)  }
         val rootNode = ModelFacade.getRootNode(branch)
         return rootNode
@@ -43,22 +47,14 @@ object KernelfAPI {
     }
 
     fun renderTypedNodeAsHtmlText(rootNode: ITypedNode): String {
-        return nodeRenderer(rootNode)
-    }
-
-    private fun createNodeRenderer(): (ITypedNode)->String {
-        val editorEngine = EditorEngine()
-        KernelfEditor().register(editorEngine)
-        return { rootNode ->
-            val sb = StringBuilder()
-            ModelFacade.readNode(rootNode.unwrap()) {
-                DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
-                    val cell = editorEngine.createCell(rootNode)
-                    LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
-                }
+        val sb = StringBuilder()
+        ModelFacade.readNode(rootNode.unwrap()) {
+            DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
+                val cell = editorEngine.createCell(rootNode)
+                LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
             }
-            sb.toString()
         }
+        return sb.toString()
     }
 
     fun renderModelAsHtmlText(modelData: ModelData): String {
