@@ -9,9 +9,10 @@ class EditorToText {
 
     @Test
     fun toText() {
-        val yamlFile = File("models/test.in.expr.os.strings@tests.yaml")
-        val data = modelDataFromYaml(yamlFile.readText())
-        val modelAsText = KernelfAPI.renderModelAsHtmlText(data)
+        val jsonFile = File("models/test.in.expr.os.strings@tests.json")
+        val model = KernelfAPI.loadModelFromJson(jsonFile.readText())
+        val testSuites = KernelfAPI.findTestSuites(model)
+        val modelAsText = KernelfAPI.renderTypedNodeAsHtmlText(testSuites.first())
         println(modelAsText)
     }
 

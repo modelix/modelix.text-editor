@@ -3,18 +3,18 @@ package org.modelix.editor.kernelf
 import jetbrains.mps.lang.core.N_INamedConcept
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.div
-import kotlinx.html.hr
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.IncrementalBranch
-import org.modelix.editor.LayoutedCells
 import org.modelix.kernelf.KernelfLanguages
-import org.modelix.metamodel.*
-import org.modelix.model.repositoryconcepts.N_Module
+import org.modelix.metamodel.ITypedNode
+import org.modelix.metamodel.ModelData
+import org.modelix.metamodel.TypedLanguagesRegistry
+import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
-import org.modelix.model.api.*
-import org.modelix.model.client.IdGenerator
+import org.modelix.model.api.INode
+import org.modelix.model.repositoryconcepts.N_Module
 import kotlin.js.JsExport
 
 @JsExport
@@ -51,7 +51,7 @@ object KernelfAPI {
         ModelFacade.readNode(rootNode.unwrap()) {
             DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
                 val cell = editorEngine.createCell(rootNode)
-                LayoutedCells().also { cell.layout(it) }.toHtml(consumer)
+                cell.layout.toHtml(consumer)
             }
         }
         return sb.toString()
