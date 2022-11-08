@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {ITypedNode, LanguageRegistry} from "@modelix/ts-model-api";
+import { org } from 'kernelf-editor';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'kernelf-angular-demo';
-
-
-
 }
+
+LanguageRegistry.INSTANCE.wrapperCache = (node: ITypedNode) => org.modelix.model.api.NodeAdapterCache.getCachedWrapper(node, ()=>node)
