@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import { org } from 'kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
@@ -15,10 +15,29 @@ export class TextEditorComponent implements OnInit {
   @Input()
   public node!: any; // org.modelix.model.api.INode or TypedNode or INodeJS
 
+  @ViewChild('editorContainer') editorContainer: ElementRef | undefined;
+
   constructor() {
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(){
+    if (this.editorContainer) {
+      let dom = org.modelix.editor.kernelf.KernelfApiJS.renderNodeAsDom(this.getUnwrappedNode());
+      let nativeElement: HTMLElement = this.editorContainer.nativeElement;
+      let existingChild = nativeElement.firstChild;
+      if (existingChild) {
+        if (existingChild !== dom) {
+          nativeElement.removeChild(existingChild);
+          nativeElement.appendChild(dom);
+        }
+      } else {
+        nativeElement.appendChild(dom);
+      }
+    }
   }
 
   public get nodeName(): string {
@@ -27,8 +46,10 @@ export class TextEditorComponent implements OnInit {
   }
 
   public set nodeName(value: string) {
-    let named = this.getNamedConcept();
-    if (named !== undefined) named.name = value
+    if (this.nodeName !== value) {
+      let named = this.getNamedConcept();
+      if (named !== undefined) named.name = value
+    }
   }
 
   public getUnwrappedNode(): any {

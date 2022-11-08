@@ -1,6 +1,7 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
+import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.div
 import kotlinx.html.stream.HTMLStreamBuilder
@@ -48,13 +49,21 @@ object KernelfAPI {
 
     fun renderTypedNodeAsHtmlText(rootNode: ITypedNode): String {
         val sb = StringBuilder()
+        renderTypedNode(rootNode, DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)))
+        return sb.toString()
+    }
+
+    fun renderNode(rootNode: INode, tagConsumer: TagConsumer<*>) {
+        return renderTypedNode(rootNode.typed(), tagConsumer)
+    }
+
+    fun renderTypedNode(rootNode: ITypedNode, tagConsumer: TagConsumer<*>) {
         ModelFacade.readNode(rootNode.unwrap()) {
-            DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)).div {
+            tagConsumer.div {
                 val cell = editorEngine.createCell(rootNode)
-                cell.layout.toHtml(consumer)
+                cell.layout.toHtml(tagConsumer)
             }
         }
-        return sb.toString()
     }
 
     fun renderModelAsHtmlText(modelData: ModelData): String {
