@@ -11,6 +11,8 @@ node {
     download.set(true)
 }
 
+val modelixCoreVersion: String by rootProject
+
 tasks.named("npm_run_build") {
   inputs.dir("src")
   inputs.file("package.json")
@@ -40,8 +42,26 @@ val copyGithubToken = tasks.create("copyGithubToken") {
   }
 }
 
+val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
+  doLast {
+    val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api").relativeTo(projectDir)
+    val packageJsonFile = projectDir.resolve("package.json")
+    var text = packageJsonFile.readText()
+    println("ts-model-api path: $localPath")
+    val replacement = if (localPath.exists()) {
+      """"@modelix/ts-model-api": "file:$localPath""""
+    } else {
+      """"@modelix/ts-model-api": "$modelixCoreVersion""""
+    }
+    println("ts-model-api version: $replacement")
+    text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), replacement)
+    packageJsonFile.writeText(text)
+  }
+}
+
 tasks.withType<NpmInstallTask> {
   dependsOn(copyGithubToken)
+  dependsOn(updateTsModelApiVersion)
   dependsOn(":kernelf-editor:generateMetaModelSources")
   dependsOn(":kernelf-editor:jsBrowserDistribution")
 }

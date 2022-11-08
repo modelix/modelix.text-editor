@@ -76,6 +76,13 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api("org.modelix:model-api:$modelixCoreVersion")
+
+                val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
+                if (localPath.exists()) {
+                    implementation(npm("@modelix/ts-model-api", localPath))
+                } else {
+                    implementation(npm("@modelix/ts-model-api", modelixCoreVersion))
+                }
             }
         }
         val jsTest by getting {
