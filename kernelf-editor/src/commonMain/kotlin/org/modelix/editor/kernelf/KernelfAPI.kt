@@ -1,6 +1,8 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
+import kotlinx.html.DIV
+import kotlinx.html.HTMLTag
 import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.div
@@ -8,6 +10,7 @@ import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.IncrementalBranch
+import org.modelix.editor.toHtml
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ModelData
@@ -15,6 +18,8 @@ import org.modelix.metamodel.TypedLanguagesRegistry
 import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.INode
+import org.modelix.model.area.IAreaChangeList
+import org.modelix.model.area.IAreaListener
 import org.modelix.model.repositoryconcepts.N_Module
 import kotlin.js.JsExport
 
@@ -53,16 +58,14 @@ object KernelfAPI {
         return sb.toString()
     }
 
-    fun renderNode(rootNode: INode, tagConsumer: TagConsumer<*>) {
-        return renderTypedNode(rootNode.typed(), tagConsumer)
+    fun <T> renderNode(rootNode: INode, tagConsumer: TagConsumer<T>) {
+        renderTypedNode(rootNode.typed(), tagConsumer)
     }
 
-    fun renderTypedNode(rootNode: ITypedNode, tagConsumer: TagConsumer<*>) {
+    fun <T> renderTypedNode(rootNode: ITypedNode, tagConsumer: TagConsumer<T>) {
         ModelFacade.readNode(rootNode.unwrap()) {
-            tagConsumer.div {
-                val cell = editorEngine.createCell(rootNode)
-                cell.layout.toHtml(tagConsumer)
-            }
+            val cell = editorEngine.createCell(rootNode)
+            cell.layout.toHtml(tagConsumer)
         }
     }
 

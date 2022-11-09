@@ -26,17 +26,9 @@ export class TextEditorComponent implements OnInit {
 
   ngAfterViewInit(){
     if (this.editorContainer) {
-      let dom = org.modelix.editor.kernelf.KernelfApiJS.renderNodeAsDom(this.getUnwrappedNode());
+      let dom = org.modelix.editor.kernelf.KernelfApiJS.renderAndUpdateNodeAsDom(this.getUnwrappedNode());
       let nativeElement: HTMLElement = this.editorContainer.nativeElement;
-      let existingChild = nativeElement.firstChild;
-      if (existingChild) {
-        if (existingChild !== dom) {
-          nativeElement.removeChild(existingChild);
-          nativeElement.appendChild(dom);
-        }
-      } else {
-        nativeElement.appendChild(dom);
-      }
+      nativeElement.appendChild(dom);
     }
   }
 

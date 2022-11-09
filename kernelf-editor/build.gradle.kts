@@ -29,13 +29,13 @@ kotlin {
     js(IR) {
         browser {}
         binaries.executable()
-        nodejs {
-            testTask {
-                useMocha {
-                    timeout = "10s"
-                }
-            }
-        }
+//        nodejs {
+//            testTask {
+//                useMocha {
+//                    timeout = "10s"
+//                }
+//            }
+//        }
     }
 
     sourceSets {
@@ -88,6 +88,8 @@ kotlin {
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))
+                implementation(npm("jsdom", "20.0.1"))
+                implementation(npm("@types/jsdom", "20.0.1"))
             }
         }
     }
