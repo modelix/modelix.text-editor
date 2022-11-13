@@ -25,7 +25,7 @@ import kotlin.js.JsExport
 
 @JsExport
 object KernelfAPI {
-    private val editorEngine = EditorEngine()
+    val editorEngine = EditorEngine()
 
     init {
         KernelfLanguages.languages.forEach { it.register() }

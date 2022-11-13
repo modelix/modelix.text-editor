@@ -1,17 +1,19 @@
 package org.modelix.editor.kernelf
 
 import kotlinx.browser.document
-import kotlinx.html.consumers.delayed
 import kotlinx.html.dom.create
 import kotlinx.html.dom.createTree
 import kotlinx.html.js.div
 import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.IncrementalJSDOMBuilder
+import org.modelix.editor.JsEditorComponent
+import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.IBranchListener
 import org.modelix.model.api.INode
 import org.modelix.model.api.ITree
 import org.w3c.dom.HTMLElement
+import org.w3c.dom.Node
 
 @JsExport
 object KernelfApiJS {
@@ -34,18 +36,20 @@ object KernelfApiJS {
     }
 
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {
-        val container = document.create.div("auto-update-container")
+        val editor = JsEditorComponent { KernelfAPI.editorEngine.createCell(rootNode.typed()) }
         val branch = ModelFacade.getBranch(rootNode)!!.let { if (it is IncrementalBranch) it.branch else it }
         branch.addListener(object : IBranchListener {
             override fun treeChanged(oldTree: ITree?, newTree: ITree) {
-                if (container.parentNode == null) {
-                    branch.removeListener(this)
+                if (editor.getHtmlElement().isInDocument()) {
+                    editor.updateHtml()
                 } else {
-                    updateNodeAsDom(rootNode, container)
+                    branch.removeListener(this)
                 }
             }
         })
-        updateNodeAsDom(rootNode, container)
-        return container
+        editor.updateHtml()
+        return editor.getHtmlElement()
     }
 }
+
+private fun Node.isInDocument(): Boolean = if (this === document) true else parentNode?.isInDocument() ?: false

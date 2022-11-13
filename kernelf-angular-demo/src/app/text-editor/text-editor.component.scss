@@ -1,7 +1,8 @@
-.editor-container {
+.editor {
   font-family: monospace;
   counter-reset: line-number;
   border: 1px solid #D1D1D1;
+  position: relative;
 
   .line {
     counter-increment: line-number;
@@ -16,5 +17,70 @@
     background: #F2F2F2;
     color: #ADADAD;
     border-right: 1px solid #d1d1d1;
+  }
+
+  .relative-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+
+  .caret {
+    position: absolute;
+    border-left: 2px solid;
+    width: 3px;
+    height: 20px;
+    display: block;
+    &.own {
+      animation: blinker 1s linear infinite;
+    }
+    &.leftend {
+      width: 3px;
+      border-bottom: 1px solid;
+      border-top: 1px solid
+    }
+    &.rightend {
+      width: 3px;
+      background-color: transparent;
+      border-left: none;
+      border-right: 2px solid;
+      border-bottom: 1px solid;
+      border-top: 1px solid;
+    }
+  }
+
+  .selection {
+    border-width: 1px;
+    border-style: solid;
+    position: absolute;
+  }
+
+  .ccmenu {
+    position: absolute;
+    border-width: 1px;
+    border-style: solid;
+    overflow-y: scroll;
+    max-height: 200px;
+    white-space: nowrap;
+    box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.5);
+
+    .ccSelectedEntry {
+      padding: 0;
+    }
+
+    .matchingText {
+      padding: 0 10px 0 3px;
+      white-space: nowrap;
+    }
+
+    .description {
+      padding: 0 3px 0 10px;
+      white-space: nowrap;
+    }
+
+    th, td {
+      border: none;
+      padding: 3px 6px;
+    }
   }
 }
