@@ -1,3 +1,20 @@
 .editor-container {
   font-family: monospace;
+  counter-reset: line-number;
+  border: 1px solid #D1D1D1;
+
+  .line {
+    counter-increment: line-number;
+  }
+  .line:before {
+    content: counter(line-number);
+    padding-right: 10px;
+    margin-right: 10px;
+    min-width: 30pt;
+    text-align: right;
+    display: inline-block;
+    background: #F2F2F2;
+    color: #ADADAD;
+    border-right: 1px solid #d1d1d1;
+  }
 }
