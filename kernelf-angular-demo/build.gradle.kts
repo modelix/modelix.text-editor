@@ -1,4 +1,5 @@
 import com.github.gradle.node.npm.task.NpmInstallTask
+import com.github.gradle.node.npm.task.NpmSetupTask
 
 plugins {
   base
@@ -33,11 +34,14 @@ val copyGithubToken = tasks.create("copyGithubToken") {
       System.getenv("GITHUB_TOKEN")
     }
     if (!token.isNullOrEmpty()) {
-      projectDir.resolve(".npmrc").writeText("""
+      val text = """
         @modelix:registry=https://npm.pkg.github.com
         //npm.pkg.github.com/:_authToken=$token
-      """.trimIndent())
-
+      """.trimIndent().trim()
+      projectDir.resolve(".npmrc").writeText(text)
+      rootDir.resolve(".npmrc").writeText(text)
+    } else {
+      println("No github token specified")
     }
   }
 }
@@ -59,7 +63,7 @@ val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
   }
 }
 
-tasks.withType<NpmInstallTask> {
+tasks.withType<NpmSetupTask> {
   dependsOn(copyGithubToken)
   dependsOn(updateTsModelApiVersion)
   dependsOn(":kernelf-editor:generateMetaModelSources")
