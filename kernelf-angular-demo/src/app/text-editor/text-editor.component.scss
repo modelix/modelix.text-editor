@@ -84,3 +84,10 @@
     }
   }
 }
+
+@keyframes blinker {
+  from { opacity: 100%; }
+  49% { opacity: 100%; }
+  50% { opacity: 40%; }
+  to { opacity: 40%; }
+}

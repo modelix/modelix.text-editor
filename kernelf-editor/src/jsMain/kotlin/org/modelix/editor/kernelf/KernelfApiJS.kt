@@ -44,6 +44,7 @@ object KernelfApiJS {
                     editor.updateHtml()
                 } else {
                     branch.removeListener(this)
+                    editor.dispose()
                 }
             }
         })

@@ -1,7 +1,7 @@
 
 plugins {
-    kotlin("multiplatform") version "1.7.20" apply false
-    kotlin("plugin.serialization") version "1.7.20" apply false
+    kotlin("multiplatform") version "1.7.21" apply false
+    kotlin("plugin.serialization") version "1.7.21" apply false
     `maven-publish`
     id("com.palantir.git-version") version "0.13.0"
     id("com.dorongold.task-tree") version "2.1.0"
