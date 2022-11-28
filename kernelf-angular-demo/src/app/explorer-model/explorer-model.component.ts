@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_model_repositoryconcepts";
+import {N_Model} from "../../gen/L_org_modelix_model_repositoryconcepts";
 
 @Component({
   selector: 'app-explorer-model',
@@ -9,7 +9,7 @@ import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_mo
 export class ExplorerModelComponent implements OnInit {
 
   @Input()
-  public node!: L_org_modelix_model_repositoryconcepts.N_Model;
+  public node!: N_Model;
 
   constructor() { }
 

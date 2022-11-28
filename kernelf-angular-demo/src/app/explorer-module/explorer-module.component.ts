@@ -1,6 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { org, Nullable } from 'kernelf-editor';
-import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_model_repositoryconcepts";
+import {
+  N_Model,
+  N_Module
+} from "../../gen/L_org_modelix_model_repositoryconcepts";
 
 @Component({
   selector: 'app-explorer-module',
@@ -10,13 +13,13 @@ import {L_org_modelix_model_repositoryconcepts} from "../../gen/L_org_modelix_mo
 export class ExplorerModuleComponent implements OnInit {
 
   @Input()
-  public node!: L_org_modelix_model_repositoryconcepts.N_Module;
+  public node!: N_Module;
 
   constructor() {
 
   }
 
-  public getModels(): Array<L_org_modelix_model_repositoryconcepts.N_Model> {
+  public getModels(): Array<N_Model> {
     return this.node.models.asArray()
   }
 

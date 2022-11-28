@@ -3,7 +3,10 @@ import { org } from 'kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
-import {L_jetbrains_mps_lang_core} from "../../gen/L_jetbrains_mps_lang_core";
+import {
+  isOfConcept_INamedConcept,
+  N_INamedConcept
+} from "../../gen/L_jetbrains_mps_lang_core";
 
 @Component({
   selector: 'app-text-editor',
@@ -69,9 +72,9 @@ export class TextEditorComponent implements OnInit {
     return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.getUnwrappedNode())
   }
 
-  public getNamedConcept(): L_jetbrains_mps_lang_core.N_INamedConcept | undefined {
+  public getNamedConcept(): N_INamedConcept | undefined {
     let typedNode = this.getTypedNode();
-    return L_jetbrains_mps_lang_core.N_INamedConcept.isInstance(typedNode) ? typedNode : undefined
+    return isOfConcept_INamedConcept(typedNode) ? typedNode : undefined
   }
 }
 
