@@ -26,26 +26,6 @@ tasks.named("assemble") {
   dependsOn("npm_run_build")
 }
 
-val copyGithubToken = tasks.create("copyGithubToken") {
-  doLast {
-    val token = if (rootProject.hasProperty("gpr.token")) {
-      "" + rootProject.property("gpr.token")
-    } else {
-      System.getenv("GITHUB_TOKEN")
-    }
-    if (!token.isNullOrEmpty()) {
-      val text = """
-        @modelix:registry=https://npm.pkg.github.com
-        //npm.pkg.github.com/:_authToken=$token
-      """.trimIndent().trim()
-      projectDir.resolve(".npmrc").writeText(text)
-      rootDir.resolve(".npmrc").writeText(text)
-    } else {
-      println("No github token specified")
-    }
-  }
-}
-
 val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
   doLast {
     val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api").relativeTo(projectDir)
@@ -64,7 +44,6 @@ val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
 }
 
 tasks.withType<NpmSetupTask> {
-  dependsOn(copyGithubToken)
   dependsOn(updateTsModelApiVersion)
   dependsOn(":kernelf-editor:generateMetaModelSources")
   dependsOn(":kernelf-editor:jsBrowserDistribution")
