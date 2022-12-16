@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
+import org.jetbrains.kotlin.com.google.gson.JsonParser
 import org.modelix.metamodel.generator.*
 
 buildscript {
@@ -50,7 +52,7 @@ kotlin {
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
                 implementation("org.modelix:model-client:$modelixCoreVersion")
-                //implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -139,3 +141,49 @@ tasks.named("clean") {
     dependsOn(cleanGeneratedMetaModelSources)
 }
 
+fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
+    if (!sourcesDir.exists()) return
+    if (!sourceMapFile.exists()) return
+    val json = JsonParser.parseString(sourceMapFile.readText()).asJsonObject
+    val correctPaths = sourcesDir.walk().associateBy { it.name }
+    val wrongPaths = json.getAsJsonArray("sources")
+    wrongPaths.forEachIndexed { index, wrongPath ->
+        val fileName = wrongPath.asString.substringAfterLast('/')
+        val resolvedFile = correctPaths[fileName]
+        if (resolvedFile != null) {
+            wrongPaths.set(index, JsonPrimitive(resolvedFile.absolutePath))
+        }
+    }
+
+    sourceMapFile.writeText(json.toString())
+}
+
+val fixSourceMaps by tasks.registering {
+    dependsOn("jsProductionExecutableCompileSync")
+    doLast {
+        fixSourceMap(
+            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
+        )
+        fixSourceMap(
+            rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
+        )
+        fixSourceMap(
+            rootDir.resolve("../modelix.core/metamodel-runtime/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-metamodel-runtime-js-ir.js.map")
+        )
+        fixSourceMap(
+            rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-client-js-ir.js.map")
+        )
+        fixSourceMap(
+            rootDir.resolve("../incremental/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/incremental.js.map")
+        )
+
+    }
+}
+tasks.named("jsBrowserProductionWebpack") {
+    dependsOn(fixSourceMaps)
+}
