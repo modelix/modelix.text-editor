@@ -1,11 +1,8 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
-import kotlinx.html.DIV
-import kotlinx.html.HTMLTag
 import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
-import kotlinx.html.div
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.EditorEngine

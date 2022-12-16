@@ -159,7 +159,7 @@ fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
 }
 
 val fixSourceMaps by tasks.registering {
-    dependsOn("jsProductionExecutableCompileSync")
+    dependsOn("jsDevelopmentExecutableCompileSync")
     doLast {
         fixSourceMap(
             rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
@@ -184,6 +184,6 @@ val fixSourceMaps by tasks.registering {
 
     }
 }
-tasks.named("jsBrowserProductionWebpack") {
+tasks.named("jsBrowserDevelopmentWebpack") {
     dependsOn(fixSourceMaps)
 }
