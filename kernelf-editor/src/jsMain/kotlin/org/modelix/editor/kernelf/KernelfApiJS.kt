@@ -1,9 +1,12 @@
 package org.modelix.editor.kernelf
 
+import kotlinx.atomicfu.atomic
 import kotlinx.browser.document
-import kotlinx.html.dom.create
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
-import kotlinx.html.js.div
 import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.IncrementalJSDOMBuilder
 import org.modelix.editor.JsEditorComponent
@@ -39,10 +42,18 @@ object KernelfApiJS {
         val editor = JsEditorComponent { KernelfAPI.editorEngine.createCell(rootNode.typed()) }
         val branch = ModelFacade.getBranch(rootNode)!!.let { if (it is IncrementalBranch) it.branch else it }
         branch.addListener(object : IBranchListener {
+            private var updateScheduled = atomic(false)
+            private val coroutinesScope = CoroutineScope(Dispatchers.Main)
             override fun treeChanged(oldTree: ITree?, newTree: ITree) {
                 if (editor.getHtmlElement().isInDocument()) {
-                    editor.updateHtml()
+                    if (!updateScheduled.getAndSet(true)) {
+                        coroutinesScope.launch {
+                            updateScheduled.getAndSet(false)
+                            editor.update()
+                        }
+                    }
                 } else {
+                    coroutinesScope.cancel("Editor removed from document")
                     branch.removeListener(this)
                     editor.dispose()
                 }
