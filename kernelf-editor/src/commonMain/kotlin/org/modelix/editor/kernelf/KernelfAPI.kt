@@ -26,7 +26,7 @@ object KernelfAPI {
 
     init {
         KernelfLanguages.languages.forEach { it.register() }
-        KernelfEditor().register(editorEngine)
+        KernelfEditor.register(editorEngine)
     }
 
     fun renderJsonAsHtmlText(json: String): String {

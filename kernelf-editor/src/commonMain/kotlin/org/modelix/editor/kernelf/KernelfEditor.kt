@@ -24,10 +24,8 @@ import org.modelix.editor.CellTemplateBuilder
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.languageEditors
 import org.modelix.metamodel.GeneratedConcept
-import kotlin.js.JsExport
 
-@JsExport
-class KernelfEditor {
+object KernelfEditor {
 
 
     val tests = languageEditors(L_org_iets3_core_expr_tests) {
@@ -39,7 +37,7 @@ class KernelfEditor {
             emptyLine()
             concept.contents.vertical()
         }
-        conceptEditor(language.TestCase) {
+/*        conceptEditor(language.TestCase) {
             "test case".cell {
                 iets3keyword()
             }
@@ -57,7 +55,7 @@ class KernelfEditor {
                     concept.items.vertical()
                 }
             }
-        }
+        }*/
         conceptEditor(language.AssertTestItem) {
             optional {
                 concept.optionalName.cell()

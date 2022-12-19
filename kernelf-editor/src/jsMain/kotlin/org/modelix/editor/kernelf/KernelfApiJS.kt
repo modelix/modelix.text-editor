@@ -39,7 +39,7 @@ object KernelfApiJS {
     }
 
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {
-        val editor = JsEditorComponent { KernelfAPI.editorEngine.createCell(rootNode.typed()) }
+        val editor = JsEditorComponent(KernelfAPI.editorEngine) { KernelfAPI.editorEngine.createCell(rootNode.typed()) }
         val branch = ModelFacade.getBranch(rootNode)!!.let { if (it is IncrementalBranch) it.branch else it }
         branch.addListener(object : IBranchListener {
             private var updateScheduled = atomic(false)
