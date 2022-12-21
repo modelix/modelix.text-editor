@@ -130,7 +130,9 @@ object KernelfEditor {
                 textColor("DarkGreen")
                 "\"".cell()
                 noSpace()
-                concept.value.cell()
+                concept.value.cell {
+                    placeholderText("")
+                }
                 noSpace()
                 "\"".cell()
             }
