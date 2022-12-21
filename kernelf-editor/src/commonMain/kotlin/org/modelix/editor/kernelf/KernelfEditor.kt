@@ -37,7 +37,7 @@ object KernelfEditor {
             emptyLine()
             concept.contents.vertical()
         }
-/*        conceptEditor(language.TestCase) {
+        conceptEditor(language.TestCase) {
             "test case".cell {
                 iets3keyword()
             }
@@ -55,7 +55,7 @@ object KernelfEditor {
                     concept.items.vertical()
                 }
             }
-        }*/
+        }
         conceptEditor(language.AssertTestItem) {
             optional {
                 concept.optionalName.cell()
