@@ -1,8 +1,8 @@
 import kotlinx.browser.document
 import kotlinx.html.dom.create
 import kotlinx.html.js.div
+import org.modelix.editor.EditorState
 import org.modelix.editor.kernelf.KernelfAPI
-import org.modelix.editor.kernelf.KernelfApiJS
 import org.w3c.dom.*
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,10 +26,11 @@ class IncrementalDomTest {
         val model = KernelfAPI.loadModelFromJson(modelJson)
         val testSuites = KernelfAPI.findTestSuites(model)
         val containerElement = document.create.div()
-        KernelfApiJS.updateNodeAsDom(testSuites.first().unwrap(), containerElement)
+        val editorState = EditorState()
+        KernelfApiJS.updateNodeAsDom(editorState, testSuites.first().unwrap(), containerElement)
         val elements1 = containerElement.descendants().toList()
         testSuites.first().name = "changed"
-        KernelfApiJS.updateNodeAsDom(testSuites.first().unwrap(), containerElement)
+        KernelfApiJS.updateNodeAsDom(editorState, testSuites.first().unwrap(), containerElement)
         val elements2 = containerElement.descendants().toList()
         assertEquals(elements1.size, elements2.size)
         val expectedChanges = elements1.indices.joinToString {

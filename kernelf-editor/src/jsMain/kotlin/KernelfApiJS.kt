@@ -31,7 +31,7 @@ object KernelfApiJS {
         return tagConsumer.finalize()
     }
 
-    private fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
+    fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
         val existing = parentElement.firstElementChild as? HTMLElement
         val consumer = IncrementalJSDOMBuilder(parentElement.ownerDocument!!, existing)
         KernelfAPI.renderNode(editorState, rootNode, consumer)
