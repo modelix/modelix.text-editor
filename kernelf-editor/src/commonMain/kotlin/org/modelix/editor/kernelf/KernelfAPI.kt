@@ -6,6 +6,7 @@ import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.EditorEngine
+import org.modelix.editor.EditorState
 import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.toHtml
 import org.modelix.kernelf.KernelfLanguages
@@ -20,7 +21,6 @@ import org.modelix.model.area.IAreaListener
 import org.modelix.model.repositoryconcepts.N_Module
 import kotlin.js.JsExport
 
-@JsExport
 object KernelfAPI {
     val editorEngine = EditorEngine()
 
@@ -51,17 +51,17 @@ object KernelfAPI {
 
     fun renderTypedNodeAsHtmlText(rootNode: ITypedNode): String {
         val sb = StringBuilder()
-        renderTypedNode(rootNode, DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)))
+        renderTypedNode(EditorState(), rootNode, DelayedConsumer(HTMLStreamBuilder(out = sb, prettyPrint = true, xhtmlCompatible = true)))
         return sb.toString()
     }
 
-    fun <T> renderNode(rootNode: INode, tagConsumer: TagConsumer<T>) {
-        renderTypedNode(rootNode.typed(), tagConsumer)
+    fun <T> renderNode(editorState: EditorState, rootNode: INode, tagConsumer: TagConsumer<T>) {
+        renderTypedNode(editorState, rootNode.typed(), tagConsumer)
     }
 
-    fun <T> renderTypedNode(rootNode: ITypedNode, tagConsumer: TagConsumer<T>) {
+    fun <T> renderTypedNode(editorState: EditorState, rootNode: ITypedNode, tagConsumer: TagConsumer<T>) {
         ModelFacade.readNode(rootNode.unwrap()) {
-            val cell = editorEngine.createCell(rootNode)
+            val cell = editorEngine.createCell(editorState, rootNode)
             cell.layout.toHtml(tagConsumer)
         }
     }

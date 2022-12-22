@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { org } from 'kernelf-editor';
+import { KernelfApiJS, org } from 'kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
@@ -30,7 +30,7 @@ export class TextEditorComponent implements OnInit {
 
   ngAfterViewInit(){
     if (this.editorContainer) {
-      let dom = org.modelix.editor.kernelf.KernelfApiJS.renderAndUpdateNodeAsDom(this.getUnwrappedNode());
+      let dom = KernelfApiJS.renderAndUpdateNodeAsDom(this.getUnwrappedNode());
       let nativeElement: HTMLElement = this.editorContainer.nativeElement;
       nativeElement.appendChild(dom);
     }
@@ -64,12 +64,8 @@ export class TextEditorComponent implements OnInit {
     return LanguageRegistry.INSTANCE.wrapNode(this.getJSNode())
   }
 
-  public renderEditor(): string {
-    return org.modelix.editor.kernelf.KernelfAPI.renderNodeAsHtmlText(this.getUnwrappedNode());
-  }
-
   public getTitle(): string {
-    return org.modelix.editor.kernelf.KernelfAPI.nodeToString(this.getUnwrappedNode())
+    return KernelfApiJS.nodeToString(this.getUnwrappedNode())
   }
 
   public getNamedConcept(): N_INamedConcept | undefined {
