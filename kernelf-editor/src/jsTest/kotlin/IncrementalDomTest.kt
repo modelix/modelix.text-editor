@@ -43,7 +43,7 @@ class IncrementalDomTest {
     }
 }
 
-val modelJson = """
+private val modelJson = """
     {
         "root": {
             "id": "",
