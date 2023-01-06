@@ -9,6 +9,9 @@
     &.highlighted {
       background-color: hsla(90, 70%, 50%, 0.15); //#FCFAEE;
     }
+    &.highlighted:before {
+      background-color: hsla(90, 70%, 50%, 0.15); //#FCFAEE;
+    }
     .highlighted-cell {
       background-color: #DBE5FD;
     }
@@ -23,9 +26,6 @@
     background: #F2F2F2;
     color: #ADADAD;
     border-right: 1px solid #d1d1d1;
-  }
-  .line.highlighted:before {
-    background-color: hsla(90, 70%, 50%, 0.15); //#FCFAEE;
   }
 
   .relative-layer {
