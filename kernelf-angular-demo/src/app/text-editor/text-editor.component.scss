@@ -66,6 +66,7 @@
 
   .ccmenu-container {
     position: absolute;
+    white-space: nowrap;
     .ccmenu-pattern {
       background-color: white;
       border: 1px solid #ccc;
@@ -76,7 +77,6 @@
       border: 1px solid black;
       overflow-y: scroll;
       max-height: 200px;
-      white-space: nowrap;
       box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.5);
 
       .ccSelectedEntry {
