@@ -64,34 +64,40 @@
     position: absolute;
   }
 
-  .ccmenu {
-    background-color: white;
+  .ccmenu-container {
     position: absolute;
-    border-width: 1px;
-    border-style: solid;
-    overflow-y: scroll;
-    max-height: 200px;
-    white-space: nowrap;
-    box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.5);
-
-    .ccSelectedEntry {
-      background-color: #5373af;
-      color: #fff;
+    .ccmenu-pattern {
+      background-color: white;
+      border: 1px solid #ccc;
+      display: inline-block;
     }
-
-    .matchingText {
-      padding: 0 10px 0 3px;
+    .ccmenu {
+      background-color: white;
+      border: 1px solid black;
+      overflow-y: scroll;
+      max-height: 200px;
       white-space: nowrap;
-    }
+      box-shadow: 5px 5px 40px 0 rgba(0,0,0,0.5);
 
-    .description {
-      padding: 0 3px 0 10px;
-      white-space: nowrap;
-    }
+      .ccSelectedEntry {
+        background-color: #5373af;
+        color: #fff;
+      }
 
-    th, td {
-      border: none;
-      padding: 3px 6px;
+      .matchingText {
+        padding: 0 10px 0 3px;
+        white-space: nowrap;
+      }
+
+      .description {
+        padding: 0 3px 0 10px;
+        white-space: nowrap;
+      }
+
+      th, td {
+        border: none;
+        padding: 3px 6px;
+      }
     }
   }
 }
