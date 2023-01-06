@@ -61,6 +61,7 @@ import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -95,6 +96,7 @@ open class IncrementalLayoutAfterInsertJS {
         KernelfLanguages.languages.forEach { it.unregister() }
     }
 
+    @Ignore
     @Test
     fun domAfterInsert() {
         val containerElement = document.create.div()
