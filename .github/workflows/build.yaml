@@ -26,11 +26,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }}
       - name: Upload artifact
-        uses: actions/upload-artifact@main
+        uses: actions/upload-pages-artifact@v1
         with:
-          name: github-pages
-          path: kernelf-angular-demo/build/github-pages/artifact.tar
-          retention-days: 1
+          path: kernelf-angular-demo/dist/kernelf-angular-demo
 
   # Deploy job
   deploy:

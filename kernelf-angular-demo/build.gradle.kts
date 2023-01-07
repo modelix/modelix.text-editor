@@ -22,21 +22,8 @@ tasks.named("npm_run_build") {
   outputs.dir("dist")
 }
 
-val packageDist = tasks.create<Tar>("packageDist") {
-  dependsOn("npm_run_build")
-
-  archiveFileName.set("artifact.tar")
-  into ("/"){
-    from("dist/kernelf-angular-demo")
-  }
-
-  destinationDirectory.set(buildDir.resolve("github-pages"))
-  archiveExtension.set("tar")
-}
-
 tasks.named("assemble") {
   dependsOn("npm_run_build")
-  dependsOn(packageDist)
 }
 
 val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
