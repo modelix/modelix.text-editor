@@ -25,6 +25,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@main
+        with:
+          name: gh-pages
+          path: kernelf-angular-demo/build/gh-pages.tar
+          retention-days: 1
 
   # Deploy job
   deploy:
@@ -44,12 +50,6 @@ jobs:
     # Specify runner + deployment step
     runs-on: ubuntu-latest
     steps:
-      - name: Upload artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: gh-pages
-          path: kernelf-angular-demo/build/gh-pages.tar
-          retention-days: 1
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
