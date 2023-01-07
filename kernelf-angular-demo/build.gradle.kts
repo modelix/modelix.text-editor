@@ -25,14 +25,13 @@ tasks.named("npm_run_build") {
 val packageDist = tasks.create<Tar>("packageDist") {
   dependsOn("npm_run_build")
 
-  archiveFileName.set("gh-pages.tar")
+  archiveFileName.set("artifact.tar")
   into ("/"){
     from("dist/kernelf-angular-demo")
   }
 
-  destinationDirectory.set(buildDir)
+  destinationDirectory.set(buildDir.resolve("github-pages"))
   archiveExtension.set("tar")
-  compression = Compression.GZIP
 }
 
 tasks.named("assemble") {
