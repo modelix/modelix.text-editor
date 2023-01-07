@@ -7,4 +7,4 @@ An implementation of KernelF with Modelix
 
 ## Live Demo
 
-The angular project in kernelf-angular-demo is published to https://modelix.github.io/modelix.kernelf/kernelf-angular-demo/
+The angular project in kernelf-angular-demo is published to https://modelix.github.io/modelix.kernelf/
