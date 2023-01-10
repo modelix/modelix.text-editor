@@ -23,7 +23,7 @@ val kotlinLoggingVersion: String by rootProject
 val kotlinCoroutinesVersion: String by rootProject
 val kotlinxHtmlVersion: String by rootProject
 
-val generatorOutputDir = file("src/commonMain/kotlin_gen")
+val generatorOutputDir = buildDir.resolve("apigen").resolve("src_gen")
 val tsGeneratorOutputDir = file("../kernelf-angular-demo/src/gen")
 
 kotlin {
@@ -53,7 +53,6 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
                 implementation("org.modelix:model-client:$modelixCoreVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
-                implementation(project(":kernelf-apigen"))
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -98,49 +97,46 @@ kotlin {
     }
 }
 
-fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
-    if (!sourcesDir.exists()) return
-    if (!sourceMapFile.exists()) return
-    val json = JsonParser.parseString(sourceMapFile.readText()).asJsonObject
-    val correctPaths = sourcesDir.walk().associateBy { it.name }
-    val wrongPaths = json.getAsJsonArray("sources")
-    wrongPaths.forEachIndexed { index, wrongPath ->
-        val fileName = wrongPath.asString.substringAfterLast('/')
-        val resolvedFile = correctPaths[fileName]
-        if (resolvedFile != null) {
-            wrongPaths.set(index, JsonPrimitive(resolvedFile.absolutePath))
-        }
-    }
-
-    sourceMapFile.writeText(json.toString())
-}
-
-val fixSourceMaps by tasks.registering {
-    dependsOn("jsDevelopmentExecutableCompileSync")
+val generateMetaModelSources = tasks.create("generateMetaModelSources") {
+    val languagesDir = file("languages")
+    inputs.dir(languagesDir)
+    outputs.dir(generatorOutputDir)
+    outputs.dir(tsGeneratorOutputDir)
     doLast {
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/metamodel-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-metamodel-runtime-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-client-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../incremental/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/incremental.js.map")
-        )
+        var languages: LanguageSet = LanguageSet(languagesDir.walk()
+            .filter { it.extension.toLowerCase() == "yaml" }
+            .map { LanguageData.fromFile(it) }
+            .toList())
+        languages = languages.filter {
+            val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")
+            languages.getLanguages().filter { lang -> includedLanguagePrefixes.any { lang.name.startsWith(it) } }.forEach { lang ->
+                lang.getConceptsInLanguage().forEach { concept ->
+                    includeConcept(concept.fqName)
+                }
+            }
+            includeConcept("jetbrains.mps.lang.test.TestInfo")
+        }
 
+        val generator = MetaModelGenerator(generatorOutputDir.toPath())
+        generator.generate(languages)
+        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages", languages)
+
+        val tsGenerator = TypescriptMMGenerator(tsGeneratorOutputDir.toPath())
+        tsGenerator.generate(languages)
     }
 }
-tasks.named("jsBrowserDevelopmentWebpack") {
-    dependsOn(fixSourceMaps)
+
+val cleanGeneratedMetaModelSources = tasks.create("cleanGeneratedMetaModelSources") {
+    doLast {
+        generatorOutputDir.deleteRecursively()
+        tsGeneratorOutputDir.deleteRecursively()
+    }
+}
+
+tasks.matching { it.name.matches(Regex("""(.*compile.*Kotlin.*|.*[sS]ourcesJar.*)""")) }.configureEach {
+    dependsOn(generateMetaModelSources)
+}
+
+tasks.named("clean") {
+    dependsOn(cleanGeneratedMetaModelSources)
 }
