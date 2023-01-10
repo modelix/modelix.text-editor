@@ -14,6 +14,7 @@ import org.modelix.editor.collectActionsBetween
 import org.modelix.editor.commonAncestor
 import org.modelix.editor.descendants
 import org.modelix.editor.firstLeaf
+import org.modelix.editor.flattenApplicableActions
 import org.modelix.editor.getSubstituteActions
 import org.modelix.editor.getVisibleText
 import org.modelix.editor.isVisible
@@ -77,7 +78,7 @@ class CodeCompletionTest {
     fun printActions() {
         val actions = getSubstituteActions(getNumberLiteralCell())
         val parameters = CodeCompletionParameters(editor, "")
-        actions.forEach { println(it.getMatchingText(parameters) + " | " + it.getDescription(parameters)) }
+        actions.forEach { println(it.getMatchingText() + " | " + it.getDescription()) }
     }
 
     @Test
@@ -116,9 +117,9 @@ class CodeCompletionTest {
     fun noDuplicates() {
         val parameters = CodeCompletionParameters(editor, "")
         val actions = getSubstituteActions(getNumberLiteralCell())
-        val knownDuplicates = setOf("none")
-        val duplicates = actions.groupBy { it.getMatchingText(parameters) }.filter { it.value.size > 1 } - knownDuplicates
-        assertTrue(duplicates.isEmpty(), "Duplicate entries found: " + duplicates.map { it.key })
+        val knownDuplicates = setOf("none", "")
+        val duplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 } - knownDuplicates
+        assertTrue(duplicates.isEmpty(), "Duplicate entries found: " + duplicates)
     }
 
     private fun getNumberLiteralCell() = editor.resolvePropertyCell(C_NumberLiteral.value, numberLiteral)!!
@@ -126,8 +127,8 @@ class CodeCompletionTest {
     private fun getSubstituteActions(cell: Cell): List<ICodeCompletionAction> {
         val parameters = CodeCompletionParameters(editor, "")
         return branch.computeRead {
-            cell.getSubstituteActions().flatMap { it.getActions(parameters) }
-                .sortedBy { it.getMatchingText(parameters) }.toList()
+            cell.getSubstituteActions().flatMap { it.flattenApplicableActions(parameters) }
+                .sortedBy { it.getMatchingText() }.toList()
         }
     }
 }

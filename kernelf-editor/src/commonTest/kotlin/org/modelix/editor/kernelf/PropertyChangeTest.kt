@@ -16,6 +16,7 @@ import org.modelix.editor.JSKeyboardEvent
 import org.modelix.editor.KeyLocation
 import org.modelix.editor.Modifiers
 import org.modelix.editor.PropertyCellReference
+import org.modelix.editor.flattenApplicableActions
 import org.modelix.editor.getSubstituteActions
 import org.modelix.editor.layoutable
 import org.modelix.editor.resolvePropertyCell
@@ -86,8 +87,8 @@ class PropertyChangeTest {
     fun substituteActions() {
         val parameters = CodeCompletionParameters(editor, "")
         val cell = editor.resolvePropertyCell(C_NumberLiteral.value, numberLiteral)!!
-        val actions: List<ICodeCompletionAction> = cell.getSubstituteActions().flatMap { it.getActions(parameters) }.toList()
-        actions.forEach { println(it.getMatchingText(parameters) + " | " + it.getDescription(parameters)) }
+        val actions: List<ICodeCompletionAction> = cell.getSubstituteActions().flatMap { it.flattenApplicableActions(parameters) }.toList()
+        actions.forEach { println(it.getMatchingText() + " | " + it.getDescription()) }
         assertTrue(actions.isNotEmpty())
     }
 }
