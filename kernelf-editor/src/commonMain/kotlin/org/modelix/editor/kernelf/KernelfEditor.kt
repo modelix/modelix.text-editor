@@ -17,6 +17,7 @@ import de.slisson.mps.richtext.L_de_slisson_mps_richtext
 import jetbrains.mps.lang.core.N_INamedConcept
 import jetbrains.mps.lang.test.L_jetbrains_mps_lang_test
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
+import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
@@ -291,13 +292,31 @@ object KernelfEditor {
             })
         }
         val binaryExpressionSymbols = mapOf<GeneratedConcept<*, *>, String>(
-            language.PlusExpression to "+",
-            language.MinusExpression to "-",
+            language.AssignmentExpr to ":=",
+
             language.DivExpression to "/",
-            language.MulExpression to "*",
+            language.MinusExpression to "-",
             language.ModExpression to "%",
+            language.MulExpression to "*",
+            language.PlusExpression to "+",
+
+            language.GreaterEqualsExpression to ">=",
+            language.GreaterExpression to ">",
+            language.LessEqualsExpression to "<=",
+            language.LessExpression to "<",
+
             language.EqualsExpression to "==",
+            language.NonStrictEqualsExpression to "===",
             language.NotEqualsExpression to "!=",
+
+            language.LogicalAndExpression to "&&",
+            language.LogicalIffExpression to "<=>",
+            language.LogicalImpliesExpression to "=>",
+            language.LogicalOrExpression to "||",
+
+            language.OptionOrExpression to "?:",
+
+            L_org_iets3_core_expr_lambda.FunCompose to ":o:",
         )
         conceptEditor(language.BinaryExpression) {
             val symbol = binaryExpressionSymbols[concept._concept]
