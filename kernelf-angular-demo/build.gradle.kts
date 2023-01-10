@@ -45,6 +45,6 @@ val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
 
 tasks.withType<NpmSetupTask> {
   dependsOn(updateTsModelApiVersion)
-  dependsOn(":kernelf-editor:generateMetaModelSources")
+  dependsOn(":kernelf-apigen:generateMetaModelSources")
   dependsOn(":kernelf-editor:jsBrowserDistribution")
 }
