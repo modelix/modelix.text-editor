@@ -1,8 +1,10 @@
 pluginManagement {
     val kotlinVersion: String by settings
+    val modelixCoreVersion: String by settings
     plugins {
         kotlin("multiplatform") version kotlinVersion apply false
         kotlin("plugin.serialization") version kotlinVersion apply false
+        id("org.modelix.metamodel.gradle") version modelixCoreVersion apply false
     }
     resolutionStrategy {
     }

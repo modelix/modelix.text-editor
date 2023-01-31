@@ -3,6 +3,7 @@ plugins {
     `maven-publish`
     id("com.palantir.git-version") version "0.13.0"
     id("com.dorongold.task-tree") version "2.1.0"
+    kotlin("multiplatform") apply false
 }
 
 group = "org.modelix"

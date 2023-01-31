@@ -1,6 +1,10 @@
+import kotlinx.serialization.decodeFromString
 import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 import org.jetbrains.kotlin.com.google.gson.JsonParser
-import org.modelix.metamodel.generator.*
+import org.modelix.metamodel.generator.LanguageSet
+import org.modelix.metamodel.generator.MetaModelGenerator
+import org.modelix.metamodel.generator.TypescriptMMGenerator
+import org.modelix.model.data.LanguageData
 
 buildscript {
     repositories {
@@ -9,7 +13,9 @@ buildscript {
     }
     dependencies {
         val modelixCoreVersion: String by rootProject
+        classpath("org.modelix:model-api:$modelixCoreVersion")
         classpath("org.modelix:metamodel-generator:$modelixCoreVersion")
+        classpath("com.charleskorn.kaml:kaml:0.48.0")
     }
 }
 
@@ -97,6 +103,7 @@ kotlin {
     }
 }
 
+
 val generateMetaModelSources = tasks.create("generateMetaModelSources") {
     val languagesDir = file("languages")
     inputs.dir(languagesDir)
@@ -105,7 +112,7 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
     doLast {
         var languages: LanguageSet = LanguageSet(languagesDir.walk()
             .filter { it.extension.toLowerCase() == "yaml" }
-            .map { LanguageData.fromFile(it) }
+            .map { com.charleskorn.kaml.Yaml.Companion.default.decodeFromString<LanguageData>(it.readText()) }
             .toList())
         languages = languages.filter {
             val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")

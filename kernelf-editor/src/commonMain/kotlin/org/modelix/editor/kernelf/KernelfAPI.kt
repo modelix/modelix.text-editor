@@ -14,6 +14,7 @@ import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ModelData
 import org.modelix.metamodel.TypedLanguagesRegistry
 import org.modelix.metamodel.typed
+import org.modelix.metamodel.untypedConcept
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.INode
 import org.modelix.model.area.IAreaChangeList
@@ -81,7 +82,7 @@ object KernelfAPI {
             is INode -> node.typed()
             else -> throw IllegalArgumentException("Unsupported node type: $node")
         }
-        return (if (typedNode is N_INamedConcept) typedNode.name else null) ?: typedNode._concept._concept.getLongName()
+        return (if (typedNode is N_INamedConcept) typedNode.name else null) ?: typedNode.untypedConcept().getLongName()
     }
 
     fun findTestSuites(rootNode: INode): Array<N_TestSuite> {

@@ -1,4 +1,3 @@
-import com.github.gradle.node.npm.task.NpmInstallTask
 import com.github.gradle.node.npm.task.NpmSetupTask
 
 plugins {
@@ -28,12 +27,12 @@ tasks.named("assemble") {
 
 val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
   doLast {
-    val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api").relativeTo(projectDir)
+    val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
     val packageJsonFile = projectDir.resolve("package.json")
     var text = packageJsonFile.readText()
     println("ts-model-api path: $localPath")
     val replacement = if (localPath.exists()) {
-      """"@modelix/ts-model-api": "file:$localPath""""
+      """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir)}""""
     } else {
       """"@modelix/ts-model-api": "$modelixCoreVersion""""
     }

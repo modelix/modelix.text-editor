@@ -11,7 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "predeploy": "ng build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist/kernelf-angular-demo"
   },
   "private": true,
   "dependencies": {

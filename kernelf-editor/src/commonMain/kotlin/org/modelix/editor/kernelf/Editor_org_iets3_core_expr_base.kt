@@ -106,8 +106,8 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         L_org_iets3_core_expr_lambda.FunCompose to ":o:",
     )
     conceptEditor(language.BinaryExpression) {
-        val symbol = binaryExpressionSymbols[concept._concept]
-            ?: "Operator symbol for ${concept._concept.getLongName()} not specified"
+        val symbol = binaryExpressionSymbols[concept.untyped()]
+            ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
         concept.left.cell()
         symbol.cell()
         concept.right.cell()
