@@ -51,3 +51,11 @@ subprojects {
         }
     }
 }
+
+subprojects {
+    val sourceFile = rootDir.resolve(".npmrc")
+    val targetFile = projectDir.resolve(".npmrc")
+    if (!targetFile.exists() && sourceFile.exists()) {
+        sourceFile.copyTo(targetFile)
+    }
+}
