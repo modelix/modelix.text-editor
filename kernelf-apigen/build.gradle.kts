@@ -53,7 +53,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
-                implementation("org.modelix:editor-runtime:$modelixCoreVersion")
+                implementation(project(":editor-runtime"))
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")

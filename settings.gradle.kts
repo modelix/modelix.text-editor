@@ -16,9 +16,10 @@ pluginManagement {
     }
 }
 
-rootProject.name = "modelix.kernelf"
+rootProject.name = "modelix.text-editor"
 
 include("kernelf-angular-demo")
 include("kernelf-editor")
 include("kernelf-apigen")
+include("editor-runtime")
 

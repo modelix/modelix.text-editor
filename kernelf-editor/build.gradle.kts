@@ -47,7 +47,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
-                implementation("org.modelix:editor-runtime:$modelixCoreVersion")
+                implementation(project(":editor-runtime"))
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
@@ -119,10 +119,10 @@ fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
 val fixSourceMaps by tasks.registering {
     dependsOn("jsDevelopmentExecutableCompileSync")
     doLast {
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
-        )
+//        fixSourceMap(
+//            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
+//            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
+//        )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
             rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
