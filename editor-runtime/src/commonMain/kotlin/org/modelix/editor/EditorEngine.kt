@@ -11,6 +11,7 @@ import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.GeneratedConcept
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedConcept
+import org.modelix.metamodel.typed
 import org.modelix.metamodel.untyped
 import org.modelix.metamodel.untypedConcept
 import org.modelix.metamodel.untypedReference
@@ -61,7 +62,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     fun createCellModel(concept: IConcept): CellTemplate<*, *> {
         val editor: ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>> = resolveConceptEditor(concept) as ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>>
-        val template: CellTemplate<ITypedNode, IConceptOfTypedNode<ITypedNode>> = editor.apply(concept as IConceptOfTypedNode<ITypedNode>)
+        val template: CellTemplate<ITypedNode, IConceptOfTypedNode<ITypedNode>> = editor.apply(concept.typed() as IConceptOfTypedNode<ITypedNode>)
         return template
     }
 

@@ -7,6 +7,7 @@ import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ITypedSingleChildLink
 import org.modelix.metamodel.typed
+import org.modelix.metamodel.typedConcept
 import org.modelix.metamodel.untypedConcept
 import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.serialize
@@ -21,11 +22,11 @@ class ConceptEditor<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
     }
 
     fun apply(context: CellCreationContext, node: NodeT): CellData {
-        return apply(node.untypedConcept() as ConceptT).apply(context, node)
+        return apply(node.typedConcept() as ConceptT).apply(context, node)
     }
 }
 
-val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>) { subConcept ->
+val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>?) { subConcept ->
     CellTemplateBuilder(CollectionCellTemplate(subConcept)).apply {
         subConcept.untyped().getShortName().constant()
         curlyBrackets {
