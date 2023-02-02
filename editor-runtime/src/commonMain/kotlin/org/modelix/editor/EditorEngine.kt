@@ -9,8 +9,10 @@ import org.modelix.model.api.getAllConcepts
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.GeneratedConcept
+import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.untyped
+import org.modelix.metamodel.untypedConcept
 import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.IConcept
 
@@ -49,7 +51,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         editors.add(languageEditors)
         languageEditors.conceptEditors.forEach {
             val declaredConcept = it.declaredConcept ?: return@forEach
-            editorsForConcept.getOrPut(declaredConcept.getReference()) { ArrayList() }.add(it)
+            editorsForConcept.getOrPut(declaredConcept.untyped().getReference()) { ArrayList() }.add(it)
         }
     }
 
@@ -58,8 +60,8 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
 
     fun createCellModel(concept: IConcept): CellTemplate<*, *> {
-        val editor: ConceptEditor<ITypedNode, ITypedConcept> = resolveConceptEditor(concept) as ConceptEditor<ITypedNode, ITypedConcept>
-        val template: CellTemplate<ITypedNode, ITypedConcept> = editor.apply(concept as GeneratedConcept<ITypedNode, ITypedConcept>)
+        val editor: ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>> = resolveConceptEditor(concept) as ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>>
+        val template: CellTemplate<ITypedNode, IConceptOfTypedNode<ITypedNode>> = editor.apply(concept as IConceptOfTypedNode<ITypedNode>)
         return template
     }
 
@@ -92,7 +94,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     private fun <NodeT : ITypedNode> doCreateCellData(editorState: EditorState, node: NodeT): CellData {
         try {
-            val editor = resolveConceptEditor(node._concept.untyped()) as ConceptEditor<NodeT, *>
+            val editor = resolveConceptEditor(node.untypedConcept()) as ConceptEditor<NodeT, *>
             val data = editor.apply(CellCreationContext(this, editorState), node)
             data.properties[CellActionProperties.substitute] = ReplaceNodeActionProvider(ExistingNode(node.unwrap()))
             data.cellReferences += NodeCellReference(node.untypedReference())
@@ -108,7 +110,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private fun resolveConceptEditor(concept: IConcept): ConceptEditor<*, out ITypedConcept> {
+    private fun resolveConceptEditor(concept: IConcept): ConceptEditor<*, out IConceptOfTypedNode<*>> {
         val editors = concept.getAllConcepts()
             .firstNotNullOfOrNull { editorsForConcept[it.getReference()] }
         return editors?.firstOrNull()

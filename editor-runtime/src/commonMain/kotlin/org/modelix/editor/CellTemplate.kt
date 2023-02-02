@@ -1,6 +1,7 @@
 package org.modelix.editor
 
 import org.modelix.metamodel.GeneratedConcept
+import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ITypedReferenceLink
@@ -19,7 +20,7 @@ import org.modelix.model.api.getChildren
 import org.modelix.model.api.moveChild
 import org.modelix.model.api.setPropertyValue
 
-abstract class CellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(val concept: GeneratedConcept<NodeT, ConceptT>) {
+abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(val concept: ConceptT) {
     val properties = CellProperties()
     private val children: MutableList<CellTemplate<NodeT, ConceptT>> = ArrayList()
     private var reference: ICellTemplateReference? = null
@@ -126,7 +127,7 @@ class OverrideText(val cell: TextCellData, val delegate: ITextChangeAction?) : I
     }
 }
 
-class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>, val text: String)
+class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val text: String)
     : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: NodeT) = TextCellData(text, "")
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
@@ -139,9 +140,9 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept
 
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) : ICodeCompletionAction {
         override fun getMatchingText(): String = text
-        override fun getDescription(): String = concept.getShortName()
+        override fun getDescription(): String = concept.untyped().getShortName()
         override fun execute(editor: EditorComponent) {
-            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept)
+            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept.untyped())
             wrapper.moveChild(wrappingLink, 0, nodeToWrap.getOrCreateNode(null))
             editor.selectAfterUpdate {
                 CaretPositionPolicy(wrapper)
@@ -170,11 +171,11 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept
         }
 
         override fun getDescription(): String {
-            return concept.getShortName()
+            return concept.untyped().getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val newNode = location.replaceNode(concept)
+            val newNode = location.replaceNode(concept.untyped())
             editor.selectAfterUpdate {
                 CaretPositionPolicy(newNode)
                     .getBestSelection(editor)
@@ -189,7 +190,7 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept
  * It is ignored when generating transformation action.
  * A constant is part of the grammar.
  */
-class LabelCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>, val text: String)
+class LabelCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val text: String)
     : CellTemplate<NodeT, ConceptT>(concept) {
     override fun createCell(context: CellCreationContext, node: NodeT): TextCellData {
         return TextCellData(text, "").also {
@@ -203,23 +204,23 @@ class LabelCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: G
     }
 }
 
-class NewLineCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>)
+class NewLineCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
     : CellTemplate<NodeT, ConceptT>(concept) {
     override fun createCell(context: CellCreationContext, node: NodeT): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.onNewLine] = true }
     }
 }
-class NoSpaceCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>)
+class NoSpaceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
     : CellTemplate<NodeT, ConceptT>(concept) {
     override fun createCell(context: CellCreationContext, node: NodeT): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.noSpace] = true }
     }
 }
-class CollectionCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>)
+class CollectionCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
     : CellTemplate<NodeT, ConceptT>(concept) {
     override fun createCell(context: CellCreationContext, node: NodeT) = CellData()
 }
-class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>)
+class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
     : CellTemplate<NodeT, ConceptT>(concept) {
     override fun createCell(context: CellCreationContext, node: NodeT): CellData {
         return CellData()
@@ -240,7 +241,7 @@ class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept
     }
 }
 
-open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(concept: GeneratedConcept<NodeT, ConceptT>, val property: IProperty)
+open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val property: IProperty)
     : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
     var placeholderText: String = "<no ${property.name}>"
     var validator: (String) -> Boolean = { true }
@@ -272,11 +273,11 @@ open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(co
         }
 
         override fun getDescription(): String {
-            return concept.getShortName()
+            return concept.untyped().getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val node = location.getOrCreateNode(concept)
+            val node = location.getOrCreateNode(concept.untyped())
             node.setPropertyValue(property, value)
             editor.selectAfterUpdate {
                 CaretPositionPolicy(createCellReference(node))
@@ -298,8 +299,8 @@ open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(co
     }
 }
 
-class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept, TargetNodeT : ITypedNode>(
-    concept: GeneratedConcept<NodeT, ConceptT>,
+class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>, TargetNodeT : ITypedNode>(
+    concept: ConceptT,
     val link: ITypedReferenceLink<TargetNodeT>,
     val presentation: TargetNodeT.() -> String?
 ) : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
@@ -314,7 +315,7 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept, Target
         return sourceNode.unwrap().getReferenceTargetOrNull(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        val specializedLocation = location.ofSubConcept(concept)
+        val specializedLocation = location.ofSubConcept(concept.untyped())
         val targets = specializedLocation.getVisibleReferenceTargets(link.untyped())
         return targets.map { WrapReferenceTarget(location, it, presentation(it.typedUnsafe()) ?: "") }
     }
@@ -325,11 +326,11 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept, Target
         }
 
         override fun getDescription(): String {
-            return concept.getShortName()
+            return concept.untyped().getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val sourceNode = location.getOrCreateNode(concept)
+            val sourceNode = location.getOrCreateNode(concept.untyped())
             sourceNode.setReferenceTarget(link, link.castTarget(target))
             editor.selectAfterUpdate {
                 CaretPositionPolicy(createCellReference(sourceNode))
@@ -339,8 +340,8 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept, Target
     }
 }
 
-class FlagCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(
-    concept: GeneratedConcept<NodeT, ConceptT>,
+class FlagCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
+    concept: ConceptT,
     property: IProperty,
     val text: String
 ) : PropertyCellTemplate<NodeT, ConceptT>(concept, property), IGrammarSymbol {
@@ -351,8 +352,8 @@ class FlagCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(
     }
 }
 
-class ChildCellTemplate<NodeT : ITypedNode, ConceptT : ITypedConcept>(
-    concept: GeneratedConcept<NodeT, ConceptT>,
+class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
+    concept: ConceptT,
     val link: IChildLink
 ) : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: NodeT) = CellData().also { cell ->

@@ -4,8 +4,8 @@ import org.modelix.metamodel.*
 import org.modelix.model.api.*
 import kotlin.jvm.JvmName
 
-open class CellTemplateBuilder<NodeT : ITypedNode, ConceptT : ITypedConcept>(val template: CellTemplate<NodeT, ConceptT>) {
-    val concept: ConceptT = template.concept.typed()
+open class CellTemplateBuilder<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(val template: CellTemplate<NodeT, ConceptT>) {
+    val concept: ConceptT = template.concept
     val properties = CellProperties()
 
     fun ifEmpty(link: IChildLink, body: ()->Unit) {
@@ -220,7 +220,7 @@ open class CellTemplateBuilder<NodeT : ITypedNode, ConceptT : ITypedConcept>(val
     inner class WithNodeContext(val node: NodeT)
 }
 
-class PropertyCellTemplateBuilder<NodeT : ITypedNode, ConceptT : ITypedConcept>(template: PropertyCellTemplate<NodeT, ConceptT>) : CellTemplateBuilder<NodeT, ConceptT>(
+class PropertyCellTemplateBuilder<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(template: PropertyCellTemplate<NodeT, ConceptT>) : CellTemplateBuilder<NodeT, ConceptT>(
     template
 ) {
     fun validateValue(validator: (String)->Boolean) {
@@ -240,7 +240,7 @@ class PropertyCellTemplateBuilder<NodeT : ITypedNode, ConceptT : ITypedConcept>(
     }
 }
 
-class ReferenceCellTemplateBuilder<SourceNodeT : ITypedNode, SourceConceptT : ITypedConcept, TargetNodeT : ITypedNode>(template: CellTemplate<SourceNodeT, SourceConceptT>, val link: ITypedReferenceLink<TargetNodeT>) : CellTemplateBuilder<SourceNodeT, SourceConceptT>(
+class ReferenceCellTemplateBuilder<SourceNodeT : ITypedNode, SourceConceptT : IConceptOfTypedNode<SourceNodeT>, TargetNodeT : ITypedNode>(template: CellTemplate<SourceNodeT, SourceConceptT>, val link: ITypedReferenceLink<TargetNodeT>) : CellTemplateBuilder<SourceNodeT, SourceConceptT>(
     template
 ) {
     fun presentation(f: (TargetNodeT)->String?) {

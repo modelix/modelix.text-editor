@@ -1,10 +1,10 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
+import org.iets3.core.expr.base.CN_BinaryExpression
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.modelix.editor.languageEditors
-import org.modelix.metamodel.GeneratedConcept
 
 val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base) {
     conceptEditor(language.DotExpression) {
@@ -78,7 +78,7 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
             }
         })
     }
-    val binaryExpressionSymbols = mapOf<GeneratedConcept<*, *>, String>(
+    val binaryExpressionSymbols = mapOf<CN_BinaryExpression, String>(
         language.AssignmentExpr to ":=",
 
         language.DivExpression to "/",
@@ -106,7 +106,7 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         L_org_iets3_core_expr_lambda.FunCompose to ":o:",
     )
     conceptEditor(language.BinaryExpression) {
-        val symbol = binaryExpressionSymbols[concept.untyped()]
+        val symbol = binaryExpressionSymbols[concept]
             ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
         concept.left.cell()
         symbol.cell()
