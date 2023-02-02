@@ -1,5 +1,4 @@
-# modelix.kernelf
-An implementation of KernelF with Modelix
+# modelix.text-editor
 
 ## Build
 
@@ -7,4 +6,4 @@ An implementation of KernelF with Modelix
 
 ## Live Demo
 
-The angular project in kernelf-angular-demo is published to https://modelix.github.io/modelix.kernelf/
+The angular project in kernelf-angular-demo is published to https://modelix.github.io/modelix.text-editor/

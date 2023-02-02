@@ -2,7 +2,7 @@
   "name": "kernelf-angular-demo",
   "version": "0.0.0",
   "repository": {
-    "url": "git+https://github.com/modelix/modelix.kernelf.git"
+    "url": "git+https://github.com/modelix/modelix.text-editor.git"
   },
   "scripts": {
     "ng": "ng",
@@ -26,8 +26,8 @@
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4",
-    "kernelf-editor": "file:../build/js/packages/modelix.kernelf-kernelf-editor",
-    "@modelix/ts-model-api": "1.5.8"
+    "kernelf-editor": "file:../build/js/packages/modelix.text-editor-kernelf-editor",
+    "@modelix/ts-model-api": "file:../../modelix.core/ts-model-api"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.1",
