@@ -7,13 +7,13 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
     conceptEditor(language.StringLiteral) {
         horizontal {
             textColor("DarkGreen")
-            "\"".cell()
+            "\"".constant()
             noSpace()
             concept.value.cell {
                 placeholderText("")
             }
             noSpace()
-            "\"".cell()
+            "\"".constant()
         }
     }
     conceptEditor(language.NumberLiteral) {
@@ -23,10 +23,10 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         }
     }
     conceptEditor(language.TrueLiteral) {
-        "true".cell()
+        "true".constant()
     }
     conceptEditor(language.FalseLiteral) {
-        "false".cell()
+        "false".constant()
     }
     conceptEditor(language.InterpolExprWord) {
         brackets(singleLine = true, leftSymbol = "$(", rightSymbol = ")") {
@@ -34,23 +34,23 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         }
     }
     conceptEditor(language.NumberRangeSpec) {
-        "[".cell()
+        "[".constant()
         noSpace()
         concept.min.cell {
             validateValue { it.toDoubleOrNull() != null }
             writeReplace { if (it.equals("-inf", ignoreCase = true)) "∞" else it.replace(",", ".") }
         }
         noSpace()
-        "|".cell()
+        "|".constant()
         noSpace()
         concept.max.cell {
             writeReplace { if (it.equals("inf", ignoreCase = true)) "∞" else it.replace(",", ".") }
         }
         noSpace()
-        "]".cell()
+        "]".constant()
     }
     conceptEditor(language.NumberType) {
-        "number".cell()
+        "number".constant()
         optional {
             noSpace()
             concept.range.cell()
@@ -61,14 +61,14 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         }
     }
     conceptEditor(language.StringContainsTarget) {
-        "contains".cell()
+        "contains".constant()
         noSpace()
         parentheses {
             concept.value.cell()
         }
     }
     conceptEditor(language.StringEndsWithTarget) {
-        "endsWith".cell()
+        "endsWith".constant()
         noSpace()
         parentheses {
             concept.value.cell()
@@ -80,19 +80,19 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         }
     }
     conceptEditor(language.StringLengthTarget) {
-        "length".cell()
+        "length".constant()
     }
     conceptEditor(language.StringStartsWithTarget) {
-        "startsWith".cell()
+        "startsWith".constant()
         noSpace()
         parentheses {
             concept.value.cell()
         }
     }
     conceptEditor(language.StringToIntTarget) {
-        "toInt".cell()
+        "toInt".constant()
     }
     conceptEditor(language.StringType) {
-        "string".cell()
+        "string".constant()
     }
 }

@@ -5,15 +5,15 @@ import org.modelix.editor.languageEditors
 
 val Editor_org_iets3_core_expr_toplevel = languageEditors(L_org_iets3_core_expr_toplevel) {
     conceptEditor(language.Constant) {
-        "val".cell {
+        "val".constant {
             iets3keyword()
         }
         concept.name.cell()
         optional {
-            ":".cell()
+            ":".constant()
             concept.type.cell()
         }
-        "=".cell()
+        "=".constant()
         concept.value.cell()
     }
     conceptEditor(language.ConstantRef) {

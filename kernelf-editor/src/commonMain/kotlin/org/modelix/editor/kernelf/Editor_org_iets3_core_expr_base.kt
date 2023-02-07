@@ -38,11 +38,11 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         val symbol = binaryExpressionSymbols[concept]
             ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
         concept.left.cell()
-        symbol.cell()
+        symbol.constant()
         concept.right.cell()
     }
     conceptEditor(language.DefaultValueExpression) {
-        "default".cell()
+        "default".constant()
         noSpace()
         parentheses {
             concept.type.cell()
@@ -51,22 +51,22 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
     conceptEditor(language.DotExpression) {
         concept.expr.cell()
         noSpace()
-        ".".cell()
+        ".".constant()
         noSpace()
         concept.target.cell()
     }
     conceptEditor(language.IfElseSection) {
-        "else".cell {
+        "else".constant {
             iets3keyword()
         }
         concept.expr.cell()
     }
     conceptEditor(language.IfExpression) {
-        "if".cell {
+        "if".constant {
             iets3keyword()
         }
         concept.condition.cell()
-        "then".cell {
+        "then".constant {
             iets3keyword()
         }
         concept.thenPart.cell()
@@ -75,18 +75,18 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         }
     }
     conceptEditor(language.IsSomeExpression) {
-        "isSome".cell()
+        "isSome".constant()
         noSpace()
         parentheses {
             concept.expr.cell()
         }
         optional {
-            "as".cell()
+            "as".constant()
             concept.optionalName.cell()
         }
     }
     conceptEditor(language.NoneLiteral) {
-        "none".cell()
+        "none".constant()
         optional {
             noSpace()
             angleBrackets {
@@ -115,7 +115,7 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         })
     }
     conceptEditor(language.UnaryMinusExpression) {
-        "-".cell()
+        "-".constant()
         noSpace()
         concept.expr.cell()
     }

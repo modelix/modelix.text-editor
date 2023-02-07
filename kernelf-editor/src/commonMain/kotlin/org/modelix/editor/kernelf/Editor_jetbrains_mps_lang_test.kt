@@ -7,11 +7,11 @@ val Editor_jetbrains_mps_lang_test = languageEditors(L_jetbrains_mps_lang_test) 
     conceptEditor(language.TestInfo) {
         vertical {
             horizontal {
-                "Project Path  :".cell()
+                "Project Path  :".constant()
                 concept.projectPath.cell()
             }
             horizontal {
-                "ReOpen Project:".cell()
+                "ReOpen Project:".constant()
                 concept.reOpenProject.cell {
                     placeholderText("false")
                 }
