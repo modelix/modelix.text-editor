@@ -7,17 +7,53 @@ import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.modelix.editor.languageEditors
 
 val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base) {
+    val binaryExpressionSymbols = mapOf<CN_BinaryExpression, String>(
+        language.AssignmentExpr to ":=",
+
+        language.DivExpression to "/",
+        language.MinusExpression to "-",
+        language.ModExpression to "%",
+        language.MulExpression to "*",
+        language.PlusExpression to "+",
+
+        language.GreaterEqualsExpression to ">=",
+        language.GreaterExpression to ">",
+        language.LessEqualsExpression to "<=",
+        language.LessExpression to "<",
+
+        language.EqualsExpression to "==",
+        language.NonStrictEqualsExpression to "===",
+        language.NotEqualsExpression to "!=",
+
+        language.LogicalAndExpression to "&&",
+        language.LogicalIffExpression to "<=>",
+        language.LogicalImpliesExpression to "=>",
+        language.LogicalOrExpression to "||",
+
+        language.OptionOrExpression to "?:",
+
+        L_org_iets3_core_expr_lambda.FunCompose to ":o:",
+    )
+    conceptEditor(language.BinaryExpression) {
+        val symbol = binaryExpressionSymbols[concept]
+            ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
+        concept.left.cell()
+        symbol.cell()
+        concept.right.cell()
+    }
+    conceptEditor(language.DefaultValueExpression) {
+        "default".cell()
+        noSpace()
+        parentheses {
+            concept.type.cell()
+        }
+    }
     conceptEditor(language.DotExpression) {
         concept.expr.cell()
         noSpace()
         ".".cell()
         noSpace()
         concept.target.cell()
-    }
-    conceptEditor(language.UnaryMinusExpression) {
-        "-".cell()
-        noSpace()
-        concept.expr.cell()
     }
     conceptEditor(language.IfElseSection) {
         "else".cell {
@@ -78,45 +114,9 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
             }
         })
     }
-    val binaryExpressionSymbols = mapOf<CN_BinaryExpression, String>(
-        language.AssignmentExpr to ":=",
-
-        language.DivExpression to "/",
-        language.MinusExpression to "-",
-        language.ModExpression to "%",
-        language.MulExpression to "*",
-        language.PlusExpression to "+",
-
-        language.GreaterEqualsExpression to ">=",
-        language.GreaterExpression to ">",
-        language.LessEqualsExpression to "<=",
-        language.LessExpression to "<",
-
-        language.EqualsExpression to "==",
-        language.NonStrictEqualsExpression to "===",
-        language.NotEqualsExpression to "!=",
-
-        language.LogicalAndExpression to "&&",
-        language.LogicalIffExpression to "<=>",
-        language.LogicalImpliesExpression to "=>",
-        language.LogicalOrExpression to "||",
-
-        language.OptionOrExpression to "?:",
-
-        L_org_iets3_core_expr_lambda.FunCompose to ":o:",
-    )
-    conceptEditor(language.BinaryExpression) {
-        val symbol = binaryExpressionSymbols[concept]
-            ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
-        concept.left.cell()
-        symbol.cell()
-        concept.right.cell()
-    }
-    conceptEditor(language.DefaultValueExpression) {
-        "default".cell()
+    conceptEditor(language.UnaryMinusExpression) {
+        "-".cell()
         noSpace()
-        parentheses {
-            concept.type.cell()
-        }
+        concept.expr.cell()
     }
 }
