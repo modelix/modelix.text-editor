@@ -95,4 +95,76 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
     conceptEditor(language.StringType) {
         "string".constant()
     }
+    conceptEditor(language.BoundsExpression) {
+        indented {
+            "bounds".constant {
+                iets3keyword()
+            }
+            parentheses {
+                concept.expr.cell()
+                "⎵".constant()
+                concept.lower.cell()
+                "⎴".constant()
+                concept.upper.cell()
+            }
+        }
+    }
+    conceptEditor(language.LimitExpression) {
+        indented {
+            "limit".constant {
+                iets3keyword()
+            }
+            noSpace()
+            angleBrackets {
+                concept.type.cell()
+            }
+            noSpace()
+            parentheses {
+                concept.expr.cell()
+            }
+        }
+    }
+    conceptEditor(language.ConvertPrecisionNumberExpression) {
+        indented {
+            "precision".constant {
+                iets3keyword()
+            }
+            noSpace()
+            angleBrackets {
+                concept.rounding.cell()
+                "to".constant()
+                concept.targetPrecision.cell()
+            }
+            noSpace()
+            parentheses {
+                concept.expr.cell()
+            }
+        }
+    }
+    val roundingModes = mapOf(
+        language.RoundDownRoundingMode to "round down",
+        language.RoundHalfUpRoundingMode to "round half up",
+        language.RoundUpRoundingMode to "round up",
+        language.TruncateRoundingMode to "truncate"
+    )
+    conceptEditor(language.RoundingMode) {
+        val mode = roundingModes[concept]
+            ?: "Unknown rounding mode ${concept.untyped().getLongName()}"
+        mode.constant()
+    }
+    conceptEditor(language.NumberPrecSpec) {
+        indented {
+            noSpace()
+            curlyBrackets {
+                concept.prec.cell()
+            }
+        }
+    }
+    conceptEditor(language.ToleranceExpr) {
+        concept.value.cell()
+        noSpace()
+        "±".constant()
+        noSpace()
+        concept.tolerance.cell()
+    }
 }
