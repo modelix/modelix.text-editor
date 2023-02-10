@@ -9,6 +9,7 @@ fun CellTemplateBuilder<*, *>.iets3keyword() {
 
 object KernelfEditor {
     fun register(editorEngine: EditorEngine) {
+        Editor_org_iets3_core_expr_tracing.register(editorEngine)
         Editor__org_iets3_core_expr_tests.register(editorEngine)
         Editor_org_iets3_core_expr_toplevel.register(editorEngine)
         Editor_org_iets3_core_expr_simpleTypes.register(editorEngine)
