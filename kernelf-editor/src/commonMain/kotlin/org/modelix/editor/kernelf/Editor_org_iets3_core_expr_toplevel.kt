@@ -54,12 +54,10 @@ val Editor_org_iets3_core_expr_toplevel = languageEditors(L_org_iets3_core_expr_
         concept.literal.cell({ name })
     }
     conceptEditor(language.EnumIsInTarget) {
-        indented {
-            "isIn".constant()
-            noSpace()
-            parentheses {
-                concept.selectors.horizontal(",")
-            }
+        "isIn".constant()
+        noSpace()
+        parentheses {
+            concept.selectors.horizontal(",")
         }
     }
     conceptEditor(language.EnumIsTarget) {
@@ -212,12 +210,10 @@ val Editor_org_iets3_core_expr_toplevel = languageEditors(L_org_iets3_core_expr_
         concept.lit.cell({ name })
     }
     conceptEditor(language.RecordChangeTarget) {
-        indented {
-            "with".constant()
-            noSpace()
-            parentheses {
-                concept.setters.horizontal(",")
-            }
+        "with".constant()
+        noSpace()
+        parentheses {
+            concept.setters.horizontal(",")
         }
     }
     conceptEditor(language.RecordDeclaration) {
@@ -240,13 +236,11 @@ val Editor_org_iets3_core_expr_toplevel = languageEditors(L_org_iets3_core_expr_
         }
     }
     conceptEditor(language.RecordLiteral) {
-        indented {
-            "#".constant()
-            concept.type.cell()
-            curlyBrackets {
-                newLine()
-                concept.memberValues.horizontal(",")
-            }
+        "#".constant()
+        concept.type.cell()
+        curlyBrackets {
+            newLine()
+            concept.memberValues.horizontal(",")
         }
     }
     conceptEditor(language.RecordMember) {

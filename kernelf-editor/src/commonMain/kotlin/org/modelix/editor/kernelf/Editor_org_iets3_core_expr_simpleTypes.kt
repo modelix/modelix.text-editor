@@ -96,49 +96,43 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         "string".constant()
     }
     conceptEditor(language.BoundsExpression) {
-        indented {
-            "bounds".constant {
-                iets3keyword()
-            }
-            parentheses {
-                concept.expr.cell()
-                "⎵".constant()
-                concept.lower.cell()
-                "⎴".constant()
-                concept.upper.cell()
-            }
+        "bounds".constant {
+            iets3keyword()
+        }
+        parentheses {
+            concept.expr.cell()
+            "⎵".constant()
+            concept.lower.cell()
+            "⎴".constant()
+            concept.upper.cell()
         }
     }
     conceptEditor(language.LimitExpression) {
-        indented {
-            "limit".constant {
-                iets3keyword()
-            }
-            noSpace()
-            angleBrackets {
-                concept.type.cell()
-            }
-            noSpace()
-            parentheses {
-                concept.expr.cell()
-            }
+        "limit".constant {
+            iets3keyword()
+        }
+        noSpace()
+        angleBrackets {
+            concept.type.cell()
+        }
+        noSpace()
+        parentheses {
+            concept.expr.cell()
         }
     }
     conceptEditor(language.ConvertPrecisionNumberExpression) {
-        indented {
-            "precision".constant {
-                iets3keyword()
-            }
-            noSpace()
-            angleBrackets {
-                concept.rounding.cell()
-                "to".constant()
-                concept.targetPrecision.cell()
-            }
-            noSpace()
-            parentheses {
-                concept.expr.cell()
-            }
+        "precision".constant {
+            iets3keyword()
+        }
+        noSpace()
+        angleBrackets {
+            concept.rounding.cell()
+            "to".constant()
+            concept.targetPrecision.cell()
+        }
+        noSpace()
+        parentheses {
+            concept.expr.cell()
         }
     }
     val roundingModes = mapOf(
@@ -153,11 +147,9 @@ val Editor_org_iets3_core_expr_simpleTypes = languageEditors(L_org_iets3_core_ex
         mode.constant()
     }
     conceptEditor(language.NumberPrecSpec) {
-        indented {
-            noSpace()
-            curlyBrackets {
-                concept.prec.cell()
-            }
+        noSpace()
+        curlyBrackets {
+            concept.prec.cell()
         }
     }
     conceptEditor(language.ToleranceExpr) {

@@ -245,17 +245,15 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         }
     }
     conceptEditor(language.Invariant) {
-        indented {
-            "inv".constant {
-                iets3keyword()
-            }
-            concept.warning.flagCell("warning")
-            concept.expr.cell()
-            optional {
-                indented {
-                    ":".constant()
-                    concept.err.cell()
-                }
+        "inv".constant {
+            iets3keyword()
+        }
+        concept.warning.flagCell("warning")
+        concept.expr.cell()
+        optional {
+            indented {
+                ":".constant()
+                concept.err.cell()
             }
         }
     }
@@ -283,11 +281,9 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         }
     }
     conceptEditor(language.LogicalNotExpression) {
-        indented {
-            "!".constant()
-            noSpace()
-            concept.expr.cell()
-        }
+        "!".constant()
+        noSpace()
+        concept.expr.cell()
     }
     conceptEditor(language.MakeRefTarget) {
         "ref".constant()
@@ -353,39 +349,33 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         }
     }
     conceptEditor(language.PlainConstraint) {
-        indented {
-            concept.warning.flagCell("warning")
-            concept.expr.cell()
-            optional {
-                ":".constant()
-                concept.err.cell()
-            }
+        concept.warning.flagCell("warning")
+        concept.expr.cell()
+        optional {
+            ":".constant()
+            concept.err.cell()
         }
     }
     conceptEditor(language.Postcondition) {
-        indented {
-            "post".constant {
-                iets3keyword()
-            }
-            concept.warning.flagCell("warning")
-            concept.expr.cell()
-            optional {
-                ":".constant()
-                concept.err.cell()
-            }
+        "post".constant {
+            iets3keyword()
+        }
+        concept.warning.flagCell("warning")
+        concept.expr.cell()
+        optional {
+            ":".constant()
+            concept.err.cell()
         }
     }
     conceptEditor(language.Precondition) {
-        indented {
-            "pre".constant {
-                iets3keyword()
-            }
-            concept.warning.flagCell("warning")
-            concept.expr.cell()
-            optional {
-                ":".constant()
-                concept.err.cell()
-            }
+        "pre".constant {
+            iets3keyword()
+        }
+        concept.warning.flagCell("warning")
+        concept.expr.cell()
+        optional {
+            ":".constant()
+            concept.err.cell()
         }
     }
     conceptEditor(language.ProgramLocationOp) {
@@ -395,16 +385,14 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         "loc".constant()
     }
     conceptEditor(language.RangeTarget) {
-        indented {
-            "inRange".constant()
-            //TODO lower exclusive
-            squareBrackets {
-               concept.min.cell()
-               "..".constant()
-               concept.max.cell()
-            }
-            //TODO upper exclusive
+        "inRange".constant()
+        //TODO lower exclusive
+        squareBrackets {
+           concept.min.cell()
+           "..".constant()
+           concept.max.cell()
         }
+        //TODO upper exclusive
     }
 //    conceptEditor(language.ReductionInspector) {
 //        //TODO

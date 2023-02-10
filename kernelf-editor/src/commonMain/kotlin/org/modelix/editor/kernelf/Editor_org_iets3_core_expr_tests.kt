@@ -216,16 +216,14 @@ val Editor__org_iets3_core_expr_tests = languageEditors(L_org_iets3_core_expr_te
         concept.coverageRatio.cell()
     }
     conceptEditor(language.MutationEngine) {
-        indented {
-            "# of mutations".constant()
-            concept.numberOfMutations.cell()
-            newLine()
-            "keep all:".constant()
-            concept.keepAll.cell()
-            newLine()
-            ifNotEmpty(concept.logs) {
-                concept.logs.vertical()
-            }
+        "# of mutations".constant()
+        concept.numberOfMutations.cell()
+        newLine()
+        "keep all:".constant()
+        concept.keepAll.cell()
+        newLine()
+        ifNotEmpty(concept.logs) {
+            concept.logs.vertical()
         }
     }
     conceptEditor(language.MutationLog) {
