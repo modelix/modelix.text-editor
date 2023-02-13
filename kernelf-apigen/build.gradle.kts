@@ -1,11 +1,4 @@
-import kotlinx.serialization.decodeFromString
-import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
-import org.jetbrains.kotlin.com.google.gson.JsonParser
-import org.modelix.metamodel.generator.LanguageSet
-import org.modelix.metamodel.generator.MetaModelGenerator
-import org.modelix.metamodel.generator.TypescriptMMGenerator
-import org.modelix.metamodel.generator.process
-import org.modelix.model.data.LanguageData
+import org.modelix.gradle.mpsbuild.MPSBuildSettings
 
 buildscript {
     repositories {
@@ -17,13 +10,17 @@ buildscript {
         classpath("org.modelix:model-api:$modelixCoreVersion")
         classpath("org.modelix:metamodel-generator:$modelixCoreVersion")
         classpath("com.charleskorn.kaml:kaml:0.48.0")
+        classpath("org.modelix.mpsbuild:gradle-mpsbuild-plugin:1.0.8")
     }
 }
 
 plugins {
     kotlin("multiplatform")
     `maven-publish`
+    id("org.modelix.metamodel.gradle")
 }
+
+apply(plugin = "modelix-gradle-mpsbuild-plugin")
 
 val modelixCoreVersion: String by rootProject
 val kotlinLoggingVersion: String by rootProject
@@ -48,104 +45,53 @@ kotlin {
     }
 
     sourceSets {
-        all {
-            languageSettings.optIn("kotlin.js.ExperimentalJsExport")
-        }
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
-                implementation(project(":editor-runtime"))
                 implementation(kotlin("stdlib-common"))
-                implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-                implementation("org.modelix:model-client:$modelixCoreVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
             }
             kotlin.srcDir(generatorOutputDir)
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
-                implementation(kotlin("test-common"))
-                implementation(kotlin("test-annotations-common"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutinesVersion")
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.modelix:metamodel-generator:$modelixCoreVersion")
-                implementation(kotlin("test"))
-                implementation(kotlin("test-junit"))
             }
         }
         val jsMain by getting {
             dependencies {
-                api("org.modelix:model-api:$modelixCoreVersion")
-
-                val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-                if (localPath.exists()) {
-                    implementation(npm("@modelix/ts-model-api", localPath))
-                } else {
-                    implementation(npm("@modelix/ts-model-api", modelixCoreVersion))
-                }
             }
         }
         val jsTest by getting {
             dependencies {
-                implementation(kotlin("test-js"))
-                implementation(npm("jsdom", "20.0.1"))
-                implementation(npm("@types/jsdom", "20.0.1"))
             }
         }
     }
 }
 
-
-val generateMetaModelSources = tasks.create("generateMetaModelSources") {
-    val languagesDir = file("languages")
-    inputs.dir(languagesDir)
-    outputs.dir(generatorOutputDir)
-    outputs.dir(tsGeneratorOutputDir)
-    doLast {
-        var languages: LanguageSet = LanguageSet(languagesDir.walk()
-            .filter { it.extension.toLowerCase() == "yaml" }
-            .map { com.charleskorn.kaml.Yaml.Companion.default.decodeFromString<LanguageData>(it.readText()) }
-            .toList())
-        languages = languages.filter {
-            val includedLanguagePrefixes = listOf("org.iets3", "org.modelix", "de.slisson.mps.richtext")
-            languages.getLanguages().filter { lang -> includedLanguagePrefixes.any { lang.name.startsWith(it) } }.forEach { lang ->
-                lang.getConceptsInLanguage().forEach { concept ->
-                    includeConcept(concept.fqName)
-                }
-            }
-            includeConcept("jetbrains.mps.lang.test.TestInfo")
-        }
-
-        val generator = MetaModelGenerator(generatorOutputDir.toPath())
-        val processed = languages.process()
-        generator.generate(processed)
-        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages", processed)
-
-        val tsGenerator = TypescriptMMGenerator(tsGeneratorOutputDir.toPath())
-        tsGenerator.generate(processed)
-    }
+extensions.configure<MPSBuildSettings> {
+    //dependsOn(copyLibs)
+    mpsVersion("2021.1.4")
+    externalModules("org.iets3:opensource:2021.1.5939.+")
 }
 
-val cleanGeneratedMetaModelSources = tasks.create("cleanGeneratedMetaModelSources") {
-    doLast {
-        generatorOutputDir.deleteRecursively()
-        tsGeneratorOutputDir.deleteRecursively()
-    }
-}
-
-tasks.matching { it.name.matches(Regex("""(.*compile.*Kotlin.*|.*[sS]ourcesJar.*)""")) }.configureEach {
-    dependsOn(generateMetaModelSources)
-}
-
-tasks.named("clean") {
-    dependsOn(cleanGeneratedMetaModelSources)
+metamodel {
+    mpsHeapSize = "2g"
+    dependsOn("copyDependencies")
+    mpsHome = buildDir.resolve("mpsbuild/mps/mps-2021.1.4.zip")
+    modulesFrom(buildDir.resolve("mpsbuild/dependencies"))
+    includeNamespace("org.iets3.core.expr")
+    includeLanguage("org.modelix.model.repositoryconcepts")
+    includeLanguage("de.slisson.mps.richtext")
+    includeConcept("jetbrains.mps.lang.test.TestInfo")
+    kotlinProject = project
+    kotlinDir = generatorOutputDir
+    typescriptDir = tsGeneratorOutputDir
+    //exportModules("jetbrains.mps.baseLanguage")
 }
