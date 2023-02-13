@@ -4,6 +4,7 @@ import org.jetbrains.kotlin.com.google.gson.JsonParser
 import org.modelix.metamodel.generator.LanguageSet
 import org.modelix.metamodel.generator.MetaModelGenerator
 import org.modelix.metamodel.generator.TypescriptMMGenerator
+import org.modelix.metamodel.generator.process
 import org.modelix.model.data.LanguageData
 
 buildscript {
@@ -125,11 +126,12 @@ val generateMetaModelSources = tasks.create("generateMetaModelSources") {
         }
 
         val generator = MetaModelGenerator(generatorOutputDir.toPath())
-        generator.generate(languages)
-        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages", languages)
+        val processed = languages.process()
+        generator.generate(processed)
+        generator.generateRegistrationHelper("org.modelix.kernelf.KernelfLanguages", processed)
 
         val tsGenerator = TypescriptMMGenerator(tsGeneratorOutputDir.toPath())
-        tsGenerator.generate(languages)
+        tsGenerator.generate(processed)
     }
 }
 
