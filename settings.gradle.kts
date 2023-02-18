@@ -22,4 +22,6 @@ include("kernelf-angular-demo")
 include("kernelf-editor")
 include("kernelf-apigen")
 include("editor-runtime")
+include("behavior-aspect")
+include("language-aspects")
 

@@ -31,22 +31,16 @@ kotlin {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-                api("org.modelix:incremental:$modelixIncrementalVersion")
-                api("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
-                implementation(project(":language-aspects"))
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutinesVersion")
             }
         }
         val jvmTest by getting {
@@ -62,8 +56,6 @@ kotlin {
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-js"))
-                implementation(npm("jsdom-global", "3.0.2"))
-                implementation(npm("jsdom", "20.0.2"))
             }
         }
     }

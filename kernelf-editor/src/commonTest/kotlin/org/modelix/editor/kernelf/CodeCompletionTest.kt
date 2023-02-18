@@ -117,9 +117,12 @@ class CodeCompletionTest {
     fun noDuplicates() {
         val parameters = CodeCompletionParameters(editor, "")
         val actions = getSubstituteActions(getNumberLiteralCell())
-        val knownDuplicates = setOf("none", "", "empty", "[", "it", "|")
-        val duplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 } - knownDuplicates
-        assertTrue(duplicates.isEmpty(), "Duplicate entries found: " + duplicates)
+        val knownDuplicates = setOf("none", "", "empty", "[", "it", "|", "ParamRef")
+        val actualDuplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 }.map { it.key }
+        val unexpectedDuplicates = actualDuplicates - knownDuplicates
+        val missingDuplicates = knownDuplicates - actualDuplicates
+        assertTrue(unexpectedDuplicates.isEmpty(), "Duplicate entries found: " + unexpectedDuplicates)
+        assertTrue(missingDuplicates.isEmpty(), "These entries aren't duplicates anymore: " + missingDuplicates)
     }
 
     private fun getNumberLiteralCell() = editor.resolvePropertyCell(C_NumberLiteral.value, numberLiteral)!!

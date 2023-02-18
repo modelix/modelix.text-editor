@@ -48,6 +48,8 @@ kotlin {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
                 implementation(project(":editor-runtime"))
+                implementation(project(":language-aspects"))
+                implementation(project(":behavior-aspect"))
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")

@@ -21,7 +21,6 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     private val incrementalEngine: IncrementalEngine
     private val ownsIncrementalEngine: Boolean
-    private val editors: MutableSet<LanguageEditors<*>> = HashSet()
     private val editorsForConcept: MutableMap<IConceptReference, MutableList<ConceptEditor<*, *>>> = LinkedHashMap()
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
@@ -48,9 +47,8 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         cellData
     }
 
-    fun registerEditors(languageEditors: LanguageEditors<*>) {
-        editors.add(languageEditors)
-        languageEditors.conceptEditors.forEach {
+    fun registerEditors(editorAspect: EditorAspect) {
+        editorAspect.conceptEditors.forEach {
             val declaredConcept = it.declaredConcept ?: return@forEach
             editorsForConcept.getOrPut(declaredConcept.untyped().getReference()) { ArrayList() }.add(it)
         }

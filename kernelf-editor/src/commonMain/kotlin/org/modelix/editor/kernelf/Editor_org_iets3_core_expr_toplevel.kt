@@ -1,9 +1,10 @@
 package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
-import org.modelix.editor.languageEditors
+import org.modelix.aspects.languageAspects
+import org.modelix.editor.conceptEditor
 
-val Editor_org_iets3_core_expr_toplevel = languageEditors(L_org_iets3_core_expr_toplevel) {
+val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_toplevel) {
     conceptEditor(language.AbstractFunctionAdapter) {
         concept.`fun`.cell()
     }

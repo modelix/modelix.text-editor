@@ -2,11 +2,21 @@ package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
 import org.iets3.core.expr.base.CN_BinaryExpression
+import org.iets3.core.expr.base.C_BinaryExpression
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
+import org.iets3.core.expr.base.N_AssignmentExpr
+import org.iets3.core.expr.base.N_BinaryExpression
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.modelix.editor.languageEditors
+import org.modelix.aspects.behavior.PolymorphicFunctionBuilder
+import org.modelix.aspects.behavior.PolymorphicValue
+import org.modelix.aspects.behavior.polymorphicFunction
+import org.modelix.aspects.languageAspects
+import org.modelix.editor.conceptEditor
 
-val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base) {
+//val binaryExpressionSymbols by polymorphicValue<String?>(null)
+val binaryExpressionSymbols by polymorphicFunction().forConcept<CN_BinaryExpression>().returns<String>()
+
+val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
     val abstractMinMaxAliases = mapOf(
         language.MinExpression to "min",
         language.MaxExpression to "max"
@@ -54,36 +64,35 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         noSpace()
         "!".constant()
     }
-    val binaryExpressionSymbols = mapOf<CN_BinaryExpression, String>(
-        language.AssignmentExpr to ":=",
 
-        language.DivExpression to "/",
-        language.MinusExpression to "-",
-        language.ModExpression to "%",
-        language.MulExpression to "*",
-        language.PlusExpression to "+",
+    binaryExpressionSymbols.implement(language.BinaryExpression) { ":${it.untyped().getShortName()}:" }
+    binaryExpressionSymbols.implement(language.AssignmentExpr) { ":=" }
 
-        language.GreaterEqualsExpression to ">=",
-        language.GreaterExpression to ">",
-        language.LessEqualsExpression to "<=",
-        language.LessExpression to "<",
+    binaryExpressionSymbols.implement(language.DivExpression) { "/" }
+    binaryExpressionSymbols.implement(language.MinusExpression) { "-" }
+    binaryExpressionSymbols.implement(language.ModExpression) { "%" }
+    binaryExpressionSymbols.implement(language.MulExpression) { "*" }
+    binaryExpressionSymbols.implement(language.PlusExpression) { "+" }
 
-        language.EqualsExpression to "==",
-        language.NonStrictEqualsExpression to "===",
-        language.NotEqualsExpression to "!=",
+    binaryExpressionSymbols.implement(language.GreaterEqualsExpression) { ">=" }
+    binaryExpressionSymbols.implement(language.GreaterExpression) { ">" }
+    binaryExpressionSymbols.implement(language.LessEqualsExpression) { "<=>" }
+    binaryExpressionSymbols.implement(language.LessExpression) { "<" }
 
-        language.LogicalAndExpression to "&&",
-        language.LogicalIffExpression to "<=>",
-        language.LogicalImpliesExpression to "=>",
-        language.LogicalOrExpression to "||",
+    binaryExpressionSymbols.implement(language.EqualsExpression) { "==" }
+    binaryExpressionSymbols.implement(language.NonStrictEqualsExpression) { "===" }
+    binaryExpressionSymbols.implement(language.NotEqualsExpression) { "!=" }
 
-        language.OptionOrExpression to "?:",
+    binaryExpressionSymbols.implement(language.LogicalAndExpression) { "&&" }
+    binaryExpressionSymbols.implement(language.LogicalIffExpression) { "<=>" }
+    binaryExpressionSymbols.implement(language.LogicalImpliesExpression) { "=>" }
+    binaryExpressionSymbols.implement(language.LogicalOrExpression) { "||" }
 
-        L_org_iets3_core_expr_lambda.FunCompose to ":o:",
-    )
+    binaryExpressionSymbols.implement(language.OptionOrExpression) { "?:" }
+    binaryExpressionSymbols.implement(L_org_iets3_core_expr_lambda.FunCompose) { ":o:" }
+
     conceptEditor(language.BinaryExpression) {
-        val symbol = binaryExpressionSymbols[concept]
-            ?: "Operator symbol for ${concept.untyped().getLongName()} not specified"
+        val symbol = binaryExpressionSymbols(concept)
         concept.left.cell()
         symbol.constant()
         concept.right.cell()
@@ -376,6 +385,11 @@ val Editor_org_iets3_core_expr_base = languageEditors(L_org_iets3_core_expr_base
         optional {
             ":".constant()
             concept.err.cell()
+        }
+    }
+    conceptEditor(language.PrimitiveType) {
+        "alias".constant {
+            iets3type()
         }
     }
     conceptEditor(language.ProgramLocationOp) {

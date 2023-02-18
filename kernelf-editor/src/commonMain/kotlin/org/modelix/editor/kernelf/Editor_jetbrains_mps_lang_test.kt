@@ -1,9 +1,10 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.test.L_jetbrains_mps_lang_test
-import org.modelix.editor.languageEditors
+import org.modelix.aspects.languageAspects
+import org.modelix.editor.conceptEditor
 
-val Editor_jetbrains_mps_lang_test = languageEditors(L_jetbrains_mps_lang_test) {
+val Editor_jetbrains_mps_lang_test = languageAspects(L_jetbrains_mps_lang_test) {
     conceptEditor(language.TestInfo) {
         vertical {
             horizontal {

@@ -1,9 +1,10 @@
 package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
-import org.modelix.editor.languageEditors
+import org.modelix.aspects.languageAspects
+import org.modelix.editor.conceptEditor
 
-val Editor__org_iets3_core_expr_tests = languageEditors(L_org_iets3_core_expr_tests) {
+val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tests) {
     conceptEditor(language.AllExpressionsFilter) {
         "expressions everywhere".constant()
     }
@@ -41,7 +42,7 @@ val Editor__org_iets3_core_expr_tests = languageEditors(L_org_iets3_core_expr_te
         concept.op.cell()
         concept.expected.cell()
         withNode {
-            if (node.isIgnored == "true") {
+            if (node.isIgnored) {
                 "[ignored]".constant {
                     textColor("red")
                     backgroundColor("orange")

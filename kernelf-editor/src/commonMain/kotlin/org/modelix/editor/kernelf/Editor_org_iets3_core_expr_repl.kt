@@ -1,9 +1,10 @@
 package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.repl.L_org_iets3_core_expr_repl
-import org.modelix.editor.languageEditors
+import org.modelix.aspects.languageAspects
+import org.modelix.editor.conceptEditor
 
-val Editor_org_iets3_core_expr_repl = languageEditors(L_org_iets3_core_expr_repl) {
+val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl) {
     val borderCellStyles = mapOf(
         language.BottomBorderCellStyle to "bottom border",
         language.LeftBorderCellStyle to "left border",
