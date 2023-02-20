@@ -81,8 +81,14 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         }
     }
     conceptEditor(language.EnumLiteralRef) {
-        concept.literal.cell({ name })
-        //TODO use qualified name instead if declaration is qualified
+        concept.literal.cell({
+            val enumDecl = untyped().parent!!.typed<N_EnumDeclaration>()
+            if (enumDecl.qualified) {
+                enumDecl.name + ":" + name
+            } else {
+                name
+            }
+        })
     }
     conceptEditor(language.EnumType) {
         concept.enum.cell({ name })
