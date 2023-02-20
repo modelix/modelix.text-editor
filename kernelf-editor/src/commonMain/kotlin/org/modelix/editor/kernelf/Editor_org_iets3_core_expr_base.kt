@@ -418,13 +418,16 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
     }
     conceptEditor(language.RangeTarget) {
         "inRange".constant()
-        //TODO lower exclusive
+        noSpace()
+        concept.lowerExcluding.booleanCell("]", "[")
+        noSpace()
         squareBrackets {
-           concept.min.cell()
-           "..".constant()
-           concept.max.cell()
+            concept.min.cell()
+            "..".constant()
+            concept.max.cell()
         }
-        //TODO upper exclusive
+        noSpace()
+        concept.upperExcluding.booleanCell("[", "]")
     }
 //    conceptEditor(language.ReductionInspector) {
 //        //TODO

@@ -178,6 +178,15 @@ open class CellTemplateBuilder<NodeT : ITypedNode, ConceptT : IConceptOfTypedNod
             .also(body).template.also(template::addChild)
     }
 
+    fun ITypedProperty<Boolean>.booleanCell(trueText: String = "true", falseText: String = "false", body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        // TODO generate code completion entries for the two possible values
+        untyped().propertyCell {
+            readReplace { if (it == "true") trueText else falseText }
+            writeReplace { if (it == trueText) "true" else "false" }
+            body()
+        }
+    }
+
     fun <TargetNodeT : ITypedNode> ITypedReferenceLink<TargetNodeT>.cell(presentation: TargetNodeT.()->String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, TargetNodeT>.()->Unit = {}) {
         ReferenceCellTemplateBuilder(ReferenceCellTemplate(template.concept, this, presentation), this)
             .also(body).template.also(template::addChild)
