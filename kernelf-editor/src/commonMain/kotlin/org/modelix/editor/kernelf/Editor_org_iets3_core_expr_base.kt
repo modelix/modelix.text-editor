@@ -338,9 +338,18 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.values.horizontal(",")
         }
     }
-//    conceptEditor(language.OperatorGroup) {
-//        //TODO
-//    }
+    conceptEditor(language.OperatorGroup) {
+        "join".constant {
+            iets3keyword()
+        }
+        noSpace()
+        angleBrackets {
+            concept.tag.cell()
+        }
+        largeBrackets {
+            concept.expressions.vertical()
+        }
+    }
     val operatorTagSymbols = mapOf(
         language.AndTag to "&&",
         language.MulTag to "*",

@@ -110,6 +110,11 @@ open class CellTemplateBuilder<NodeT : ITypedNode, ConceptT : IConceptOfTypedNod
         brackets(singleLine, "<", ">", body)
     }
 
+    fun largeBrackets(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        // TODO the body should be displayed inline and the bracket symbol should span multiple lines
+        curlyBrackets(false, body)
+    }
+
     fun squareBrackets(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
         brackets(singleLine, "[", "]", body)
     }
