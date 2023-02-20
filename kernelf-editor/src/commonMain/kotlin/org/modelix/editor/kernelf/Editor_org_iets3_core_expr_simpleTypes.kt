@@ -5,6 +5,11 @@ import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
 
 val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_expr_simpleTypes) {
+    BaseConcept_alias.implement(language.BooleanType) { "boolean" }
+    BaseConcept_alias.implement(language.NumberType) { "number" }
+    BaseConcept_alias.implement(language.IntegerType) { "int" }
+    BaseConcept_alias.implement(language.RealType) { "real" }
+    BaseConcept_alias.implement(language.StringType) { "string" }
     conceptEditor(language.StringLiteral) {
         horizontal {
             textColor("DarkGreen")

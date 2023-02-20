@@ -18,6 +18,7 @@ object KernelfEditor {
         Editor_jetbrains_mps_lang_test.getAspect(EditorAspect).register(editorEngine)
         Editor_org_iets3_core_expr_base.getAspect(EditorAspect).register(editorEngine)
         Editor_org_iets3_core_expr_collections.getAspect(EditorAspect).register(editorEngine)
+        Editor_org_iets3_core_expr_datetime.getAspect(EditorAspect).register(editorEngine)
         Editor_org_iets3_core_expr_lambda.getAspect(EditorAspect).register(editorEngine)
         Editor_org_iets3_core_expr_path.getAspect(EditorAspect).register(editorEngine)
         Editor_org_iets3_core_expr_repl.getAspect(EditorAspect).register(editorEngine)
