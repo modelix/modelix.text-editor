@@ -157,13 +157,14 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
     }
     conceptEditor(language.InvalidValueTestItem) {
         "inval".constant {
-            concept.actual.cell()
-            optional {
-                "with error".constant() {
-                    iets3keyword()
-                }
-                concept.errmsg.cell()
+            iets3keyword()
+        }
+        concept.actual.cell()
+        optional {
+            "with error".constant {
+                iets3keyword()
             }
+            concept.errmsg.cell()
         }
     }
     conceptEditor(language.IsInvalid) {
