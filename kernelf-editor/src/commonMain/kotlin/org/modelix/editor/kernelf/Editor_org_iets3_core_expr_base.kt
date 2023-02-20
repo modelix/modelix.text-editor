@@ -1,8 +1,13 @@
 package org.modelix.editor.kernelf
 
+import jetbrains.mps.lang.core.N_BaseConcept
 import jetbrains.mps.lang.core.N_INamedConcept
 import org.iets3.core.expr.base.CN_BinaryExpression
+import org.iets3.core.expr.base.CN_IRef
+import org.iets3.core.expr.base.CN_ISingleSymbolRef
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
+import org.iets3.core.expr.base.N_IRef
+import org.iets3.core.expr.base.N_ISingleSymbolRef
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.modelix.aspects.behavior.polymorphicFunction
 import org.modelix.aspects.languageAspects
@@ -10,6 +15,10 @@ import org.modelix.editor.conceptEditor
 
 //val binaryExpressionSymbols by polymorphicValue<String?>(null)
 val binaryExpressionSymbols by polymorphicFunction().forConcept<CN_BinaryExpression>().returns<String>()
+val ISingleSymbolRef_getSymbolName by polymorphicFunction().forNode(CN_ISingleSymbolRef).returns<String>()
+fun N_ISingleSymbolRef.getSymbolName() = ISingleSymbolRef_getSymbolName(this)
+val IRef_target by polymorphicFunction().forNode(CN_IRef).returns<N_BaseConcept>()
+fun N_IRef.target() = IRef_target(this)
 
 val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
     val abstractMinMaxAliases = mapOf(
@@ -261,9 +270,14 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         }
     }
-//    conceptEditor(language.ISingleSymbolRef) {
-//        //TODO
-//    }
+    ISingleSymbolRef_getSymbolName.implement(CN_ISingleSymbolRef) { node ->
+        ((node as? N_IRef)?.target() as? N_INamedConcept)?.name ?: "<unnamed>"
+    }
+    conceptEditor(language.ISingleSymbolRef) {
+        withNode {
+            node.getSymbolName().constant()
+        }
+    }
     conceptEditor(language.IsSomeExpression) {
         "isSome".constant {
             iets3keyword()
