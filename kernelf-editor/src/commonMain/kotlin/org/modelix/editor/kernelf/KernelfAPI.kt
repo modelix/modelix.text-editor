@@ -17,10 +17,7 @@ import org.modelix.metamodel.typed
 import org.modelix.metamodel.untypedConcept
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.INode
-import org.modelix.model.area.IAreaChangeList
-import org.modelix.model.area.IAreaListener
 import org.modelix.model.repositoryconcepts.N_Module
-import kotlin.js.JsExport
 
 object KernelfAPI {
     val editorEngine = EditorEngine()

@@ -2,13 +2,8 @@ package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
 import org.iets3.core.expr.base.CN_BinaryExpression
-import org.iets3.core.expr.base.C_BinaryExpression
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
-import org.iets3.core.expr.base.N_AssignmentExpr
-import org.iets3.core.expr.base.N_BinaryExpression
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.modelix.aspects.behavior.PolymorphicFunctionBuilder
-import org.modelix.aspects.behavior.PolymorphicValue
 import org.modelix.aspects.behavior.polymorphicFunction
 import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
