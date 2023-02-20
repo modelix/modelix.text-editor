@@ -39,9 +39,7 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
         }
     }
     conceptEditor(language.CapturedValue) {
-        "<captured:".constant()
-        noSpace()
-        //TODO model access
+        "!!!user objects are not supported!!!".constant()
     }
     conceptEditor(language.ExecOp) {
         "exec".constant()
