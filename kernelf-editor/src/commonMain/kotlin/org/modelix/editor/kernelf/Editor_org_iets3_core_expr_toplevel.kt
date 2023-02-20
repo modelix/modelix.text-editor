@@ -1,8 +1,11 @@
 package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
+import org.iets3.core.expr.toplevel.N_EnumDeclaration
 import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
+import org.modelix.metamodel.typed
+import org.modelix.metamodel.untyped
 
 val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_toplevel) {
     conceptEditor(language.AbstractFunctionAdapter) {
@@ -70,7 +73,12 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
     }
     conceptEditor(language.EnumLiteral) {
         concept.name.cell()
-        //TODO -> value if declaration is valued
+        withNode {
+            if (node.untyped().parent!!.typed<N_EnumDeclaration>().type.isSet()) {
+                "->".constant()
+                concept.value.cell()
+            }
+        }
     }
     conceptEditor(language.EnumLiteralRef) {
         concept.literal.cell({ name })
