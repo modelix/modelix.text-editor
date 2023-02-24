@@ -126,7 +126,9 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         "where".constant {
             iets3keyword()
         }
-        concept.items.vertical()
+        largeBrackets {
+            concept.items.vertical()
+        }
     }
     conceptEditor(language.ContractItem) {
         "".constant()
