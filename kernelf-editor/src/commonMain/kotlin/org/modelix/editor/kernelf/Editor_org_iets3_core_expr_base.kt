@@ -1,33 +1,12 @@
 package org.modelix.editor.kernelf
 
-import jetbrains.mps.lang.core.CN_BaseConcept
-import jetbrains.mps.lang.core.C_BaseConcept
-import jetbrains.mps.lang.core.N_BaseConcept
 import jetbrains.mps.lang.core.N_INamedConcept
-import org.iets3.core.expr.base.CN_BinaryExpression
-import org.iets3.core.expr.base.C_IRef
 import org.iets3.core.expr.base.C_ISingleSymbolRef
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.base.N_IRef
-import org.iets3.core.expr.base.N_ISingleSymbolRef
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.modelix.aspects.behavior.buildPolymorphicFunction
 import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
-
-val binaryExpressionSymbols by buildPolymorphicFunction().returns<String>().forConcept<CN_BinaryExpression>()
-    .defaultValue {
-        ":${it.untyped().getShortName()}:"
-    }.delegate()
-
-val ISingleSymbolRef_getSymbolName by buildPolymorphicFunction().returns<String>().forNode(C_ISingleSymbolRef).delegate()
-fun N_ISingleSymbolRef.getSymbolName() = ISingleSymbolRef_getSymbolName(this)
-
-val IRef_target by buildPolymorphicFunction().returns<N_BaseConcept>().forNode(C_IRef).delegate()
-fun N_IRef.target() = IRef_target(this)
-
-val BaseConcept_alias by buildPolymorphicFunction().returns<String>().forConcept<CN_BaseConcept>().delegate()
-fun CN_BaseConcept.alias() = BaseConcept_alias(this)
 
 val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
     val abstractMinMaxAliases = mapOf(
