@@ -16,13 +16,13 @@ import org.modelix.model.api.isSubConceptOf
 import org.modelix.model.api.remove
 
 interface INonExistingNode {
+    fun getExistingAncestor(): INode?
     fun getParent(): INonExistingNode?
     fun getContainmentLink(): IChildLink?
     fun index(): Int
     fun replaceNode(subConcept: IConcept?): INode
-    fun getOrCreateNode(subConcept: IConcept?): INode
+    fun getOrCreateNode(subConcept: IConcept? = null): INode
     fun expectedConcept(): IConcept?
-    fun getVisibleReferenceTargets(link: IReferenceLink): List<INode>
 }
 
 fun INonExistingNode.ancestors(includeSelf: Boolean = false): Sequence<INonExistingNode> {
@@ -43,6 +43,8 @@ fun INonExistingNode.commonAncestor(otherNode: INonExistingNode): INonExistingNo
 }
 
 data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept: IConcept): INonExistingNode {
+    override fun getExistingAncestor(): INode? = node.getExistingAncestor()
+
     override fun getParent(): INonExistingNode? = node.getParent()
 
     override fun getContainmentLink(): IChildLink? = node.getContainmentLink()
@@ -59,10 +61,6 @@ data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept
 
     override fun expectedConcept(): IConcept {
         return subConcept
-    }
-
-    override fun getVisibleReferenceTargets(link: IReferenceLink): List<INode> {
-        return node.getVisibleReferenceTargets(link)
     }
 }
 
@@ -87,6 +85,8 @@ fun INonExistingNode.coerceOutputConcept(subConcept: IConcept?): IConcept? {
 }
 
 data class ExistingNode(val node: INode) : INonExistingNode {
+    override fun getExistingAncestor(): INode = node
+
     override fun getParent(): INonExistingNode? = node.parent?.let { ExistingNode(it) }
 
     override fun getContainmentLink() = node.getContainmentLink()
@@ -112,16 +112,13 @@ data class ExistingNode(val node: INode) : INonExistingNode {
     override fun expectedConcept(): IConcept? {
         return node.getContainmentLink()?.targetConcept
     }
-
-    override fun getVisibleReferenceTargets(link: IReferenceLink): List<INode> {
-        val targetConcept = link.targetConcept
-        return node.getRoot().getDescendants(true).filter { it.isInstanceOfSafe(targetConcept) }.toList()
-    }
 }
 
 fun INode.toNonExisting() = ExistingNode(this)
 
 data class NonExistingChild(private val parent: INonExistingNode, val link: IChildLink, private val index: Int = 0) : INonExistingNode {
+    override fun getExistingAncestor(): INode? = parent.getExistingAncestor()
+
     override fun getParent() = parent
 
     override fun getContainmentLink() = link
@@ -142,9 +139,5 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
 
     override fun expectedConcept(): IConcept {
         return link.targetConcept
-    }
-
-    override fun getVisibleReferenceTargets(link: IReferenceLink): List<INode> {
-        return parent.getVisibleReferenceTargets(link)
     }
 }

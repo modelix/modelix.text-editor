@@ -10,6 +10,10 @@ class LanguageAspects {
         return aspects.getOrPut(language.getUID(), { HashMap() }).getOrPut(factory, { factory.createInstance(language) }) as T
     }
 
+    fun <T : ILanguageAspect> getAllAspectInstances(factory: ILanguageAspectFactory<T>): List<T> {
+        return aspects.values.mapNotNull { it[factory] as T? }
+    }
+
     fun getAspects(language: ILanguage): List<ILanguageAspect> = aspects[language.getUID()]?.values?.toList() ?: emptyList()
 
     companion object {

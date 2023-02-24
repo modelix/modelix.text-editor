@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.aspects.getInstance
 import org.modelix.metamodel.GeneratedConcept
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedConcept
@@ -19,6 +20,7 @@ import org.modelix.model.api.addNewChild
 import org.modelix.model.api.getChildren
 import org.modelix.model.api.moveChild
 import org.modelix.model.api.setPropertyValue
+import org.modelix.scopes.ScopeAspect
 
 abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(val concept: ConceptT) {
     val properties = CellProperties()
@@ -316,11 +318,18 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         val specializedLocation = location.ofSubConcept(concept.untyped())
-        val targets = specializedLocation.getVisibleReferenceTargets(link.untyped())
-        return targets.map { WrapReferenceTarget(location, it, presentation(it.typedUnsafe()) ?: "") }
+        val scope = ScopeAspect.getScope(link.untyped())
+        val targets = scope.getVisibleElements(specializedLocation, link.untyped())
+        return targets.map { target ->
+            val text = when (target) {
+                is ExistingNode -> presentation(target.node.typedUnsafe()) ?: ""
+                else -> "<create new target node>"
+            }
+            WrapReferenceTarget(location, target, text)
+        }
     }
 
-    inner class WrapReferenceTarget(val location: INonExistingNode, val target: INode, val presentation: String): ICodeCompletionAction {
+    inner class WrapReferenceTarget(val location: INonExistingNode, val target: INonExistingNode, val presentation: String): ICodeCompletionAction {
         override fun getMatchingText(): String {
             return presentation
         }
@@ -331,7 +340,7 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
 
         override fun execute(editor: EditorComponent) {
             val sourceNode = location.getOrCreateNode(concept.untyped())
-            sourceNode.setReferenceTarget(link, link.castTarget(target))
+            sourceNode.setReferenceTarget(link, link.castTarget(target.getOrCreateNode()))
             editor.selectAfterUpdate {
                 CaretPositionPolicy(createCellReference(sourceNode))
                     .getBestSelection(editor)
