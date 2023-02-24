@@ -9,10 +9,11 @@ class PolymorphicDispatch<ValueT>(val implementations: Map<IConceptReference, Va
     private val cache: MutableMap<IConceptReference, Value<ValueT>?> = HashMap()
 
     @Synchronized
-    fun dispatch(receiverConcept: IConcept): Value<ValueT>? {
-        return cache.getOrPut(receiverConcept.getReference()) {
+    fun dispatch(receiverConcept: IConcept, default: () -> ValueT): ValueT {
+        val optionalResult = cache.getOrPut(receiverConcept.getReference()) {
             findValue(receiverConcept)
         }
+        return if (optionalResult == null) default() else optionalResult.value
     }
 
     private fun findValue(receiverConcept: IConcept): Value<ValueT>? {
@@ -24,5 +25,5 @@ class PolymorphicDispatch<ValueT>(val implementations: Map<IConceptReference, Va
         return null
     }
 
-    class Value<ValueT>(val value: ValueT)
+    private class Value<ValueT>(val value: ValueT)
 }

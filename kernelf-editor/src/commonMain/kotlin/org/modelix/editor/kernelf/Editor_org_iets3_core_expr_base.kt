@@ -10,17 +10,20 @@ import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.base.N_IRef
 import org.iets3.core.expr.base.N_ISingleSymbolRef
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.modelix.aspects.behavior.polymorphicFunction
+import org.modelix.aspects.behavior.buildPolymorphicFunction
 import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
 
-//val binaryExpressionSymbols by polymorphicValue<String?>(null)
-val binaryExpressionSymbols by polymorphicFunction().forConcept<CN_BinaryExpression>().returns<String>()
-val ISingleSymbolRef_getSymbolName by polymorphicFunction().forNode(CN_ISingleSymbolRef).returns<String>()
+val binaryExpressionSymbols by buildPolymorphicFunction().returns<String>().forConcept<CN_BinaryExpression>()
+    .defaultValue { ":${it.untyped().getShortName()}:" }.delegate()
+
+val ISingleSymbolRef_getSymbolName by buildPolymorphicFunction().returns<String>().forNode(CN_ISingleSymbolRef).delegate()
 fun N_ISingleSymbolRef.getSymbolName() = ISingleSymbolRef_getSymbolName(this)
-val IRef_target by polymorphicFunction().forNode(CN_IRef).returns<N_BaseConcept>()
+
+val IRef_target by buildPolymorphicFunction().returns<N_BaseConcept>().forNode(CN_IRef).delegate()
 fun N_IRef.target() = IRef_target(this)
-val BaseConcept_alias by polymorphicFunction().forConcept<CN_BaseConcept>().returns<String>()
+
+val BaseConcept_alias by buildPolymorphicFunction().returns<String>().forConcept<CN_BaseConcept>().delegate()
 fun CN_BaseConcept.alias() = BaseConcept_alias(this)
 
 val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
@@ -72,7 +75,6 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         "!".constant()
     }
 
-    binaryExpressionSymbols.implement(language.BinaryExpression) { ":${it.untyped().getShortName()}:" }
     binaryExpressionSymbols.implement(language.AssignmentExpr) { ":=" }
 
     binaryExpressionSymbols.implement(language.DivExpression) { "/" }

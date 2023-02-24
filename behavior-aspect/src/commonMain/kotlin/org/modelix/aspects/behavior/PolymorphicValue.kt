@@ -6,13 +6,11 @@ class PolymorphicValue<ValueT>(val name: String) {
     private var implementations: PolymorphicDispatch<ValueT> = PolymorphicDispatch<ValueT>(emptyMap())
 
     fun getValue(concept: IConcept): ValueT {
-        return implementations.dispatch(concept).let {
-            if (it == null) {
-                throw NoImplementationException(this, concept)
-            } else {
-                it.value
-            }
-        }
+        return getValue(concept) { throw NoImplementationException(this, concept) }
+    }
+
+    fun getValue(concept: IConcept, default: () -> ValueT): ValueT {
+        return implementations.dispatch(concept, default)
     }
 
     fun addImplementation(concept: IConcept, impl: ValueT) {
