@@ -33,20 +33,11 @@ class PolymorphicFunctionBuilder {
 
         inner class ForConcept<ConceptT : ITypedConcept> : ForNodeOrConcept<ConceptT>() {
             fun build(name: String = "") = PolymorphicFunction(name)
-            fun delegate() = Delegate()
+            fun delegate() = SingleInstanceDelegate { PolymorphicFunction(it) }
 
             override fun defaultValue(body: (ConceptT) -> ReturnT): ForConcept<ConceptT> {
                 super.defaultValue(body)
                 return this
-            }
-
-            inner class Delegate {
-                operator fun getValue(
-                    nothing: Nothing?,
-                    property: KProperty<*>
-                ): PolymorphicFunction {
-                    return PolymorphicFunction(property.name)
-                }
             }
 
             inner class PolymorphicFunction(name: String) {
@@ -69,20 +60,11 @@ class PolymorphicFunctionBuilder {
         inner class ForNode<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> : ForNodeOrConcept<NodeT>() {
 
             fun build(name: String = "") = PolymorphicFunction(name)
-            fun delegate() = Delegate()
+            fun delegate() = SingleInstanceDelegate { PolymorphicFunction(it) }
 
             override fun defaultValue(body: (NodeT) -> ReturnT): ForNode<NodeT, ConceptT> {
                 super.defaultValue(body)
                 return this
-            }
-
-            inner class Delegate {
-                operator fun getValue(
-                    nothing: Nothing?,
-                    property: KProperty<*>
-                ): PolymorphicFunction {
-                    return PolymorphicFunction(property.name)
-                }
             }
 
             inner class PolymorphicFunction(name: String) {
@@ -101,5 +83,16 @@ class PolymorphicFunctionBuilder {
                 }
             }
         }
+    }
+}
+
+class SingleInstanceDelegate<E>(val initializer: (String) -> E) {
+    private var name: String = ""
+    private val instance by lazy { initializer(name) }
+    operator fun getValue(
+        nothing: Nothing?,
+        property: KProperty<*>
+    ): E {
+        return instance
     }
 }
