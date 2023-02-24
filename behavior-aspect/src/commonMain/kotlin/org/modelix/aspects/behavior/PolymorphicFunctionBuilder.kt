@@ -87,12 +87,13 @@ class PolymorphicFunctionBuilder {
 }
 
 class SingleInstanceDelegate<E>(val initializer: (String) -> E) {
-    private var name: String = ""
+    private lateinit var name: String
     private val instance by lazy { initializer(name) }
     operator fun getValue(
         nothing: Nothing?,
         property: KProperty<*>
     ): E {
+        name = property.name
         return instance
     }
 }
