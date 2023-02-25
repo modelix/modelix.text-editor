@@ -31,13 +31,13 @@ kotlin {
     js(IR) {
         browser {}
         binaries.executable()
-//        nodejs {
-//            testTask {
-//                useMocha {
-//                    timeout = "10s"
-//                }
-//            }
-//        }
+        nodejs {
+            testTask {
+                useMocha {
+                    timeout = "10s"
+                }
+            }
+        }
     }
 
     sourceSets {
