@@ -3,6 +3,9 @@ package org.modelix.typesystem
 import org.modelix.aspects.ILanguageAspect
 import org.modelix.aspects.ILanguageAspectFactory
 import org.modelix.aspects.LanguageAspectsBuilder
+import org.modelix.incremental.IncrementalEngine
+import org.modelix.incremental.IncrementalList
+import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.typed
@@ -12,8 +15,6 @@ import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.ILanguage
 import org.modelix.model.api.INode
 import org.modelix.model.api.getAllConcepts
-import org.modelix.model.api.getConcept
-import org.modelix.model.api.getDescendants
 import org.modelix.model.api.getRoot
 import org.modelix.model.api.tryGetConcept
 
@@ -71,7 +72,15 @@ class TypesystemConstraintsBuilder<NodeT : ITypedNode>(val node: NodeT) {
     fun ITypesystemType.subtypeOf(superType: ITypesystemType) = KnownValue(this).subtypeOf(KnownValue(superType))
 }
 
+// TODO make a class and provide IncrementalEngine to constructor
 object TypesystemEngine {
+    private val incrementalEngine: IncrementalEngine = IncrementalEngine(100_000)
+    private val getConstraintsFromSubtree: (INode) -> IncrementalList<Constraint> = incrementalEngine.incrementalFunction("getConstraintsFromSubtree") { context, node: INode ->
+        return@incrementalFunction doGetConstraintsFromSubtree(node)
+    }
+    private val getConstraintsFromNode: (INode) -> IncrementalList<Constraint> = incrementalEngine.incrementalFunction("getConstraintsFromSubtree") { context, node: INode ->
+        return@incrementalFunction doGetConstraintsFromNode(node)
+    }
     private val constraintBuilders: MutableMap<IConceptReference, ITypesystemConstraintsBuilderFactory> = HashMap()
 
     fun registerConstraintsBuilder(concept: IConcept, builder: ITypesystemConstraintsBuilderFactory) {
@@ -79,6 +88,7 @@ object TypesystemEngine {
     }
 
     fun solve(constraints: List<Constraint>): Map<IVariableReference, ITypesystemType> {
+        // TODO performance
         val solver = TypesystemSolver()
         solver.solve(constraints)
         val result = HashMap<IVariableReference, ITypesystemType>()
@@ -89,19 +99,25 @@ object TypesystemEngine {
         return result
     }
 
-    fun solve(constraintProviders: Sequence<INode>) =
-        solve(constraintProviders.flatMap { getConstraintsFromNode(it) }.toList())
+    fun solve(constraintProviderRoots: Sequence<INode>) =
+        solve(constraintProviderRoots.flatMap { getConstraintsFromSubtree(it).asSequence() }.toList())
 
-    fun getConstraintsFromNode(node: INode): Sequence<Constraint> {
-        val concept = node.tryGetConcept() ?: return emptySequence()
-        return concept.getAllConcepts().asSequence().flatMap { superConcept ->
+    private fun doGetConstraintsFromSubtree(node: INode): IncrementalList<Constraint> {
+        return IncrementalList.concat(
+            listOf(getConstraintsFromNode(node)) + node.allChildren.map { getConstraintsFromSubtree(it) }
+        )
+    }
+
+    private fun doGetConstraintsFromNode(node: INode): IncrementalList<Constraint> {
+        val concept = node.tryGetConcept() ?: return IncrementalList.empty()
+        val constraints = concept.getAllConcepts().flatMap { superConcept ->
             constraintBuilders[superConcept.getReference()]?.buildConstraints(node) ?: emptyList()
         }
+        return IncrementalList.of(constraints)
     }
 
     fun computeType(node: INode): ITypesystemType? {
-        // TODO performance
-        return solve(node.getRoot().getDescendants(true))[node.asTypeVariable()]
+        return solve(sequenceOf(node.getRoot()))[node.asTypeVariable()]
     }
 }
 
