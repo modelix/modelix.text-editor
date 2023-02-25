@@ -322,7 +322,7 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         val targets = scope.getVisibleElements(specializedLocation, link.untyped())
         return targets.map { target ->
             val text = when (target) {
-                is ExistingNode -> presentation(target.node.typedUnsafe()) ?: ""
+                is ExistingNode -> presentation(target.getNode().typedUnsafe()) ?: ""
                 else -> "<create new target node>"
             }
             WrapReferenceTarget(location, target, text)

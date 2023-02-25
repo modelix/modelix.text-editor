@@ -35,6 +35,7 @@ kotlin {
                 api("org.modelix:incremental:$modelixIncrementalVersion")
                 api("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
                 implementation(project(":language-aspects"))
+                implementation(project(":behavior-aspect"))
             }
         }
         val commonTest by getting {

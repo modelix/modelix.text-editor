@@ -3,15 +3,11 @@ package org.modelix.editor
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
-import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.addNewChild
 import org.modelix.model.api.getChildren
 import org.modelix.model.api.getContainmentLink
-import org.modelix.model.api.getDescendants
-import org.modelix.model.api.getRoot
 import org.modelix.model.api.index
 import org.modelix.model.api.isInstanceOf
-import org.modelix.model.api.isInstanceOfSafe
 import org.modelix.model.api.isSubConceptOf
 import org.modelix.model.api.remove
 
@@ -22,6 +18,7 @@ interface INonExistingNode {
     fun index(): Int
     fun replaceNode(subConcept: IConcept?): INode
     fun getOrCreateNode(subConcept: IConcept? = null): INode
+    fun getNode(): INode?
     fun expectedConcept(): IConcept?
 }
 
@@ -59,6 +56,10 @@ data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept
         return node.getOrCreateNode(coerceOutputConcept(subConcept))
     }
 
+    override fun getNode(): INode? {
+        return node.getNode()
+    }
+
     override fun expectedConcept(): IConcept {
         return subConcept
     }
@@ -84,7 +85,7 @@ fun INonExistingNode.coerceOutputConcept(subConcept: IConcept?): IConcept? {
     }
 }
 
-data class ExistingNode(val node: INode) : INonExistingNode {
+data class ExistingNode(private val node: INode) : INonExistingNode {
     override fun getExistingAncestor(): INode = node
 
     override fun getParent(): INonExistingNode? = node.parent?.let { ExistingNode(it) }
@@ -107,6 +108,10 @@ data class ExistingNode(val node: INode) : INonExistingNode {
         } else {
             replaceNode(subConcept)
         }
+    }
+
+    override fun getNode(): INode {
+        return node
     }
 
     override fun expectedConcept(): IConcept? {
@@ -135,6 +140,10 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
 
     override fun getOrCreateNode(subConcept: IConcept?): INode {
         return replaceNode(subConcept)
+    }
+
+    override fun getNode(): INode? {
+        return null
     }
 
     override fun expectedConcept(): IConcept {

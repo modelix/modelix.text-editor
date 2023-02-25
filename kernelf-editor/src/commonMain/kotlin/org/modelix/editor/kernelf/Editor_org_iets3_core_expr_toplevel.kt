@@ -2,10 +2,14 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
 import org.iets3.core.expr.toplevel.N_EnumDeclaration
+import org.iets3.core.expr.toplevel.N_RecordType
 import org.modelix.aspects.languageAspects
 import org.modelix.editor.conceptEditor
 import org.modelix.metamodel.typed
 import org.modelix.metamodel.untyped
+import org.modelix.typesystem.asType
+import org.modelix.typesystem.asTypeVariable
+import org.modelix.typesystem.typesystem
 
 val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_toplevel) {
     conceptEditor(language.AbstractFunctionAdapter) {
@@ -135,6 +139,16 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         }
         //TODO ? = for single line body
     }
+    typesystem(language.Function) {
+        val body = node.body.get()
+        val returnType = node.type.get()
+        if (returnType != null) {
+            node.asTypeVariable().equalTo(returnType.asType())
+        }
+        if (body != null) {
+            body.asTypeVariable().subtypeOf(node.asTypeVariable())
+        }
+    }
     conceptEditor(language.FunctionCall) {
         concept.function.cell({ name })
         //TODO effect descriptor
@@ -142,6 +156,9 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         parentheses {
             concept.args.horizontal()
         }
+    }
+    typesystem(language.FunctionCall) {
+        node.asTypeVariable().equalTo(node.function.asTypeVariable())
     }
     conceptEditor(language.FunRef) {
         ":".constant()
@@ -256,6 +273,12 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         curlyBrackets {
             newLine()
             concept.memberValues.horizontal(",")
+        }
+    }
+    typesystem(language.RecordLiteral) {
+        val recordType = node.type.get() as? N_RecordType
+        if (recordType != null) {
+            node.asTypeVariable().equalTo(recordType.asType())
         }
     }
     conceptEditor(language.RecordMember) {
