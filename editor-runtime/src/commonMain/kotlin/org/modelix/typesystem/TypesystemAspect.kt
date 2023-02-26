@@ -121,6 +121,11 @@ object TypesystemEngine {
     }
 }
 
+fun INode.rawType(): ITypesystemType? = TypesystemEngine.computeType(this)
+fun ITypedNode.rawType(): ITypesystemType? = untyped().rawType()
+fun INode.type(): INode? = (rawType() as? NodeAsType)?.node
+fun ITypedNode.type(): ITypedNode? = untyped().type()?.typed()
+
 class TypesystemSolver {
     private val variables: MutableMap<IVariableReference, Variable> = HashMap()
 
