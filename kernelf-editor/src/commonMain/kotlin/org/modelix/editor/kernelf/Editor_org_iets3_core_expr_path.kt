@@ -18,17 +18,10 @@ val Editor_org_iets3_core_expr_path = languageAspects(L_org_iets3_core_expr_path
         //TODO replace name with path label
     }
     scope(language.PathElement.member) {
-        println("PathElement.member scope called")
-        val v5 = it.getParent()?.getNode()?.typed()
-        val v1 = v5 as? N_DotExpression
-        val dot = v1 ?: return@scope emptyList()
-        val v2 = dot.expr.get()
-        val left = v2 ?: return@scope emptyList()
-        val v3 = TypesystemEngine.computeType(left.untyped())
-        val leftType = v3 ?: return@scope emptyList()
-        val v4 = (leftType as? NodeAsType)?.node?.typed()
-        val leftTypeAsNode = v4 ?: return@scope emptyList()
-        println("Type: " + leftTypeAsNode.untypedConcept().getLongName())
+        val dot = it.getParent()?.getNode()?.typed() as? N_DotExpression ?: return@scope emptyList()
+        val left = dot.expr.get() ?: return@scope emptyList()
+        val leftType = TypesystemEngine.computeType(left.untyped()) ?: return@scope emptyList()
+        val leftTypeAsNode = (leftType as? NodeAsType)?.node?.typed() ?: return@scope emptyList()
         when (leftTypeAsNode) {
             is N_RecordType -> leftTypeAsNode.record.members.toList()
             else -> emptyList()
