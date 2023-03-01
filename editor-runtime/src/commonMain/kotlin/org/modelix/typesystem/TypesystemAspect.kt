@@ -59,17 +59,17 @@ class TypesystemConstraintsBuilder<NodeT : ITypedNode>(val node: NodeT) {
     fun equalType(operand1: ITypesystemType, operand2: ITypesystemType) = equalType(KnownValue(operand1), KnownValue(operand2))
     fun equalType(operand1: ITypesystemType, operand2: IOperand) = equalType(KnownValue(operand1), operand2)
 
-    fun IOperand.equalTo(other: IOperand) = equalType(this, other)
-    fun IOperand.equalTo(other: ITypesystemType) = equalType(this, KnownValue(other))
-    fun ITypesystemType.equalTo(other: IOperand) = equalType(KnownValue(this), other)
-    fun ITypesystemType.equalTo(other: ITypesystemType) = equalType(KnownValue(this), KnownValue(other))
+    infix fun IOperand.equalTo(other: IOperand) = equalType(this, other)
+    infix fun IOperand.equalTo(other: ITypesystemType) = equalType(this, KnownValue(other))
+    infix fun ITypesystemType.equalTo(other: IOperand) = equalType(KnownValue(this), other)
+    infix fun ITypesystemType.equalTo(other: ITypesystemType) = equalType(KnownValue(this), KnownValue(other))
 
-    fun IOperand.subtypeOf(superType: IOperand) {
+    infix fun IOperand.subtypeOf(superType: IOperand) {
         constraints += Subtype(this, superType)
     }
-    fun IOperand.subtypeOf(superType: ITypesystemType) = subtypeOf(KnownValue(superType))
-    fun ITypesystemType.subtypeOf(superType: IOperand) = KnownValue(this).subtypeOf(superType)
-    fun ITypesystemType.subtypeOf(superType: ITypesystemType) = KnownValue(this).subtypeOf(KnownValue(superType))
+    infix fun IOperand.subtypeOf(superType: ITypesystemType) = subtypeOf(KnownValue(superType))
+    infix fun ITypesystemType.subtypeOf(superType: IOperand) = KnownValue(this).subtypeOf(superType)
+    infix fun ITypesystemType.subtypeOf(superType: ITypesystemType) = KnownValue(this).subtypeOf(KnownValue(superType))
 }
 
 // TODO make a class and provide IncrementalEngine to constructor

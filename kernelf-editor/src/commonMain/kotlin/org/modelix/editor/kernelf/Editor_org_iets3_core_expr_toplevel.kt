@@ -143,10 +143,10 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         val body = node.body.get()
         val returnType = node.type.get()
         if (returnType != null) {
-            node.asTypeVariable().equalTo(returnType.asType())
+            node.asTypeVariable() equalTo returnType.asType()
         }
         if (body != null) {
-            body.asTypeVariable().subtypeOf(node.asTypeVariable())
+            body.asTypeVariable() subtypeOf node.asTypeVariable()
         }
     }
     conceptEditor(language.FunctionCall) {
@@ -158,7 +158,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         }
     }
     typesystem(language.FunctionCall) {
-        node.asTypeVariable().equalTo(node.function.asTypeVariable())
+        node.asTypeVariable() equalTo node.function.asTypeVariable()
     }
     conceptEditor(language.FunRef) {
         ":".constant()
@@ -278,7 +278,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
     typesystem(language.RecordLiteral) {
         val recordType = node.type.get() as? N_RecordType
         if (recordType != null) {
-            node.asTypeVariable().equalTo(recordType.asType())
+            node.asTypeVariable() equalTo recordType.asType()
         }
     }
     conceptEditor(language.RecordMember) {
