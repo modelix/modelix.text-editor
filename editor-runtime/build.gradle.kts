@@ -36,6 +36,12 @@ kotlin {
                 api("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
                 implementation(project(":language-aspects"))
                 implementation(project(":behavior-aspect"))
+                val tuPrologVersion = "0.31.1"
+                // TODO change to implementation(...)
+                api("it.unibo.tuprolog:dsl-unify:$tuPrologVersion")
+                api("it.unibo.tuprolog:dsl-solve:$tuPrologVersion")
+                api("it.unibo.tuprolog:dsl-theory:$tuPrologVersion")
+                api("it.unibo.tuprolog:solve-classic:$tuPrologVersion")
             }
         }
         val commonTest by getting {
