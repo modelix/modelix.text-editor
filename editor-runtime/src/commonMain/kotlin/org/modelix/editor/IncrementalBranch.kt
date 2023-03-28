@@ -240,6 +240,10 @@ class IncrementalBranch(val branch: IBranch) : IBranch {
     }
 
     inner class IncrementalTree(val tree: ITree) : ITree {
+        override fun usesRoleIds(): Boolean {
+            return tree.usesRoleIds()
+        }
+
         override fun getId(): String? {
             return tree.getId()
         }

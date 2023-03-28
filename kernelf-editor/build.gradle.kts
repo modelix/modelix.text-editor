@@ -27,9 +27,19 @@ val generatorOutputDir = file("src/commonMain/kotlin_gen")
 val tsGeneratorOutputDir = file("../kernelf-angular-demo/src/gen")
 
 kotlin {
-    jvm()
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = "11"
+        }
+    }
     js(IR) {
-        browser {}
+        browser {
+            testTask {
+                useMocha {
+                    timeout = "10s"
+                }
+            }
+        }
         binaries.executable()
         nodejs {
             testTask {
