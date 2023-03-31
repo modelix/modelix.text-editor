@@ -19,11 +19,11 @@ export class ExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.node === undefined) {
-      let data = JSON.stringify(Model_iets3_strings)
-      this.node = KernelfApiJS.loadModelsFromJson([
+      let jsonModels = [
         JSON.stringify(Model_iets3_strings),
         JSON.stringify(Model_iets3_base),
-      ])
+      ];
+      this.node = KernelfApiJS.connectToModelServer(jsonModels, node => this.node = node)
     }
   }
 

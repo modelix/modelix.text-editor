@@ -1,6 +1,8 @@
 package org.modelix.editor.kernelf
 
 import jetbrains.mps.lang.core.N_INamedConcept
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.stream.HTMLStreamBuilder
@@ -9,17 +11,25 @@ import org.modelix.editor.EditorEngine
 import org.modelix.editor.EditorState
 import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.toHtml
+import org.modelix.editor.withIncrementalComputationSupport
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.ITypedNode
-import org.modelix.metamodel.ModelData
 import org.modelix.metamodel.TypedLanguagesRegistry
 import org.modelix.metamodel.typed
 import org.modelix.metamodel.untypedConcept
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.INode
+import org.modelix.model.api.getRootNode
+import org.modelix.model.client2.ModelClientV2
+import org.modelix.model.client2.ReplicatedModel
+import org.modelix.model.client2.getReplicatedModel
+import org.modelix.model.data.ModelData
+import org.modelix.model.lazy.RepositoryId
 import org.modelix.model.repositoryconcepts.N_Module
+import org.modelix.model.withAutoTransactions
 
 object KernelfAPI {
+    private val LOG = mu.KotlinLogging.logger {  }
     val editorEngine = EditorEngine()
 
     init {
@@ -41,6 +51,33 @@ object KernelfAPI {
         json.forEach { ModelData.fromJson(it).load(branch)  }
         val rootNode = ModelFacade.getRootNode(branch)
         return rootNode
+    }
+
+    fun connectToModelServer(url: String = "http://localhost:28101/v2", initialJsonData: Array<String> = emptyArray() , callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
+        GlobalScope.launch {
+            try {
+                val repositoryId = RepositoryId("kernelf-demo")
+                val client = ModelClientV2.builder().url(url).build()
+                client.init()
+                val existingRepositories = client.listRepositories()
+                val repositoryExisted = existingRepositories.contains(repositoryId)
+                if (!repositoryExisted) {
+                    client.initRepository(repositoryId)
+                }
+                val model: ReplicatedModel = client.getReplicatedModel(repositoryId.getBranchReference())
+                model.start()
+                val branch = model.getBranch().withIncrementalComputationSupport()
+                if (!repositoryExisted) {
+                    initialJsonData.forEach { ModelData.fromJson(it).load(branch)  }
+                }
+                val rootNode = branch.withAutoTransactions().getRootNode()
+                LOG.debug { "Connected to model server" }
+                callback(rootNode)
+            } catch (ex: Exception) {
+                errorCallback(ex)
+            }
+
+        }
     }
 
     fun renderNodeAsHtmlText(rootNode: INode): String {

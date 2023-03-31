@@ -15,12 +15,21 @@ import org.modelix.model.ModelFacade
 import org.modelix.model.api.IBranchListener
 import org.modelix.model.api.INode
 import org.modelix.model.api.ITree
+import org.modelix.model.api.deepUnwrap
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
 
 @JsExport
 object KernelfApiJS {
+    private val LOG = mu.KotlinLogging.logger {}
 
+    fun connectToModelServer(json: Array<String>, callback: (INode) -> Unit) {
+        KernelfAPI.connectToModelServer(
+            initialJsonData = json,
+            callback = callback,
+            errorCallback = { LOG.error(it) { "Failed to connect to model server" } }
+        )
+    }
     fun loadModelsFromJson(json: Array<String>): INode = KernelfAPI.loadModelsFromJson(json)
     fun getModules(rootNode: INode): Array<INode> = KernelfAPI.getModules(rootNode)
     fun nodeToString(node: Any): String = KernelfAPI.nodeToString(node)
@@ -46,7 +55,7 @@ object KernelfApiJS {
         val editor = JsEditorComponent(KernelfAPI.editorEngine) { state ->
             KernelfAPI.editorEngine.createCell(state, rootNode.typed())
         }
-        val branch = ModelFacade.getBranch(rootNode)!!.let { if (it is IncrementalBranch) it.branch else it }
+        val branch = ModelFacade.getBranch(rootNode)!!.deepUnwrap()
         branch.addListener(object : IBranchListener {
             private var updateScheduled = atomic(false)
             private val coroutinesScope = CoroutineScope(Dispatchers.Main)

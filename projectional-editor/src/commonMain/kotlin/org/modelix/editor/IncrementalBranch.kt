@@ -5,7 +5,7 @@ import org.modelix.incremental.IStateVariableGroup
 import org.modelix.incremental.IStateVariableReference
 import org.modelix.model.api.*
 
-class IncrementalBranch(val branch: IBranch) : IBranch {
+class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
 
     init {
         branch.addListener(object : IBranchListener {
@@ -31,6 +31,10 @@ class IncrementalBranch(val branch: IBranch) : IBranch {
                 }
             }
         })
+    }
+
+    override fun unwrapBranch(): IBranch {
+        return branch
     }
 
     fun accessed(dep: IStateVariableReference<*>) {
@@ -410,3 +414,5 @@ data class AllPropertiesDependency(val branch: IBranch, val nodeId: Long) : Depe
 data class ContainmentDependency(val branch: IBranch, val nodeId: Long) : DependencyBase() {
     override fun getGroup() = UnclassifiedNodeDependency(branch, nodeId)
 }
+
+fun IBranch.withIncrementalComputationSupport() = IncrementalBranch(this)
