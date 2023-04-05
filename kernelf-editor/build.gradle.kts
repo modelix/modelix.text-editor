@@ -57,7 +57,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
-                implementation(project(":editor-runtime"))
+                implementation(project(":projectional-editor"))
                 implementation(project(":language-aspects"))
                 implementation(project(":behavior-aspect"))
                 implementation(kotlin("stdlib-common"))
