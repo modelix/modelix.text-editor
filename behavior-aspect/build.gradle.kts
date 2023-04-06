@@ -28,7 +28,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation("org.modelix:model-api:$modelixCoreVersion")
-                implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
+                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation(project(":language-aspects"))

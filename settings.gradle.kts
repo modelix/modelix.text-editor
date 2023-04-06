@@ -4,7 +4,7 @@ pluginManagement {
     plugins {
         kotlin("multiplatform") version kotlinVersion apply false
         kotlin("plugin.serialization") version kotlinVersion apply false
-        id("org.modelix.metamodel.gradle") version modelixCoreVersion apply false
+        id("org.modelix.model-api-gen") version modelixCoreVersion apply false
     }
     resolutionStrategy {
     }

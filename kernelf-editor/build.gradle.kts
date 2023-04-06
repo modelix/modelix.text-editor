@@ -1,6 +1,5 @@
 import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 import org.jetbrains.kotlin.com.google.gson.JsonParser
-import org.modelix.metamodel.generator.*
 
 buildscript {
     repositories {
@@ -9,7 +8,6 @@ buildscript {
     }
     dependencies {
         val modelixCoreVersion: String by rootProject
-        classpath("org.modelix:metamodel-generator:$modelixCoreVersion")
     }
 }
 
@@ -56,7 +54,7 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
+                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
                 implementation(project(":projectional-editor"))
                 implementation(project(":language-aspects"))
                 implementation(project(":behavior-aspect"))
@@ -84,7 +82,7 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.modelix:metamodel-generator:$modelixCoreVersion")
+                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
             }
@@ -140,8 +138,8 @@ val fixSourceMaps by tasks.registering {
             rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
         )
         fixSourceMap(
-            rootDir.resolve("../modelix.core/metamodel-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-metamodel-runtime-js-ir.js.map")
+            rootDir.resolve("../modelix.core/model-api-gen-runtime/src").canonicalFile,
+            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-gen-runtime-js-ir.js.map")
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-client/src").canonicalFile,

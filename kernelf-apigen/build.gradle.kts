@@ -8,19 +8,16 @@ buildscript {
     dependencies {
         val modelixCoreVersion: String by rootProject
         classpath("org.modelix:model-api:$modelixCoreVersion")
-        classpath("org.modelix:metamodel-generator:$modelixCoreVersion")
         classpath("com.charleskorn.kaml:kaml:0.48.0")
-        classpath("org.modelix.mpsbuild:gradle-mpsbuild-plugin:1.0.8")
     }
 }
 
 plugins {
     kotlin("multiplatform")
     `maven-publish`
-    id("org.modelix.metamodel.gradle")
+    id("org.modelix.mps.build-tools") version "1.0.11"
+    id("org.modelix.model-api-gen")
 }
-
-apply(plugin = "modelix-gradle-mpsbuild-plugin")
 
 val modelixCoreVersion: String by rootProject
 val kotlinLoggingVersion: String by rootProject
@@ -47,7 +44,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:metamodel-runtime:$modelixCoreVersion")
+                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
                 implementation(kotlin("stdlib-common"))
             }
             kotlin.srcDir(generatorOutputDir)
