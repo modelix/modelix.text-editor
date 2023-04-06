@@ -7,3 +7,5 @@
 *.iml
 kotlin_gen
 /*/.npmrc
+**/.ideaconfig
+**/.mpsconfig
