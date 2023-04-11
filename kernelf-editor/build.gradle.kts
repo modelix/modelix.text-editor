@@ -62,6 +62,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
+                implementation("org.modelix:light-model-client:$modelixCoreVersion")
                 implementation("org.modelix:model-client:$modelixCoreVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
                 implementation(project(":kernelf-apigen"))

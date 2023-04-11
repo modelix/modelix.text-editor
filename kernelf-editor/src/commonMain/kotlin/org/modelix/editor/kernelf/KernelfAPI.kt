@@ -7,6 +7,7 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
+import org.modelix.client.light.LightModelClient
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.EditorState
 import org.modelix.editor.IncrementalBranch
@@ -26,7 +27,9 @@ import org.modelix.model.client2.getReplicatedModel
 import org.modelix.model.data.ModelData
 import org.modelix.model.lazy.RepositoryId
 import org.modelix.model.repositoryconcepts.N_Module
+import org.modelix.model.server.api.buildModelQuery
 import org.modelix.model.withAutoTransactions
+import kotlin.time.Duration.Companion.seconds
 
 object KernelfAPI {
     private val LOG = mu.KotlinLogging.logger {  }
@@ -56,27 +59,40 @@ object KernelfAPI {
     fun connectToModelServer(url: String = "http://localhost:28101/v2", initialJsonData: Array<String> = emptyArray() , callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
         GlobalScope.launch {
             try {
-                val repositoryId = RepositoryId("kernelf-demo")
-                val client = ModelClientV2.builder().url(url).build()
-                client.init()
-                val existingRepositories = client.listRepositories()
-                val repositoryExisted = existingRepositories.contains(repositoryId)
-                if (!repositoryExisted) {
-                    client.initRepository(repositoryId)
+                if (url.endsWith("/v2") || url.endsWith("/v2/")) {
+                    val repositoryId = RepositoryId("kernelf-demo")
+                    val client = ModelClientV2.builder().url(url).build()
+                    client.init()
+                    val existingRepositories = client.listRepositories()
+                    val repositoryExisted = existingRepositories.contains(repositoryId)
+                    if (!repositoryExisted) {
+                        client.initRepository(repositoryId)
+                    }
+                    val model: ReplicatedModel = client.getReplicatedModel(repositoryId.getBranchReference())
+                    model.start()
+                    val branch = model.getBranch().withIncrementalComputationSupport()
+                    if (!repositoryExisted) {
+                        initialJsonData.forEach { ModelData.fromJson(it).load(branch)  }
+                    }
+                    val rootNode = branch.withAutoTransactions().getRootNode()
+                    LOG.debug { "Connected to model server" }
+                    callback(rootNode)
+                } else {
+                    val client = LightModelClient.builder().url(url).build()
+                    client.changeQuery(buildModelQuery {
+                        root {
+                            children("modules") {
+                                whereProperty("name").startsWith("test.in.expr.")
+                                descendants {}
+                            }
+                        }
+                    })
+                    val rootNode = client.waitForRootNode(30.seconds) ?: throw RuntimeException("Root node not received")
+                    callback(rootNode)
                 }
-                val model: ReplicatedModel = client.getReplicatedModel(repositoryId.getBranchReference())
-                model.start()
-                val branch = model.getBranch().withIncrementalComputationSupport()
-                if (!repositoryExisted) {
-                    initialJsonData.forEach { ModelData.fromJson(it).load(branch)  }
-                }
-                val rootNode = branch.withAutoTransactions().getRootNode()
-                LOG.debug { "Connected to model server" }
-                callback(rootNode)
             } catch (ex: Exception) {
                 errorCallback(ex)
             }
-
         }
     }
 
