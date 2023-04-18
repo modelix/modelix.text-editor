@@ -72,8 +72,7 @@ kotlin {
     }
 }
 
-extensions.configure<MPSBuildSettings> {
-    //dependsOn(copyLibs)
+mpsBuild {
     mpsVersion("2021.1.4")
     externalModules("org.iets3:opensource:2021.1.5939.+")
 }
