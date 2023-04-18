@@ -2,7 +2,7 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_expr_simpleTypes) {
     BaseConcept_alias.implement(language.BooleanType) { "boolean" }
@@ -10,7 +10,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
     BaseConcept_alias.implement(language.IntegerType) { "int" }
     BaseConcept_alias.implement(language.RealType) { "real" }
     BaseConcept_alias.implement(language.StringType) { "string" }
-    conceptEditor(language.StringLiteral) {
+    editor(language.StringLiteral) {
         horizontal {
             textColor("DarkGreen")
             "\"".constant()
@@ -22,24 +22,24 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             "\"".constant()
         }
     }
-    conceptEditor(language.NumberLiteral) {
+    editor(language.NumberLiteral) {
         concept.value.cell {
             textColor("DarkMagenta")
             validateValue { it.toDoubleOrNull() != null }
         }
     }
-    conceptEditor(language.TrueLiteral) {
+    editor(language.TrueLiteral) {
         "true".constant()
     }
-    conceptEditor(language.FalseLiteral) {
+    editor(language.FalseLiteral) {
         "false".constant()
     }
-    conceptEditor(language.InterpolExprWord) {
+    editor(language.InterpolExprWord) {
         brackets(singleLine = true, leftSymbol = "$(", rightSymbol = ")") {
             concept.expr.cell()
         }
     }
-    conceptEditor(language.NumberRangeSpec) {
+    editor(language.NumberRangeSpec) {
         "[".constant()
         noSpace()
         concept.min.cell {
@@ -55,7 +55,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         noSpace()
         "]".constant()
     }
-    conceptEditor(language.NumberType) {
+    editor(language.NumberType) {
         "number".constant()
         optional {
             noSpace()
@@ -66,42 +66,42 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             concept.prec.cell()
         }
     }
-    conceptEditor(language.StringContainsTarget) {
+    editor(language.StringContainsTarget) {
         "contains".constant()
         noSpace()
         parentheses {
             concept.value.cell()
         }
     }
-    conceptEditor(language.StringEndsWithTarget) {
+    editor(language.StringEndsWithTarget) {
         "endsWith".constant()
         noSpace()
         parentheses {
             concept.value.cell()
         }
     }
-    conceptEditor(language.StringInterpolationExpr) {
+    editor(language.StringInterpolationExpr) {
         brackets(singleLine = true, leftSymbol = "'''", rightSymbol = "'''") {
             concept.text.cell()
         }
     }
-    conceptEditor(language.StringLengthTarget) {
+    editor(language.StringLengthTarget) {
         "length".constant()
     }
-    conceptEditor(language.StringStartsWithTarget) {
+    editor(language.StringStartsWithTarget) {
         "startsWith".constant()
         noSpace()
         parentheses {
             concept.value.cell()
         }
     }
-    conceptEditor(language.StringToIntTarget) {
+    editor(language.StringToIntTarget) {
         "toInt".constant()
     }
-    conceptEditor(language.StringType) {
+    editor(language.StringType) {
         "string".constant()
     }
-    conceptEditor(language.BoundsExpression) {
+    editor(language.BoundsExpression) {
         "bounds".constant {
             iets3keyword()
         }
@@ -113,7 +113,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             concept.upper.cell()
         }
     }
-    conceptEditor(language.LimitExpression) {
+    editor(language.LimitExpression) {
         "limit".constant {
             iets3keyword()
         }
@@ -126,7 +126,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             concept.expr.cell()
         }
     }
-    conceptEditor(language.ConvertPrecisionNumberExpression) {
+    editor(language.ConvertPrecisionNumberExpression) {
         "precision".constant {
             iets3keyword()
         }
@@ -147,18 +147,18 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         language.RoundUpRoundingMode to "round up",
         language.TruncateRoundingMode to "truncate"
     )
-    conceptEditor(language.RoundingMode) {
+    editor(language.RoundingMode) {
         val mode = roundingModes[concept]
             ?: "Unknown rounding mode ${concept.untyped().getLongName()}"
         mode.constant()
     }
-    conceptEditor(language.NumberPrecSpec) {
+    editor(language.NumberPrecSpec) {
         noSpace()
         curlyBrackets {
             concept.prec.cell()
         }
     }
-    conceptEditor(language.ToleranceExpr) {
+    editor(language.ToleranceExpr) {
         concept.value.cell()
         noSpace()
         "±".constant()

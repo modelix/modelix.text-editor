@@ -2,27 +2,27 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.collections.L_org_iets3_core_expr_collections
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_expr_collections) {
-    conceptEditor(language.AsSingletonList) {
+    editor(language.AsSingletonList) {
         "toList".constant()
     }
-    conceptEditor(language.BracketOp) {
+    editor(language.BracketOp) {
         concept.expr.cell()
         noSpace()
         squareBrackets {
             concept.index.cell()
         }
     }
-    conceptEditor(language.CollectionSizeSpec) {
+    editor(language.CollectionSizeSpec) {
         angleBrackets {
             concept.min.cell()
             "|".constant()
             concept.max.cell()
         }
     }
-    conceptEditor(language.CollectionType) {
+    editor(language.CollectionType) {
         "collection".constant()
         noSpace()
         angleBrackets {
@@ -32,7 +32,7 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.sizeConstraint.cell()
         }
     }
-    conceptEditor(language.ElementTypeConstraintMap) {
+    editor(language.ElementTypeConstraintMap) {
         noSpace()
         angleBrackets {
             concept.typeConstraint1.cell()
@@ -41,23 +41,23 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.typeConstraint2.cell()
         }
     }
-    conceptEditor(language.ElementTypeConstraintSingle) {
+    editor(language.ElementTypeConstraintSingle) {
         noSpace()
         angleBrackets {
             concept.typeConstraint.cell()
         }
     }
-    conceptEditor(language.IndexExpr) {
+    editor(language.IndexExpr) {
         "index".constant()
     }
-    conceptEditor(language.KeyValuePair) {
+    editor(language.KeyValuePair) {
         concept.key.cell()
         noSpace()
         "->".constant()
         noSpace()
         concept.`val`.cell()
     }
-    conceptEditor(language.ListInsertOp) {
+    editor(language.ListInsertOp) {
         "insert".constant()
         noSpace()
         parentheses {
@@ -67,7 +67,7 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.arg.cell()
         }
     }
-    conceptEditor(language.ListLiteral) {
+    editor(language.ListLiteral) {
         "list".constant()
         optional {
             concept.typeConstraint.cell()
@@ -75,14 +75,14 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
         noSpace()
         concept.elements.horizontal()
     }
-    conceptEditor(language.ListPickOp) {
+    editor(language.ListPickOp) {
         "pick".constant()
         noSpace()
         squareBrackets {
             concept.selectorList.cell()
         }
     }
-    conceptEditor(language.ListType) {
+    editor(language.ListType) {
         "list".constant()
         noSpace()
         angleBrackets {
@@ -92,13 +92,13 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.sizeConstraint.cell()
         }
     }
-    conceptEditor(language.MaxOp) {
+    editor(language.MaxOp) {
         "max".constant()
     }
-    conceptEditor(language.MapKeysOp) {
+    editor(language.MapKeysOp) {
         "keys".constant()
     }
-    conceptEditor(language.MapLiteral) {
+    editor(language.MapLiteral) {
         "map".constant()
         optional {
             concept.typeConstraint.cell()
@@ -108,10 +108,10 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.elements.horizontal(",")
         }
     }
-    conceptEditor(language.MapSizeOp) {
+    editor(language.MapSizeOp) {
         "size".constant()
     }
-    conceptEditor(language.MapType) {
+    editor(language.MapType) {
         "map".constant()
         noSpace()
         angleBrackets {
@@ -122,13 +122,13 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
 
         }
     }
-    conceptEditor(language.MapValuesOp) {
+    editor(language.MapValuesOp) {
         "values".constant()
     }
-    conceptEditor(language.MinOp) {
+    editor(language.MinOp) {
         "min".constant()
     }
-    conceptEditor(language.SetLiteral) {
+    editor(language.SetLiteral) {
         "set".constant()
         optional {
             concept.typeConstraint.cell()
@@ -138,21 +138,21 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.elements.horizontal(",")
         }
     }
-    conceptEditor(language.SetType) {
+    editor(language.SetType) {
         "set".constant()
         noSpace()
         angleBrackets {
             concept.baseType.cell()
         }
     }
-    conceptEditor(language.SimpleSortOp) {
+    editor(language.SimpleSortOp) {
         "sort".constant()
         noSpace()
         parentheses {
             concept.order.cell()
         }
     }
-    conceptEditor(language.UpToTarget) {
+    editor(language.UpToTarget) {
         "upto".constant()
         noSpace()
         parentheses {

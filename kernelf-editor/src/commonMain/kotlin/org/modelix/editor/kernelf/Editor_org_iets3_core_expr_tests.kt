@@ -2,23 +2,23 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tests) {
-    conceptEditor(language.AllExpressionsFilter) {
+    editor(language.AllExpressionsFilter) {
         "expressions everywhere".constant()
     }
-    conceptEditor(language.AllNodesFilter) {
+    editor(language.AllNodesFilter) {
         "nodes everywhere".constant()
     }
-    conceptEditor(language.AndMatcher) {
+    editor(language.AndMatcher) {
         concept.left.cell()
         "and".constant() {
             iets3keyword()
         }
         concept.right.cell()
     }
-    conceptEditor(language.AssertOptionTestItem) {
+    editor(language.AssertOptionTestItem) {
         "assert-opt".constant {
             iets3keyword()
         }
@@ -29,7 +29,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         concept.what.cell()
         //TODO editor component actualAndError
     }
-    conceptEditor(language.AssertTestItem) {
+    editor(language.AssertTestItem) {
         optional {
             concept.optionalName.cell()
             "=".constant()
@@ -50,7 +50,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             }
         }
     }
-    conceptEditor(language.AssertThatTestItem) {
+    editor(language.AssertThatTestItem) {
         optional {
             concept.optionalName.cell()
             "=".constant()
@@ -65,7 +65,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         concept.matcher.cell()
         //TODO editor component actualAndError
     }
-    conceptEditor(language.ConstraintFailedTestItem) {
+    editor(language.ConstraintFailedTestItem) {
         "confail".constant {
             iets3keyword()
         }
@@ -75,28 +75,28 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.errmsg.cell()
         }
     }
-    conceptEditor(language.ContainsString) {
+    editor(language.ContainsString) {
         "a string containing".constant()
         concept.text.cell()
     }
-    conceptEditor(language.EmptyProducer) {
+    editor(language.EmptyProducer) {
         "empty".constant()
     }
-    conceptEditor(language.EmptyTestItem) {
+    editor(language.EmptyTestItem) {
         "".constant()
     }
-    conceptEditor(language.EqualsTestOp) {
+    editor(language.EqualsTestOp) {
         "equals".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.EvalAnythingExpr) {
+    editor(language.EvalAnythingExpr) {
         "evalanything".constant()
         squareBrackets {
             concept.anything.cell()
         }
     }
-    conceptEditor(language.ForceCastExpr) {
+    editor(language.ForceCastExpr) {
         "forceCast".constant {
             iets3keyword()
         }
@@ -109,7 +109,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.expr.cell()
         }
     }
-    conceptEditor(language.FunctionSubjectAdapter) {
+    editor(language.FunctionSubjectAdapter) {
         "function".constant()
         concept.`fun`.cell({ name })
         newLine()
@@ -121,41 +121,41 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         }
 
     }
-    conceptEditor(language.IgnoredConcept) {
+    editor(language.IgnoredConcept) {
         "concept".constant()
         noSpace()
         brackets(true, "/", "/") {
             concept.concept.cell({ name })
         }
     }
-    conceptEditor(language.InputValue) {
+    editor(language.InputValue) {
         concept.value.cell()
     }
-    conceptEditor(language.InterpreterCoverageAssResult) {
+    editor(language.InterpreterCoverageAssResult) {
         concept.concept.cell({ name })
         concept.comment.cell()
     }
-    conceptEditor(language.InterpreterCoverageAssSummary) {
+    editor(language.InterpreterCoverageAssSummary) {
         "coverage".constant()
         concept.coverageRatio.cell()
     }
-    conceptEditor(language.InterpreterValueStat) {
+    editor(language.InterpreterValueStat) {
         concept.label.cell()
         "=".constant()
         concept.value.cell()
     }
-    conceptEditor(language.InterpreterValueSummary) {
+    editor(language.InterpreterValueSummary) {
         "value ranges".constant()
         newLine()
         indented {
             concept.valueStats.vertical()
         }
     }
-    conceptEditor(language.InvalidInputOutcome) {
+    editor(language.InvalidInputOutcome) {
         "invalid input".constant()
         //TODO text color
     }
-    conceptEditor(language.InvalidValueTestItem) {
+    editor(language.InvalidValueTestItem) {
         "inval".constant {
             iets3keyword()
         }
@@ -167,7 +167,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.errmsg.cell()
         }
     }
-    conceptEditor(language.IsInvalid) {
+    editor(language.IsInvalid) {
         "invalid".constant {
             iets3keyword()
         }
@@ -178,31 +178,31 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.messageMatcher.cell()
         }
     }
-    conceptEditor(language.IsValidRecord) {
+    editor(language.IsValidRecord) {
         "a valid record".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.LanguageRef) {
+    editor(language.LanguageRef) {
         "language".constant()
         brackets(true, "/", ",") {
             concept.lang.cell()
         }
     }
-    conceptEditor(language.MatcherForAnyRecordType) {
+    editor(language.MatcherForAnyRecordType) {
         "matcher-for-any-record-type".constant()
     }
-    conceptEditor(language.MatcherForAnyType) {
+    editor(language.MatcherForAnyType) {
         "macher-for-any-type".constant()
     }
-    conceptEditor(language.MatcherType) {
+    editor(language.MatcherType) {
         "matcher".constant()
         noSpace()
         angleBrackets {
             concept.forType.cell()
         }
     }
-    conceptEditor(language.MeasureCoverageFor) {
+    editor(language.MeasureCoverageFor) {
         "concept".constant()
         brackets(true, "/", "/") {
             concept.concept.cell({ name })
@@ -210,14 +210,14 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         "complete?".constant()
         //TODO checkbox
     }
-//    conceptEditor(language.ModelsCoverageAssResult) {
+//    editor(language.ModelsCoverageAssResult) {
 //        //TODO
 //    }
-    conceptEditor(language.ModelsCoverageAssSummary) {
+    editor(language.ModelsCoverageAssSummary) {
         "coverage".constant()
         concept.coverageRatio.cell()
     }
-    conceptEditor(language.MutationEngine) {
+    editor(language.MutationEngine) {
         "# of mutations".constant()
         concept.numberOfMutations.cell()
         newLine()
@@ -228,41 +228,41 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.logs.vertical()
         }
     }
-    conceptEditor(language.MutationLog) {
+    editor(language.MutationLog) {
         "->".constant()
         concept.newNode.cell({ concept.untyped().getShortName() })
     }
-    conceptEditor(language.MuteEffect) {
+    editor(language.MuteEffect) {
         "mute".constant()
         noSpace()
         parentheses {
             concept.expr.cell()
         }
     }
-//    conceptEditor(language.OldNodeAnnotation) {
+//    editor(language.OldNodeAnnotation) {
 //        //TODO
 //    }
-    conceptEditor(language.NamedAssertRef) {
+    editor(language.NamedAssertRef) {
         concept.item.cell({ name })
     }
-    conceptEditor(language.NoneExpr) {
+    editor(language.NoneExpr) {
         "none".constant()
         noSpace()
         angleBrackets {
             concept.expr.cell()
         }
     }
-    conceptEditor(language.OptExpression) {
+    editor(language.OptExpression) {
         "some".constant()
         noSpace()
         angleBrackets {
             concept.expr.cell()
         }
     }
-    conceptEditor(language.OutputValue) {
+    editor(language.OutputValue) {
         concept.value.cell()
     }
-    conceptEditor(language.RealEqualsTestOp) {
+    editor(language.RealEqualsTestOp) {
         "real-equals".constant {
             iets3keyword()
         }
@@ -271,7 +271,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.decimals.cell()
         }
     }
-    conceptEditor(language.ReportTestItem) {
+    editor(language.ReportTestItem) {
         "report".constant {
             iets3keyword()
         }
@@ -279,10 +279,10 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         "=>".constant()
         //TODO model access
     }
-//    conceptEditor(language.StackTraceElement) {
+//    editor(language.StackTraceElement) {
 //        //TODO
 //    }
-    conceptEditor(language.StructuralCoverageAssQuery) {
+    editor(language.StructuralCoverageAssQuery) {
         foldable("structural coverage {...}") {
             "structural coverage".constant()
             "in".constant()
@@ -325,15 +325,15 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             }
         }
     }
-    conceptEditor(language.StructuralCoverageAssResult) {
+    editor(language.StructuralCoverageAssResult) {
         concept.concept.cell({ name })
         concept.comment.cell()
     }
-    conceptEditor(language.StructuralCoverageAssSummary) {
+    editor(language.StructuralCoverageAssSummary) {
         "coverage".constant()
         concept.coverageRatio.cell()
     }
-    conceptEditor(language.TestCase) {
+    editor(language.TestCase) {
         "test case".constant {
             iets3keyword()
         }
@@ -352,7 +352,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             }
         }
     }
-    conceptEditor(language.TestCoverageAssQuery) {
+    editor(language.TestCoverageAssQuery) {
         foldable("test coverage {...}") {
             "test coverage".constant()
             "in".constant()
@@ -378,10 +378,10 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             }
         }
     }
-//    conceptEditor(language.TestItemVectorCollection) {
+//    editor(language.TestItemVectorCollection) {
 //        //TODO
 //    }
-    conceptEditor(language.TestSuite) {
+    editor(language.TestSuite) {
         "test suite".constant()
         concept.name.cell()
         emptyLine()
@@ -389,11 +389,11 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         emptyLine()
         concept.contents.vertical()
     }
-    conceptEditor(language.ValidOutcome) {
+    editor(language.ValidOutcome) {
         "valid".constant()
         //TODO text color
     }
-    conceptEditor(language.VectorTestItem) {
+    editor(language.VectorTestItem) {
         "vectors".constant {
             iets3keyword()
         }

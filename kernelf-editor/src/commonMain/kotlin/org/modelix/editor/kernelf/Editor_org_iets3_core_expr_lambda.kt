@@ -2,13 +2,13 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_lambda) {
-    conceptEditor(language.ArgRef) {
+    editor(language.ArgRef) {
         concept.arg.cell({ name })
     }
-    conceptEditor(language.AssertExpr) {
+    editor(language.AssertExpr) {
         "assert".constant {
             iets3keyword()
         }
@@ -17,10 +17,10 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
             concept.expr.cell()
         }
     }
-//    conceptEditor(language.AttachedConstraint) {
+//    editor(language.AttachedConstraint) {
 //        //TODO
 //    }
-    conceptEditor(language.BlockExpression) {
+    editor(language.BlockExpression) {
         foldable("{...}") {
             curlyBrackets {
                 newLine()
@@ -31,24 +31,24 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
             }
         }
     }
-    conceptEditor(language.BindOp) {
+    editor(language.BindOp) {
         "bind".constant()
         noSpace()
         parentheses {
             concept.args.horizontal(",")
         }
     }
-    conceptEditor(language.CapturedValue) {
+    editor(language.CapturedValue) {
         "!!!user objects are not supported!!!".constant()
     }
-    conceptEditor(language.ExecOp) {
+    editor(language.ExecOp) {
         "exec".constant()
         noSpace()
         parentheses {
             concept.args.horizontal(",")
         }
     }
-    conceptEditor(language.FunctionArgument) {
+    editor(language.FunctionArgument) {
         concept.name.cell()
         noSpace()
         optional {
@@ -56,14 +56,14 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
             concept.type.cell()
         }
     }
-    conceptEditor(language.FunctionStyleExecOp) {
+    editor(language.FunctionStyleExecOp) {
         concept.`fun`.cell()
         noSpace()
         parentheses {
             concept.args.horizontal(",")
         }
     }
-    conceptEditor(language.FunctionType) {
+    editor(language.FunctionType) {
         parentheses {
             concept.argumentTypes.horizontal(",")
             "=>".constant()
@@ -73,12 +73,12 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
             concept.returnType.cell()
         }
     }
-    conceptEditor(language.FunResExpr) {
+    editor(language.FunResExpr) {
         "res".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.LambdaArg) {
+    editor(language.LambdaArg) {
         concept.name.cell()
         noSpace()
         optional {
@@ -86,17 +86,17 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
             concept.type.cell()
         }
     }
-    conceptEditor(language.LambdaArgRef) {
+    editor(language.LambdaArgRef) {
         concept.arg.cell({ name })
     }
-    conceptEditor(language.LambdaExpression) {
+    editor(language.LambdaExpression) {
         brackets(true, "|", "|") {
             concept.args.horizontal(",")
             "=>".constant()
             concept.expression.cell()
         }
     }
-    conceptEditor(language.LocalVarDeclExpr) {
+    editor(language.LocalVarDeclExpr) {
         "var".constant {
             iets3keyword()
         }
@@ -111,18 +111,18 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
         "=".constant()
         concept.expr.cell()
     }
-    conceptEditor(language.LocalVarRef) {
+    editor(language.LocalVarRef) {
         concept.`var`.cell({ name })
     }
-    conceptEditor(language.ShortLambdaExpression) {
+    editor(language.ShortLambdaExpression) {
         brackets(true, "|", "|") {
             concept.expression.cell()
         }
     }
-    conceptEditor(language.ShortLambdaItExpression) {
+    editor(language.ShortLambdaItExpression) {
         "it".constant()
     }
-    conceptEditor(language.ValExpression) {
+    editor(language.ValExpression) {
         "val".constant {
             iets3keyword()
         }
@@ -137,10 +137,10 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
         "=".constant()
         concept.expr.cell()
     }
-    conceptEditor(language.ValRef) {
+    editor(language.ValRef) {
         concept.`val`.cell({ name })
     }
-    conceptEditor(language.ValValueInContractExpr) {
+    editor(language.ValValueInContractExpr) {
         "it".constant()
     }
 }

@@ -8,6 +8,7 @@ import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.*
 
+@Deprecated("use editor(...)")
 fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.conceptEditor(concept: ConceptT, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit): ConceptEditor<NodeT, ConceptT> {
     return editor(concept, body)
 }

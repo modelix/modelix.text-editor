@@ -6,14 +6,14 @@ import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.base.N_IRef
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
     val abstractMinMaxAliases = mapOf(
         language.MinExpression to "min",
         language.MaxExpression to "max"
     )
-    conceptEditor(language.AbstractMinMaxExpression) {
+    editor(language.AbstractMinMaxExpression) {
         val alias = abstractMinMaxAliases[concept]
             ?: "Unknown MinMaxExpression ${concept.untyped().getLongName()}"
         alias.constant()
@@ -22,22 +22,22 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.values.horizontal(",")
         }
     }
-    conceptEditor(language.AlternativesExpression) {
+    editor(language.AlternativesExpression) {
         "alt".constant{
             iets3keyword()
         }
         //TODO custom OpeningBracketCell
         concept.alternatives.vertical()
     }
-    conceptEditor(language.AltOption) {
+    editor(language.AltOption) {
         concept.`when`.cell()
         "=>".constant()
         concept.then.cell()
     }
-    conceptEditor(language.AlwaysValue) {
+    editor(language.AlwaysValue) {
         "always".constant()
     }
-    conceptEditor(language.AttemptType) {
+    editor(language.AttemptType) {
         "attempt".constant {
             iets3keyword()
         }
@@ -51,7 +51,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         }
     }
-    conceptEditor(language.BangOp) {
+    editor(language.BangOp) {
         concept.expr.cell()
         noSpace()
         "!".constant()
@@ -82,13 +82,13 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
     binaryExpressionSymbols.implement(language.OptionOrExpression) { "?:" }
     binaryExpressionSymbols.implement(L_org_iets3_core_expr_lambda.FunCompose) { ":o:" }
 
-    conceptEditor(language.BinaryExpression) {
+    editor(language.BinaryExpression) {
         val symbol = binaryExpressionSymbols(concept)
         concept.left.cell()
         symbol.constant()
         concept.right.cell()
     }
-    conceptEditor(language.CastExpression) {
+    editor(language.CastExpression) {
         "cast".constant {
             iets3keyword()
         }
@@ -101,7 +101,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.expr.cell()
         }
     }
-    conceptEditor(language.CheckTypeConstraintsExpr) {
+    editor(language.CheckTypeConstraintsExpr) {
         "check".constant {
             iets3keyword()
         }
@@ -115,14 +115,14 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.expr.cell()
         }
     }
-    conceptEditor(language.ColonCast) {
+    editor(language.ColonCast) {
         concept.expr.cell()
         noSpace()
         ":".constant()
         noSpace()
         concept.type.cell()
     }
-    conceptEditor(language.Contract) {
+    editor(language.Contract) {
         "where".constant {
             iets3keyword()
         }
@@ -130,17 +130,17 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.items.vertical()
         }
     }
-    conceptEditor(language.ContractItem) {
+    editor(language.ContractItem) {
         "".constant()
     }
-    conceptEditor(language.ConvenientBoolean) {
+    editor(language.ConvenientBoolean) {
         concept.value.cell()
     }
-    conceptEditor(language.ConvenientValueCond) {
+    editor(language.ConvenientValueCond) {
         "if".constant()
         concept.expr.cell()
     }
-    conceptEditor(language.DefaultValueExpression) {
+    editor(language.DefaultValueExpression) {
         "default".constant {
             iets3keyword()
         }
@@ -149,23 +149,23 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.type.cell()
         }
     }
-    conceptEditor(language.DeRefTarget) {
+    editor(language.DeRefTarget) {
         "deref".constant()
     }
-    conceptEditor(language.DotExpression) {
+    editor(language.DotExpression) {
         concept.expr.cell()
         noSpace()
         ".".constant()
         noSpace()
         concept.target.cell()
     }
-    conceptEditor(language.EmptyExpression) {
+    editor(language.EmptyExpression) {
         "".constant()
     }
-    conceptEditor(language.EmptyType) {
+    editor(language.EmptyType) {
         "emptytype".constant()
     }
-    conceptEditor(language.EmptyValue) {
+    editor(language.EmptyValue) {
         "empty".constant()
         noSpace()
         optional {
@@ -174,7 +174,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         }
     }
-    conceptEditor(language.ErrorExpression) {
+    editor(language.ErrorExpression) {
         "error".constant {
             iets3keyword()
         }
@@ -183,13 +183,13 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.error.cell()
         }
     }
-    conceptEditor(language.ErrorLiteral) {
+    editor(language.ErrorLiteral) {
         concept.name.cell()
     }
-    conceptEditor(language.ErrorTarget) {
+    editor(language.ErrorTarget) {
         "err".constant()
     }
-    conceptEditor(language.FailExpr) {
+    editor(language.FailExpr) {
         "fail".constant {
             iets3keyword()
         }
@@ -209,21 +209,21 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.contextExpression.cell()
         }
     }
-    conceptEditor(language.GenericErrorType) {
+    editor(language.GenericErrorType) {
         "error".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.HasValueOp) {
+    editor(language.HasValueOp) {
         "hasValue".constant()
     }
-    conceptEditor(language.IfElseSection) {
+    editor(language.IfElseSection) {
         "else".constant {
             iets3keyword()
         }
         concept.expr.cell()
     }
-    conceptEditor(language.IfExpression) {
+    editor(language.IfExpression) {
         "if".constant {
             iets3keyword()
         }
@@ -236,17 +236,17 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.elseSection.cell()
         }
     }
-    conceptEditor(language.ImplicitValidityValExpr) {
+    editor(language.ImplicitValidityValExpr) {
         "it".constant()
     }
-    conceptEditor(language.InlineMessage) {
+    editor(language.InlineMessage) {
         "message".constant()
         noSpace()
         squareBrackets {
             concept.text.cell()
         }
     }
-    conceptEditor(language.Invariant) {
+    editor(language.Invariant) {
         "inv".constant {
             iets3keyword()
         }
@@ -262,12 +262,12 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
     ISingleSymbolRef_getSymbolName.implement(C_ISingleSymbolRef) { node ->
         ((node as? N_IRef)?.target() as? N_INamedConcept)?.name ?: "<unnamed>"
     }
-    conceptEditor(language.ISingleSymbolRef) {
+    editor(language.ISingleSymbolRef) {
         withNode {
             node.getSymbolName().constant()
         }
     }
-    conceptEditor(language.IsSomeExpression) {
+    editor(language.IsSomeExpression) {
         "isSome".constant {
             iets3keyword()
         }
@@ -280,28 +280,28 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.optionalName.cell()
         }
     }
-    conceptEditor(language.JoinType) {
+    editor(language.JoinType) {
         "join".constant()
         noSpace()
         angleBrackets {
             concept.types.horizontal(",")
         }
     }
-    conceptEditor(language.LogicalNotExpression) {
+    editor(language.LogicalNotExpression) {
         "!".constant()
         noSpace()
         concept.expr.cell()
     }
-    conceptEditor(language.MakeRefTarget) {
+    editor(language.MakeRefTarget) {
         "ref".constant()
     }
-    conceptEditor(language.MessageValueType) {
+    editor(language.MessageValueType) {
         "message".constant()
     }
-    conceptEditor(language.NeverValue) {
+    editor(language.NeverValue) {
         "never".constant()
     }
-    conceptEditor(language.NoneLiteral) {
+    editor(language.NoneLiteral) {
         "none".constant {
             iets3keyword()
         }
@@ -312,22 +312,22 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         }
     }
-    conceptEditor(language.NoneType) {
+    editor(language.NoneType) {
         "none".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.OkTarget) {
+    editor(language.OkTarget) {
         "ok".constant()
     }
-    conceptEditor(language.OneOfTarget) {
+    editor(language.OneOfTarget) {
         "oneOf".constant()
         noSpace()
         squareBrackets {
             concept.values.horizontal(",")
         }
     }
-    conceptEditor(language.OperatorGroup) {
+    editor(language.OperatorGroup) {
         "join".constant {
             iets3keyword()
         }
@@ -345,12 +345,12 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         language.OrTag to "||",
         language.PlusTag to "+"
     )
-    conceptEditor(language.OperatorTag) {
+    editor(language.OperatorTag) {
         val symbol = operatorTagSymbols[concept]
             ?: "Unknown operator tag ${concept.untyped().getLongName()}"
         symbol.constant()
     }
-    conceptEditor(language.OptionType) {
+    editor(language.OptionType) {
         "opt".constant {
             iets3keyword()
         }
@@ -359,12 +359,12 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.baseType.cell()
         }
     }
-    conceptEditor(language.ParensExpression) {
+    editor(language.ParensExpression) {
         parentheses {
             concept.expr.cell()
         }
     }
-    conceptEditor(language.PlainConstraint) {
+    editor(language.PlainConstraint) {
         concept.warning.flagCell("warning")
         concept.expr.cell()
         optional {
@@ -372,7 +372,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.err.cell()
         }
     }
-    conceptEditor(language.Postcondition) {
+    editor(language.Postcondition) {
         "post".constant {
             iets3keyword()
         }
@@ -383,7 +383,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.err.cell()
         }
     }
-    conceptEditor(language.Precondition) {
+    editor(language.Precondition) {
         "pre".constant {
             iets3keyword()
         }
@@ -394,18 +394,18 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.err.cell()
         }
     }
-    conceptEditor(language.PrimitiveType) {
+    editor(language.PrimitiveType) {
         concept.alias().constant {
             iets3type()
         }
     }
-    conceptEditor(language.ProgramLocationOp) {
+    editor(language.ProgramLocationOp) {
         "url".constant()
     }
-    conceptEditor(language.ProgramLocationType) {
+    editor(language.ProgramLocationType) {
         "loc".constant()
     }
-    conceptEditor(language.RangeTarget) {
+    editor(language.RangeTarget) {
         "inRange".constant()
         noSpace()
         concept.lowerExcluding.booleanCell("]", "[")
@@ -418,10 +418,10 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         noSpace()
         concept.upperExcluding.booleanCell("[", "]")
     }
-//    conceptEditor(language.ReductionInspector) {
+//    editor(language.ReductionInspector) {
 //        //TODO
 //    }
-    conceptEditor(language.ReferenceType) {
+    editor(language.ReferenceType) {
         "ref".constant {
             iets3keyword()
         }
@@ -430,16 +430,16 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.baseType.cell()
         }
     }
-//    conceptEditor(language.Revealer) {
+//    editor(language.Revealer) {
 //        //TODO
 //    }
-    conceptEditor(language.RevealerThis) {
+    editor(language.RevealerThis) {
         "revealed".constant()
     }
-//    conceptEditor(language.SimpleExpressionValueInspector) {
+//    editor(language.SimpleExpressionValueInspector) {
 //        //TODO
 //    }
-    conceptEditor(language.SomeValExpr) {
+    editor(language.SomeValExpr) {
         concept.someQuery.cell(presentation = {
             expr.read {exprNode ->
                 if (exprNode == null) {
@@ -454,14 +454,14 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         })
     }
-    conceptEditor(language.SpecificErrorType) {
+    editor(language.SpecificErrorType) {
         "error".constant()
         noSpace()
         angleBrackets {
             concept.error.cell()
         }
     }
-    conceptEditor(language.SuccessExpression) {
+    editor(language.SuccessExpression) {
         "success".constant {
             iets3keyword()
         }
@@ -470,27 +470,27 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.expr.cell()
         }
     }
-    conceptEditor(language.SuccessType) {
+    editor(language.SuccessType) {
         "success".constant()
         noSpace()
         angleBrackets {
             concept.baseType.cell()
         }
     }
-    conceptEditor(language.SuccessValueExpr) {
+    editor(language.SuccessValueExpr) {
         concept.`try`.cell({name})
     }
-    conceptEditor(language.ThisExpression) {
+    editor(language.ThisExpression) {
         "this".constant {
             iets3keyword()
         }
     }
-    conceptEditor(language.TracerExpression) {
+    editor(language.TracerExpression) {
         squareBrackets {
             concept.traced.cell()
         }
     }
-    conceptEditor(language.TryErrorClause) {
+    editor(language.TryErrorClause) {
         "error".constant {
             iets3keyword()
         }
@@ -503,7 +503,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             }
         }
     }
-    conceptEditor(language.TryExpression) {
+    editor(language.TryExpression) {
         "try".constant {
             iets3keyword()
         }
@@ -519,36 +519,36 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
             concept.errorClauses.vertical()
         }
     }
-    conceptEditor(language.TrySuccessClause) {
+    editor(language.TrySuccessClause) {
         "=>".constant()
         concept.expr.cell()
     }
-    conceptEditor(language.TupleAccessExpr) {
+    editor(language.TupleAccessExpr) {
         concept.tuple.cell()
         noSpace()
         squareBrackets {
             concept.index.cell()
         }
     }
-    conceptEditor(language.TupleType) {
+    editor(language.TupleType) {
         squareBrackets {
             concept.elementTypes.horizontal(",")
         }
     }
-    conceptEditor(language.TupleValue) {
+    editor(language.TupleValue) {
         squareBrackets {
             concept.values.horizontal(",")
         }
     }
-    conceptEditor(language.UnaryMinusExpression) {
+    editor(language.UnaryMinusExpression) {
         "-".constant()
         noSpace()
         concept.expr.cell()
     }
-    conceptEditor(language.ValidityType) {
+    editor(language.ValidityType) {
         "validity".constant()
     }
-    conceptEditor(language.VoidType) {
+    editor(language.VoidType) {
         "void".constant()
     }
 }

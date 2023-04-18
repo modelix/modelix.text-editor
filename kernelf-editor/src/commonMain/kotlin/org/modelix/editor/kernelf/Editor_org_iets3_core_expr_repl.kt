@@ -2,7 +2,7 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.repl.L_org_iets3_core_expr_repl
 import org.modelix.aspects.languageAspects
-import org.modelix.editor.conceptEditor
+import org.modelix.editor.editor
 
 val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl) {
     val borderCellStyles = mapOf(
@@ -11,41 +11,41 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
         language.RightBorderCellStyle to "right border",
         language.TopBorderCellStyle to "top border"
     )
-    conceptEditor(language.BorderCellStyle) {
+    editor(language.BorderCellStyle) {
         val alias = borderCellStyles[concept]
             ?: "Unknown BorderCellStyle: ${concept.untyped().getLongName()}"
         alias.constant()
         concept.width.cell()
     }
-//    conceptEditor(language.Cell) {
+//    editor(language.Cell) {
 //        //TODO
 //    }
-    conceptEditor(language.CellArg) {
+    editor(language.CellArg) {
         concept.name.cell()
         noSpace()
         optional {
             concept.type.cell()
         }
     }
-    conceptEditor(language.CellArgRef) {
+    editor(language.CellArgRef) {
         concept.arg.cell({ name })
     }
-    conceptEditor(language.CellConstraint) {
+    editor(language.CellConstraint) {
         "type:".constant()
         concept.type.cell()
         newLine()
         "where".constant()
         concept.constraint.cell()
     }
-    conceptEditor(language.CellConstraintIt) {
+    editor(language.CellConstraintIt) {
         "it".constant()
     }
-    conceptEditor(language.CellLabel) {
+    editor(language.CellLabel) {
         concept.name.cell()
         noSpace()
         ":".constant()
     }
-    conceptEditor(language.CoordCellRef) {
+    editor(language.CoordCellRef) {
         "$".constant()
         noSpace()
         optional {
@@ -56,22 +56,22 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
         concept.cell.cell()
         //TODO argList if needActuals
     }
-//    conceptEditor(language.DefaultEntry) {
+//    editor(language.DefaultEntry) {
 //        //TODO
 //    }
     val fontStyles = mapOf(
         language.FontBoldStyle to "font-bold"
     )
-    conceptEditor(language.FontStyle) {
+    editor(language.FontStyle) {
         val alias = fontStyles[concept] ?: "Unknown font style: ${concept.untyped().getLongName()}"
         alias.constant()
     }
-    conceptEditor(language.LabelExpression) {
+    editor(language.LabelExpression) {
         "'".constant()
         noSpace()
         concept.text.cell()
     }
-    conceptEditor(language.MakeListExpr) {
+    editor(language.MakeListExpr) {
         "makeList".constant()
         noSpace()
         squareBrackets {
@@ -82,7 +82,7 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
             concept.to.cell()
         }
     }
-    conceptEditor(language.MakeRecordExpr) {
+    editor(language.MakeRecordExpr) {
         "makeRecord".constant()
         noSpace()
         angleBrackets {
@@ -97,35 +97,35 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
             concept.to.cell()
         }
     }
-    conceptEditor(language.NamedCellRef) {
+    editor(language.NamedCellRef) {
         concept.label.cell({ name })
         //TODO argList if needActuals
     }
-    conceptEditor(language.NamedSheetFinder) {
+    editor(language.NamedSheetFinder) {
         concept.sheet.cell({ name })
     }
-    conceptEditor(language.QuoteExpr) {
+    editor(language.QuoteExpr) {
         "quote".constant()
         noSpace()
         parentheses {
             concept.cell.cell()
         }
     }
-//    conceptEditor(language.REPL) {
+//    editor(language.REPL) {
 //        //TODO
 //    }
-//    conceptEditor(language.ReplEntryRef) {
+//    editor(language.ReplEntryRef) {
 //        //TODO
 //    }
-    conceptEditor(language.ReplEntryRefByName) {
+    editor(language.ReplEntryRefByName) {
         concept.entry.cell({ optionalName }) {
             textColor("blue")
         }
     }
-//    conceptEditor(language.Sheet) {
+//    editor(language.Sheet) {
 //        //TODO
 //    }
-    conceptEditor(language.SheetEmbedExpr) {
+    editor(language.SheetEmbedExpr) {
         ifEmpty(concept.sheet) {
             "new sheet from".constant {
                 iets3keyword()
@@ -147,7 +147,7 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
             concept.sheet.cell()
         }
     }
-    conceptEditor(language.SheetTestItem) {
+    editor(language.SheetTestItem) {
         ifEmpty(concept.sheet) {
             "new sheet will be".constant()
             concept.cols.cell()
@@ -163,17 +163,17 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
             concept.sheet.cell()
         }
     }
-    conceptEditor(language.SheetType) {
+    editor(language.SheetType) {
         "sheet".constant()
         noSpace()
         angleBrackets {
             concept.template.cell({ name })
         }
     }
-//    conceptEditor(language.TopLevelSheet) {
+//    editor(language.TopLevelSheet) {
 //        //TODO
 //    }
-    conceptEditor(language.UpwardsSheetFinder) {
+    editor(language.UpwardsSheetFinder) {
         "..".constant()
     }
 }
