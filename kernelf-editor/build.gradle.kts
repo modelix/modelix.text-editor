@@ -38,7 +38,7 @@ kotlin {
                 }
             }
         }
-        binaries.executable()
+        binaries.library()
         nodejs {
             testTask {
                 useMocha {
@@ -129,7 +129,7 @@ fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
 }
 
 val fixSourceMaps by tasks.registering {
-    dependsOn("jsDevelopmentExecutableCompileSync")
+    dependsOn("jsDevelopmentLibraryCompileSync")
     doLast {
 //        fixSourceMap(
 //            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
@@ -154,6 +154,6 @@ val fixSourceMaps by tasks.registering {
 
     }
 }
-tasks.named("jsBrowserDevelopmentWebpack") {
+tasks.named("jsBrowserDevelopmentLibraryDistribution") {
     dependsOn(fixSourceMaps)
 }

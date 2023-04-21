@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { KernelfApiJS, org } from 'kernelf-editor';
+import { KernelfApiJS, org } from 'modelix.text-editor-kernelf-editor';
 import Model_iets3_strings from "../../assets/test.in.expr.os.strings@tests.json";
 import Model_iets3_base from "../../assets/test.in.expr.os.base@tests.json";
 import {N_Module} from "../../gen/L_org_modelix_model_repositoryconcepts";

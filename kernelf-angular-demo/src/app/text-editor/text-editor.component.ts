@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { KernelfApiJS, org } from 'kernelf-editor';
+import { KernelfApiJS, org } from 'modelix.text-editor-kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
@@ -30,9 +30,12 @@ export class TextEditorComponent implements OnInit {
 
   ngAfterViewInit(){
     if (this.editorContainer) {
-      let dom = KernelfApiJS.renderAndUpdateNodeAsDom(this.getUnwrappedNode());
-      let nativeElement: HTMLElement = this.editorContainer.nativeElement;
-      nativeElement.appendChild(dom);
+      let unwrappedNode = this.getUnwrappedNode();
+      if (unwrappedNode) {
+        let dom = KernelfApiJS.renderAndUpdateNodeAsDom(unwrappedNode);
+        let nativeElement: HTMLElement = this.editorContainer.nativeElement;
+        nativeElement.appendChild(dom);
+      }
     }
   }
 
