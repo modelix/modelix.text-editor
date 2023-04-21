@@ -1,3 +1,4 @@
 <div>
   <app-explorer-module *ngFor="let module of getModules()" [node]="module"></app-explorer-module>
+  <div *ngIf="getModules().length == 0" ><i>No modules found</i></div>
 </div>
