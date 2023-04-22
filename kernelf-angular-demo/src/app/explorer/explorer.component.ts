@@ -9,7 +9,8 @@ import {
 import {ITypedNode, LanguageRegistry} from "@modelix/ts-model-api";
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from "@angular/material/tree";
-
+import {SelectionChange} from '@angular/cdk/collections';
+import {BehaviorSubject} from "rxjs";
 
 @Component({
   selector: 'app-explorer',
@@ -20,13 +21,35 @@ export class ExplorerComponent implements OnInit {
 
   @Input()
   public node: any | undefined; // org.modelix.model.api.INode
+  private observableChildren: Map<ITypedNode, BehaviorSubject<ITypedNode[]>> = new Map()
 
   treeControl: NestedTreeControl<ITypedNode> = new NestedTreeControl<ITypedNode>((node: ITypedNode) => {
-    return node.unwrap().getAllChildren().map(child => LanguageRegistry.INSTANCE.wrapNode(child));
+    let observable = this.observableChildren.get(node)
+    if (!observable) {
+      observable = new BehaviorSubject<ITypedNode[]>(this.getVisibleChildren(node))
+      this.observableChildren.set(node, observable)
+    }
+    return observable
   });
   dataSource: MatTreeNestedDataSource<ITypedNode> = new MatTreeNestedDataSource<ITypedNode>();
 
   constructor() {
+    this.treeControl.expansionModel.changed.subscribe(change => {
+      for (let node of change.added) {
+        let observable = this.observableChildren.get(node)
+        if (observable) {
+          observable.next(this.getVisibleChildren(node))
+        }
+      }
+    });
+  }
+
+  public getVisibleChildren(node: ITypedNode): ITypedNode[] {
+    if (this.isExpanded(node)) {
+      return node.unwrap().getAllChildren().map(child => LanguageRegistry.INSTANCE.wrapNode(child));
+    } else {
+      return [];
+    }
   }
 
   ngOnInit(): void {
@@ -40,6 +63,10 @@ export class ExplorerComponent implements OnInit {
         this.dataSource.data = [LanguageRegistry.INSTANCE.wrapNode(KernelfApiJS.getNodeConverter().nodeToJs(this.node))]
       })
     }
+  }
+
+  public isExpanded(node: ITypedNode): boolean {
+    return this.treeControl.isExpanded(node)
   }
 
   public getModules(): Array<N_Module> {
