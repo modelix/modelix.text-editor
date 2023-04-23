@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from "@angular/material/button";
+import {AngularSplitModule} from "angular-split";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {MatButtonModule} from "@angular/material/button";
     FormsModule,
     MatTreeModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    AngularSplitModule
   ],
   providers: [],
   bootstrap: [AppComponent]

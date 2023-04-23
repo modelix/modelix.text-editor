@@ -56,8 +56,8 @@ export class TextEditorComponent implements OnInit {
   }
 
   public getJSNode(): INodeJS {
-    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return this.node as INodeJS
-    return org.modelix.model.api.JSNodeConverter.nodeToJs(this.getUnwrappedNode())
+    if (KernelfApiJS.getNodeConverter().isJsNode(this.node)) return this.node as INodeJS
+    return KernelfApiJS.getNodeConverter().nodeToJs(this.getUnwrappedNode())
   }
 
   public getTypedNode(): ITypedNode {
