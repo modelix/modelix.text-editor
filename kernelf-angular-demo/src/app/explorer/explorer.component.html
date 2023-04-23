@@ -3,7 +3,7 @@
     <!-- This is the tree node template for leaf nodes -->
     <!-- There is inline padding applied to this node using styles.
       This padding value depends on the mat-icon-button width. -->
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle (click)="editNode(node)">
       {{ getLabel(node) }}
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -25,6 +25,6 @@
       </div>
     </mat-nested-tree-node>
   </mat-tree>
-
-
 </div>
+
+<app-text-editor *ngIf="selectedNode" [node]="selectedNode"></app-text-editor>

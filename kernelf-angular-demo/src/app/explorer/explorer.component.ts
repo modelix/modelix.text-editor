@@ -22,6 +22,7 @@ export class ExplorerComponent implements OnInit {
   @Input()
   public node: any | undefined; // org.modelix.model.api.INode
   private observableChildren: Map<ITypedNode, BehaviorSubject<ITypedNode[]>> = new Map()
+  selectedNode: ITypedNode | undefined
 
   treeControl: NestedTreeControl<ITypedNode> = new NestedTreeControl<ITypedNode>((node: ITypedNode) => {
     let observable = this.observableChildren.get(node)
@@ -79,5 +80,9 @@ export class ExplorerComponent implements OnInit {
 
   getLabel(node: ITypedNode): string {
     return KernelfApiJS.nodeToString(node)
+  }
+
+  editNode(node: ITypedNode) {
+    this.selectedNode = node
   }
 }

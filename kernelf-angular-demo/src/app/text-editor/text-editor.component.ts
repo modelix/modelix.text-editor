@@ -52,9 +52,7 @@ export class TextEditorComponent implements OnInit {
   }
 
   public getUnwrappedNode(): any {
-    if (this.node instanceof TypedNode) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node.node)
-    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node)
-    return this.node // INode
+    return KernelfApiJS.getNodeConverter().toINode(this.node)
   }
 
   public getJSNode(): INodeJS {
