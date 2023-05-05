@@ -16,12 +16,22 @@ import {
 })
 export class TextEditorComponent implements OnInit {
 
-  @Input()
-  public node!: any; // org.modelix.model.api.INode or TypedNode or INodeJS
-
   @ViewChild('editorContainer') editorContainer: ElementRef | undefined;
 
+  private nodeToLoad: any; // org.modelix.model.api.INode or TypedNode or INodeJS
+  private loadedNode: any;
+
   constructor() {
+  }
+
+  @Input()
+  set node(value: any) {
+    this.nodeToLoad = value;
+    this.updateEditor();
+  }
+
+  get node(): any {
+    return this.nodeToLoad;
   }
 
   ngOnInit(): void {
@@ -29,13 +39,19 @@ export class TextEditorComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    if (this.editorContainer) {
+    this.updateEditor();
+  }
+
+  private updateEditor() {
+    if (this.nodeToLoad !== this.loadedNode && this.editorContainer) {
       let unwrappedNode = this.getUnwrappedNode();
       if (unwrappedNode) {
         let dom = KernelfApiJS.renderAndUpdateNodeAsDom(unwrappedNode);
         let nativeElement: HTMLElement = this.editorContainer.nativeElement;
+        nativeElement.innerHTML = ""
         nativeElement.appendChild(dom);
       }
+      this.loadedNode = this.nodeToLoad;
     }
   }
 
