@@ -112,12 +112,11 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 var previousLeaf: Cell? = layoutable.cell
                 while (previousLeaf != null) {
                     val nextLeaf = previousLeaf.nextLeaf { it.isVisible() }
-                    val actions = collectActionsBetween(
-                        previousLeaf,
-                        nextLeaf
-                    ) { cellsFullyBetween, cellsEndingBetween, cellsBeginningBetween ->
-                        cellsFullyBetween.map { it.getProperty(CellActionProperties.insert) }
-                    }.filter { it.isApplicable() }
+                    val actions = getBordersBetween(previousLeaf.rightBorder(), nextLeaf?.leftBorder())
+                        .filter { it.isLeft }
+                        .mapNotNull { it.cell.getProperty(CellActionProperties.insert) }
+                        .distinct()
+                        .filter { it.isApplicable() }
                     // TODO resolve conflicts if multiple actions are applicable
                     val action = actions.firstOrNull()
                     if (action != null) {

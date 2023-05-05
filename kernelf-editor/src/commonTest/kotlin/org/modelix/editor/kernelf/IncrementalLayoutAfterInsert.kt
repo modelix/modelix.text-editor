@@ -1,53 +1,16 @@
 package org.modelix.editor.kernelf
 
-import jetbrains.mps.lang.core.N_INamedConcept
-import jetbrains.mps.lang.core.name
-import org.iets3.core.expr.base.C_MinusExpression
-import org.iets3.core.expr.base.C_ParensExpression
-import org.iets3.core.expr.base.C_PlusExpression
-import org.iets3.core.expr.base.N_ParensExpression
-import org.iets3.core.expr.simpleTypes.C_NumberLiteral
-import org.iets3.core.expr.simpleTypes.N_NumberLiteral
 import org.iets3.core.expr.tests.N_AssertTestItem
 import org.iets3.core.expr.tests.N_TestSuite
-import org.modelix.editor.CaretSelection
-import org.modelix.editor.Cell
-import org.modelix.editor.CodeCompletionParameters
-import org.modelix.editor.EditorComponent
-import org.modelix.editor.EditorEngine
-import org.modelix.editor.ICodeCompletionAction
-import org.modelix.editor.IncrementalBranch
-import org.modelix.editor.JSKeyboardEvent
-import org.modelix.editor.KeyLocation
-import org.modelix.editor.KnownKeys
-import org.modelix.editor.Modifiers
-import org.modelix.editor.PropertyCellReference
-import org.modelix.editor.collectActionsBetween
-import org.modelix.editor.commonAncestor
-import org.modelix.editor.descendants
-import org.modelix.editor.firstLeaf
-import org.modelix.editor.getSubstituteActions
-import org.modelix.editor.getVisibleText
-import org.modelix.editor.isVisible
-import org.modelix.editor.layoutable
-import org.modelix.editor.nextLeafs
-import org.modelix.editor.previousLeaf
-import org.modelix.editor.resolveNodeCell
-import org.modelix.editor.resolvePropertyCell
+import org.modelix.editor.*
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.ModelData
 import org.modelix.metamodel.descendants
 import org.modelix.metamodel.ofType
-import org.modelix.metamodel.setNew
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.untyped
-import org.modelix.metamodel.untypedReference
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.IBranch
 import org.modelix.model.api.PBranch
-import org.modelix.model.api.getDescendants
-import org.modelix.model.area.PArea
 import org.modelix.model.area.getArea
 import org.modelix.model.client.IdGenerator
 import org.modelix.model.repositoryconcepts.N_Module
@@ -57,7 +20,6 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 open class IncrementalLayoutAfterInsert {
     lateinit var assertTestItem: N_AssertTestItem
