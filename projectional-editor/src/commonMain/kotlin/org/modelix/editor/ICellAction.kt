@@ -60,8 +60,27 @@ class SideTransformNode(val before: Boolean, val node: INode) : ICodeCompletionA
 }
 
 fun Cell.getSubstituteActions() = collectSubstituteActionsBetween(previousLeaf { it.isVisible() }, firstLeaf()).distinct() // TODO non-leafs can also be visible (text cells can have children)
-fun Cell.getActionsBefore() = collectTransformActionsBetween(previousLeaf { it.isVisible() }, firstLeaf()).distinct() // TODO non-leafs can also be visible (text cells can have children)
-fun Cell.getActionsAfter() = collectTransformActionsBetween(lastLeaf(), nextLeaf { it.isVisible() }).distinct() // TODO non-leafs can also be visible (text cells can have children)
+fun Cell.getActionsBefore(): Sequence<ICodeCompletionActionProvider> {
+    val stopAt = previousLeaf { it.isVisible() }?.rightBorder()
+    return firstLeaf().leftBorder()
+        .allPrevious()
+        .takeWhile { it != stopAt }
+        .takeUnlessPrevious { it.isLeft && it.cell.getProperty(CommonCellProperties.onNewLine) }
+        .mapNotNull { it.cell.getProperty(if (it.isLeft) CellActionProperties.transformBefore else CellActionProperties.transformAfter) }
+        .distinct()
+    // TODO non-leafs can also be visible (text cells can have children)
+}
+
+fun Cell.getActionsAfter(): Sequence<ICodeCompletionActionProvider> {
+    val stopAt = nextLeaf { it.isVisible() }?.leftBorder()
+    return lastLeaf().rightBorder()
+        .allNext()
+        .takeWhile { it != stopAt }
+        .takeWhile { !(it.isLeft && it.cell.getProperty(CommonCellProperties.onNewLine)) }
+        .mapNotNull { it.cell.getProperty(if (it.isLeft) CellActionProperties.transformBefore else CellActionProperties.transformAfter) }
+        .distinct()
+    // TODO non-leafs can also be visible (text cells can have children)
+}
 
 private fun collectSubstituteActionsBetween(leftLeaf: Cell?, rightLeaf: Cell?): Sequence<ICodeCompletionActionProvider> {
     return getBordersBetween(leftLeaf?.rightBorder(), rightLeaf?.leftBorder())
@@ -86,6 +105,9 @@ fun getBordersBetween(left: CellBorder?, right: CellBorder?): Sequence<CellBorde
 
 data class CellBorder(val cell: Cell, val isLeft: Boolean) {
     val isRight: Boolean get() = !isLeft
+
+    fun allPrevious() = generateSequence(this) { it.previous() }
+    fun allNext() = generateSequence(this) { it.next() }
 
     fun previous(): CellBorder? {
         if (isLeft) {
