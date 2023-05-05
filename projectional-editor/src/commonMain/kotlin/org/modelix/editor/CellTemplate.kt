@@ -62,7 +62,7 @@ abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         }.flatten()
     }
 
-    fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
+    open fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
         return if (this is IGrammarSymbol) {
             sequenceOf(this)
         } else {
@@ -240,6 +240,10 @@ class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
 
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return null // skip optional. Don't search in children.
+    }
+
+    override fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
+        return emptySequence()
     }
 }
 
