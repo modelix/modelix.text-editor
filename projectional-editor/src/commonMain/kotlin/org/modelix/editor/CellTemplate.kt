@@ -435,6 +435,7 @@ class InsertSubstitutionPlaceholderAction(
 
     override fun execute(editor: EditorComponent) {
         editorState.substitutionPlaceholderPositions[ref] = SubstitutionPlaceholderPosition(index)
+        editorState.textReplacements.remove(PlaceholderCellReference(ref))
         editor.selectAfterUpdate {
             editor.resolveCell(PlaceholderCellReference(ref))
                 .firstOrNull()?.layoutable()?.let { CaretSelection(it, 0) }
