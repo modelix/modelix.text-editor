@@ -203,8 +203,22 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
     private fun replaceText(range: IntRange, replacement: String, editor: EditorComponent): Boolean {
         val oldText = layoutable.cell.getSelectableText() ?: ""
         val newText = oldText.replaceRange(range, replacement)
-        val actions = layoutable.cell.centerAlignedHierarchy().mapNotNull { it.getProperty(CellActionProperties.replaceText) }
-        for (action in actions) {
+
+        // complete immediately if there is a single matching action
+        val providers = layoutable.cell.getSubstituteActions()
+        val params = CodeCompletionParameters(editor, newText)
+        val actions = providers.flatMap { it.flattenApplicableActions(params) }.toList()
+        val matchingActions = actions
+            .filter { it.getMatchingText() == newText }
+            .applyShadowing()
+        val singleAction = matchingActions.singleOrNull()
+        if (singleAction != null) {
+            singleAction.execute(editor)
+            return true
+        }
+
+        val replaceTextActions = layoutable.cell.centerAlignedHierarchy().mapNotNull { it.getProperty(CellActionProperties.replaceText) }
+        for (action in replaceTextActions) {
             if (action.isValid(newText) && action.replaceText(editor, range, replacement, newText)) {
                 editor.selectAfterUpdate {
                     reResolveLayoutable(editor)?.let { CaretSelection(it, range.first + replacement.length) }
