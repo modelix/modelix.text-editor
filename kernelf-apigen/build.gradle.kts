@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         val modelixCoreVersion: String by rootProject
         classpath("org.modelix:model-api:$modelixCoreVersion")
-        classpath("com.charleskorn.kaml:kaml:0.48.0")
+        classpath("com.charleskorn.kaml:kaml:0.55.0")
     }
 }
 
