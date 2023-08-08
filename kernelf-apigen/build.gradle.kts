@@ -15,7 +15,7 @@ buildscript {
 plugins {
     kotlin("multiplatform")
     `maven-publish`
-    id("org.modelix.mps.build-tools") version "1.0.11"
+    id("org.modelix.mps.build-tools") version "1.1.0"
     id("org.modelix.model-api-gen")
 }
 
