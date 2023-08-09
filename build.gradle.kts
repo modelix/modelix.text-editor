@@ -1,9 +1,12 @@
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
+import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 
 plugins {
     `maven-publish`
     id("com.palantir.git-version") version "3.0.0"
     id("com.dorongold.task-tree") version "2.1.1"
-    kotlin("multiplatform") apply false
+    alias(coreLibs.plugins.kotlin.multiplatform) apply false
+    alias(coreLibs.plugins.kotlin.serialization) apply false
 }
 
 group = "org.modelix"
@@ -58,4 +61,11 @@ subprojects {
     if (!targetFile.exists() && sourceFile.exists()) {
         sourceFile.copyTo(targetFile)
     }
+}
+
+rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlugin::class.java) {
+    rootProject.the<YarnRootExtension>().yarnLockMismatchReport =
+        YarnLockMismatchReport.WARNING // NONE | FAIL
+    rootProject.the<YarnRootExtension>().reportNewYarnLock = false // true
+    rootProject.the<YarnRootExtension>().yarnLockAutoReplace = false // true
 }

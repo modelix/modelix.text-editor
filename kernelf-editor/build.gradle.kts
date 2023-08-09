@@ -7,7 +7,6 @@ buildscript {
         maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
     }
     dependencies {
-        val modelixCoreVersion: String by rootProject
     }
 }
 
@@ -15,11 +14,6 @@ plugins {
     kotlin("multiplatform")
     `maven-publish`
 }
-
-val modelixCoreVersion: String by rootProject
-val kotlinLoggingVersion: String by rootProject
-val kotlinCoroutinesVersion: String by rootProject
-val kotlinxHtmlVersion: String by rootProject
 
 val generatorOutputDir = file("src/commonMain/kotlin_gen")
 val tsGeneratorOutputDir = file("../kernelf-angular-demo/src/gen")
@@ -55,23 +49,23 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
+                implementation(libs.modelix.model.api.gen.runtime)
                 implementation(project(":projectional-editor"))
                 implementation(project(":language-aspects"))
                 implementation(project(":behavior-aspect"))
                 implementation(kotlin("stdlib-common"))
-                implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-                implementation("org.modelix:light-model-client:$modelixCoreVersion")
-                implementation("org.modelix:model-client:$modelixCoreVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
+                implementation(coreLibs.kotlin.logging)
+                implementation(coreLibs.kotlin.coroutines.core)
+                implementation(libs.modelix.light.model.client)
+                implementation(libs.modelix.model.client)
+                implementation(libs.kotlin.html)
                 implementation(project(":kernelf-apigen"))
             }
             kotlin.srcDir(generatorOutputDir)
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+                implementation(coreLibs.kotlin.coroutines.test)
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation(project(":kernelf-apigen"))
@@ -79,25 +73,25 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutinesVersion")
+                implementation(coreLibs.kotlin.coroutines.swing)
             }
         }
         val jvmTest by getting {
             dependencies {
-                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
+                implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
             }
         }
         val jsMain by getting {
             dependencies {
-                api("org.modelix:model-api:$modelixCoreVersion")
+                api(libs.modelix.model.api)
 
                 val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
                 if (localPath.exists()) {
                     implementation(npm("@modelix/ts-model-api", localPath))
                 } else {
-                    implementation(npm("@modelix/ts-model-api", modelixCoreVersion))
+                    implementation(npm("@modelix/ts-model-api", libs.versions.modelixCore.get()))
                 }
             }
         }
@@ -156,4 +150,12 @@ val fixSourceMaps by tasks.registering {
 }
 tasks.named("jsBrowserDevelopmentLibraryDistribution") {
     dependsOn(fixSourceMaps)
+}
+
+listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare", "jsNodeDevelopmentLibraryPrepare", "jsNodeProductionLibraryPrepare").forEach {
+    tasks.named(it) {
+        // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
+        dependsOn("jsDevelopmentLibraryCompileSync")
+        dependsOn("jsProductionLibraryCompileSync")
+    }
 }

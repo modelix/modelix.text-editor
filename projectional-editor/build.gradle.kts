@@ -3,14 +3,6 @@ plugins {
     `maven-publish`
 }
 
-val modelixCoreVersion: String by rootProject
-val modelixIncrementalVersion: String by rootProject
-val kotlinVersion: String by rootProject
-val kotlinCoroutinesVersion: String by rootProject
-val ktorVersion: String by rootProject
-val kotlinLoggingVersion: String by rootProject
-val kotlinxHtmlVersion: String by rootProject
-
 kotlin {
     jvm()
     js(IR) {
@@ -27,27 +19,27 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:model-api:$modelixCoreVersion")
-                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
+                implementation(libs.modelix.model.api)
+                implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("stdlib-common"))
-                implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutinesVersion")
-                api("org.modelix:incremental:$modelixIncrementalVersion")
-                api("org.jetbrains.kotlinx:kotlinx-html:$kotlinxHtmlVersion")
+                implementation(coreLibs.kotlin.logging)
+                implementation(coreLibs.kotlin.coroutines.core)
+                api(coreLibs.modelix.incremental)
+                api(libs.kotlin.html)
                 implementation(project(":language-aspects"))
                 implementation(project(":behavior-aspect"))
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$kotlinCoroutinesVersion")
+                implementation(coreLibs.kotlin.coroutines.test)
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-swing:$kotlinCoroutinesVersion")
+                implementation(coreLibs.kotlin.coroutines.swing)
             }
         }
         val jvmTest by getting {
