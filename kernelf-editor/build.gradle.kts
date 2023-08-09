@@ -151,3 +151,11 @@ val fixSourceMaps by tasks.registering {
 tasks.named("jsBrowserDevelopmentLibraryDistribution") {
     dependsOn(fixSourceMaps)
 }
+
+listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare", "jsNodeDevelopmentLibraryPrepare", "jsNodeProductionLibraryPrepare").forEach {
+    tasks.named(it) {
+        // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
+        dependsOn("jsDevelopmentLibraryCompileSync")
+        dependsOn("jsProductionLibraryCompileSync")
+    }
+}
