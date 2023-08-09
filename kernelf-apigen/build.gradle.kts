@@ -1,13 +1,10 @@
-import org.modelix.gradle.mpsbuild.MPSBuildSettings
-
 buildscript {
     repositories {
         mavenLocal()
         maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
     }
     dependencies {
-        val modelixCoreVersion: String by rootProject
-        classpath("org.modelix:model-api:$modelixCoreVersion")
+        classpath(libs.modelix.model.api)
         classpath("com.charleskorn.kaml:kaml:0.55.0")
     }
 }
@@ -15,14 +12,9 @@ buildscript {
 plugins {
     kotlin("multiplatform")
     `maven-publish`
-    id("org.modelix.mps.build-tools") version "1.1.0"
-    id("org.modelix.model-api-gen")
+    alias(libs.plugins.modelix.model.api.gen)
+    alias(coreLibs.plugins.modelix.mps.buildtools)
 }
-
-val modelixCoreVersion: String by rootProject
-val kotlinLoggingVersion: String by rootProject
-val kotlinCoroutinesVersion: String by rootProject
-val kotlinxHtmlVersion: String by rootProject
 
 val generatorOutputDir = buildDir.resolve("apigen").resolve("src_gen")
 val tsGeneratorOutputDir = file("../kernelf-angular-demo/src/gen")
@@ -43,7 +35,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
+                implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("stdlib-common"))
             }
             kotlin.srcDir(generatorOutputDir)

@@ -1,0 +1,14 @@
+[bundles]
+
+[plugins]
+modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "modelixCore" }
+
+[versions]
+modelixCore = "2.15.5"
+
+[libraries]
+modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
+modelix-model-api-gen-runtime = { group = "org.modelix", name = "model-api-gen-runtime", version.ref = "modelixCore" }
+modelix-light-model-client = { group = "org.modelix", name = "light-model-client", version.ref = "modelixCore" }
+modelix-model-client = { group = "org.modelix", name = "model-client", version.ref = "modelixCore" }
+kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.8.0"

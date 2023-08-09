@@ -3,14 +3,6 @@ plugins {
     `maven-publish`
 }
 
-val modelixCoreVersion: String by rootProject
-val modelixIncrementalVersion: String by rootProject
-val kotlinVersion: String by rootProject
-val kotlinCoroutinesVersion: String by rootProject
-val ktorVersion: String by rootProject
-val kotlinLoggingVersion: String by rootProject
-val kotlinxHtmlVersion: String by rootProject
-
 kotlin {
     jvm()
     js(IR) {
@@ -27,10 +19,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.modelix:model-api:$modelixCoreVersion")
-                implementation("org.modelix:model-api-gen-runtime:$modelixCoreVersion")
+                implementation(libs.modelix.model.api)
+                implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("stdlib-common"))
-                implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
+                implementation(coreLibs.kotlin.logging)
             }
         }
         val commonTest by getting {

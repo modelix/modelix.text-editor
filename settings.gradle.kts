@@ -1,18 +1,22 @@
 pluginManagement {
-    val kotlinVersion: String by settings
-    val modelixCoreVersion: String by settings
-    plugins {
-        kotlin("multiplatform") version kotlinVersion apply false
-        kotlin("plugin.serialization") version kotlinVersion apply false
-        id("org.modelix.model-api-gen") version modelixCoreVersion apply false
-    }
-    resolutionStrategy {
-    }
     repositories {
         mavenLocal()
         gradlePluginPortal()
         maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
         mavenCentral()
+    }
+    dependencyResolutionManagement {
+        repositories {
+            mavenLocal()
+            gradlePluginPortal()
+            maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
+            mavenCentral()
+        }
+        versionCatalogs {
+            create("coreLibs") {
+                from("org.modelix:core-version-catalog:2.15.5")
+            }
+        }
     }
 }
 
