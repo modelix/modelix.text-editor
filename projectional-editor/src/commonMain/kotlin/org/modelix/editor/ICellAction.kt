@@ -60,47 +60,93 @@ class SideTransformNode(val before: Boolean, val node: INode) : ICodeCompletionA
 }
 
 fun Cell.getSubstituteActions() = collectSubstituteActionsBetween(previousLeaf { it.isVisible() }, firstLeaf()).distinct() // TODO non-leafs can also be visible (text cells can have children)
-fun Cell.getActionsBefore() = collectInsertActionsBetween(previousLeaf { it.isVisible() }, firstLeaf()).distinct() // TODO non-leafs can also be visible (text cells can have children)
-fun Cell.getActionsAfter() = collectInsertActionsBetween(lastLeaf(), nextLeaf { it.isVisible() }).distinct() // TODO non-leafs can also be visible (text cells can have children)
-
-private fun Cell.collectSubstituteActionsBetween(leftLeaf: Cell?, rightLeaf: Cell?): Sequence<ICodeCompletionActionProvider> {
-    return collectActionsBetween(leftLeaf, rightLeaf) { cellsFullyBetween, cellsEndingBetween, cellsBeginningBetween ->
-        cellsFullyBetween.map { it.getProperty(CellActionProperties.substitute) } +
-        cellsBeginningBetween.map { it.getProperty(CellActionProperties.substitute) }
-    }
+fun Cell.getActionsBefore(): Sequence<ICodeCompletionActionProvider> {
+    val stopAt = previousLeaf { it.isVisible() }?.rightBorder()
+    return firstLeaf().leftBorder()
+        .allPrevious()
+        .takeWhile { it != stopAt }
+        .takeUnlessPrevious { it.isLeft && it.cell.getProperty(CommonCellProperties.onNewLine) }
+        .mapNotNull { it.cell.getProperty(if (it.isLeft) CellActionProperties.transformBefore else CellActionProperties.transformAfter) }
+        .distinct()
+    // TODO non-leafs can also be visible (text cells can have children)
 }
 
-private fun Cell.collectInsertActionsBetween(leftLeaf: Cell?, rightLeaf: Cell?): Sequence<ICodeCompletionActionProvider> {
-    return collectActionsBetween(leftLeaf, rightLeaf) { cellsFullyBetween, cellsEndingBetween, cellsBeginningBetween ->
-        cellsEndingBetween.map { it.getProperty(CellActionProperties.transformAfter) } +
-                cellsFullyBetween.flatMap { sequenceOf(
-                    it.getProperty(CellActionProperties.transformBefore),
-                    it.getProperty(CellActionProperties.transformAfter)
-                ) } +
-                cellsBeginningBetween.map { it.getProperty(CellActionProperties.transformBefore) }
-    }
+fun Cell.getActionsAfter(): Sequence<ICodeCompletionActionProvider> {
+    val stopAt = nextLeaf { it.isVisible() }?.leftBorder()
+    return lastLeaf().rightBorder()
+        .allNext()
+        .takeWhile { it != stopAt }
+        .takeWhile { !(it.isLeft && it.cell.getProperty(CommonCellProperties.onNewLine)) }
+        .mapNotNull { it.cell.getProperty(if (it.isLeft) CellActionProperties.transformBefore else CellActionProperties.transformAfter) }
+        .distinct()
+    // TODO non-leafs can also be visible (text cells can have children)
 }
 
-fun <T : Any> collectActionsBetween(
-    leftLeaf: Cell?,
-    rightLeaf: Cell?,
-    actionsAccessor: (
-        cellsFullyBetween: List<Cell>,
-        cellsEndingBetween: List<Cell>,
-        cellsBeginningBetween: List<Cell>,
-    ) -> List<T?>
-): Sequence<T> {
-    require(leftLeaf != null || rightLeaf != null) { "At least one cell is required. Both are null." }
-    val commonAncestor: Cell? = leftLeaf?.let { rightLeaf?.commonAncestor(it) }
-    val leafsBetween = if (leftLeaf != null && rightLeaf != null) {
-        leftLeaf.nextLeafs(false).takeWhile { it != rightLeaf }
-    } else if (leftLeaf != null) {
-        leftLeaf.nextLeafs(false)
+private fun collectSubstituteActionsBetween(leftLeaf: Cell?, rightLeaf: Cell?): Sequence<ICodeCompletionActionProvider> {
+    return getBordersBetween(leftLeaf?.rightBorder(), rightLeaf?.leftBorder())
+        .filter { it.isLeft }
+        .mapNotNull { it.cell.getProperty(CellActionProperties.substitute) }
+}
+
+private fun collectTransformActionsBetween(leftLeaf: Cell?, rightLeaf: Cell?): Sequence<ICodeCompletionActionProvider> {
+    return getBordersBetween(leftLeaf?.rightBorder(), rightLeaf?.leftBorder())
+        .mapNotNull { it.cell.getProperty(if (it.isLeft) CellActionProperties.transformBefore else CellActionProperties.transformAfter) }
+}
+
+fun getBordersBetween(left: CellBorder?, right: CellBorder?): Sequence<CellBorder> {
+    return if (left != null && right != null) {
+        generateSequence(left) { it.next() }.takeWhilePrevious { it != right }
+    } else if (left != null) {
+        generateSequence(left) { it.next() }
     } else {
-        rightLeaf!!.previousLeafs(false)
+        generateSequence(right) { it.previous() }
     }
-    val cellsFullyBetween = leafsBetween.map { leaf -> leaf.ancestors(true).takeWhile { it != commonAncestor } }.flatten()
-    val cellsEndingBetween = if (leftLeaf == null) emptySequence() else leftLeaf.ancestors(true).takeWhile { it != commonAncestor }
-    val cellsBeginningBetween = if (rightLeaf == null) emptySequence() else rightLeaf.ancestors(true).takeWhile { it != commonAncestor }
-    return actionsAccessor(cellsFullyBetween.toList(), cellsEndingBetween.toList(), cellsBeginningBetween.toList()).filterNotNull().asSequence()
 }
+
+data class CellBorder(val cell: Cell, val isLeft: Boolean) {
+    val isRight: Boolean get() = !isLeft
+
+    fun allPrevious() = generateSequence(this) { it.previous() }
+    fun allNext() = generateSequence(this) { it.next() }
+
+    fun previous(): CellBorder? {
+        if (isLeft) {
+            val previousSibling = cell.previousSibling()
+            if (previousSibling == null) {
+                val parent = cell.parent ?: return null
+                return parent.leftBorder()
+            } else {
+                return previousSibling.rightBorder()
+            }
+        } else {
+            val lastChild = cell.getChildren().lastOrNull()
+            if (lastChild == null) {
+                return cell.leftBorder()
+            } else {
+                return lastChild.rightBorder()
+            }
+        }
+    }
+
+    fun next(): CellBorder? {
+        if (isLeft) {
+            val firstChild = cell.getChildren().firstOrNull()
+            if (firstChild == null) {
+                return cell.rightBorder()
+            } else {
+                return firstChild.leftBorder()
+            }
+        } else {
+            val nextSibling = cell.nextSibling()
+            if (nextSibling == null) {
+                val parent = cell.parent ?: return null
+                return parent.rightBorder()
+            } else {
+                return nextSibling.leftBorder()
+            }
+        }
+    }
+}
+
+fun Cell.leftBorder() = CellBorder(this, true)
+fun Cell.rightBorder() = CellBorder(this, false)

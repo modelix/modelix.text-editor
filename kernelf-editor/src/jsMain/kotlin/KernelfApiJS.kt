@@ -6,16 +6,14 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
-import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.IncrementalJSDOMBuilder
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.kernelf.KernelfAPI
 import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
-import org.modelix.model.api.IBranchListener
-import org.modelix.model.api.INode
-import org.modelix.model.api.ITree
-import org.modelix.model.api.deepUnwrap
+import org.modelix.model.api.*
+import org.modelix.model.area.IAreaChangeList
+import org.modelix.model.area.IAreaListener
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
 
@@ -32,7 +30,9 @@ object KernelfApiJS {
     }
     fun loadModelsFromJson(json: Array<String>): INode = KernelfAPI.loadModelsFromJson(json)
     fun getModules(rootNode: INode): Array<INode> = KernelfAPI.getModules(rootNode)
-    fun nodeToString(node: Any): String = KernelfAPI.nodeToString(node)
+    fun nodeToString(node: Any): String = KernelfAPI.nodeToString(JSNodeConverter.toINode(node))
+
+    fun getNodeConverter() = JSNodeConverter
 
     private fun renderNodeAsDom(editorState: EditorState, rootNode: INode): HTMLElement {
         val tagConsumer = document.createTree()
@@ -55,25 +55,48 @@ object KernelfApiJS {
         val editor = JsEditorComponent(KernelfAPI.editorEngine) { state ->
             KernelfAPI.editorEngine.createCell(state, rootNode.typed())
         }
-        val branch = ModelFacade.getBranch(rootNode)!!.deepUnwrap()
-        branch.addListener(object : IBranchListener {
-            private var updateScheduled = atomic(false)
-            private val coroutinesScope = CoroutineScope(Dispatchers.Main)
-            override fun treeChanged(oldTree: ITree?, newTree: ITree) {
-                if (editor.getHtmlElement().isInDocument()) {
-                    if (!updateScheduled.getAndSet(true)) {
-                        coroutinesScope.launch {
-                            updateScheduled.getAndSet(false)
-                            editor.update()
+        val branch = ModelFacade.getBranch(rootNode)?.deepUnwrap()
+        if (branch != null) {
+            branch.addListener(object : IBranchListener {
+                private var updateScheduled = atomic(false)
+                private val coroutinesScope = CoroutineScope(Dispatchers.Main)
+                override fun treeChanged(oldTree: ITree?, newTree: ITree) {
+                    if (editor.getHtmlElement().isInDocument()) {
+                        if (!updateScheduled.getAndSet(true)) {
+                            coroutinesScope.launch {
+                                updateScheduled.getAndSet(false)
+                                editor.update()
+                            }
                         }
+                    } else {
+                        coroutinesScope.cancel("Editor removed from document")
+                        branch.removeListener(this)
+                        editor.dispose()
                     }
-                } else {
-                    coroutinesScope.cancel("Editor removed from document")
-                    branch.removeListener(this)
-                    editor.dispose()
                 }
-            }
-        })
+            })
+        } else {
+            val area = rootNode.getArea()
+            area.addListener(object : IAreaListener {
+                private var updateScheduled = atomic(false)
+                private val coroutinesScope = CoroutineScope(Dispatchers.Main)
+                override fun areaChanged(changes: IAreaChangeList) {
+                    if (editor.getHtmlElement().isInDocument()) {
+                        if (!updateScheduled.getAndSet(true)) {
+                            coroutinesScope.launch {
+                                updateScheduled.getAndSet(false)
+                                editor.update()
+                            }
+                        }
+                    } else {
+                        coroutinesScope.cancel("Editor removed from document")
+                        area.removeListener(this)
+                        editor.dispose()
+                    }
+                }
+
+            })
+        }
         editor.updateHtml()
         return editor.getHtmlElement()
     }

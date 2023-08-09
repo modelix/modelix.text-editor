@@ -69,7 +69,7 @@ fun Cell.rightAlignedHierarchy() = lastLeaf().ancestors(true).takeWhilePrevious 
 fun Cell.centerAlignedHierarchy() = leftAlignedHierarchy().toList().intersect(rightAlignedHierarchy().toSet())
 
 /**
- * Takes all the elements that matches the predicate and one more.
+ * Takes all the elements that match the predicate and one more.
  */
 fun <T> Sequence<T>.takeWhilePrevious(predicate: (previous: T) -> Boolean): Sequence<T> {
     var previous: T? = null
@@ -81,3 +81,5 @@ fun <T> Sequence<T>.takeWhilePrevious(predicate: (previous: T) -> Boolean): Sequ
         matches
     }
 }
+
+fun <T> Sequence<T>.takeUnlessPrevious(predicate: (previous: T) -> Boolean): Sequence<T> = takeWhilePrevious { !predicate(it) }

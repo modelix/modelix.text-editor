@@ -2,29 +2,10 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.base.N_DotExpression
 import org.iets3.core.expr.path.N_PathElement
-import org.iets3.core.expr.simpleTypes.C_NumberLiteral
-import org.iets3.core.expr.simpleTypes.N_NumberLiteral
 import org.iets3.core.expr.tests.N_TestSuite
-import org.iets3.core.expr.toplevel.N_RecordMember
 import org.iets3.core.expr.toplevel.N_RecordType
-import org.modelix.editor.CaretSelection
-import org.modelix.editor.Cell
-import org.modelix.editor.CodeCompletionParameters
-import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
-import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.IncrementalBranch
-import org.modelix.editor.collectActionsBetween
-import org.modelix.editor.commonAncestor
-import org.modelix.editor.descendants
-import org.modelix.editor.firstLeaf
-import org.modelix.editor.flattenApplicableActions
-import org.modelix.editor.getSubstituteActions
-import org.modelix.editor.getVisibleText
-import org.modelix.editor.isVisible
-import org.modelix.editor.layoutable
-import org.modelix.editor.previousLeaf
-import org.modelix.editor.resolvePropertyCell
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.descendants
@@ -42,13 +23,7 @@ import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
 import org.modelix.typesystem.NodeAsType
 import org.modelix.typesystem.TypesystemEngine
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertIs
-import kotlin.test.assertNotNull
-import kotlin.test.assertTrue
+import kotlin.test.*
 
 class TypesystemTest {
     lateinit var recordMemberRef: N_PathElement

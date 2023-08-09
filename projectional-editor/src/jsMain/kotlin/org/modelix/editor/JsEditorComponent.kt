@@ -135,7 +135,11 @@ class JsEditorComponent(engine: EditorEngine, rootCellCreator: (EditorState) -> 
                 abs(absoluteClickX - it.second.getAbsoluteBounds().maxX())
             )
         } ?: return false
-        val caretPos = if (absoluteClickX <= closest.second.getAbsoluteBounds().minX()) 0 else closest.first.getLength()
+        val caretPos = if (absoluteClickX <= closest.second.getAbsoluteBounds().minX()) {
+            0
+        } else {
+            closest.first.cell.getSelectableText()?.length ?: 0
+        }
         changeSelection(CaretSelection(closest.first, caretPos))
         return true
     }

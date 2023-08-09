@@ -10,7 +10,6 @@ import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.IncrementalBranch
-import org.modelix.editor.collectActionsBetween
 import org.modelix.editor.commonAncestor
 import org.modelix.editor.descendants
 import org.modelix.editor.firstLeaf
@@ -98,16 +97,6 @@ class CodeCompletionTest {
         assertEquals("test case", previousLeaf.getVisibleText())
         val commonAncestor = previousLeaf.commonAncestor(firstLeaf)
         assertEquals(namePropertyCell.parent, commonAncestor)
-
-        collectActionsBetween(previousLeaf, firstLeaf) { cellsFullyBetween, cellsEndingBetween, cellsBeginningBetween ->
-            println("fully between:\n" + cellsFullyBetween.joinToString(separator = "\n") { "  $it" })
-            println("ending: \n" + cellsEndingBetween.joinToString(separator = "\n") { "  $it" })
-            println("beginning: \n" + cellsBeginningBetween.joinToString(separator = "\n") { "  $it" })
-            assertEquals(emptySet(), cellsFullyBetween.toSet().intersect(cellsBeginningBetween.toSet()))
-            assertEquals(emptySet(), cellsFullyBetween.toSet().intersect(cellsEndingBetween.toSet()))
-            assertEquals(emptySet(), cellsBeginningBetween.toSet().intersect(cellsEndingBetween.toSet()))
-            emptyList()
-        }
 
         val actions = getSubstituteActions(namePropertyCell)
         assertEquals(emptyList(), actions)

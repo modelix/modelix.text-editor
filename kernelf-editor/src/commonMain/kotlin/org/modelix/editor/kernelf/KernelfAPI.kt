@@ -56,10 +56,10 @@ object KernelfAPI {
         return rootNode
     }
 
-    fun connectToModelServer(url: String = "http://localhost:28101/v2", initialJsonData: Array<String> = emptyArray() , callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
+    fun connectToModelServer(url: String? = null, initialJsonData: Array<String> = emptyArray() , callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
         GlobalScope.launch {
             try {
-                if (url.endsWith("/v2") || url.endsWith("/v2/")) {
+                if (url != null && (url.endsWith("/v2") || url.endsWith("/v2/"))) {
                     val repositoryId = RepositoryId("kernelf-demo")
                     val client = ModelClientV2.builder().url(url).build()
                     client.init()
@@ -78,12 +78,20 @@ object KernelfAPI {
                     LOG.debug { "Connected to model server" }
                     callback(rootNode)
                 } else {
-                    val client = LightModelClient.builder().url(url).build()
+                    val builder = LightModelClient.builder()
+                    if (url != null) {
+                        builder.url(url)
+                    }
+                    val client = builder.autoTransactions().autoFilterNonLoadedNodes().build()
                     client.changeQuery(buildModelQuery {
                         root {
                             children("modules") {
                                 whereProperty("name").startsWith("test.in.expr.")
-                                descendants {}
+                                children("models") {
+                                    children("rootNodes") {
+                                        descendants {}
+                                    }
+                                }
                             }
                         }
                     })

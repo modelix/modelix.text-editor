@@ -7,7 +7,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --stats-json",
+    "build-non-optimized": "ng build --optimization=false",
+    "analyze": "webpack-bundle-analyzer dist/kernelf-angular-demo/stats.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "predeploy": "ng build",
@@ -20,14 +22,16 @@
     "@angular/compiler": "^14.0.0",
     "@angular/core": "^14.0.0",
     "@angular/forms": "^14.0.0",
+    "@angular/material": "^14.0.0",
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
+    "@modelix/ts-model-api": "file:../../modelix.core/ts-model-api",
+    "angular-split": "^14.0.0",
+    "modelix.text-editor-kernelf-editor": "file:../build/js/packages/modelix.text-editor-kernelf-editor",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-    "kernelf-editor": "file:../build/js/packages/modelix.text-editor-kernelf-editor",
-    "@modelix/ts-model-api": "file:../../modelix.core/ts-model-api"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^14.0.1",
@@ -41,6 +45,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "webpack-bundle-analyzer": "^4.8.0"
   }
 }

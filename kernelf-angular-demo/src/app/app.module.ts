@@ -9,6 +9,10 @@ import { ExplorerModuleComponent } from './explorer-module/explorer-module.compo
 import { ExplorerModelComponent } from './explorer-model/explorer-model.component';
 import {registerLanguages} from "../gen";
 import {FormsModule} from "@angular/forms";
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
+import {MatButtonModule} from "@angular/material/button";
+import {AngularSplitModule} from "angular-split";
 
 @NgModule({
   declarations: [
@@ -19,11 +23,15 @@ import {FormsModule} from "@angular/forms";
     ExplorerModuleComponent,
     ExplorerModelComponent
   ],
-    imports: [
-        BrowserModule,
+  imports: [
+    BrowserModule,
 //        AppRoutingModule,
-        FormsModule
-    ],
+    FormsModule,
+    MatTreeModule,
+    MatIconModule,
+    MatButtonModule,
+    AngularSplitModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

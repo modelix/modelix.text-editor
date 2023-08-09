@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { org, Nullable } from 'kernelf-editor';
+import { org, Nullable } from 'modelix.text-editor-kernelf-editor';
 import {
   N_Model,
   N_Module

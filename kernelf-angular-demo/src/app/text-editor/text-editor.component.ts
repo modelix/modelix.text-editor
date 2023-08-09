@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { KernelfApiJS, org } from 'kernelf-editor';
+import { KernelfApiJS, org } from 'modelix.text-editor-kernelf-editor';
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
@@ -16,12 +16,22 @@ import {
 })
 export class TextEditorComponent implements OnInit {
 
-  @Input()
-  public node!: any; // org.modelix.model.api.INode or TypedNode or INodeJS
-
   @ViewChild('editorContainer') editorContainer: ElementRef | undefined;
 
+  private nodeToLoad: any; // org.modelix.model.api.INode or TypedNode or INodeJS
+  private loadedNode: any;
+
   constructor() {
+  }
+
+  @Input()
+  set node(value: any) {
+    this.nodeToLoad = value;
+    this.updateEditor();
+  }
+
+  get node(): any {
+    return this.nodeToLoad;
   }
 
   ngOnInit(): void {
@@ -29,10 +39,19 @@ export class TextEditorComponent implements OnInit {
   }
 
   ngAfterViewInit(){
-    if (this.editorContainer) {
-      let dom = KernelfApiJS.renderAndUpdateNodeAsDom(this.getUnwrappedNode());
-      let nativeElement: HTMLElement = this.editorContainer.nativeElement;
-      nativeElement.appendChild(dom);
+    this.updateEditor();
+  }
+
+  private updateEditor() {
+    if (this.nodeToLoad !== this.loadedNode && this.editorContainer) {
+      let unwrappedNode = this.getUnwrappedNode();
+      if (unwrappedNode) {
+        let dom = KernelfApiJS.renderAndUpdateNodeAsDom(unwrappedNode);
+        let nativeElement: HTMLElement = this.editorContainer.nativeElement;
+        nativeElement.innerHTML = ""
+        nativeElement.appendChild(dom);
+      }
+      this.loadedNode = this.nodeToLoad;
     }
   }
 
@@ -49,14 +68,12 @@ export class TextEditorComponent implements OnInit {
   }
 
   public getUnwrappedNode(): any {
-    if (this.node instanceof TypedNode) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node.node)
-    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return org.modelix.model.api.JSNodeConverter.nodeFromJs(this.node)
-    return this.node // INode
+    return KernelfApiJS.getNodeConverter().toINode(this.node)
   }
 
   public getJSNode(): INodeJS {
-    if (org.modelix.model.api.JSNodeConverter.isJsNode(this.node)) return this.node as INodeJS
-    return org.modelix.model.api.JSNodeConverter.nodeToJs(this.getUnwrappedNode())
+    if (KernelfApiJS.getNodeConverter().isJsNode(this.node)) return this.node as INodeJS
+    return KernelfApiJS.getNodeConverter().nodeToJs(this.getUnwrappedNode())
   }
 
   public getTypedNode(): ITypedNode {
