@@ -13,6 +13,7 @@ buildscript {
 plugins {
     kotlin("multiplatform")
     `maven-publish`
+    alias(coreLibs.plugins.npm.publish)
 }
 
 val generatorOutputDir = file("src/commonMain/kotlin_gen")
@@ -32,7 +33,6 @@ kotlin {
                 }
             }
         }
-        binaries.library()
         nodejs {
             testTask {
                 useMocha {
@@ -40,6 +40,7 @@ kotlin {
                 }
             }
         }
+        binaries.library()
         generateTypeScriptDefinitions()
     }
 
@@ -59,7 +60,7 @@ kotlin {
                 implementation(libs.modelix.light.model.client)
                 implementation(libs.modelix.model.client)
                 implementation(libs.kotlin.html)
-                implementation(project(":kernelf-apigen"))
+                api(project(":kernelf-apigen"))
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -86,13 +87,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api(libs.modelix.model.api)
-
-                val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-                if (localPath.exists()) {
-                    implementation(npm("@modelix/ts-model-api", localPath))
-                } else {
-                    implementation(npm("@modelix/ts-model-api", libs.versions.modelixCore.get()))
-                }
             }
         }
         val jsTest by getting {
@@ -105,57 +99,24 @@ kotlin {
     }
 }
 
-fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
-    if (!sourcesDir.exists()) return
-    if (!sourceMapFile.exists()) return
-    val json = JsonParser.parseString(sourceMapFile.readText()).asJsonObject
-    val correctPaths = sourcesDir.walk().associateBy { it.name }
-    val wrongPaths = json.getAsJsonArray("sources")
-    wrongPaths.forEachIndexed { index, wrongPath ->
-        val fileName = wrongPath.asString.substringAfterLast('/')
-        val resolvedFile = correctPaths[fileName]
-        if (resolvedFile != null) {
-            wrongPaths.set(index, JsonPrimitive(resolvedFile.absolutePath))
+npmPublish {
+//    registries {
+//        register("itemis-npm-open") {
+//            uri.set("https://artifacts.itemis.cloud/repository/npm-open")
+//            System.getenv("NODE_AUTH_TOKEN").takeIf { !it.isNullOrBlank() }?.let {
+//                authToken.set(it)
+//            }
+//        }
+//    }
+    packages {
+        named("js") {
+            packageJson {
+                name.set("@modelix/kernelf-editor")
+            }
         }
     }
-
-    sourceMapFile.writeText(json.toString())
 }
 
-val fixSourceMaps by tasks.registering {
-    dependsOn("jsDevelopmentLibraryCompileSync")
-    doLast {
-//        fixSourceMap(
-//            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
-//            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
-//        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/model-api-gen-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-gen-runtime-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-client-js-ir.js.map")
-        )
-        fixSourceMap(
-            rootDir.resolve("../incremental/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/incremental.js.map")
-        )
-
-    }
-}
-tasks.named("jsBrowserDevelopmentLibraryDistribution") {
-    dependsOn(fixSourceMaps)
-}
-
-listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare", "jsNodeDevelopmentLibraryPrepare", "jsNodeProductionLibraryPrepare").forEach {
-    tasks.named(it) {
-        // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
-        dependsOn("jsDevelopmentLibraryCompileSync")
-        dependsOn("jsProductionLibraryCompileSync")
-    }
+tasks.named("assembleJsPackage") {
+    println(this::class.java.name)
 }

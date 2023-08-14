@@ -26,9 +26,8 @@
     "@angular/platform-browser": "^14.0.0",
     "@angular/platform-browser-dynamic": "^14.0.0",
     "@angular/router": "^14.0.0",
-    "@modelix/ts-model-api": "file:../../modelix.core/ts-model-api",
     "angular-split": "^14.0.0",
-    "modelix.text-editor-kernelf-editor": "file:../build/js/packages/modelix.text-editor-kernelf-editor",
+    "@modelix/kernelf-editor": "file:../kernelf-editor/build/packages/js",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

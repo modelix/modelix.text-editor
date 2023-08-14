@@ -13,8 +13,13 @@ pluginManagement {
             mavenCentral()
         }
         versionCatalogs {
+            val modelixCoreVersion = "2.15.5-4-gd78d7ea.dirty-2-SNAPSHOT"
+            create("libs")
+            getByName("libs") {
+                version("modelixCore", modelixCoreVersion)
+            }
             create("coreLibs") {
-                from("org.modelix:core-version-catalog:2.15.6")
+                from("org.modelix:core-version-catalog:$modelixCoreVersion")
             }
         }
     }

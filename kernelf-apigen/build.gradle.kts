@@ -33,6 +33,9 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.js.ExperimentalJsExport")
+        }
         val commonMain by getting {
             dependencies {
                 implementation(libs.modelix.model.api.gen.runtime)

@@ -1,16 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
-import { KernelfApiJS, org } from 'modelix.text-editor-kernelf-editor';
 import Model_iets3_strings from "../../assets/test.in.expr.os.strings@tests.json";
 import Model_iets3_base from "../../assets/test.in.expr.os.base@tests.json";
 import {
   isOfConcept_Model, isOfConcept_Module, isOfConcept_Repository,
   N_Module
 } from "../../gen/L_org_modelix_model_repositoryconcepts";
-import {ITypedNode, LanguageRegistry} from "@modelix/ts-model-api";
+import * as kf from "@modelix/kernelf-editor";
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from "@angular/material/tree";
 import {SelectionChange} from '@angular/cdk/collections';
 import {BehaviorSubject} from "rxjs";
+
+import ITypedNode = kf.org.modelix.metamodel.ITypedNode;
+
 
 @Component({
   selector: 'app-explorer',
