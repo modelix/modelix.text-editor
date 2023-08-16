@@ -4,7 +4,7 @@
 modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "modelixCore" }
 
 [versions]
-modelixCore = "2.15.5"
+modelixCore = "2.16.3"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
