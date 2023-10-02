@@ -26,8 +26,6 @@ kotlin {
                 implementation(coreLibs.kotlin.coroutines.core)
                 api(coreLibs.modelix.incremental)
                 api(libs.kotlin.html)
-                implementation(project(":language-aspects"))
-                implementation(project(":behavior-aspect"))
             }
         }
         val commonTest by getting {

@@ -26,6 +26,4 @@ include("kernelf-angular-demo")
 include("kernelf-editor")
 include("kernelf-apigen")
 include("projectional-editor")
-include("behavior-aspect")
-include("language-aspects")
 
