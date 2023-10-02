@@ -51,8 +51,6 @@ kotlin {
             dependencies {
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(project(":projectional-editor"))
-                implementation(project(":language-aspects"))
-                implementation(project(":behavior-aspect"))
                 implementation(kotlin("stdlib-common"))
                 implementation(coreLibs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
