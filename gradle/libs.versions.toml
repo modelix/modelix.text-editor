@@ -2,6 +2,7 @@
 
 [plugins]
 modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "modelixCore" }
+npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.1" }
 
 [versions]
 modelixCore = "3.1.0"

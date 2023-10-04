@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ITypedNode, LanguageRegistry} from "@modelix/ts-model-api";
-import { org } from 'modelix.text-editor-kernelf-editor';
+import { org } from "@modelix/kernelf-editor";
 
 @Component({
   selector: 'app-root',

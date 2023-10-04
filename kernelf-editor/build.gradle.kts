@@ -13,6 +13,7 @@ buildscript {
 plugins {
     kotlin("multiplatform")
     `maven-publish`
+    alias(libs.plugins.npm.publish)
 }
 
 val generatorOutputDir = file("src/commonMain/kotlin_gen")
@@ -84,13 +85,7 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api(libs.modelix.model.api)
-
-                val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-                if (localPath.exists()) {
-                    implementation(npm("@modelix/ts-model-api", localPath))
-                } else {
-                    implementation(npm("@modelix/ts-model-api", libs.versions.modelixCore.get()))
-                }
+                implementation(peerNpm("@modelix/ts-model-api", rootProject.property("ts-model-api.version").toString()))
             }
         }
         val jsTest by getting {
@@ -121,32 +116,37 @@ fun fixSourceMap(sourcesDir: File, sourceMapFile: File) {
 }
 
 val fixSourceMaps by tasks.registering {
-    dependsOn("jsDevelopmentLibraryCompileSync")
+    dependsOn("assembleJsPackage")
     doLast {
+        val jsOutputDir = buildDir.resolve("packages/js")
 //        fixSourceMap(
 //            rootDir.resolve("../modelix.core/editor-runtime/src").canonicalFile,
 //            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-editor-runtime.js.map")
 //        )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-js-ir.js.map")
+            jsOutputDir.resolve("modelix.core-model-api.js.map")
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-api-gen-runtime/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-api-gen-runtime-js-ir.js.map")
+            jsOutputDir.resolve("modelix.core-model-api-gen-runtime.js.map")
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/modelix.core-model-client-js-ir.js.map")
+            jsOutputDir.resolve("modelix.core-model-client.js.map")
+        )
+        fixSourceMap(
+            rootDir.resolve("../modelix.core/light-model-client/src").canonicalFile,
+            jsOutputDir.resolve("modelix.core-light-model-client.js.map")
         )
         fixSourceMap(
             rootDir.resolve("../incremental/src").canonicalFile,
-            rootDir.resolve("build/js/packages/modelix.kernelf-kernelf-editor/kotlin/incremental.js.map")
+            jsOutputDir.resolve("incremental.js.map")
         )
 
     }
 }
-tasks.named("jsBrowserDevelopmentLibraryDistribution") {
+tasks.named("packJsPackage") {
     dependsOn(fixSourceMaps)
 }
 
@@ -155,5 +155,31 @@ listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare"
         // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
         dependsOn("jsDevelopmentLibraryCompileSync")
         dependsOn("jsProductionLibraryCompileSync")
+    }
+}
+
+npmPublish {
+//    registries {
+//        register("itemis-npm-open") {
+//            uri.set("https://artifacts.itemis.cloud/repository/npm-open")
+//            System.getenv("NODE_AUTH_TOKEN").takeIf { !it.isNullOrBlank() }?.let {
+//                authToken.set(it)
+//            }
+//        }
+//    }
+    packages {
+        named("js") {
+            packageJson {
+                name.set("@modelix/kernelf-editor")
+            }
+        }
+    }
+}
+
+tasks.named("packJsPackage") {
+    doLast {
+        val packagesDir = buildDir.resolve("packages")
+        packagesDir.resolve("modelix-kernelf-editor-$version.tgz")
+            .copyTo(packagesDir.resolve("modelix-kernelf-editor.tgz"), overwrite = true)
     }
 }

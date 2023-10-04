@@ -1,5 +1,5 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { KernelfApiJS, org } from 'modelix.text-editor-kernelf-editor';
+import { KernelfApiJS, org } from "@modelix/kernelf-editor";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
 import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
