@@ -78,7 +78,7 @@ object KernelfAPI {
                     LOG.debug { "Connected to model server" }
                     callback(rootNode)
                 } else {
-                    val builder = LightModelClient.builder()
+                    val builder = LightModelClient.builder().port(48305)
                     if (url != null) {
                         builder.url(url)
                     }
