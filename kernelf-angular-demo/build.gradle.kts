@@ -2,7 +2,7 @@ import com.github.gradle.node.npm.task.NpmSetupTask
 
 plugins {
   base
-  id("com.github.node-gradle.node") version "7.0.0"
+  id("com.github.node-gradle.node") version "7.0.1"
 }
 
 node {
