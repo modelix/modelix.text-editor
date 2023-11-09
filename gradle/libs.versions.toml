@@ -5,7 +5,7 @@ modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "model
 npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.1" }
 
 [versions]
-modelixCore = "3.3.4"
+modelixCore = "3.13.0-1-gc50bb50-SNAPSHOT"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }

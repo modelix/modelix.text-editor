@@ -24,10 +24,6 @@ fun computeVersion(): Any {
     return version
 }
 
-val tsModelApiPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-val tsModelApiVersion = if (tsModelApiPath.exists()) "file:${tsModelApiPath.absolutePath}" else libs.versions.modelixCore.get()
-ext.set("ts-model-api.version", tsModelApiVersion)
-
 subprojects {
     apply(plugin = "maven-publish")
     version = rootProject.version

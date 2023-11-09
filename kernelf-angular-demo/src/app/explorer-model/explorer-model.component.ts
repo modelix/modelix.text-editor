@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {N_Model} from "../../gen/L_org_modelix_model_repositoryconcepts";
+import { org } from "@modelix/kernelf-editor";
+import N_Model = org.modelix.model.repositoryconcepts.N_Model
 
 @Component({
   selector: 'app-explorer-model',

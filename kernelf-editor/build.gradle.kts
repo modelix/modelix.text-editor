@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 import org.jetbrains.kotlin.com.google.gson.JsonParser
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilerExecutionStrategy
 
 buildscript {
     repositories {
@@ -33,7 +34,6 @@ kotlin {
                 }
             }
         }
-        binaries.library()
         nodejs {
             testTask {
                 useMocha {
@@ -41,7 +41,9 @@ kotlin {
                 }
             }
         }
+        binaries.library()
         generateTypeScriptDefinitions()
+        useCommonJs()
     }
 
     sourceSets {
@@ -85,7 +87,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api(libs.modelix.model.api)
-                implementation(peerNpm("@modelix/ts-model-api", rootProject.property("ts-model-api.version").toString()))
             }
         }
         val jsTest by getting {
@@ -183,3 +184,7 @@ tasks.named("packJsPackage") {
             .copyTo(packagesDir.resolve("modelix-kernelf-editor.tgz"), overwrite = true)
     }
 }
+//
+//tasks.compileKotlinMetadata {
+//    compilerExecutionStrategy.set(KotlinCompilerExecutionStrategy.IN_PROCESS)
+//}

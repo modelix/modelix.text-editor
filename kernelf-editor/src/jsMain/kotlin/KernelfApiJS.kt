@@ -30,9 +30,9 @@ object KernelfApiJS {
     }
     fun loadModelsFromJson(json: Array<String>): INode = KernelfAPI.loadModelsFromJson(json)
     fun getModules(rootNode: INode): Array<INode> = KernelfAPI.getModules(rootNode)
-    fun nodeToString(node: Any): String = KernelfAPI.nodeToString(JSNodeConverter.toINode(node))
+    fun nodeToString(node: Any): String = KernelfAPI.nodeToString(TypedNodeConverter.toINode(node))
 
-    fun getNodeConverter() = JSNodeConverter
+    fun getNodeConverter() = TypedNodeConverter
 
     private fun renderNodeAsDom(editorState: EditorState, rootNode: INode): HTMLElement {
         val tagConsumer = document.createTree()

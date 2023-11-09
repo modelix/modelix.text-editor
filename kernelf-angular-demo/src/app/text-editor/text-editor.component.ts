@@ -1,12 +1,11 @@
 import {Component, ElementRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import { KernelfApiJS, org } from "@modelix/kernelf-editor";
 import { DomSanitizer } from "@angular/platform-browser";
 import { PipeTransform, Pipe } from "@angular/core";
-import {TypedNode, INodeJS, LanguageRegistry, ITypedNode} from "@modelix/ts-model-api";
-import {
-  isOfConcept_INamedConcept,
-  N_INamedConcept
-} from "../../gen/L_jetbrains_mps_lang_core";
+import { org, jetbrains, KernelfApiJS, TypedNodeConverter} from "@modelix/kernelf-editor";
+import {isOfConcept_INamedConcept} from "../../gen/L_jetbrains_mps_lang_core";
+import N_INamedConcept = jetbrains.mps.lang.core.N_INamedConcept;
+import ITypedNode = org.modelix.metamodel.ITypedNode;
+import INode = org.modelix.model.api.INode;
 
 @Component({
   selector: 'app-text-editor',
@@ -67,18 +66,12 @@ export class TextEditorComponent implements OnInit {
     }
   }
 
-  public getUnwrappedNode(): any {
+  public getUnwrappedNode(): INode {
     return KernelfApiJS.getNodeConverter().toINode(this.node)
   }
 
-  public getJSNode(): INodeJS {
-    if (KernelfApiJS.getNodeConverter().isJsNode(this.node)) return this.node as INodeJS
-    return KernelfApiJS.getNodeConverter().nodeToJs(this.getUnwrappedNode())
-  }
-
   public getTypedNode(): ITypedNode {
-    if (this.node instanceof TypedNode) return this.node
-    return LanguageRegistry.INSTANCE.wrapNode(this.getJSNode())
+    return TypedNodeConverter.toTypedNode(this.node)
   }
 
   public getTitle(): string {

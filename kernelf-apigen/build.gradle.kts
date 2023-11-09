@@ -33,10 +33,12 @@ kotlin {
     }
 
     sourceSets {
+        all {
+            languageSettings.optIn("kotlin.js.ExperimentalJsExport")
+        }
         val commonMain by getting {
             dependencies {
                 implementation(libs.modelix.model.api.gen.runtime)
-                implementation(kotlin("stdlib-common"))
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -80,6 +82,7 @@ metamodel {
     kotlinProject = project
     kotlinDir = generatorOutputDir
     typescriptDir = tsGeneratorOutputDir
+    runtimeNpmPackage = "@modelix/kernelf-editor"
     registrationHelperName = "org.modelix.kernelf.KernelfLanguages"
     //exportModules("jetbrains.mps.baseLanguage")
 }

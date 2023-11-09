@@ -55,7 +55,6 @@ kotlin {
                 implementation(kotlin("test-js"))
                 implementation(npm("jsdom-global", "3.0.2"))
                 implementation(npm("jsdom", "20.0.2"))
-                implementation(npm("@modelix/ts-model-api", rootProject.property("ts-model-api.version").toString()))
             }
         }
     }
