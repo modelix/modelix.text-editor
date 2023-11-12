@@ -1,8 +1,10 @@
+import com.github.gradle.node.npm.task.NpmInstallTask
 import com.github.gradle.node.npm.task.NpmSetupTask
+import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
-  base
-  id("com.github.node-gradle.node") version "7.0.1"
+    base
+    id("com.github.node-gradle.node") version "7.0.1"
 }
 
 node {
@@ -12,18 +14,26 @@ node {
 }
 
 tasks.named("npm_run_build") {
-  inputs.dir("src")
-  inputs.file("package.json")
-  inputs.file("package-lock.json")
+    inputs.dir("src")
+    inputs.file("package.json")
+    inputs.file("package-lock.json")
 
-  outputs.dir("dist")
+    outputs.dir("dist")
 }
 
 tasks.named("assemble") {
-  dependsOn("npm_run_build")
+    dependsOn("npm_run_build")
 }
 
 tasks.withType<NpmSetupTask> {
-  dependsOn(":kernelf-apigen:generateMetaModelSources")
-  dependsOn(":kernelf-editor:packJsPackage")
+    dependsOn(":kernelf-apigen:generateMetaModelSources")
+    dependsOn(":kernelf-editor:packJsPackage")
+}
+
+val updateTask = tasks.register<NpmTask>("updateOwnDependencies") {
+    args = listOf("update", "@modelix/kernelf-editor")
+}
+
+tasks.withType<NpmInstallTask> {
+    dependsOn(updateTask)
 }
