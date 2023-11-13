@@ -35,7 +35,9 @@ data class DomTreeUpdate(
     val elements: List<HTMLElementUpdateData> = emptyList()
 )
 
+@Serializable
 sealed interface INodeUpdateData
+@Serializable
 sealed interface IElementUpdateData : INodeUpdateData {
     val id: String?
 }

@@ -109,6 +109,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
 
         fun applyUpdate(update: DomTreeUpdate) {
+            LOG.trace { "($editorId) Updating DOM" }
             // this map allows updating nodes in a different order to resolve references during syncChildren
             pendingUpdates.putAll(update.elements.associateBy {
                 requireNotNull(it.id) { "Elements in DomTreeUpdate.elements are expected to have an ID" }
@@ -133,7 +134,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
                 is TextNodeUpdateData -> document.createTextNode(data.text)
                 is HTMLElementUpdateData -> {
                     pendingUpdates.remove(data.id)
-                    val element = elementMap[data.id]?.takeIf { it.tagName == data.tagName }
+                    val element = elementMap[data.id]?.takeIf { it.tagName.lowercase() == data.tagName.lowercase() }
                         ?: document.createElement(data.tagName).also { element ->
                             data.id?.let { elementId ->
                                 element.id = elementId
