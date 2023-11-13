@@ -10,9 +10,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.div
+import kotlinx.html.dom.append
 import kotlinx.html.dom.create
 import kotlinx.html.id
 import kotlinx.html.js.div
+import kotlinx.html.onClick
+import kotlinx.html.tabIndex
 import launchLogging
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
@@ -81,7 +84,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
                 LOG.error(ex) { "Failed to initialized editor ${editorSession.editorId}" }
             }
         }
-        return editorSession.rootElement
+        return editorSession.containerElement
     }
 
     private fun processMessage(msg: MessageFromServer) {
@@ -93,18 +96,25 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
     }
 
     private inner class EditorSession(val editorId: String, rootNodeReference: INodeReference) {
-        val rootElement: HTMLDivElement = document.create.div {
-            id = editorId
-            div {
-                +"Editor $editorId"
-            }
+        val containerElement: HTMLDivElement = document.create.div("modelix-text-editor-component") {
+            tabIndex = "-1"
         }
-        private val elementMap: MutableMap<String, Element> = HashMap<String, Element>().also { it[editorId] = rootElement }
+        val editorElement: HTMLDivElement = containerElement.append.div {
+            id = editorId
+            +"Loading ..."
+        }
+        private val elementMap: MutableMap<String, Element> = HashMap<String, Element>().also { it[editorId] = editorElement }
         private val pendingUpdates: MutableMap<String, IElementUpdateData> = HashMap()
         private val possiblyDetachedElements: MutableSet<String> = HashSet<String>()
 
+        init {
+            containerElement.onclick = {
+                LOG.info { "Editor clicked: $it" }
+            }
+        }
+
         suspend fun dispose() {
-            rootElement.remove()
+            containerElement.remove()
             websocketSession?.send(MessageFromClient(editorId = editorId, dispose = true).toJson())
         }
 
