@@ -32,17 +32,17 @@ val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>
         curlyBrackets {
             for (property in subConcept.untyped().getAllProperties()) {
                 newLine()
-                label(property.name + ":")
+                label(property.getSimpleName() + ":")
                 property.cell()
             }
             for (link in subConcept.untyped().getAllReferenceLinks()) {
                 newLine()
-                label(link.name + ":")
+                label(link.getSimpleName() + ":")
                 link.typed()?.cell(presentation = { untypedReference().serialize() })
             }
             for (link in subConcept.untyped().getAllChildLinks()) {
                 newLine()
-                label(link.name + ":")
+                label(link.getSimpleName() + ":")
                 when (val l = link.typed()) {
                     is ITypedSingleChildLink -> l.cell()
                     is ITypedChildListLink -> {

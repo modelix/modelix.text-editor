@@ -249,7 +249,7 @@ class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
 
 open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val property: IProperty)
     : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
-    var placeholderText: String = "<no ${property.name}>"
+    var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: (String) -> Boolean = { true }
     override fun createCell(context: CellCreationContext, node: NodeT): CellData {
         val value = node.getPropertyValue(property)
@@ -311,7 +311,7 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
     val presentation: TargetNodeT.() -> String?
 ) : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: NodeT): CellData {
-        val data = TextCellData(getText(node), "<no ${link.untyped().name}>")
+        val data = TextCellData(getText(node), "<no ${link.untyped().getSimpleName()}>")
         data.cellReferences += ReferencedNodeCellReference(node.untypedReference(), link.untyped())
         data.properties[CommonCellProperties.tabTarget] = true
         return data
@@ -375,7 +375,7 @@ class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT
         val placeholderIndex = substitutionPlaceholder?.index?.coerceIn(0..childNodes.size) ?: 0
         val addSubstitutionPlaceholder: (Int) -> Unit = { index ->
             val isDefaultPlaceholder = childNodes.isEmpty()
-            val placeholderText = if (isDefaultPlaceholder) "<no ${link.name}>" else "<choose ${link.name}>"
+            val placeholderText = if (isDefaultPlaceholder) "<no ${link.getSimpleName()}>" else "<choose ${link.getSimpleName()}>"
             val placeholder = TextCellData("", placeholderText)
             placeholder.properties[CellActionProperties.substitute] =
                 ReplaceNodeActionProvider(NonExistingChild(node.untyped().toNonExisting(), link, index)).after {
