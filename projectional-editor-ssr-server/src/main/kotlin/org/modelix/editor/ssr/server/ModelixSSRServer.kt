@@ -7,7 +7,6 @@ import io.ktor.websocket.*
 import kotlinx.html.div
 import kotlinx.html.dom.create
 import kotlinx.html.id
-import kotlinx.html.tabIndex
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.IProducesHtml
@@ -157,23 +156,20 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 val dbf = DocumentBuilderFactory.newInstance()
                 val db = dbf.newDocumentBuilder()
                 val doc = db.newDocument()
-                val rootElement = doc.create.div("js-editor-component") {
-                    tabIndex = "-1"
+                val editorElement = doc.create.div("editor") {
                     id = editorId
-                    div("editor") {
-                        div(EditorComponent.MAIN_LAYER_CLASS_NAME) {
-                            produceChild(contentProducer)
-                        }
-                        div("selection-layer relative-layer") {
-                            //produceChild(selectionView)
-                        }
-                        div("popup-layer relative-layer") {
-                            //produceChild(codeCompletionMenu)
-                        }
+                    div(EditorComponent.MAIN_LAYER_CLASS_NAME) {
+                        produceChild(contentProducer)
+                    }
+                    div("selection-layer relative-layer") {
+                        //produceChild(selectionView)
+                    }
+                    div("popup-layer relative-layer") {
+                        //produceChild(codeCompletionMenu)
                     }
                 }
                 LOG.trace { "Editor as XML: ${xmlToString(doc)}" }
-                return rootElement
+                return editorElement
             }
 
             fun toUpdateData(node: Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
