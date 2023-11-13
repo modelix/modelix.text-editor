@@ -15,7 +15,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class JsEditorComponent(engine: EditorEngine, rootCellCreator: (EditorState) -> Cell) : EditorComponent(engine, rootCellCreator), IProducesHtml {
-
+    override var htmlGenerationId: String? = null
     private var containerElement: HTMLElement = document.create.div("js-editor-component") {
         tabIndex = "-1" // allows setting keyboard focus
     }
