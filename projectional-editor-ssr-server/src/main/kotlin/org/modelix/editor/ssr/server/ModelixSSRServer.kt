@@ -4,12 +4,14 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.coroutines.launch
+import kotlinx.html.div
 import kotlinx.html.dom.create
-import kotlinx.html.dom.createHTMLTree
+import kotlinx.html.id
+import kotlinx.html.tabIndex
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.IProducesHtml
+import org.modelix.editor.produceChild
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
 import org.modelix.editor.ssr.common.HTMLElementUpdateData
@@ -17,7 +19,6 @@ import org.modelix.editor.ssr.common.INodeUpdateData
 import org.modelix.editor.ssr.common.MessageFromClient
 import org.modelix.editor.ssr.common.MessageFromServer
 import org.modelix.editor.ssr.common.TextNodeUpdateData
-import org.modelix.editor.toHtml
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.model.api.INodeResolutionScope
 import org.modelix.model.api.NodeReference
@@ -30,7 +31,6 @@ import org.w3c.dom.NamedNodeMap
 import org.w3c.dom.Node
 import org.w3c.dom.NodeList
 import org.w3c.dom.Text
-import org.w3c.dom.html.HTMLElement
 import java.io.StringWriter
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
@@ -137,7 +137,9 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 val dom = buildDom(editorComponent!!.getRootCell().layout)
                 LOG.debug { "($editorId) dom: $dom" }
                 val updateDataMap = HashMap<String, HTMLElementUpdateData>()
-                var rootData = toUpdateData(dom, updateDataMap) as HTMLElementUpdateData
+                var rootData = toUpdateData(dom, updateDataMap)
+                if (rootData is ElementReference) rootData = updateDataMap[rootData.id]!!
+                check(rootData is HTMLElementUpdateData)
                 if (rootData.id != editorId) {
                     updateDataMap.remove(rootData.id)
                     rootData = rootData.copy(id = editorId)
@@ -149,6 +151,29 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                         elements = updateDataMap.values.toList()
                     )
                 ).toJson()))
+            }
+
+            private fun buildDom(contentProducer: IProducesHtml): Element {
+                val dbf = DocumentBuilderFactory.newInstance()
+                val db = dbf.newDocumentBuilder()
+                val doc = db.newDocument()
+                val rootElement = doc.create.div("js-editor-component") {
+                    tabIndex = "-1"
+                    id = editorId
+                    div("editor") {
+                        div(EditorComponent.MAIN_LAYER_CLASS_NAME) {
+                            produceChild(contentProducer)
+                        }
+                        div("selection-layer relative-layer") {
+                            //produceChild(selectionView)
+                        }
+                        div("popup-layer relative-layer") {
+                            //produceChild(codeCompletionMenu)
+                        }
+                    }
+                }
+                LOG.trace { "Editor as XML: ${xmlToString(doc)}" }
+                return rootElement
             }
 
             fun toUpdateData(node: Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
@@ -179,15 +204,6 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             }
         }
     }
-}
-
-private fun buildDom(producer: IProducesHtml): Element {
-    val dbf = DocumentBuilderFactory.newInstance()
-    val db = dbf.newDocumentBuilder()
-    val doc = db.newDocument()
-    val rootElement = doc.create.also { producer.produceHtml(it) }.finalize()
-    LOG.trace { "Editor as XML: ${xmlToString(doc)}" }
-    return rootElement
 }
 
 private fun NamedNodeMap.toList(): List<Pair<String, String>> {
