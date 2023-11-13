@@ -14,7 +14,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-
+                implementation(coreLibs.kotlin.serialization.json)
+                api(project(":projectional-editor"))
+                api(libs.modelix.model.api)
             }
         }
         val commonTest by getting {
