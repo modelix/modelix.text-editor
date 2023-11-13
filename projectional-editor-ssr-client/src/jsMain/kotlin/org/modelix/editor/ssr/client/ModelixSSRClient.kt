@@ -173,6 +173,10 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
                 }
                 attributesToRemove.remove(attributeData.key)
             }
+            updateData.id?.let { id ->
+                element.setAttribute("id", id)
+                attributesToRemove.remove("id")
+            }
             attributesToRemove.forEach(element::removeAttribute)
         }
 

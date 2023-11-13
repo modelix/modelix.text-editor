@@ -6,5 +6,6 @@ abstract class Selection : IKeyboardHandler {
 }
 
 abstract class SelectionView<E : Selection>(val selection: E) : IProducesHtml {
+    override var htmlGenerationId: String? = null
     abstract fun update()
 }

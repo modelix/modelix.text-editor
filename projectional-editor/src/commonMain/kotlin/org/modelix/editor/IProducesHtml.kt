@@ -2,10 +2,17 @@ package org.modelix.editor
 
 import kotlinx.html.Tag
 import kotlinx.html.TagConsumer
+import org.modelix.incremental.AtomicLong
 
 interface IProducesHtml {
+    var htmlGenerationId: String?
     fun isHtmlOutputValid(): Boolean = true
     fun <T> produceHtml(consumer: TagConsumer<T>)
+}
+
+private val idSequence = AtomicLong()
+fun IProducesHtml.getInitializedId(): String {
+    return htmlGenerationId ?: idSequence.incrementAndGet().toString(16).also { htmlGenerationId = it }
 }
 
 interface IIncrementalTagConsumer<E> : TagConsumer<E> {

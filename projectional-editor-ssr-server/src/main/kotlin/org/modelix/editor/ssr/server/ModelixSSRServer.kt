@@ -112,6 +112,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
         private inner class EditorSession(val editorId: String) {
             private var editorComponent: EditorComponent? = null
+            private val commonElementPrefix = editorId + "-"
 
             fun processMessage(msg: MessageFromClient) {
                 msg.rootNodeReference?.let {  rootNodeReferenceString ->
@@ -176,11 +177,13 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 return when (node) {
                     is Text -> TextNodeUpdateData(node.data)
                     is Element -> {
-                        val id = node.getAttribute("id").takeIf { it.isNotEmpty() }
+                        val id = node.getAttribute("id").takeIf { it.isNotEmpty() }?.let {
+                            if (it.startsWith(commonElementPrefix)) it else commonElementPrefix + it
+                        }
                         val data = HTMLElementUpdateData(
                             id = id,
                             tagName = node.tagName,
-                            attributes = node.attributes.toList().associate { it },
+                            attributes = node.attributes.toList().associate { it } - "id",
                             children = node.childNodes.toList().map { toUpdateData(it, id2data) }
                         )
                         if (id == null) {
