@@ -1,5 +1,6 @@
 package org.modelix.editor.ssr.server
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
@@ -7,16 +8,22 @@ import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.ssr.common.MessageFromClient
 import org.modelix.editor.ssr.common.MessageFromServer
+import org.modelix.editor.toHtml
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.model.api.INodeResolutionScope
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
 import org.modelix.model.api.runSynchronized
+import org.modelix.model.area.IArea
 
 class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
+    companion object {
+        private val LOG = KotlinLogging.logger {  }
+    }
+
     private val incrementalEngine = IncrementalEngine()
-    private val editorEngine: EditorEngine = EditorEngine(incrementalEngine)
+    val editorEngine: EditorEngine = EditorEngine(incrementalEngine)
     private val lock = Any()
 
     fun install(route: Route) {
@@ -46,7 +53,9 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 try {
                     when (wsMessage) {
                         is Frame.Text -> {
-                            val deserializedMessage = MessageFromClient.fromJson(wsMessage.readText())
+                            val serializedMessage = wsMessage.readText()
+                            LOG.debug { "Received message: $serializedMessage" }
+                            val deserializedMessage = MessageFromClient.fromJson(serializedMessage)
                             clientMessage = deserializedMessage
                             runSynchronized(lock) {
                                 processMessage(deserializedMessage)
@@ -64,7 +73,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             }
         }
 
-        suspend fun processMessage(msg: MessageFromClient) {
+        fun processMessage(msg: MessageFromClient) {
             msg.editorId?.let { editorId ->
                 if (msg.dispose) {
                     editors.remove(editorId)?.dispose()
@@ -85,15 +94,23 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
             fun processMessage(msg: MessageFromClient) {
                 msg.rootNodeReference?.let {  rootNodeReferenceString ->
-                    val rootNode = checkNotNull(NodeReference(rootNodeReferenceString).resolveIn(nodeResolutionScope)) {
-                        "Root node not found: $rootNodeReferenceString"
+                    (nodeResolutionScope as IArea).executeRead {
+                        val rootNode = checkNotNull(NodeReference(rootNodeReferenceString).resolveIn(nodeResolutionScope)) {
+                            "Root node not found: $rootNodeReferenceString"
+                        }
+                        LOG.debug { "Root node $rootNodeReferenceString found: $rootNode" }
+                        editorComponent = editorEngine.editNode(rootNode)
                     }
-                    editorComponent = editorEngine.editNode(rootNode)
                 }
                 msg.keyboardEvent?.let { event ->
                     val editor = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
                     editor.processKeyDown(event)
                 }
+            }
+
+            fun sendUpdate() {
+                editorComponent!!.update()
+                editorComponent!!.getRootCell().layout.toHtml()
             }
 
             fun dispose() {

@@ -5,10 +5,15 @@ import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.ktor.websocket.*
 import kotlinx.browser.document
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import kotlinx.html.div
 import kotlinx.html.dom.create
 import kotlinx.html.id
 import kotlinx.html.js.div
+import launchLogging
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
 import org.modelix.editor.ssr.common.HTMLElementUpdateData
@@ -31,35 +36,50 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         private val LOG = KotlinLogging.logger {}
     }
 
+    private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var nextEditorId: Long = 1000
     private var websocketSession: DefaultClientWebSocketSession? = null
     private val editors: MutableMap<String, EditorSession> = HashMap()
 
-    suspend fun connect() {
-        httpClient.webSocket(urlString = url) {
-            websocketSession = this
-            for (wsMessage in incoming) {
-                try {
-                    when (wsMessage) {
-                        is Frame.Text -> processMessage(MessageFromServer.fromJson(wsMessage.readText()))
-                        else -> {}
+    fun dispose() {
+        coroutineScope.cancel("Disposed")
+    }
+
+    fun connect(callback: suspend () -> Unit = {}) {
+        coroutineScope.launchLogging {
+            httpClient.webSocket(urlString = url) {
+                websocketSession = this
+                callback()
+                for (wsMessage in incoming) {
+                    try {
+                        when (wsMessage) {
+                            is Frame.Text -> processMessage(MessageFromServer.fromJson(wsMessage.readText()))
+                            else -> {}
+                        }
+                    } catch (ex: Throwable) {
+                        LOG.error(ex) { "Failed to process message: $wsMessage" }
                     }
-                } catch (ex: Throwable) {
-                    LOG.error(ex) { "Failed to process message: $wsMessage" }
                 }
             }
         }
     }
 
     fun createEditor(rootNodeReference: INodeReference): HTMLElement {
+        val editorId = "modelix-editor-" + nextEditorId++.toString()
+        LOG.trace { "Trying to create new editor $editorId" }
         val ws = checkNotNull(websocketSession) { "Not connected" }
-        val editorSession = EditorSession("modelix-editor-" + nextEditorId++.toString(), rootNodeReference)
+        val editorSession = EditorSession(editorId, rootNodeReference)
+        LOG.info { "Creating editor ${editorSession.editorId}" }
         editors[editorSession.editorId] = editorSession
         ws.launch {
-            ws.send(MessageFromClient(
-                editorId = editorSession.editorId,
-                rootNodeReference = rootNodeReference.serialize()
-            ).toJson())
+            try {
+                ws.send(MessageFromClient(
+                    editorId = editorSession.editorId,
+                    rootNodeReference = rootNodeReference.serialize()
+                ).toJson())
+            } catch (ex: Throwable) {
+                LOG.error(ex) { "Failed to initialized editor ${editorSession.editorId}" }
+            }
         }
         return editorSession.rootElement
     }
@@ -75,6 +95,9 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
     private inner class EditorSession(val editorId: String, rootNodeReference: INodeReference) {
         val rootElement: HTMLDivElement = document.create.div {
             id = editorId
+            div {
+                +"Editor $editorId"
+            }
         }
         private val elementMap: MutableMap<String, Element> = HashMap<String, Element>().also { it[editorId] = rootElement }
         private val pendingUpdates: MutableMap<String, IElementUpdateData> = HashMap()
