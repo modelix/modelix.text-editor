@@ -1,5 +1,6 @@
 package org.modelix.editor.ssr.common
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -31,11 +32,27 @@ class MessageFromServer(
 
 @Serializable
 data class DomTreeUpdate(
-    val elements: List<DomElementUpdate> = emptyList()
+    val elements: List<HTMLElementUpdateData> = emptyList()
 )
 
+sealed interface INodeUpdateData
+sealed interface IElementUpdateData : INodeUpdateData {
+    val id: String?
+}
+
 @Serializable
-data class DomElementUpdate(
-    val id: String? = null,
-    val children: List<DomElementUpdate>
-)
+@SerialName("Text")
+data class TextNodeUpdateData(val text: String) : INodeUpdateData
+
+@Serializable
+@SerialName("HTMLElement")
+data class HTMLElementUpdateData(
+    override val id: String? = null,
+    val tagName: String,
+    val attributes: Map<String, String> = emptyMap(),
+    val children: List<INodeUpdateData>
+) : IElementUpdateData
+
+@Serializable
+@SerialName("ref")
+data class ElementReference(override val id: String) : IElementUpdateData

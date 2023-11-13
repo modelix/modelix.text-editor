@@ -22,6 +22,13 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 implementation(project(":projectional-editor"))
+                implementation(project(":projectional-editor-ssr-common"))
+                implementation(coreLibs.ktor.client.core)
+                implementation(coreLibs.ktor.client.websockets)
+                implementation(coreLibs.ktor.client.js)
+                implementation(libs.kotlin.html)
+                implementation(libs.modelix.model.api)
+                implementation(libs.kotlin.logging)
             }
         }
         val jsTest by getting {
