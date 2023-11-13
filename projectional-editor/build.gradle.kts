@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    alias(coreLibs.plugins.kotlin.serialization)
     `maven-publish`
 }
 
@@ -24,6 +25,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(coreLibs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
+                implementation(coreLibs.kotlin.serialization.json)
                 api(coreLibs.modelix.incremental)
                 api(libs.kotlin.html)
             }

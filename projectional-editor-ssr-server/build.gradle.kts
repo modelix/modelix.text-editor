@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":projectional-editor"))
+    implementation(project(":projectional-editor-ssr-common"))
     implementation(coreLibs.ktor.server.core)
     implementation(coreLibs.ktor.server.websockets)
 }

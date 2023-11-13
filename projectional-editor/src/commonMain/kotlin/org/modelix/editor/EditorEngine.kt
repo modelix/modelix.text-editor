@@ -16,6 +16,7 @@ import org.modelix.metamodel.untyped
 import org.modelix.metamodel.untypedConcept
 import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.INode
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
@@ -63,6 +64,8 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         val template: CellTemplate<ITypedNode, IConceptOfTypedNode<ITypedNode>> = editor.apply(concept.typed() as IConceptOfTypedNode<ITypedNode>)
         return template
     }
+
+    fun editNode(node: INode): EditorComponent = editNode(node.typed())
 
     fun editNode(node: ITypedNode): EditorComponent {
         return EditorComponent(this) { editorState ->
