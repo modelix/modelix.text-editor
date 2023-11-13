@@ -24,7 +24,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
 fun Application.module() {
     val store = ObjectStoreCache(MapBasedStore())
-    val tree = CLTree.builder(store).repositoryId("ssr-demo").useRoleIds(true).build()
+    val tree = CLTree.builder(store).repositoryId("ssr-demo").useRoleIds(false).build()
     val branch = PBranch(tree, IdGenerator.newInstance(0x8888))
     val modelData = ModelData.fromJson(
         javaClass.getResourceAsStream("/test.in.expr.os.strings@tests.json")!!.use { it.reader().readText() }
