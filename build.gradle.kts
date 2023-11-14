@@ -1,5 +1,12 @@
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
+import org.semver.Version
+
+buildscript {
+    dependencies {
+        classpath(coreLibs.semver)
+    }
+}
 
 plugins {
     `maven-publish`
@@ -20,6 +27,13 @@ fun computeVersion(): Any {
     var version = if (versionFile.exists()) versionFile.readText().trim() else gitVersion()
     if (!versionFile.exists() && "true" != project.findProperty("ciBuild")) {
         version = "$version-SNAPSHOT"
+    }
+
+    // NPM requires a valid semantic version
+    try {
+        Version.parse(version)
+    } catch (_: IllegalArgumentException) {
+        version = "0.0.0-$version"
     }
     return version
 }
