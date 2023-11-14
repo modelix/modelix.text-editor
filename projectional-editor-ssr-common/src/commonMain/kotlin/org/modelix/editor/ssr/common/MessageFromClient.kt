@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.modelix.editor.JSKeyboardEvent
+import org.modelix.editor.JSMouseEvent
 
 @Serializable
 data class MessageFromClient(
@@ -28,7 +29,9 @@ data class MessageFromClient(
     /**
      * The user pressed a key on the client side that should be processed by the editor component.
      */
-    val keyboardEvent: JSKeyboardEvent? = null
+    val keyboardEvent: JSKeyboardEvent? = null,
+
+    val mouseEvent: JSMouseEvent? = null
 ) {
     fun toJson() = Json.encodeToString(this)
 
