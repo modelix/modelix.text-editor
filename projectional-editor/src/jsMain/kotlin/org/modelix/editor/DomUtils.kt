@@ -10,13 +10,6 @@ import org.w3c.dom.events.MouseEvent
 import kotlin.math.max
 import kotlin.math.min
 
-data class Bounds(val x: Double, val y: Double, val width: Double, val height: Double) {
-    fun maxX() = x + width
-    fun maxY() = y + height
-    fun minX() = x
-    fun minY() = y
-}
-
 fun HTMLElement.getAbsoluteBounds(): Bounds {
     return getBoundingClientRect().toBounds().translated(window.scrollX, window.scrollY)
 }
