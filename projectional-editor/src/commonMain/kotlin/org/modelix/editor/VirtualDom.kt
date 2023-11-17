@@ -7,6 +7,7 @@ interface IVirtualDom {
     val ui: IVirtualDomUI
 
     interface Node {
+        fun getVDom(): IVirtualDom
         val parent: IVirtualDom.Node?
         val childNodes: List<IVirtualDom.Node>
         fun getUserObject(key: String): Any?
@@ -142,6 +143,8 @@ private class VirtualDom(override val ui: IVirtualDomUI) : IVirtualDom {
         var id: String? = null
         override var parent: IVirtualDom.Node? = null
         override val childNodes: MutableList<IVirtualDom.Node> = ArrayList()
+
+        override fun getVDom(): IVirtualDom = this@VirtualDom
 
         override fun getUserObject(key: String): Any? = userObjects[key]
 

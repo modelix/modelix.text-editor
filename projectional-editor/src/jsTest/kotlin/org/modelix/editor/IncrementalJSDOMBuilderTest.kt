@@ -1,7 +1,6 @@
 package org.modelix.editor
 
 import kotlinx.html.TagConsumer
-import org.w3c.dom.Text
 import kotlin.random.Random
 import kotlin.test.Ignore
 import kotlin.test.Test
@@ -52,7 +51,7 @@ class IncrementalJSDOMBuilderTest {
         }
         println(expectedChanges)
         assertTrue(expectedChanges.contains("C"))
-        val actualChanges = elements1.indices.joinToString("") { if (elements1[it] === elements2[it]) "-" else "C" }
+        val actualChanges = elements1.indices.joinToString("") { if (elements1[it] == elements2[it]) "-" else "C" }
         println(actualChanges)
         assertEquals(expectedChanges, actualChanges)
     }

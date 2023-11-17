@@ -55,6 +55,18 @@ class JSDom(private val doc: Document = document, private val originElement: Ele
 
     open inner class NodeWrapper(private val node: Node) : IVirtualDom.Node {
         open fun getWrappedNode(): Node = node
+        override fun getVDom(): IVirtualDom = this@JSDom
+
+        override fun equals(other: Any?): Boolean {
+            if (other == null) return false
+            if (other !is NodeWrapper) return false
+            if (other.node !== node) return false
+            return true
+        }
+
+        override fun hashCode(): Int {
+            return node.hashCode()
+        }
 
         override val parent: IVirtualDom.Node?
             get() = node.parentNode?.wrap()
