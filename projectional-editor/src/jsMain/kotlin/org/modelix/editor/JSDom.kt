@@ -1,14 +1,15 @@
 package org.modelix.editor
 
 import kotlinx.browser.document
+import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
 import org.w3c.dom.Text
 import org.w3c.dom.asList
 
-class JSDom(private val originElement: Element) : IVirtualDom, IVirtualDomUI {
-    private fun getOrigin() = originElement.getAbsoluteBounds()
+class JSDom(private val doc: Document = document, private val originElement: Element? = null) : IVirtualDom, IVirtualDomUI {
+    private fun getOrigin() = originElement?.getAbsoluteBounds() ?: Bounds.ZERO
 
     override val ui: IVirtualDomUI
         get() = this
@@ -22,18 +23,28 @@ class JSDom(private val originElement: Element) : IVirtualDom, IVirtualDomUI {
     }
 
     override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> {
-        return document.elementsFromPoint(x, y).map { it.wrap() }
+        return doc.elementsFromPoint(x, y).map { it.wrap() }
     }
 
     override fun createElement(localName: String): IVirtualDom.Element {
-        return document.createElement(localName).wrap()
+        return doc.createElement(localName).wrap()
     }
 
     override fun createTextNode(data: String): IVirtualDom.Text {
-        return document.createTextNode(data).wrap()
+        return doc.createTextNode(data).wrap()
     }
 
-    private fun wrap(node: Node): IVirtualDom.Node {
+    fun wrap(node: HTMLElement) = wrapNode(node) as IVirtualDom.HTMLElement
+    fun wrap(node: Element) = wrapNode(node) as IVirtualDom.Element
+    fun wrap(node: Text) = wrapNode(node) as IVirtualDom.Text
+    fun wrap(node: Node) = wrapNode(node)
+
+    fun Node.wrap() = wrap(this)
+    fun Element.wrap() = wrap(this)
+    fun HTMLElement.wrap() = wrap(this)
+    fun Text.wrap() = wrap(this)
+
+    private fun wrapNode(node: Node): IVirtualDom.Node {
         return when (node) {
             is HTMLElement -> HTMLElementWrapper(node)
             is Element -> ElementWrapper(node)
@@ -41,11 +52,6 @@ class JSDom(private val originElement: Element) : IVirtualDom, IVirtualDomUI {
             else -> NodeWrapper(node)
         }
     }
-
-    fun Node.wrap(): IVirtualDom.Node = wrap(this)
-    fun Element.wrap(): IVirtualDom.Element = wrap(this) as IVirtualDom.Element
-    fun HTMLElement.wrap(): IVirtualDom.HTMLElement = wrap(this) as IVirtualDom.HTMLElement
-    fun Text.wrap(): IVirtualDom.Text = wrap(this) as IVirtualDom.Text
 
     open inner class NodeWrapper(private val node: Node) : IVirtualDom.Node {
         open fun getWrappedNode(): Node = node

@@ -60,7 +60,7 @@ class EditorKeyboardTest {
     }
 
     private fun testCaretChange(editor: EditorComponent, key: KnownKeys, expectedCellText: String, expectedPosition: Int) {
-        editor.processKeyDown(JSKeyboardEvent(key))
+        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, key))
         val layoutable = editor.getRootCell().descendants().find { it.getVisibleText() == expectedCellText }!!.layoutable()!!
         assertEquals(CaretSelection(layoutable, expectedPosition), editor.getSelection())
     }
