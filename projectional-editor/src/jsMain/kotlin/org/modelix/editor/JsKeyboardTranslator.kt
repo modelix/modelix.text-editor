@@ -1,10 +1,12 @@
 package org.modelix.editor
 
+import org.w3c.dom.HTMLElement
 import org.w3c.dom.events.KeyboardEvent
+import org.w3c.dom.events.MouseEvent
 
-fun KeyboardEvent.convert(): JSKeyboardEvent {
+fun KeyboardEvent.convert(eventType: JSKeyboardEventType): JSKeyboardEvent {
     val knownKey = KnownKeys.getIfKnown(key)
-    var typedText: String? = key.let { if (it.length == 1) it else null }
+    val typedText: String? = key.let { if (it.length == 1) it else null }
     val locationEnum = when (this.location) {
         KeyboardEvent.DOM_KEY_LOCATION_STANDARD -> KeyLocation.STANDARD
         KeyboardEvent.DOM_KEY_LOCATION_LEFT -> KeyLocation.LEFT
@@ -13,6 +15,7 @@ fun KeyboardEvent.convert(): JSKeyboardEvent {
         else -> KeyLocation.STANDARD
     }
     return JSKeyboardEvent(
+        eventType = eventType,
         typedText = typedText,
         knownKey = knownKey,
         rawKey = key,
@@ -20,5 +23,17 @@ fun KeyboardEvent.convert(): JSKeyboardEvent {
         location = locationEnum,
         repeat = this.repeat,
         composing = this.isComposing
+    )
+}
+
+fun MouseEvent.convert(eventType: JSMouseEventType, relativeTo: HTMLElement?): JSMouseEvent {
+    val origin = relativeTo?.getAbsoluteBounds() ?: Bounds.ZERO
+    return JSMouseEvent(
+        eventType = eventType,
+        x = this.getAbsolutePositionX() - origin.x,
+        y = this.getAbsolutePositionY() - origin.y,
+        modifiers = Modifiers(ctrlKey, altKey, shiftKey, metaKey),
+        button = button,
+        buttons = buttons
     )
 }

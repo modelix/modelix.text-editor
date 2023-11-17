@@ -1,6 +1,7 @@
 package org.modelix.editor
 
 import kotlinx.serialization.Serializable
+import kotlin.jvm.JvmName
 import kotlin.math.max
 import kotlin.math.min
 
@@ -25,6 +26,7 @@ fun Bounds.relativeTo(origin: Bounds): Bounds {
     )
 }
 
+@JvmName("union_nullable")
 fun Bounds?.union(other: Bounds?): Bounds? {
     return if (this == null) other else union(other)
 }

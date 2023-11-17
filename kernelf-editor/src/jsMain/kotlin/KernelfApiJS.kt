@@ -6,9 +6,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
-import org.modelix.editor.IncrementalJSDOMBuilder
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.kernelf.KernelfAPI
+import org.modelix.editor.unwrap
 import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.*
@@ -40,17 +40,6 @@ object KernelfApiJS {
         return tagConsumer.finalize()
     }
 
-    fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
-        val existing = parentElement.firstElementChild as? HTMLElement
-        val consumer = IncrementalJSDOMBuilder(parentElement.ownerDocument!!, existing)
-        KernelfAPI.renderNode(editorState, rootNode, consumer)
-        val newHtml = consumer.finalize()
-        if (newHtml != existing) {
-            if (existing != null) parentElement.removeChild(existing)
-            parentElement.appendChild(newHtml)
-        }
-    }
-
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {
         val editor = JsEditorComponent(KernelfAPI.editorEngine) { state ->
             KernelfAPI.editorEngine.createCell(state, rootNode.typed())
@@ -61,7 +50,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun treeChanged(oldTree: ITree?, newTree: ITree) {
-                    if (editor.getHtmlElement().isInDocument()) {
+                    if (editor.getHtmlElement().unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -81,7 +70,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun areaChanged(changes: IAreaChangeList) {
-                    if (editor.getHtmlElement().isInDocument()) {
+                    if (editor.getHtmlElement().unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -98,7 +87,7 @@ object KernelfApiJS {
             })
         }
         editor.updateHtml()
-        return editor.getHtmlElement()
+        return editor.getHtmlElement().unwrap()
     }
 }
 

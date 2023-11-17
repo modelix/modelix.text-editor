@@ -26,12 +26,13 @@ open class EditorComponent(
     private var selectionView: SelectionView<*>? = null
     private val virtualDom = IVirtualDom.newInstance()
     val generatedHtmlMap = GeneratedHtmlMap()
-    private var containerElement: IVirtualDom.HTMLElement = virtualDom.create().div("js-editor-component") {
+    protected var containerElement: IVirtualDom.HTMLElement = virtualDom.create().div("js-editor-component") {
         tabIndex = "-1" // allows setting keyboard focus
     }
-
+    private var highlightedLine: IVirtualDom.HTMLElement? = null
+    private var highlightedCell: IVirtualDom.HTMLElement? = null
     fun getMainLayer(): IVirtualDom.HTMLElement? {
-        return containerElement.descendants().filterIsInstance<IVirtualDom.HTMLElement>().find { it.classList.contains(MAIN_LAYER_CLASS_NAME) }
+        return containerElement.descendants().filterIsInstance<IVirtualDom.HTMLElement>().find { it.getClasses().contains(MAIN_LAYER_CLASS_NAME) }
     }
 
     fun selectAfterUpdate(newSelection: () -> Selection?) {
@@ -41,6 +42,10 @@ open class EditorComponent(
     fun resolveCell(reference: CellReference): List<Cell> = cellIndex.lookup(reference)
 
     fun resolveLayoutable(cell: Cell): LayoutableCell? = layoutablesIndex.lookup(cell).firstOrNull()
+
+    override fun isHtmlOutputValid(): Boolean = false
+
+    fun getHtmlElement(): IVirtualDom.HTMLElement = containerElement
 
     private fun updateRootCell() {
         val oldRootCell = rootCell
@@ -57,7 +62,35 @@ open class EditorComponent(
     open fun update() {
         updateRootCell()
         updateSelection()
+        updateSelectionView()
+        updateHtml()
         selectionView?.update()
+        codeCompletionMenu?.let { CodeCompletionMenuUI(it, this).updateBounds() }
+    }
+
+    fun updateHtml() {
+        val oldEditorElement = generatedHtmlMap.getOutput(this)
+        val newEditorElement = IncrementalVirtualDOMBuilder(virtualDom, oldEditorElement).produce(this)()
+        if (newEditorElement != oldEditorElement) {
+            oldEditorElement?.remove()
+            containerElement.appendChild(newEditorElement)
+        }
+
+        val selectedLayoutable = (getSelection() as? CaretSelection)?.layoutable
+
+        val newHighlightedLine = selectedLayoutable?.getLine()?.let { generatedHtmlMap.getOutput(it) }
+        if (newHighlightedLine != highlightedLine) {
+            highlightedLine?.removeClass("highlighted")
+        }
+        newHighlightedLine?.addClass("highlighted")
+        highlightedLine = newHighlightedLine
+
+        val newHighlightedCell = selectedLayoutable?.let { generatedHtmlMap.getOutput(it) }
+        if (newHighlightedCell != highlightedCell) {
+            highlightedCell?.removeClass("highlighted-cell")
+        }
+        newHighlightedCell?.addClass("highlighted-cell")
+        highlightedCell = newHighlightedCell
     }
 
     private fun updateSelectionView() {
@@ -144,7 +177,7 @@ open class EditorComponent(
     }
 
     open fun processClick(event: JSMouseEvent): Boolean {
-        val targets = virtualDom.getUI().getElementsAt(event.x, event.y)
+        val targets = virtualDom.ui.getElementsAt(event.x, event.y)
         for (target in targets) {
             val htmlElement = target as? IVirtualDom.HTMLElement
             val producer: IProducesHtml = htmlElement?.let { generatedHtmlMap.getProducer(it) } ?: continue
