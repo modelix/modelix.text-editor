@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class JSKeyboardEvent(
+    val eventType: JSKeyboardEventType,
     val typedText: String?,
     val knownKey: KnownKeys?,
     val rawKey: String,
@@ -12,7 +13,13 @@ class JSKeyboardEvent(
     val repeat: Boolean = false,
     val composing: Boolean = false
 ) {
-    constructor(knownKey: KnownKeys) : this(null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
+    constructor(eventType: JSKeyboardEventType, knownKey: KnownKeys)
+            : this(eventType, null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
+}
+
+enum class JSKeyboardEventType {
+    KEYDOWN,
+    KEYUP
 }
 
 @Serializable

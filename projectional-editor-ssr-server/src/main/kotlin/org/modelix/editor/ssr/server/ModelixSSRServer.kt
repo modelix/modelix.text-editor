@@ -114,6 +114,8 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             private var editorComponent: EditorComponent? = null
             private val commonElementPrefix = editorId + "-"
 
+            private fun getEditor() = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
+
             fun processMessage(msg: MessageFromClient) {
                 msg.rootNodeReference?.let {  rootNodeReferenceString ->
                     (nodeResolutionScope as IArea).executeRead {
@@ -126,8 +128,10 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                     sendUpdate()
                 }
                 msg.keyboardEvent?.let { event ->
-                    val editor = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
-                    editor.processKeyDown(event)
+                    getEditor().processKeyEvent(event)
+                }
+                msg.mouseEvent?.let { event ->
+                    getEditor().processMouseEvent(event)
                 }
             }
 

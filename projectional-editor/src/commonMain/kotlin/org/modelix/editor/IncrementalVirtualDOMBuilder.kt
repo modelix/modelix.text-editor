@@ -2,6 +2,7 @@ package org.modelix.editor
 
 import kotlinx.html.*
 import kotlinx.html.org.w3c.dom.events.Event
+import org.modelix.incremental.AtomicLong
 
 class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElement: IVirtualDom.HTMLElement?) : IIncrementalTagConsumer<IVirtualDom.HTMLElement> {
     private inner class StackFrame {
@@ -188,7 +189,13 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
 class GeneratedHtmlMap {
     private val producer2element: MutableMap<IProducesHtml, IVirtualDom.HTMLElement> = HashMap()
     private val element2producer: MutableMap<IVirtualDom.HTMLElement, IProducesHtml> = HashMap()
-    
+    private val producerIds: MutableMap<IProducesHtml, Long> = HashMap()
+    private val idSequence = AtomicLong()
+
+    fun getProducerId(producer: IProducesHtml): Long {
+        return producerIds.getOrPut(producer) { idSequence.incrementAndGet() }
+    }
+
     private var IProducesHtml.generatedHtml: IVirtualDom.HTMLElement?
         get() = producer2element[this]
         set(value) { if (value == null) producer2element.remove(this) else producer2element[this] = value }

@@ -15,11 +15,9 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 
 class JsEditorComponent(engine: EditorEngine, rootCellCreator: (EditorState) -> Cell) : EditorComponent(engine, rootCellCreator), IProducesHtml {
-    override var htmlGenerationId: String? = null
     private var containerElement: HTMLElement = document.create.div("js-editor-component") {
         tabIndex = "-1" // allows setting keyboard focus
     }
-    private var selectionView: SelectionView<*>? = null
     private var highlightedLine: HTMLElement? = null
     private var highlightedCell: HTMLElement? = null
 
@@ -34,10 +32,6 @@ class JsEditorComponent(engine: EditorEngine, rootCellCreator: (EditorState) -> 
 
     fun getHtmlElement(): HTMLElement = containerElement
 
-    fun getMainLayer(): HTMLElement? {
-        return containerElement.descendants().filterIsInstance<HTMLElement>().find { it.classList.contains(MAIN_LAYER_CLASS_NAME) }
-    }
-
     override fun update() {
         super.update()
         updateSelectionView()
@@ -46,15 +40,7 @@ class JsEditorComponent(engine: EditorEngine, rootCellCreator: (EditorState) -> 
         codeCompletionMenu?.let { JSCodeCompletionMenuUI(it, this).updateBounds() }
     }
 
-    private fun updateSelectionView() {
-        if (selectionView?.selection != getSelection()) {
-            selectionView = when (val selection = getSelection()) {
-                is CaretSelection -> JSCaretSelectionView(selection, this)
-                is CellSelection -> JSCellSelectionView(selection, this)
-                else -> null
-            }
-        }
-    }
+
 
     override fun <T> produceHtml(consumer: TagConsumer<T>) {
         consumer.div("editor") {

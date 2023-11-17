@@ -4,7 +4,6 @@ import kotlinx.html.*
 import org.modelix.incremental.IncrementalList
 
 class TextLine(words_: Iterable<Layoutable>) : IProducesHtml {
-    override var htmlGenerationId: String? = null
     var initialText: LayoutedText? = null
     var finalText: LayoutedText? = null
     val words: List<Layoutable> = words_.toList()
@@ -36,7 +35,6 @@ class TextLine(words_: Iterable<Layoutable>) : IProducesHtml {
 
     override fun <T> produceHtml(consumer: TagConsumer<T>) {
         consumer.div("line") {
-            id = getInitializedId()
             words.forEach { element: Layoutable ->
                 produceChild(element)
             }
@@ -55,7 +53,6 @@ class LayoutedText(
     val endsWithNoSpace: Boolean,
     var indent: Int = 0
 ) : IProducesHtml {
-    override var htmlGenerationId: String? = null
     var owner: LayoutedText? = null
     val layoutablesIndexList: IncrementalList<Pair<Cell, LayoutableCell>> =
         IncrementalList.concat(lines.map { it.layoutablesIndexList })
@@ -230,7 +227,6 @@ class TextLayouter {
 }
 
 abstract class Layoutable : IProducesHtml {
-    override var htmlGenerationId: String? = null
     var initialLine: TextLine? = null
     var finalLine: TextLine? = null
 
@@ -304,7 +300,6 @@ class LayoutableCell(val cell: Cell) : Layoutable() {
             else -> null
         }
         consumer.span("text-cell") {
-            id = getInitializedId()
             val styleParts = mutableListOf<String>()
             if (textColor != null) styleParts += "color: $textColor"
             if (backgroundColor != null) styleParts += "background-color: $backgroundColor"
@@ -327,7 +322,6 @@ class LayoutableIndent(val indentSize: Int): Layoutable() {
     override fun toText(): String = (1..totalIndent()).joinToString("") { "  " }
     override fun <T> produceHtml(consumer: TagConsumer<T>) {
         consumer.span("indent") {
-            id = getInitializedId()
             +toText().useNbsp()
         }
     }
@@ -338,7 +332,6 @@ class LayoutableSpace(): Layoutable() {
     override fun toText(): String = " "
     override fun <T> produceHtml(consumer: TagConsumer<T>) {
         consumer.span {
-            id = getInitializedId()
             +Typography.nbsp.toString()
         }
     }

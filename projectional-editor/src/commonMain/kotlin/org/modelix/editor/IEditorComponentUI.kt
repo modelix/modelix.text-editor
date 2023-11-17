@@ -8,7 +8,5 @@ interface IEditorComponentUI {
     fun getInnerBounds(element: IVirtualDom.Element): Bounds
 
     fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
-
-    val generatedHtmlMap: GeneratedHtmlMap
 }
 

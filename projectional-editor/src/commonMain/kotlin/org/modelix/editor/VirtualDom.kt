@@ -1,5 +1,8 @@
 package org.modelix.editor
 
+import kotlinx.html.TagConsumer
+import kotlin.reflect.KProperty
+
 interface IVirtualDom {
     interface Node {
         var parent: IVirtualDom.Node?
@@ -17,21 +20,98 @@ interface IVirtualDom {
         fun getAttribute(qualifiedName: String): String?
         fun setAttribute(qualifiedName: String, value: String)
         fun removeAttribute(qualifiedName: String)
+
+        fun getInnerBounds(): Bounds
+        fun getOuterBounds(): Bounds
     }
     interface HTMLElement : Element
     interface Text : Node {
         var textContent: String?
     }
+    interface UI {
+        fun getOuterBounds(element: IVirtualDom.Element): Bounds
+        fun getInnerBounds(element: IVirtualDom.Element): Bounds
+        fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
+    }
 
+    fun getUI(): UI
     fun createElement(localName: String): IVirtualDom.Element
     fun createTextNode(data: String): IVirtualDom.Text
 
+    fun create(): TagConsumer<IVirtualDom.HTMLElement> {
+        return IncrementalVirtualDOMBuilder(this, null)
+    }
+
     companion object {
-        fun newInstance(): IVirtualDom = VirtualDom()
+        fun newInstance(): IVirtualDom = newInstance(DummyUI())
+        fun newInstance(ui: UI): IVirtualDom = VirtualDom(ui)
     }
 }
 
-private class VirtualDom : IVirtualDom {
+private class DummyUI : IVirtualDom.UI {
+    override fun getOuterBounds(element: IVirtualDom.Element): Bounds = Bounds.ZERO
+    override fun getInnerBounds(element: IVirtualDom.Element): Bounds = Bounds.ZERO
+    override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> = emptyList()
+}
+
+fun IVirtualDom.Node.descendants(includeSelf: Boolean = false): Sequence<IVirtualDom.Node> {
+    return if (includeSelf) {
+        sequenceOf(this) + descendants(false)
+    } else {
+        childNodes.asSequence().flatMap { it.descendants(true) }
+    }
+}
+
+val IVirtualDom.Element.classList: List<String> get() = getAttribute("class")?.split(' ') ?: emptyList()
+
+fun IVirtualDom.Element.innerText(): String {
+    return (childNodes.single() as IVirtualDom.Text).textContent ?: ""
+}
+
+val IVirtualDom.HTMLElement.style: VirtualDomStyle get() = VirtualDomStyle(this)
+
+object StyleAttributeDelegate {
+    operator fun getValue(style: VirtualDomStyle, property: KProperty<*>): String? {
+        return style[property.name]
+    }
+
+    operator fun setValue(style: VirtualDomStyle, property: KProperty<*>, value: String?) {
+        style[property.name] = value
+    }
+}
+
+var VirtualDomStyle.position by StyleAttributeDelegate
+var VirtualDomStyle.left by StyleAttributeDelegate
+var VirtualDomStyle.right by StyleAttributeDelegate
+var VirtualDomStyle.top by StyleAttributeDelegate
+var VirtualDomStyle.width by StyleAttributeDelegate
+var VirtualDomStyle.height by StyleAttributeDelegate
+
+class VirtualDomStyle(private val element: IVirtualDom.Element) {
+    fun toMap(): Map<String, String> = (element.getAttribute("style") ?: "")
+        .split(';')
+        .map { it.split(':', limit = 2) }
+        .filter { it.size != 2 }
+        .associate { it[0].trim() to it[1].trim() }
+    operator fun get(name: String): String? = toMap()[name]
+    operator fun set(name: String, value: String?) = toMap().toMutableMap()
+        .also { if (value == null) it.remove(name) else it[name] = value }
+        .entries.joinToString(";") { "${it.key}:${it.value}" }
+        .let { element.setAttribute("style", it) }
+}
+
+fun IVirtualDom.HTMLElement.setBounds(bounds: Bounds) {
+    with(style) {
+        left = "${bounds.x}px"
+        top = "${bounds.y}px"
+        width = "${bounds.width}px"
+        height = "${bounds.height}px"
+    }
+}
+
+private class VirtualDom(private val ui: IVirtualDom.UI) : IVirtualDom {
+    override fun getUI(): IVirtualDom.UI = ui
+
     override fun createElement(localName: String): Element {
         return HTMLElement(localName)
     }
@@ -84,6 +164,9 @@ private class VirtualDom : IVirtualDom {
         override fun getAttribute(qualifiedName: String): String? = attributes[qualifiedName]
         override fun setAttribute(qualifiedName: String, value: String) { attributes[qualifiedName] = value }
         override fun removeAttribute(qualifiedName: String) { attributes.remove(qualifiedName) }
+
+        override fun getInnerBounds(): Bounds = ui.getInnerBounds(this)
+        override fun getOuterBounds(): Bounds = ui.getOuterBounds(this)
     }
 
     inner class HTMLElement(tagName: String) : Element(tagName), IVirtualDom.HTMLElement {

@@ -1,6 +1,5 @@
 package org.modelix.editor
 
-import kotlinx.html.TagConsumer
 import kotlinx.html.classes
 import kotlinx.html.div
 import kotlinx.html.style
@@ -13,8 +12,8 @@ class JSCaretSelectionView(selection: CaretSelection, val editor: JsEditorCompon
 
     private fun hasRange() = selection.start != selection.end
 
-    override fun <T> produceHtml(consumer: TagConsumer<T>) {
-        with(consumer) {
+    override fun <T> produceHtml(context: IHtmlGenerationContext) {
+        with(context) {
             div("caret-selection") {
                 style = "position: absolute"
                 if (hasRange()) {
