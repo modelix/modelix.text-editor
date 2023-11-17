@@ -7,7 +7,6 @@ import {SafeHtmlPipe, TextEditorComponent} from './text-editor/text-editor.compo
 import { ExplorerComponent } from './explorer/explorer.component';
 import { ExplorerModuleComponent } from './explorer-module/explorer-module.component';
 import { ExplorerModelComponent } from './explorer-model/explorer-model.component';
-import {registerLanguages} from "../gen";
 import {FormsModule} from "@angular/forms";
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
@@ -36,5 +35,3 @@ import {AngularSplitModule} from "angular-split";
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-registerLanguages()
