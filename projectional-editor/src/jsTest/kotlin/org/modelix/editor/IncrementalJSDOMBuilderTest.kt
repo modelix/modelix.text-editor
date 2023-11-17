@@ -1,8 +1,6 @@
 package org.modelix.editor
 
-import kotlinx.browser.document
 import kotlinx.html.TagConsumer
-import org.w3c.dom.HTMLElement
 import org.w3c.dom.Text
 import kotlin.random.Random
 import kotlin.test.Ignore
@@ -34,7 +32,7 @@ class IncrementalJSDOMBuilderTest {
 
         var domBuilder: TagConsumer<IVirtualDom.HTMLElement> = IncrementalVirtualDOMBuilder(JSDom(), null)
         val dom = cell.layout.toHtml(domBuilder)
-        val elements1 = listOf(dom) + dom.descendants()
+        val elements1: List<IVirtualDom.Node> = listOf(dom) + dom.descendants()
         println(cell)
         println(dom.unwrap().outerHTML)
 
@@ -43,14 +41,14 @@ class IncrementalJSDOMBuilderTest {
         assertNotSame(cell, cell2, "No cell was replaced")
         domBuilder = IncrementalVirtualDOMBuilder(JSDom(), dom)
         val dom2 = cell2.layout.toHtml(domBuilder)
-        val elements2 = listOf(dom2) + dom2.descendants()
+        val elements2: List<IVirtualDom.Node> = listOf(dom2) + dom2.descendants()
         println(cell2)
         println(dom2.unwrap().outerHTML)
         assertEquals(elements1.size, elements2.size)
 
         val expectedChanges = elements1.indices.joinToString("") {
             val element2 = elements2[it]
-            if (element2 is Text && element2.textContent == newText) "C" else "-"
+            if (element2 is IVirtualDom.Text && element2.textContent == newText) "C" else "-"
         }
         println(expectedChanges)
         assertTrue(expectedChanges.contains("C"))
