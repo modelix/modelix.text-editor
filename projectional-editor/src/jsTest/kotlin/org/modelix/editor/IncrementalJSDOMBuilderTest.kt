@@ -32,20 +32,20 @@ class IncrementalJSDOMBuilderTest {
             addChild(Cell(TextCellData("d")))
         }
 
-        var domBuilder: TagConsumer<HTMLElement> = IncrementalJSDOMBuilder(document, null)
+        var domBuilder: TagConsumer<IVirtualDom.HTMLElement> = IncrementalVirtualDOMBuilder(JSDom(), null)
         val dom = cell.layout.toHtml(domBuilder)
         val elements1 = listOf(dom) + dom.descendants()
         println(cell)
-        println(dom.outerHTML)
+        println(dom.unwrap().outerHTML)
 
         val newText = "X"
         val cell2 = replaceCell(cell, textCellToChange, Cell(TextCellData(newText)))
         assertNotSame(cell, cell2, "No cell was replaced")
-        domBuilder = IncrementalJSDOMBuilder(document, dom)
+        domBuilder = IncrementalVirtualDOMBuilder(JSDom(), dom)
         val dom2 = cell2.layout.toHtml(domBuilder)
         val elements2 = listOf(dom2) + dom2.descendants()
         println(cell2)
-        println(dom2.outerHTML)
+        println(dom2.unwrap().outerHTML)
         assertEquals(elements1.size, elements2.size)
 
         val expectedChanges = elements1.indices.joinToString("") {
@@ -144,18 +144,18 @@ class IncrementalJSDOMBuilderTest {
 
     fun runRandomTest(rand: Random, cellsPerLevel: Int, levels: Int, modify: (Cell) -> Cell) {
         val cell = EditorTestUtils.buildRandomCells(rand, cellsPerLevel, levels)
-        val dom = cell.layout.toHtml(IncrementalJSDOMBuilder(document, null))
-        val html = dom.outerHTML
+        val dom = cell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null))
+        val html = dom.unwrap().outerHTML
         println("old html: " + html)
         println("old cells: $cell")
         val newCell = modify(cell)
         println("new cells: $newCell")
-        val dom2incremental = newCell.layout.toHtml(IncrementalJSDOMBuilder(document, dom))
-        val html2incremental = dom2incremental.outerHTML
+        val dom2incremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), dom))
+        val html2incremental = dom2incremental.unwrap().outerHTML
 
         newCell.descendantsAndSelf().forEach { it.clearCachedLayout() }
-        val dom2nonIncremental = newCell.layout.toHtml(IncrementalJSDOMBuilder(document, null))
-        val html2nonIncremental = dom2nonIncremental.outerHTML
+        val dom2nonIncremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null))
+        val html2nonIncremental = dom2nonIncremental.unwrap().outerHTML
         assertEquals(html2nonIncremental, html2incremental)
     }
 }

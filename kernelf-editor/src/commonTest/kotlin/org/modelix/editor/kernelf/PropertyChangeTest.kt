@@ -13,6 +13,7 @@ import org.modelix.editor.EditorEngine
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.JSKeyboardEvent
+import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.KeyLocation
 import org.modelix.editor.Modifiers
 import org.modelix.editor.PropertyCellReference
@@ -79,7 +80,7 @@ class PropertyChangeTest {
     @Test
     fun propertyChange() {
         assertEquals("200", numberLiteral.value)
-        editor.processKeyDown(JSKeyboardEvent("8", null, "8", Modifiers.NONE, KeyLocation.STANDARD, false, false))
+        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, "8", null, "8", Modifiers.NONE, KeyLocation.STANDARD, false, false))
         assertEquals("8200", numberLiteral.value)
     }
 

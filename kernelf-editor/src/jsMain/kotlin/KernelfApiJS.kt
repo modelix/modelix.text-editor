@@ -6,6 +6,9 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
+import org.modelix.editor.IVirtualDom
+import org.modelix.editor.IncrementalVirtualDOMBuilder
+import org.modelix.editor.JSDom
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.kernelf.KernelfAPI
 import org.modelix.editor.unwrap
@@ -38,6 +41,18 @@ object KernelfApiJS {
         val tagConsumer = document.createTree()
         KernelfAPI.renderNode(editorState, rootNode, tagConsumer)
         return tagConsumer.finalize()
+    }
+
+    fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
+        val existing = parentElement.firstElementChild as? HTMLElement
+        val virtualDom = JSDom(parentElement.ownerDocument!!)
+        val consumer = IncrementalVirtualDOMBuilder(virtualDom, existing?.let { virtualDom.wrap(it) })
+        KernelfAPI.renderNode(editorState, rootNode, consumer)
+        val newHtml = consumer.finalize()
+        if (newHtml != existing) {
+            if (existing != null) parentElement.removeChild(existing)
+            parentElement.appendChild(newHtml.unwrap())
+        }
     }
 
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {

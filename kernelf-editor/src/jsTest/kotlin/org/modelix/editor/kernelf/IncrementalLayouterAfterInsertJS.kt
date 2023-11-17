@@ -55,17 +55,17 @@ open class IncrementalLayoutAfterInsertJS {
     @Test
     fun domAfterInsert() {
         val containerElement = document.create.div()
-        var consumer = IncrementalJSDOMBuilder(containerElement.ownerDocument!!, containerElement)
-        val initialHtml = editor.getRootCell().layout.toHtml(consumer).outerHTML
+        var consumer = JSDom(containerElement.ownerDocument!!).let { vdom -> IncrementalVirtualDOMBuilder(vdom, vdom.wrap(containerElement)) }
+        val initialHtml = editor.getRootCell().layout.toHtml(consumer).unwrap().outerHTML
 
-        editor.processKeyDown(JSKeyboardEvent(KnownKeys.Enter))
-        consumer = IncrementalJSDOMBuilder(containerElement.ownerDocument!!, containerElement)
-        val incrementalHtml = editor.getRootCell().layout.toHtml(consumer).outerHTML
+        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, KnownKeys.Enter))
+        consumer = JSDom(containerElement.ownerDocument!!).let { vdom -> IncrementalVirtualDOMBuilder(vdom, vdom.wrap(containerElement)) }
+        val incrementalHtml = editor.getRootCell().layout.toHtml(consumer).unwrap().outerHTML
 
         editor.clearLayoutCache()
 
-        consumer = IncrementalJSDOMBuilder(containerElement.ownerDocument!!, containerElement)
-        val nonIncrementalHtml = editor.getRootCell().layout.toHtml(consumer).outerHTML
+        consumer = JSDom(containerElement.ownerDocument!!).let { vdom -> IncrementalVirtualDOMBuilder(vdom, vdom.wrap(containerElement)) }
+        val nonIncrementalHtml = editor.getRootCell().layout.toHtml(consumer).unwrap().outerHTML
         assertEquals(nonIncrementalHtml, incrementalHtml)
     }
 }

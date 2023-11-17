@@ -143,11 +143,11 @@ open class EditorComponent(
 
     }
 
-    open fun processKeyUp(event: JSKeyboardEvent): Boolean {
+    protected open fun processKeyUp(event: JSKeyboardEvent): Boolean {
         return true
     }
 
-    open fun processKeyDown(event: JSKeyboardEvent): Boolean {
+    protected open fun processKeyDown(event: JSKeyboardEvent): Boolean {
         try {
             if (event.knownKey == KnownKeys.F5) {
                 clearLayoutCache()
@@ -176,7 +176,7 @@ open class EditorComponent(
         }
     }
 
-    open fun processClick(event: JSMouseEvent): Boolean {
+    protected open fun processClick(event: JSMouseEvent): Boolean {
         val targets = virtualDom.ui.getElementsAt(event.x, event.y)
         for (target in targets) {
             val htmlElement = target as? IVirtualDom.HTMLElement
