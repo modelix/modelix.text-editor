@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class JSMouseEvent(
+    val eventType: JSMouseEventType,
     val x: Double,
     val y: Double,
     val modifiers: Modifiers = Modifiers.NONE,
@@ -38,5 +39,9 @@ enum class JSMouseButton {
     AUXILIARY,
     FOURTH,
     FIFTH
+}
+
+enum class JSMouseEventType {
+    CLICK
 }
 

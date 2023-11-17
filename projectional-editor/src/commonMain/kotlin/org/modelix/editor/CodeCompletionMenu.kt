@@ -14,7 +14,6 @@ class CodeCompletionMenu(
     initialPattern: String = "",
     initialCaretPosition: Int? = null,
 ) : IProducesHtml, IKeyboardHandler {
-    override var htmlGenerationId: String? = null
     val patternEditor = PatternEditor(initialPattern, initialCaretPosition)
     private val actionsCache = CachedCodeCompletionActions(providers)
     private var selectedIndex: Int = 0
@@ -108,7 +107,6 @@ class CodeCompletionMenu(
     }
 
     inner class PatternEditor(initialPattern: String, initialCaretPosition: Int?) : IProducesHtml {
-        override var htmlGenerationId: String? = null
         private var patternCell: Cell? = null
         var caretPos: Int = initialCaretPosition ?: initialPattern.length
         var pattern: String = initialPattern
