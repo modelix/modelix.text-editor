@@ -4,15 +4,18 @@ import kotlinx.html.TagConsumer
 import kotlin.reflect.KProperty
 
 interface IVirtualDom {
+    val ui: IVirtualDomUI
+
     interface Node {
-        var parent: IVirtualDom.Node?
-        val childNodes: MutableList<IVirtualDom.Node>
+        val parent: IVirtualDom.Node?
+        val childNodes: List<IVirtualDom.Node>
         fun getUserObject(key: String): Any?
         fun putUserObject(key: String, value: Any?)
         fun insertBefore(newNode: IVirtualDom.Node, referenceNode: IVirtualDom.Node?): IVirtualDom.Node
         fun appendChild(child: IVirtualDom.Node): IVirtualDom.Node
         fun replaceChild(newChild: IVirtualDom.Node, oldChild: IVirtualDom.Node): IVirtualDom.Node
         fun removeChild(child: IVirtualDom.Node): IVirtualDom.Node
+        fun remove()
     }
     interface Element : Node {
         val tagName: String
@@ -28,13 +31,7 @@ interface IVirtualDom {
     interface Text : Node {
         var textContent: String?
     }
-    interface UI {
-        fun getOuterBounds(element: IVirtualDom.Element): Bounds
-        fun getInnerBounds(element: IVirtualDom.Element): Bounds
-        fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
-    }
 
-    fun getUI(): UI
     fun createElement(localName: String): IVirtualDom.Element
     fun createTextNode(data: String): IVirtualDom.Text
 
@@ -44,11 +41,11 @@ interface IVirtualDom {
 
     companion object {
         fun newInstance(): IVirtualDom = newInstance(DummyUI())
-        fun newInstance(ui: UI): IVirtualDom = VirtualDom(ui)
+        fun newInstance(ui: IVirtualDomUI): IVirtualDom = VirtualDom(ui)
     }
 }
 
-private class DummyUI : IVirtualDom.UI {
+private class DummyUI : IVirtualDomUI {
     override fun getOuterBounds(element: IVirtualDom.Element): Bounds = Bounds.ZERO
     override fun getInnerBounds(element: IVirtualDom.Element): Bounds = Bounds.ZERO
     override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> = emptyList()
@@ -62,7 +59,21 @@ fun IVirtualDom.Node.descendants(includeSelf: Boolean = false): Sequence<IVirtua
     }
 }
 
-val IVirtualDom.Element.classList: List<String> get() = getAttribute("class")?.split(' ') ?: emptyList()
+fun IVirtualDom.Element.getClasses(): Set<String> {
+    return getAttribute("class")?.let {
+        it.split(' ').asSequence().map { it.trim() }.filter { it.isNotEmpty() }.toSet()
+    } ?: emptySet()
+}
+fun IVirtualDom.Element.removeClass(name: String) {
+    val classes = getClasses()
+    if (!classes.contains(name)) return
+    setAttribute("class", (classes - name).joinToString(" "))
+}
+fun IVirtualDom.Element.addClass(name: String) {
+    val classes = getClasses()
+    if (classes.contains(name)) return
+    setAttribute("class", (classes + name).joinToString(" "))
+}
 
 fun IVirtualDom.Element.innerText(): String {
     return (childNodes.single() as IVirtualDom.Text).textContent ?: ""
@@ -109,8 +120,14 @@ fun IVirtualDom.HTMLElement.setBounds(bounds: Bounds) {
     }
 }
 
-private class VirtualDom(private val ui: IVirtualDom.UI) : IVirtualDom {
-    override fun getUI(): IVirtualDom.UI = ui
+
+interface IVirtualDomUI {
+    fun getOuterBounds(element: IVirtualDom.Element): Bounds
+    fun getInnerBounds(element: IVirtualDom.Element): Bounds
+    fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
+}
+
+private class VirtualDom(override val ui: IVirtualDomUI) : IVirtualDom {
 
     override fun createElement(localName: String): Element {
         return HTMLElement(localName)
@@ -118,6 +135,7 @@ private class VirtualDom(private val ui: IVirtualDom.UI) : IVirtualDom {
     override fun createTextNode(data: String): Text {
         return Text().also { it.textContent = data }
     }
+
 
     open inner class Node : IVirtualDom.Node {
         private val userObjects: MutableMap<String, Any> = HashMap()
@@ -155,6 +173,10 @@ private class VirtualDom(private val ui: IVirtualDom.UI) : IVirtualDom {
         override fun removeChild(child: IVirtualDom.Node): IVirtualDom.Node {
             require(childNodes.remove(child)) { "$child is not a child of $this" }
             return child
+        }
+
+        override fun remove() {
+            parent?.removeChild(this)
         }
     }
 
