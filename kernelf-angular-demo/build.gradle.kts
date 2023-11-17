@@ -1,10 +1,12 @@
 import com.github.gradle.node.npm.task.NpmInstallTask
 import com.github.gradle.node.npm.task.NpmSetupTask
 import com.github.gradle.node.npm.task.NpmTask
+import dev.petuska.npm.publish.task.NpmPackTask
 
 plugins {
     base
     id("com.github.node-gradle.node") version "7.0.1"
+    alias(libs.plugins.npm.publish) apply false // just need the task types on the classpath
 }
 
 node {
@@ -31,6 +33,8 @@ tasks.withType<NpmSetupTask> {
 }
 
 val updateTask = tasks.register<NpmTask>("updateOwnDependencies") {
+    dependsOn(project(":kernelf-editor").tasks.named("packJsPackage"))
+    inputs.file(project(":kernelf-editor").tasks.named<NpmPackTask>("packJsPackage").map { it.outputFile })
     args = listOf("update", "@modelix/kernelf-editor")
 }
 

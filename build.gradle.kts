@@ -14,6 +14,7 @@ plugins {
     id("com.dorongold.task-tree") version "2.1.1"
     alias(coreLibs.plugins.kotlin.multiplatform) apply false
     alias(coreLibs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.npm.publish) apply false
 }
 
 group = "org.modelix"
