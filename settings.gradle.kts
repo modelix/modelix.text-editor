@@ -14,7 +14,7 @@ pluginManagement {
         }
         versionCatalogs {
             create("coreLibs") {
-                from("org.modelix:core-version-catalog:3.13.0-1-gc50bb50-SNAPSHOT")
+                from("org.modelix:core-version-catalog:3.14.2-4-gf102fe4-SNAPSHOT")
             }
         }
     }
