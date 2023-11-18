@@ -131,7 +131,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             fun sendUpdate() {
                 LOG.debug { "($editorId) sendUpdate" }
                 editorComponent!!.update()
-                val dom = editorComponent!!.getHtmlElement()
+                val dom = editorComponent!!.getHtmlElement()!!
                 LOG.debug { "($editorId) dom: $dom" }
                 val lastestDomState = HashMap<String, HTMLElementUpdateData>()
                 var rootData = toUpdateData(dom, lastestDomState)
