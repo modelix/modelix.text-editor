@@ -120,7 +120,7 @@ class VirtualDomStyle(private val element: IVirtualDom.Element) {
     fun toMap(): Map<String, String> = (element.getAttribute("style") ?: "")
         .split(';')
         .map { it.split(':', limit = 2) }
-        .filter { it.size != 2 }
+        .filter { it.size == 2 }
         .associate { it[0].trim() to it[1].trim() }
     operator fun get(name: String): String? = toMap()[name]
     operator fun set(name: String, value: String?) = toMap().toMutableMap()
