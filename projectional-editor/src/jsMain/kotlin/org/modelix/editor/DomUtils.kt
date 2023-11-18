@@ -29,7 +29,7 @@ fun Element.getAbsoluteInnerBounds(): Bounds {
 fun DOMRect.toBounds() = Bounds(x, y, width, height)
 
 private fun getBodyAbsoluteBounds() = document.body?.getBoundingClientRect()?.toBounds() ?: Bounds.ZERO
-fun MouseEvent.getAbsolutePositionX() = clientX - getBodyAbsoluteBounds().x
-fun MouseEvent.getAbsolutePositionY() = clientY - getBodyAbsoluteBounds().y
+fun MouseEvent.getAbsolutePositionX() = clientX + window.scrollX
+fun MouseEvent.getAbsolutePositionY() = clientY + window.scrollY
 
 fun Node.descendants(): Sequence<Node> = childNodes.asList().asSequence().flatMap { sequenceOf(it) + it.descendants() }
