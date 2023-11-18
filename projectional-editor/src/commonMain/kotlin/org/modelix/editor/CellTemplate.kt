@@ -20,6 +20,7 @@ import org.modelix.model.api.addNewChild
 import org.modelix.model.api.getChildren
 import org.modelix.model.api.moveChild
 import org.modelix.model.api.setPropertyValue
+import org.modelix.model.area.ContextArea
 import org.modelix.scopes.ScopeAspect
 
 abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(val concept: ConceptT) {
@@ -299,7 +300,9 @@ open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNo
         }
 
         override fun replaceText(editor: EditorComponent, range: IntRange, replacement: String, newText: String): Boolean {
-            node.unwrap().setPropertyValue(property, newText)
+            node.unwrap().getArea().executeWrite {
+                node.unwrap().setPropertyValue(property, newText)
+            }
             return true
         }
     }

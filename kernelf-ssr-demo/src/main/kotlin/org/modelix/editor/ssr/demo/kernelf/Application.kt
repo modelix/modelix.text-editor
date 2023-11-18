@@ -7,6 +7,7 @@ import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import org.modelix.editor.kernelf.KernelfEditor
 import org.modelix.editor.ssr.server.ModelixSSRServer
+import org.modelix.editor.withIncrementalComputationSupport
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IProperty
@@ -25,7 +26,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.module() {
     val store = ObjectStoreCache(MapBasedStore())
     val tree = CLTree.builder(store).repositoryId("ssr-demo").useRoleIds(false).build()
-    val branch = PBranch(tree, IdGenerator.newInstance(0x8888))
+    val branch = PBranch(tree, IdGenerator.newInstance(0x8888)).withIncrementalComputationSupport()
     val modelData = ModelData.fromJson(
         javaClass.getResourceAsStream("/test.in.expr.os.strings@tests.json")!!.use { it.reader().readText() }
     )
