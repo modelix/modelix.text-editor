@@ -65,10 +65,10 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         return template
     }
 
-    fun editNode(node: INode): EditorComponent = editNode(node.typed())
+    fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent = editNode(node.typed(), virtualDom)
 
-    fun editNode(node: ITypedNode): EditorComponent {
-        return EditorComponent(this) { editorState ->
+    fun editNode(node: ITypedNode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {
+        return EditorComponent(this, virtualDom = virtualDom) { editorState ->
             node.unwrap().getArea().executeRead { createCell(editorState, node) }
         }
     }

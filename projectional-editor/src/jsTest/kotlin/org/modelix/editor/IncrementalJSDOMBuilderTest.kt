@@ -18,6 +18,8 @@ class IncrementalJSDOMBuilderTest {
 
     @Test
     fun test() {
+        val generatedHtmlMap = GeneratedHtmlMap()
+
         val textCellToChange = Cell(TextCellData("b"))
         val cell = Cell(CellData()).apply {
             addChild(Cell(TextCellData("a")))
@@ -29,7 +31,7 @@ class IncrementalJSDOMBuilderTest {
             addChild(Cell(TextCellData("d")))
         }
 
-        var domBuilder: TagConsumer<IVirtualDom.HTMLElement> = IncrementalVirtualDOMBuilder(JSDom(), null)
+        var domBuilder: TagConsumer<IVirtualDom.HTMLElement> = IncrementalVirtualDOMBuilder(JSDom(), null, generatedHtmlMap)
         val dom = cell.layout.toHtml(domBuilder)
         val elements1: List<IVirtualDom.Node> = listOf(dom) + dom.descendants()
         println(cell)
@@ -38,7 +40,7 @@ class IncrementalJSDOMBuilderTest {
         val newText = "X"
         val cell2 = replaceCell(cell, textCellToChange, Cell(TextCellData(newText)))
         assertNotSame(cell, cell2, "No cell was replaced")
-        domBuilder = IncrementalVirtualDOMBuilder(JSDom(), dom)
+        domBuilder = IncrementalVirtualDOMBuilder(JSDom(), dom, generatedHtmlMap)
         val dom2 = cell2.layout.toHtml(domBuilder)
         val elements2: List<IVirtualDom.Node> = listOf(dom2) + dom2.descendants()
         println(cell2)
@@ -140,18 +142,19 @@ class IncrementalJSDOMBuilderTest {
     }
 
     fun runRandomTest(rand: Random, cellsPerLevel: Int, levels: Int, modify: (Cell) -> Cell) {
+        val generatedHtmlMap = GeneratedHtmlMap()
         val cell = EditorTestUtils.buildRandomCells(rand, cellsPerLevel, levels)
-        val dom = cell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null))
+        val dom = cell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null, generatedHtmlMap))
         val html = dom.unwrap().outerHTML
         println("old html: " + html)
         println("old cells: $cell")
         val newCell = modify(cell)
         println("new cells: $newCell")
-        val dom2incremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), dom))
+        val dom2incremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), dom, generatedHtmlMap))
         val html2incremental = dom2incremental.unwrap().outerHTML
 
         newCell.descendantsAndSelf().forEach { it.clearCachedLayout() }
-        val dom2nonIncremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null))
+        val dom2nonIncremental = newCell.layout.toHtml(IncrementalVirtualDOMBuilder(JSDom(), null, generatedHtmlMap))
         val html2nonIncremental = dom2nonIncremental.unwrap().outerHTML
         assertEquals(html2nonIncremental, html2incremental)
     }

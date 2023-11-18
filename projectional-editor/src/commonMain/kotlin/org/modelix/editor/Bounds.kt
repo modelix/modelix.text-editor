@@ -47,3 +47,7 @@ fun Bounds.expanded(delta: Double) = copy(
     width = width + delta * 2.0,
     height = height + delta * 2.0
 )
+
+fun Bounds.contains(x: Double, y: Double): Boolean {
+    return (minX()..maxX()).contains(x) && (minY()..maxY()).contains(y)
+}

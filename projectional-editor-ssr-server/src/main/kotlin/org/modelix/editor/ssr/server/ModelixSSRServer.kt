@@ -4,15 +4,17 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
-import kotlinx.html.div
-import kotlinx.html.dom.create
-import kotlinx.html.id
+import org.modelix.editor.Bounds
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
-import org.modelix.editor.IProducesHtml
-import org.modelix.editor.produceChild
+import org.modelix.editor.IVirtualDom
+import org.modelix.editor.IVirtualDomUI
+import org.modelix.editor.VirtualDom
+import org.modelix.editor.contains
+import org.modelix.editor.id
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
+import org.modelix.editor.ssr.common.HTMLElementBoundsUpdate
 import org.modelix.editor.ssr.common.HTMLElementUpdateData
 import org.modelix.editor.ssr.common.INodeUpdateData
 import org.modelix.editor.ssr.common.MessageFromClient
@@ -24,19 +26,6 @@ import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.area.IArea
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.NamedNodeMap
-import org.w3c.dom.Node
-import org.w3c.dom.NodeList
-import org.w3c.dom.Text
-import java.io.StringWriter
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.transform.OutputKeys
-import javax.xml.transform.Transformer
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.dom.DOMSource
-import javax.xml.transform.stream.StreamResult
 
 private val LOG = KotlinLogging.logger {  }
 
@@ -113,6 +102,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
         private inner class EditorSession(val editorId: String) {
             private var editorComponent: EditorComponent? = null
             private val commonElementPrefix = editorId + "-"
+            private var domStateOnClient: Map<String, HTMLElementUpdateData> = emptyMap()
 
             private fun getEditor() = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
 
@@ -123,9 +113,11 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                             "Root node not found: $rootNodeReferenceString"
                         }
                         LOG.debug { "Root node $rootNodeReferenceString found: $rootNode" }
-                        editorComponent = editorEngine.editNode(rootNode)
+                        editorComponent = editorEngine.editNode(rootNode, VirtualDom(VDomUI(), commonElementPrefix))
                     }
-                    sendUpdate()
+                }
+                msg.boundUpdates?.let { updates ->
+                    (editorComponent!!.virtualDom.ui as VDomUI).bounds.putAll(updates)
                 }
                 msg.keyboardEvent?.let { event ->
                     getEditor().processKeyEvent(event)
@@ -133,61 +125,50 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 msg.mouseEvent?.let { event ->
                     getEditor().processMouseEvent(event)
                 }
+                sendUpdate()
             }
 
             fun sendUpdate() {
                 LOG.debug { "($editorId) sendUpdate" }
                 editorComponent!!.update()
-                val dom = buildDom(editorComponent!!.getRootCell().layout)
+                val dom = editorComponent!!.getHtmlElement()
                 LOG.debug { "($editorId) dom: $dom" }
-                val updateDataMap = HashMap<String, HTMLElementUpdateData>()
-                var rootData = toUpdateData(dom, updateDataMap)
-                if (rootData is ElementReference) rootData = updateDataMap[rootData.id]!!
+                val lastestDomState = HashMap<String, HTMLElementUpdateData>()
+                var rootData = toUpdateData(dom, lastestDomState)
+                if (rootData is ElementReference) rootData = lastestDomState[rootData.id]!!
                 check(rootData is HTMLElementUpdateData)
                 if (rootData.id != editorId) {
-                    updateDataMap.remove(rootData.id)
+                    lastestDomState.remove(rootData.id)
                     rootData = rootData.copy(id = editorId)
-                    updateDataMap[editorId] = rootData
+                    lastestDomState[editorId] = rootData
                 }
+
+                val changesOnly = lastestDomState.entries.asSequence()
+                    .filter { domStateOnClient[it.key] != it.value }
+                    .map { it.value }.toList()
+                if (changesOnly.isEmpty()) return
+
+                domStateOnClient = lastestDomState
+
                 ws.outgoing.trySend(Frame.Text(MessageFromServer(
                     editorId = editorId,
                     domUpdate = DomTreeUpdate(
-                        elements = updateDataMap.values.toList()
+                        elements = changesOnly
                     )
                 ).toJson()))
             }
 
-            private fun buildDom(contentProducer: IProducesHtml): Element {
-                val dbf = DocumentBuilderFactory.newInstance()
-                val db = dbf.newDocumentBuilder()
-                val doc = db.newDocument()
-                val editorElement = doc.create.div("editor") {
-                    id = editorId
-                    div(EditorComponent.MAIN_LAYER_CLASS_NAME) {
-                        produceChild(contentProducer)
-                    }
-                    div("selection-layer relative-layer") {
-                        //produceChild(selectionView)
-                    }
-                    div("popup-layer relative-layer") {
-                        //produceChild(codeCompletionMenu)
-                    }
-                }
-                LOG.trace { "Editor as XML: ${xmlToString(doc)}" }
-                return editorElement
-            }
-
-            fun toUpdateData(node: Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
+            fun toUpdateData(node: IVirtualDom.Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
                 return when (node) {
-                    is Text -> TextNodeUpdateData(node.data)
-                    is Element -> {
-                        val id = node.getAttribute("id").takeIf { it.isNotEmpty() }?.let {
+                    is IVirtualDom.Text -> TextNodeUpdateData(node.textContent ?: "")
+                    is IVirtualDom.Element -> {
+                        val id = node.id?.takeIf { it.isNotEmpty() }?.let {
                             if (it.startsWith(commonElementPrefix)) it else commonElementPrefix + it
                         }
                         val data = HTMLElementUpdateData(
                             id = id,
                             tagName = node.tagName,
-                            attributes = node.attributes.toList().associate { it } - "id",
+                            attributes = node.getAttributes() - "id",
                             children = node.childNodes.toList().map { toUpdateData(it, id2data) }
                         )
                         if (id == null) {
@@ -205,25 +186,22 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 editorComponent?.dispose()
                 editorComponent = null
             }
+
+            inner class VDomUI() : IVirtualDomUI {
+                val bounds: MutableMap<String, HTMLElementBoundsUpdate> = HashMap()
+                override fun getOuterBounds(element: IVirtualDom.Element): Bounds {
+                    return bounds[element.id]?.outer ?: Bounds.ZERO
+                }
+
+                override fun getInnerBounds(element: IVirtualDom.Element): Bounds {
+                    return bounds[element.id]?.let { it.inner ?: it.outer } ?: Bounds.ZERO
+                }
+
+                override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> {
+                    return bounds.filter { it.value.outer.contains(x, y) }
+                        .mapNotNull { editorComponent!!.virtualDom.getElementById(it.key) }
+                }
+            }
         }
     }
-}
-
-private fun NamedNodeMap.toList(): List<Pair<String, String>> {
-    return 0.until(length).map { item(it) }.map { it.nodeName to it.nodeValue }
-}
-
-private fun NodeList.toList(): List<Node> {
-    return 0.until(length).map { item(it) }
-}
-
-fun xmlToString(doc: Document): String {
-    val transformerFactory: TransformerFactory = TransformerFactory.newInstance()
-    val transformer: Transformer = transformerFactory.newTransformer()
-    transformer.setOutputProperty(OutputKeys.INDENT, "yes")
-    val source = DOMSource(doc)
-    val out = StringWriter()
-    val result = StreamResult(out)
-    transformer.transform(source, result)
-    return out.toString()
 }

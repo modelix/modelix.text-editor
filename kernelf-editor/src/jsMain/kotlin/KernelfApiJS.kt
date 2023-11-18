@@ -6,6 +6,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
+import org.modelix.editor.GeneratedHtmlMap
 import org.modelix.editor.IVirtualDom
 import org.modelix.editor.IncrementalVirtualDOMBuilder
 import org.modelix.editor.JSDom
@@ -23,6 +24,7 @@ import org.w3c.dom.Node
 @JsExport
 object KernelfApiJS {
     private val LOG = mu.KotlinLogging.logger {}
+    private val generatedHtmlMap = GeneratedHtmlMap()
 
     fun connectToModelServer(json: Array<String>, callback: (INode) -> Unit) {
         KernelfAPI.connectToModelServer(
@@ -46,7 +48,7 @@ object KernelfApiJS {
     fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
         val existing = parentElement.firstElementChild as? HTMLElement
         val virtualDom = JSDom(parentElement.ownerDocument!!)
-        val consumer = IncrementalVirtualDOMBuilder(virtualDom, existing?.let { virtualDom.wrap(it) })
+        val consumer = IncrementalVirtualDOMBuilder(virtualDom, existing?.let { virtualDom.wrap(it) }, generatedHtmlMap)
         KernelfAPI.renderNode(editorState, rootNode, consumer)
         val newHtml = consumer.finalize()
         if (newHtml != existing) {

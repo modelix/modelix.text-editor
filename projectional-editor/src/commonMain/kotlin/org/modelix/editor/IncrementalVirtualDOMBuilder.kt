@@ -4,7 +4,7 @@ import kotlinx.html.*
 import kotlinx.html.org.w3c.dom.events.Event
 import org.modelix.incremental.AtomicLong
 
-class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElement: IVirtualDom.HTMLElement?) : IIncrementalTagConsumer<IVirtualDom.HTMLElement> {
+class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElement: IVirtualDom.HTMLElement?, val generatedHtmlMap: GeneratedHtmlMap) : IIncrementalTagConsumer<IVirtualDom.HTMLElement> {
     private inner class StackFrame {
         var forcedReuseNext: IVirtualDom.HTMLElement? = null
         var reusableChildren: ReusableChildren? = null
@@ -25,6 +25,7 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
                 }
                 attributesToRemove.remove(it.key)
             }
+            attributesToRemove.remove("id")
             attributesToRemove.forEach { resultingHtml!!.removeAttribute(it) }
         }
 
@@ -55,7 +56,6 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
     private var lastClosed : StackFrame? = null
     private val stack = arrayListOf(StackFrame().also { it.reusableChildren = ReusableChildren(listOfNotNull(existingRootElement)) })
     private val childHandler: (IProducesHtml)->Unit = { produce(it) }
-    private val generatedHtmlMap = GeneratedHtmlMap()
 
     override fun produce(producer: IProducesHtml): ()->IVirtualDom.HTMLElement {
         stack.last().generatedChildren.add(NodeOrProducer.producer(producer))
