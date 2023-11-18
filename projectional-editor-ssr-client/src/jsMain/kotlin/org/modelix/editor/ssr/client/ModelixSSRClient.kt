@@ -21,6 +21,7 @@ import org.modelix.editor.JSMouseEventType
 import org.modelix.editor.convert
 import org.modelix.editor.getAbsoluteBounds
 import org.modelix.editor.getAbsoluteInnerBounds
+import org.modelix.editor.relativeTo
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
 import org.modelix.editor.ssr.common.HTMLElementBoundsUpdate
@@ -129,9 +130,10 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
 
         fun computeBoundsUpdate(): Map<String, HTMLElementBoundsUpdate>? {
+            val origin = containerElement.getAbsoluteBounds()
             val latest = elementMap.entries.associate {
-                val outer = it.value.getAbsoluteBounds()
-                val inner = it.value.getAbsoluteInnerBounds().takeIf { it != outer }
+                val outer = it.value.getAbsoluteBounds().relativeTo(origin)
+                val inner = it.value.getAbsoluteInnerBounds().relativeTo(origin).takeIf { it != outer }
                 it.key to HTMLElementBoundsUpdate(outer = outer, inner = inner)
             }
             val changesOnly = latest.filter { boundsOnServer[it.key] != it.value }
