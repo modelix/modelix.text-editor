@@ -10,6 +10,7 @@ import kotlin.math.roundToInt
 
 open class EditorComponent(
     val engine: EditorEngine?,
+    val virtualDom: IVirtualDom = IVirtualDom.newInstance(),
     private val rootCellCreator: (EditorState) -> Cell
 ) : IProducesHtml {
     val state: EditorState = EditorState()
@@ -24,7 +25,6 @@ open class EditorComponent(
         layoutablesIndex.update(it.layout.layoutablesIndexList)
     }
     private var selectionView: SelectionView<*>? = null
-    private val virtualDom = IVirtualDom.newInstance()
     val generatedHtmlMap = GeneratedHtmlMap()
     protected var containerElement: IVirtualDom.HTMLElement = virtualDom.create().div("js-editor-component") {
         tabIndex = "-1" // allows setting keyboard focus
@@ -70,7 +70,7 @@ open class EditorComponent(
 
     fun updateHtml() {
         val oldEditorElement = generatedHtmlMap.getOutput(this)
-        val newEditorElement = IncrementalVirtualDOMBuilder(virtualDom, oldEditorElement).produce(this)()
+        val newEditorElement = IncrementalVirtualDOMBuilder(virtualDom, oldEditorElement, generatedHtmlMap).produce(this)()
         if (newEditorElement != oldEditorElement) {
             oldEditorElement?.remove()
             containerElement.appendChild(newEditorElement)

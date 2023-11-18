@@ -17,8 +17,13 @@ import kotlinx.html.js.div
 import kotlinx.html.onClick
 import kotlinx.html.tabIndex
 import launchLogging
+import org.modelix.editor.JSMouseEventType
+import org.modelix.editor.convert
+import org.modelix.editor.getAbsoluteBounds
+import org.modelix.editor.getAbsoluteInnerBounds
 import org.modelix.editor.ssr.common.DomTreeUpdate
 import org.modelix.editor.ssr.common.ElementReference
+import org.modelix.editor.ssr.common.HTMLElementBoundsUpdate
 import org.modelix.editor.ssr.common.HTMLElementUpdateData
 import org.modelix.editor.ssr.common.IElementUpdateData
 import org.modelix.editor.ssr.common.INodeUpdateData
@@ -43,6 +48,12 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
     private var nextEditorId: Long = 1000
     private var websocketSession: DefaultClientWebSocketSession? = null
     private val editors: MutableMap<String, EditorSession> = HashMap()
+
+    fun sendMessage(msg: MessageFromClient) {
+        websocketSession?.outgoing?.trySend(Frame.Text(msg.toJson()))
+    }
+
+    private fun MessageFromClient.send() = sendMessage(this)
 
     fun dispose() {
         coroutineScope.cancel("Disposed")
@@ -106,16 +117,36 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         private val elementMap: MutableMap<String, Element> = HashMap<String, Element>().also { it[editorId] = editorElement }
         private val pendingUpdates: MutableMap<String, IElementUpdateData> = HashMap()
         private val possiblyDetachedElements: MutableSet<String> = HashSet<String>()
+        private var boundsOnServer: Map<String, HTMLElementBoundsUpdate> = emptyMap()
 
         init {
-            containerElement.onclick = {
-                LOG.info { "Editor clicked: $it" }
+            containerElement.onclick = { event ->
+                MessageFromClient(
+                    editorId = editorId,
+                    mouseEvent = event.convert(JSMouseEventType.CLICK, containerElement)
+                ).withBounds().send()
             }
         }
 
-        suspend fun dispose() {
+        fun computeBoundsUpdate(): Map<String, HTMLElementBoundsUpdate>? {
+            val latest = elementMap.entries.associate {
+                val outer = it.value.getAbsoluteBounds()
+                val inner = it.value.getAbsoluteInnerBounds().takeIf { it != outer }
+                it.key to HTMLElementBoundsUpdate(outer = outer, inner = inner)
+            }
+            val changesOnly = latest.filter { boundsOnServer[it.key] != it.value }
+            boundsOnServer = latest
+            return changesOnly.takeIf { it.isNotEmpty() }
+        }
+
+        private fun MessageFromClient.withBounds(): MessageFromClient {
+            require(boundUpdates == null) { "Already contains bound update data" }
+            return copy(boundUpdates = computeBoundsUpdate())
+        }
+
+        fun dispose() {
             containerElement.remove()
-            websocketSession?.send(MessageFromClient(editorId = editorId, dispose = true).toJson())
+            MessageFromClient(editorId = editorId, dispose = true).send()
         }
 
         fun applyUpdate(update: DomTreeUpdate) {
@@ -133,7 +164,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
             possiblyDetachedElements.forEach { id ->
                 val element = elementMap[id] ?: return@forEach
                 if (element.parentNode == null) {
-                    elementMap.remove(id)
+//                    elementMap.remove(id)
                 }
             }
             possiblyDetachedElements.clear()

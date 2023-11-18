@@ -7,8 +7,10 @@ import org.w3c.dom.HTMLElement
 import org.w3c.dom.Node
 import org.w3c.dom.Text
 import org.w3c.dom.asList
+import org.w3c.dom.get
 
-class JSDom(private val doc: Document = document, private val originElement: Element? = null) : IVirtualDom, IVirtualDomUI {
+class JSDom(private val doc: Document = document) : IVirtualDom, IVirtualDomUI {
+    var originElement: Element? = null
     private fun getOrigin() = originElement?.getAbsoluteBounds() ?: Bounds.ZERO
 
     override val ui: IVirtualDomUI
@@ -24,6 +26,10 @@ class JSDom(private val doc: Document = document, private val originElement: Ele
 
     override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> {
         return doc.elementsFromPoint(x, y).map { it.wrap() }
+    }
+
+    override fun getElementById(id: String): IVirtualDom.Element? {
+        return doc.getElementById(id)?.wrap()
     }
 
     override fun createElement(localName: String): IVirtualDom.Element {
@@ -128,6 +134,13 @@ class JSDom(private val doc: Document = document, private val originElement: Ele
 
         override fun removeAttribute(qualifiedName: String) {
             return getWrappedNode().removeAttribute(qualifiedName)
+        }
+
+        override fun getAttributes(): Map<String, String> {
+            val attributes = getWrappedNode().attributes
+            return (0 until attributes.length)
+                .mapNotNull { i -> attributes[i] }
+                .associate { it.name to it.value }
         }
 
         override fun getInnerBounds(): Bounds {

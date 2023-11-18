@@ -1,6 +1,7 @@
 package org.modelix.editor
 
 import kotlinx.html.TagConsumer
+import org.modelix.incremental.AtomicLong
 import kotlin.reflect.KProperty
 
 interface IVirtualDom {
@@ -24,6 +25,7 @@ interface IVirtualDom {
         fun getAttribute(qualifiedName: String): String?
         fun setAttribute(qualifiedName: String, value: String)
         fun removeAttribute(qualifiedName: String)
+        fun getAttributes(): Map<String, String>
 
         fun getInnerBounds(): Bounds
         fun getOuterBounds(): Bounds
@@ -33,17 +35,18 @@ interface IVirtualDom {
         var textContent: String?
     }
 
+    fun getElementById(id: String): Element?
     fun createElement(localName: String): IVirtualDom.Element
     fun createTextNode(data: String): IVirtualDom.Text
-
-    fun create(): TagConsumer<IVirtualDom.HTMLElement> {
-        return IncrementalVirtualDOMBuilder(this, null)
-    }
 
     companion object {
         fun newInstance(): IVirtualDom = newInstance(DummyUI())
         fun newInstance(ui: IVirtualDomUI): IVirtualDom = VirtualDom(ui)
     }
+}
+
+fun IVirtualDom.create(): TagConsumer<IVirtualDom.HTMLElement> {
+    return IncrementalVirtualDOMBuilder(this, null, GeneratedHtmlMap())
 }
 
 private class DummyUI : IVirtualDomUI {
@@ -91,7 +94,21 @@ object StyleAttributeDelegate {
         style[property.name] = value
     }
 }
+object ElementAttributeDelegate {
+    operator fun getValue(element: IVirtualDom.Element, property: KProperty<*>): String? {
+        return element.getAttribute(property.name)
+    }
 
+    operator fun setValue(element: IVirtualDom.Element, property: KProperty<*>, value: String?) {
+        if (value == null) {
+            element.removeAttribute(property.name)
+        } else {
+            element.setAttribute(property.name, value)
+        }
+    }
+}
+
+var IVirtualDom.Element.id by ElementAttributeDelegate
 var VirtualDomStyle.position by StyleAttributeDelegate
 var VirtualDomStyle.left by StyleAttributeDelegate
 var VirtualDomStyle.right by StyleAttributeDelegate
@@ -128,19 +145,23 @@ interface IVirtualDomUI {
     fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
 }
 
-private class VirtualDom(override val ui: IVirtualDomUI) : IVirtualDom {
+class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IVirtualDom {
+    private val idSequence = AtomicLong()
+    private val elementsMap: MutableMap<String, Element> = HashMap()
+
+    override fun getElementById(id: String): IVirtualDom.Element? {
+        return elementsMap[id]?.takeIf { it.id == id }
+    }
 
     override fun createElement(localName: String): Element {
-        return HTMLElement(localName)
+        return HTMLElement(localName).also { it.id = idPrefix + idSequence.incrementAndGet().toString() }
     }
     override fun createTextNode(data: String): Text {
         return Text().also { it.textContent = data }
     }
 
-
     open inner class Node : IVirtualDom.Node {
         private val userObjects: MutableMap<String, Any> = HashMap()
-        var id: String? = null
         override var parent: IVirtualDom.Node? = null
         override val childNodes: MutableList<IVirtualDom.Node> = ArrayList()
 
@@ -187,8 +208,14 @@ private class VirtualDom(override val ui: IVirtualDomUI) : IVirtualDom {
         private val attributes: MutableMap<String, String> = LinkedHashMap()
         override fun getAttributeNames(): Array<String> = attributes.keys.toTypedArray()
         override fun getAttribute(qualifiedName: String): String? = attributes[qualifiedName]
-        override fun setAttribute(qualifiedName: String, value: String) { attributes[qualifiedName] = value }
+        override fun setAttribute(qualifiedName: String, value: String) {
+            attributes[qualifiedName] = value
+            if (qualifiedName == "id") {
+                elementsMap[value] = this
+            }
+        }
         override fun removeAttribute(qualifiedName: String) { attributes.remove(qualifiedName) }
+        override fun getAttributes(): Map<String, String> = attributes
 
         override fun getInnerBounds(): Bounds = ui.getInnerBounds(this)
         override fun getOuterBounds(): Bounds = ui.getOuterBounds(this)

@@ -3,6 +3,7 @@ package org.modelix.editor.ssr.common
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.modelix.editor.Bounds
 import org.modelix.editor.JSKeyboardEvent
 import org.modelix.editor.JSMouseEvent
 
@@ -31,7 +32,9 @@ data class MessageFromClient(
      */
     val keyboardEvent: JSKeyboardEvent? = null,
 
-    val mouseEvent: JSMouseEvent? = null
+    val mouseEvent: JSMouseEvent? = null,
+
+    val boundUpdates: Map<String, HTMLElementBoundsUpdate>? = null
 ) {
     fun toJson() = Json.encodeToString(this)
 
@@ -39,3 +42,9 @@ data class MessageFromClient(
         fun fromJson(msg: String) = Json.decodeFromString<MessageFromClient>(msg)
     }
 }
+
+@Serializable
+data class HTMLElementBoundsUpdate(
+    val outer: Bounds,
+    val inner: Bounds? = null,
+)
