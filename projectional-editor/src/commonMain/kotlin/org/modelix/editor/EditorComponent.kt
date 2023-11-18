@@ -2,7 +2,6 @@ package org.modelix.editor
 
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
-import kotlinx.html.tabIndex
 import org.modelix.incremental.IncrementalIndex
 import kotlin.math.abs
 import kotlin.math.min
@@ -26,13 +25,10 @@ open class EditorComponent(
     }
     private var selectionView: SelectionView<*>? = null
     val generatedHtmlMap = GeneratedHtmlMap()
-    protected var containerElement: IVirtualDom.HTMLElement = virtualDom.create().div("js-editor-component") {
-        tabIndex = "-1" // allows setting keyboard focus
-    }
     private var highlightedLine: IVirtualDom.HTMLElement? = null
     private var highlightedCell: IVirtualDom.HTMLElement? = null
     fun getMainLayer(): IVirtualDom.HTMLElement? {
-        return containerElement.descendants().filterIsInstance<IVirtualDom.HTMLElement>().find { it.getClasses().contains(MAIN_LAYER_CLASS_NAME) }
+        return getHtmlElement()?.childNodes?.filterIsInstance<IVirtualDom.HTMLElement>()?.find { it.getClasses().contains(MAIN_LAYER_CLASS_NAME) }
     }
 
     fun selectAfterUpdate(newSelection: () -> Selection?) {
@@ -45,7 +41,7 @@ open class EditorComponent(
 
     override fun isHtmlOutputValid(): Boolean = false
 
-    fun getHtmlElement(): IVirtualDom.HTMLElement = containerElement
+    fun getHtmlElement(): IVirtualDom.HTMLElement? = generatedHtmlMap.getOutput(this)
 
     private fun updateRootCell() {
         val oldRootCell = rootCell
@@ -68,12 +64,13 @@ open class EditorComponent(
         codeCompletionMenu?.let { CodeCompletionMenuUI(it, this).updateBounds() }
     }
 
+    open protected fun editorElementChanged(newElement: IVirtualDom.HTMLElement) {}
+
     fun updateHtml() {
         val oldEditorElement = generatedHtmlMap.getOutput(this)
         val newEditorElement = IncrementalVirtualDOMBuilder(virtualDom, oldEditorElement, generatedHtmlMap).produce(this)()
         if (newEditorElement != oldEditorElement) {
-            oldEditorElement?.remove()
-            containerElement.appendChild(newEditorElement)
+            editorElementChanged(newEditorElement)
         }
 
         val selectedLayoutable = (getSelection() as? CaretSelection)?.layoutable

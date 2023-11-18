@@ -67,7 +67,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun treeChanged(oldTree: ITree?, newTree: ITree) {
-                    if (editor.getHtmlElement().unwrap().isInDocument()) {
+                    if (editor.containerElement.unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -87,7 +87,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun areaChanged(changes: IAreaChangeList) {
-                    if (editor.getHtmlElement().unwrap().isInDocument()) {
+                    if (editor.containerElement.unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -104,7 +104,7 @@ object KernelfApiJS {
             })
         }
         editor.updateHtml()
-        return editor.getHtmlElement().unwrap()
+        return editor.containerElement.unwrap()
     }
 }
 

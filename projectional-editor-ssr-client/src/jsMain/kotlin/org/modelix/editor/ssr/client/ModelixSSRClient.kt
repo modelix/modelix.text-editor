@@ -17,6 +17,7 @@ import kotlinx.html.js.div
 import kotlinx.html.onClick
 import kotlinx.html.tabIndex
 import launchLogging
+import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.JSMouseEventType
 import org.modelix.editor.convert
 import org.modelix.editor.getAbsoluteBounds
@@ -109,7 +110,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
 
     private inner class EditorSession(val editorId: String, rootNodeReference: INodeReference) {
         val containerElement: HTMLDivElement = document.create.div("modelix-text-editor-component") {
-            tabIndex = "-1"
+            tabIndex = "-1" // allows setting keyboard focus
         }
         val editorElement: HTMLDivElement = containerElement.append.div {
             id = editorId
@@ -126,6 +127,20 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
                     editorId = editorId,
                     mouseEvent = event.convert(JSMouseEventType.CLICK, containerElement)
                 ).withBounds().send()
+            }
+            containerElement.onkeydown = { event ->
+                MessageFromClient(
+                    editorId = editorId,
+                    keyboardEvent = event.convert(JSKeyboardEventType.KEYDOWN)
+                ).withBounds().send()
+                event.preventDefault()
+            }
+            containerElement.onkeyup = { event ->
+                MessageFromClient(
+                    editorId = editorId,
+                    keyboardEvent = event.convert(JSKeyboardEventType.KEYUP)
+                ).withBounds().send()
+                event.preventDefault()
             }
         }
 
