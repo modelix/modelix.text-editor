@@ -67,6 +67,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                             val deserializedMessage = MessageFromClient.fromJson(serializedMessage)
                             clientMessage = deserializedMessage
                             runSynchronized(lock) {
+                                // TODO maybe use a single threaded coroutines dispatcher for all UI code
                                 processMessage(deserializedMessage)
                             }
                         }
@@ -133,22 +134,22 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 editorComponent!!.update()
                 val dom = editorComponent!!.getHtmlElement()!!
                 LOG.debug { "($editorId) dom: $dom" }
-                val lastestDomState = HashMap<String, HTMLElementUpdateData>()
-                var rootData = toUpdateData(dom, lastestDomState)
-                if (rootData is ElementReference) rootData = lastestDomState[rootData.id]!!
+                val latestDomState = HashMap<String, HTMLElementUpdateData>()
+                var rootData = toUpdateData(dom, latestDomState)
+                if (rootData is ElementReference) rootData = latestDomState[rootData.id]!!
                 check(rootData is HTMLElementUpdateData)
                 if (rootData.id != editorId) {
-                    lastestDomState.remove(rootData.id)
+                    latestDomState.remove(rootData.id)
                     rootData = rootData.copy(id = editorId)
-                    lastestDomState[editorId] = rootData
+                    latestDomState[editorId] = rootData
                 }
 
-                val changesOnly = lastestDomState.entries.asSequence()
+                val changesOnly = latestDomState.entries.asSequence()
                     .filter { domStateOnClient[it.key] != it.value }
                     .map { it.value }.toList()
                 if (changesOnly.isEmpty()) return
 
-                domStateOnClient = lastestDomState
+                domStateOnClient = latestDomState
 
                 ws.outgoing.trySend(Frame.Text(MessageFromServer(
                     editorId = editorId,
@@ -198,6 +199,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 }
 
                 override fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element> {
+                    // TODO performance
                     return bounds.filter { it.value.outer.contains(x, y) }
                         .mapNotNull { editorComponent!!.virtualDom.getElementById(it.key) }
                 }
