@@ -65,7 +65,7 @@ kotlin {
 
 mpsBuild {
     mpsVersion("2021.1.4")
-    externalModules("org.iets3:opensource:2021.3.6204.+")
+    externalModules("org.iets3:opensource:2022.2.6330.+")
 }
 
 metamodel {
