@@ -51,6 +51,7 @@ val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>
                             l.vertical()
                         }
                     }
+                    else -> RuntimeException("Unknown link type: $l")
                 }
             }
         }
