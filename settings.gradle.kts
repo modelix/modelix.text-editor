@@ -29,5 +29,6 @@ include("kernelf-ssr-demo")
 include("projectional-editor")
 include("projectional-editor-ssr-client")
 include("projectional-editor-ssr-common")
+include("projectional-editor-ssr-mps")
 include("projectional-editor-ssr-server")
 

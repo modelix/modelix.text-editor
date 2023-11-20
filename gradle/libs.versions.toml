@@ -12,6 +12,10 @@ modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "
 modelix-model-api-gen-runtime = { group = "org.modelix", name = "model-api-gen-runtime", version.ref = "modelixCore" }
 modelix-light-model-client = { group = "org.modelix", name = "light-model-client", version.ref = "modelixCore" }
 modelix-model-client = { group = "org.modelix", name = "model-client", version.ref = "modelixCore" }
+modelix-modelql-core = { group = "org.modelix", name = "modelql-core", version.ref = "modelixCore" }
+modelix-modelql-untyped = { group = "org.modelix", name = "modelql-untyped", version.ref = "modelixCore" }
+modelix-modelql-html = { group = "org.modelix", name = "modelql-html", version.ref = "modelixCore" }
 modelix-model-datastructure = { group = "org.modelix", name = "model-datastructure", version.ref = "modelixCore" }
+modelix-mps-model-adapters = { group = "org.modelix.mps", name = "model-adapters", version.ref = "modelixCore" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "5.1.0" }
 kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.10.1"
