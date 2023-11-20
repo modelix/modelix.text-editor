@@ -9,13 +9,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlinx.html.div
 import kotlinx.html.dom.append
 import kotlinx.html.dom.create
 import kotlinx.html.id
 import kotlinx.html.js.div
-import kotlinx.html.onClick
-import kotlinx.html.tabIndex
 import launchLogging
 import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.JSMouseEventType
@@ -80,11 +77,11 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
     }
 
-    fun createEditor(rootNodeReference: INodeReference): HTMLElement {
+    fun createEditor(rootNodeReference: INodeReference, existingContainerElement: HTMLDivElement? = null): HTMLElement {
         val editorId = "modelix-editor-" + nextEditorId++.toString()
         LOG.trace { "Trying to create new editor $editorId" }
         val ws = checkNotNull(websocketSession) { "Not connected" }
-        val editorSession = EditorSession(editorId, rootNodeReference)
+        val editorSession = EditorSession(editorId, rootNodeReference, existingContainerElement)
         LOG.info { "Creating editor ${editorSession.editorId}" }
         editors[editorSession.editorId] = editorSession
         ws.launch {
@@ -108,9 +105,9 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
     }
 
-    private inner class EditorSession(val editorId: String, rootNodeReference: INodeReference) {
-        val containerElement: HTMLDivElement = document.create.div("modelix-text-editor-component") {
-            tabIndex = "-1" // allows setting keyboard focus
+    private inner class EditorSession(val editorId: String, rootNodeReference: INodeReference, existingContainerElement: HTMLDivElement? = null) {
+        val containerElement: HTMLDivElement = (existingContainerElement ?: document.create.div("modelix-text-editor")).also {
+            it.tabIndex = -1 // allows setting the keyboard focus
         }
         val editorElement: HTMLDivElement = containerElement.append.div {
             id = editorId
