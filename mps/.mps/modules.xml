@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MPSProject">
+    <projectModules>
+      <modulePath path="$PROJECT_DIR$/languages/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/org.modelix.mps.editor.ssr.stubs/org.modelix.mps.editor.ssr.stubs.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/org.modelix.mps.notation.runtime/org.modelix.mps.notation.runtime.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/solutions/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="" />
+    </projectModules>
+  </component>
+</project>

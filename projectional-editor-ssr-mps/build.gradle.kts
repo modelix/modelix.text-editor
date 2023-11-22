@@ -1,5 +1,5 @@
+import org.jetbrains.intellij.tasks.PrepareSandboxTask
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 
 buildscript {
     dependencies {
@@ -117,6 +117,11 @@ tasks {
             from(project.layout.buildDirectory.dir("idea-sandbox/plugins/${project.name}"))
             into(mpsPluginDir.resolve(project.name))
         }
+    }
+
+    withType<PrepareSandboxTask> {
+        intoChild(pluginName.map { "$it/languages/org.modelix.mps.editor.ssr.stubs" })
+            .from(project(":mps").layout.projectDirectory.dir("org.modelix.mps.editor.ssr.stubs"))
     }
 }
 

@@ -26,5 +26,6 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <backgroundPostStartupActivity implementation="org.modelix.editor.ssr.mps.ModelixSSRServerForMPSStartupActivity" />
+        <mps.LanguageLibrary dir="/languages" />
     </extensions>
 </idea-plugin>

@@ -23,6 +23,8 @@ println("Version: $version")
 
 fun computeVersion(): Any {
     val versionFile = file("version.txt")
+    if (versionFile.exists()) return versionFile.readText().trim()
+
     val gitVersion: groovy.lang.Closure<String> by extra
     var version = if (versionFile.exists()) versionFile.readText().trim() else gitVersion()
     if (!versionFile.exists() && "true" != project.findProperty("ciBuild")) {
@@ -35,6 +37,8 @@ fun computeVersion(): Any {
     } catch (_: IllegalArgumentException) {
         version = "0.0.0-$version"
     }
+    versionFile.writeText(version)
+
     return version
 }
 
