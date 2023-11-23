@@ -9,11 +9,15 @@ import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.*
 
 @Deprecated("use editor(...)")
-fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.conceptEditor(concept: ConceptT, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit): ConceptEditor<NodeT, ConceptT> {
+fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.conceptEditor(concept: ConceptT, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit): ConceptEditor {
     return editor(concept, body)
 }
 
-fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.editor(concept: ConceptT, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit): ConceptEditor<NodeT, ConceptT> {
+fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.editor(concept: ConceptT, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit): ConceptEditor {
+    return aspects.getAspect(language, EditorAspect).conceptEditor(concept, body)
+}
+
+fun LanguageAspectsBuilder<*>.editor(concept: IConcept, body: CellTemplateBuilder<INode, IConcept>.()->Unit): ConceptEditor {
     return aspects.getAspect(language, EditorAspect).conceptEditor(concept, body)
 }
 

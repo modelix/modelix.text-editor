@@ -6,52 +6,53 @@ import org.modelix.metamodel.ITypedChildListLink
 import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ITypedSingleChildLink
+import org.modelix.metamodel.NullConcept
 import org.modelix.metamodel.typed
 import org.modelix.metamodel.typedConcept
 import org.modelix.metamodel.untypedConcept
 import org.modelix.metamodel.untypedReference
+import org.modelix.model.api.IConcept
+import org.modelix.model.api.INode
 import org.modelix.model.api.serialize
 
-class ConceptEditor<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
-    val declaredConcept: ConceptT?,
-    val templateBuilder: (subConcept: ConceptT)->CellTemplate<NodeT, ConceptT>
+class ConceptEditor(
+    val declaredConcept: IConcept?,
+    val templateBuilder: (subConcept: IConcept)->CellTemplate
 ) {
-    fun apply(subConcept: ConceptT): CellTemplate<NodeT, ConceptT> {
+    fun apply(subConcept: IConcept): CellTemplate {
         return templateBuilder(subConcept)
-            .also { it.setReference(RooCellTemplateReference(this, subConcept.untyped().getReference())) }
+            .also { it.setReference(RooCellTemplateReference(this, subConcept.getReference())) }
     }
 
-    fun apply(context: CellCreationContext, node: NodeT): CellData {
-        return apply(node.typedConcept() as ConceptT).apply(context, node)
+    fun apply(context: CellCreationContext, node: INode): CellData {
+        return apply(node.concept ?: NullConcept).apply(context, node)
     }
 }
 
-val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>?) { subConcept ->
-    CellTemplateBuilder(CollectionCellTemplate(subConcept)).apply {
-        subConcept.untyped().getShortName().constant()
+val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
+    CollectionCellTemplate(subConcept).builder(subConcept).apply {
+        subConcept.getShortName().constant()
         curlyBrackets {
-            for (property in subConcept.untyped().getAllProperties()) {
+            for (property in subConcept.getAllProperties()) {
                 newLine()
                 label(property.getSimpleName() + ":")
                 property.cell()
             }
-            for (link in subConcept.untyped().getAllReferenceLinks()) {
+            for (link in subConcept.getAllReferenceLinks()) {
                 newLine()
                 label(link.getSimpleName() + ":")
-                link.typed()?.cell(presentation = { untypedReference().serialize() })
+                link.cell(presentation = { reference.serialize() })
             }
-            for (link in subConcept.untyped().getAllChildLinks()) {
+            for (link in subConcept.getAllChildLinks()) {
                 newLine()
                 label(link.getSimpleName() + ":")
-                when (val l = link.typed()) {
-                    is ITypedSingleChildLink -> l.cell()
-                    is ITypedChildListLink -> {
-                        newLine()
-                        indented {
-                            l.vertical()
-                        }
+                if (link.isMultiple) {
+                    newLine()
+                    indented {
+                        link.vertical()
                     }
-                    else -> RuntimeException("Unknown link type: $l")
+                } else {
+                    link.cell()
                 }
             }
         }

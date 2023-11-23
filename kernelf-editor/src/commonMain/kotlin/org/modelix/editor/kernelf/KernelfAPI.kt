@@ -120,7 +120,7 @@ object KernelfAPI {
 
     fun <T> renderTypedNode(editorState: EditorState, rootNode: ITypedNode, tagConsumer: TagConsumer<T>) {
         ModelFacade.readNode(rootNode.unwrap()) {
-            val cell = editorEngine.createCell(editorState, rootNode)
+            val cell = editorEngine.createCell(editorState, rootNode.unwrap())
             cell.layout.toHtml(tagConsumer)
         }
     }

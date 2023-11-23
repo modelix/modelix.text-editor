@@ -1,6 +1,7 @@
 package org.modelix.editor
 
 import org.modelix.metamodel.ITypedNode
+import org.modelix.model.api.INode
 
 open class CellData : Freezable(), ILocalOrChildNodeCell {
     val cellReferences: MutableList<CellReference> = ArrayList()
@@ -36,7 +37,7 @@ interface ILocalOrChildNodeCell {
 
 }
 
-class ChildDataReference(val childNode: ITypedNode) : ILocalOrChildNodeCell {
+class ChildDataReference(val childNode: INode) : ILocalOrChildNodeCell {
 
 }
 
