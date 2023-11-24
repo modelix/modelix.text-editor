@@ -348,10 +348,12 @@ interface ITypedOrUntypedNode<NodeT> {
     }
 }
 
-fun <NodeT :ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> CellTemplate.builder(concept: ConceptT): CellTemplateBuilder<NodeT, ConceptT> {
+fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> CellTemplate.builder(concept: ConceptT): CellTemplateBuilder<NodeT, ConceptT> {
+    require(this.concept == concept.untyped())
     return CellTemplateBuilder(this, concept, INodeConverter.Typed<NodeT>(concept))
 }
 
 fun <ConceptT : IConcept> CellTemplate.builder(concept: ConceptT): CellTemplateBuilder<INode, ConceptT> {
+    require(this.concept == concept)
     return CellTemplateBuilder(this, concept, INodeConverter.Untyped)
 }
