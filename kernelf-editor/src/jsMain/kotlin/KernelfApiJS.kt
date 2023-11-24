@@ -59,7 +59,7 @@ object KernelfApiJS {
 
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {
         val editor = JsEditorComponent(KernelfAPI.editorEngine) { state ->
-            KernelfAPI.editorEngine.createCell(state, rootNode.typed())
+            KernelfAPI.editorEngine.createCell(state, rootNode)
         }
         val branch = ModelFacade.getBranch(rootNode)?.deepUnwrap()
         if (branch != null) {
