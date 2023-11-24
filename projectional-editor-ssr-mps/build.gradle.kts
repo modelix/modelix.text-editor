@@ -45,10 +45,11 @@ dependencies {
     implementation(coreLibs.logback.classic)
     implementation(coreLibs.kotlin.logging)
 
-    compileOnly("com.jetbrains:mps-openapi:$mpsVersion")
-    compileOnly("com.jetbrains:mps-core:$mpsVersion")
-    compileOnly("com.jetbrains:mps-environment:$mpsVersion")
-    compileOnly("com.jetbrains:mps-platform:$mpsVersion")
+    val mpsZip by configurations.creating
+    mpsZip("com.jetbrains:mps:$mpsVersion")
+    compileOnly(zipTree({ mpsZip.singleFile }).matching {
+        include("lib/*.jar")
+    })
 }
 
 tasks.processResources {
