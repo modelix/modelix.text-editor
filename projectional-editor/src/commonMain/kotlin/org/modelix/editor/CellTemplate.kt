@@ -324,7 +324,7 @@ class ReferenceCellTemplate(
         val targets = scope.getVisibleElements(specializedLocation, link)
         return targets.map { target ->
             val text = when (target) {
-                is ExistingNode -> presentation(target.getNode().typedUnsafe()) ?: ""
+                is ExistingNode -> presentation(target.getNode()) ?: ""
                 else -> "<create new target node>"
             }
             WrapReferenceTarget(location, target, text)
