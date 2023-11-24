@@ -64,14 +64,14 @@ kotlin {
 }
 
 mpsBuild {
-    mpsVersion("2021.1.4")
-    externalModules("org.iets3:opensource:2021.3.6204.+")
+    mpsVersion("2022.2.1")
+    externalModules("org.iets3:opensource:2022.2.6365.50b1f50")
 }
 
 metamodel {
     mpsHeapSize = "2g"
     dependsOn("copyDependencies")
-    mpsHome = buildDir.resolve("mpsbuild/mps/mps-2021.1.4.zip")
+    mpsHome = buildDir.resolve("mpsbuild/mps/mps-2022.2.1.zip")
     modulesFrom(buildDir.resolve("mpsbuild/dependencies"))
     includeNamespace("org.iets3.core.expr")
     includeLanguage("org.modelix.model.repositoryconcepts")
