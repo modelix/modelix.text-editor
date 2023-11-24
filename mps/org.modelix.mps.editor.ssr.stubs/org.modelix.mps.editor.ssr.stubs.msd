@@ -2,10 +2,11 @@
 <solution name="org.modelix.mps.editor.ssr.stubs" uuid="771cf896-ab1b-409b-93b4-48c3bbb6b23f" moduleVersion="0">
   <models>
     <modelRoot type="kotlin_jvm" contentPath="${module}/../../lib">
-      <sourceRoot location="model-api-jvm-3.14.2-5-ge5dfd43.dirty-SNAPSHOT.jar" />
-      <sourceRoot location="model-api-gen-runtime-jvm-3.14.2-5-ge5dfd43.dirty-SNAPSHOT.jar" />
-      <sourceRoot location="projectional-editor-jvm-2.0.0-63-g332bf2a.dirty-SNAPSHOT.jar" />
+      <sourceRoot location="instrumented-projectional-editor-ssr-mps-2.0.0-63-g332bf2a.dirty-SNAPSHOT.jar" />
       <sourceRoot location="model-adapters-3.14.2-5-ge5dfd43.dirty-SNAPSHOT.jar" />
+      <sourceRoot location="model-api-gen-runtime-jvm-3.14.2-5-ge5dfd43.dirty-SNAPSHOT.jar" />
+      <sourceRoot location="model-api-jvm-3.14.2-5-ge5dfd43.dirty-SNAPSHOT.jar" />
+      <sourceRoot location="projectional-editor-jvm-2.0.0-63-g332bf2a.dirty-SNAPSHOT.jar" />
     </modelRoot>
   </models>
   <facets>

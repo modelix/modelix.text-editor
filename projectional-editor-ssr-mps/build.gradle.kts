@@ -32,6 +32,7 @@ val mpsJavaVersion = if (mpsVersion >= "2022.3") 17 else 11
 println("Building for MPS version $mpsVersion and IntelliJ version $ideaVersion and Java $mpsJavaVersion")
 
 dependencies {
+    implementation(project(":projectional-editor"))
     implementation(project(":projectional-editor-ssr-server"))
     implementation(libs.modelix.mps.model.adapters)
 
@@ -40,6 +41,7 @@ dependencies {
     implementation(coreLibs.ktor.server.websockets)
     implementation(coreLibs.ktor.server.html.builder)
     implementation(coreLibs.logback.classic)
+    implementation(coreLibs.kotlin.logging)
 
     compileOnly("com.jetbrains:mps-openapi:$mpsVersion")
     compileOnly("com.jetbrains:mps-core:$mpsVersion")

@@ -3,26 +3,20 @@ package org.modelix.editor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import org.modelix.metamodel.ITypedNode
-import org.modelix.model.api.IConceptReference
-import org.modelix.model.api.getAllConcepts
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
-import org.modelix.metamodel.GeneratedConcept
-import org.modelix.metamodel.IConceptOfTypedNode
-import org.modelix.metamodel.ITypedConcept
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.untyped
-import org.modelix.metamodel.untypedConcept
-import org.modelix.metamodel.untypedReference
+import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.INode
+import org.modelix.model.api.getAllConcepts
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     private val incrementalEngine: IncrementalEngine
     private val ownsIncrementalEngine: Boolean
     private val editorsForConcept: MutableMap<IConceptReference, MutableList<ConceptEditor>> = LinkedHashMap()
+    private val conceptEditorRegistries = ArrayList<IConceptEditorRegistry>()
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     init {
@@ -46,6 +40,14 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         cellData.freeze()
         LOG.trace { "Cell created for $node: $cellData" }
         cellData
+    }
+
+    fun addRegistry(registry: IConceptEditorRegistry) {
+        conceptEditorRegistries += registry
+    }
+
+    fun removeRegistry(registry: IConceptEditorRegistry) {
+        conceptEditorRegistries.remove(registry)
     }
 
     fun registerEditors(editorAspect: EditorAspect) {
@@ -115,9 +117,13 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     private fun resolveConceptEditor(concept: IConcept?): ConceptEditor {
         if (concept == null) return defaultConceptEditor
-        val editors = concept.getAllConcepts()
-            .firstNotNullOfOrNull { editorsForConcept[it.getReference()] }
-        return editors?.firstOrNull()
+        val editors = concept.getAllConcepts().firstNotNullOfOrNull { superConcept ->
+            val conceptReference = superConcept.getReference()
+            val allEditors = (editorsForConcept[conceptReference] ?: emptyList()) +
+                    conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
+            allEditors.takeIf { it.isNotEmpty() }
+        }
+        return editors?.firstOrNull() // TODO do some proper conflict resolution between multiple applicable editors
             ?: defaultConceptEditor
     }
 

@@ -65,6 +65,7 @@ class ModelixSSRServerForMPS : Disposable {
 
     private var ssrServer: ModelixSSRServer? = null
     private var ktorServer: ApplicationEngine? = null
+    private var aspectsFromMPS: LanguageAspectsFromMPSModules? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
 
     fun registerProject(project: Project) {
@@ -95,6 +96,9 @@ class ModelixSSRServerForMPS : Disposable {
             println("starting modelix SSR server")
 
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
+            val aspectsFromMPS = LanguageAspectsFromMPSModules(getMPSProjects().first().repository)
+            this.aspectsFromMPS = aspectsFromMPS
+            ssrServer.editorEngine.addRegistry(aspectsFromMPS)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
             }

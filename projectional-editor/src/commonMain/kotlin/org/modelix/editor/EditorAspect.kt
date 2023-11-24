@@ -5,6 +5,7 @@ import org.modelix.aspects.ILanguageAspectFactory
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.ILanguage
 import org.modelix.model.api.INode
 
@@ -32,4 +33,8 @@ class EditorAspect : ILanguageAspect {
             return EditorAspect()
         }
     }
+}
+
+interface IConceptEditorRegistry {
+    fun getConceptEditors(concept: IConceptReference): List<ConceptEditor>
 }
