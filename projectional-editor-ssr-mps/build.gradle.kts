@@ -1,4 +1,6 @@
-import org.jetbrains.intellij.tasks.PrepareSandboxTask
+import com.jetbrains.plugin.structure.intellij.utils.JDOMUtil
+import org.jdom2.Element
+import org.jetbrains.intellij.transformXml
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 buildscript {
@@ -112,6 +114,45 @@ tasks {
         autoReloadPlugins.set(true)
     }
 
+
+    val stubsSolutionName = "org.modelix.mps.editor.ssr.stubs"
+    val patchedStubsSolutionDir = project.layout.buildDirectory.dir(stubsSolutionName)
+    val patchedStubsSolutionFile = project.layout.buildDirectory.file("$stubsSolutionName/$stubsSolutionName.msd")
+    val patchStubsSolution = register("patchStubsSolution") {
+        outputs.file(patchedStubsSolutionFile)
+        doLast {
+            val ownJar: File = prepareSandbox.get().pluginJar.get().asFile
+
+            val originalFile = project(":mps").layout.projectDirectory.file("$stubsSolutionName/$stubsSolutionName.msd").asFile
+            val xml = originalFile.inputStream().use { JDOMUtil.loadDocument(it) }
+
+            val modelRoot = xml.descendants.filterIsInstance<org.jdom2.Element>().first { it.name == "modelRoot" }
+            val javaFacet = xml.descendants.filterIsInstance<org.jdom2.Element>().first { it.name == "facet" }
+            modelRoot.removeChildren("sourceRoot")
+            javaFacet.removeChildren("library")
+            val runtimeJars = configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME).resolvedConfiguration.files + ownJar
+            runtimeJars.forEach { file ->
+                javaFacet.addContent(Element("library").also { it.setAttribute("location", "\${module}/../../../../lib/" + file.name) })
+            }
+            val stubModelJars =
+                configurations.getByName(JavaPlugin.RUNTIME_CLASSPATH_CONFIGURATION_NAME).resolvedConfiguration.resolvedArtifacts.filter {
+                    it.moduleVersion.id.group.startsWith("org.modelix")
+                }.map { it.file } + ownJar
+            stubModelJars.forEach { file ->
+                modelRoot.addContent(Element("sourceRoot").also { it.setAttribute("location", file.name) })
+            }
+
+            transformXml(xml, patchedStubsSolutionFile.get().asFile.toPath())
+        }
+    }
+
+    val packageStubsSolution = register("packageStubsSolution", Zip::class.java) {
+        dependsOn(patchStubsSolution)
+        from(patchedStubsSolutionDir)
+            .into("modules/$stubsSolutionName")
+        archiveFileName = "$stubsSolutionName.jar"
+    }
+
     val mpsPluginDir = project.findProperty("mps232.plugins.dir")?.toString()?.let { file(it) }
     if (mpsPluginDir != null && mpsPluginDir.isDirectory) {
         create<Sync>("installMpsPlugin") {
@@ -121,9 +162,10 @@ tasks {
         }
     }
 
-    withType<PrepareSandboxTask> {
-        intoChild(pluginName.map { "$it/languages/org.modelix.mps.editor.ssr.stubs" })
-            .from(project(":mps").layout.projectDirectory.dir("org.modelix.mps.editor.ssr.stubs"))
+    prepareSandbox {
+        dependsOn(packageStubsSolution)
+        intoChild(pluginName.map { "$it/languages" })
+            .from(packageStubsSolution.map { it.archiveFile })
     }
 }
 
