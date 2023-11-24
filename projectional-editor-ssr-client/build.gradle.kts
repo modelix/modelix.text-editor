@@ -1,7 +1,6 @@
 plugins {
     alias(coreLibs.plugins.kotlin.multiplatform)
     `maven-publish`
-    alias(coreLibs.plugins.npm.publish)
 }
 
 
