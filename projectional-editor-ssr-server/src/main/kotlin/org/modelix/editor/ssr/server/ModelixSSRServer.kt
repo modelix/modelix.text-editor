@@ -3,7 +3,15 @@ package org.modelix.editor.ssr.server
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
+import io.ktor.utils.io.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.launch
 import org.modelix.editor.Bounds
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
@@ -40,10 +48,12 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
     val editorEngine: EditorEngine = EditorEngine(incrementalEngine)
     private val allSessions: MutableSet<WebsocketSession> = Collections.synchronizedSet(LinkedHashSet())
     private val lock = Any()
+    private val coroutinesScope = CoroutineScope(Dispatchers.Default)
+    private val editorUpdater = Validator(coroutinesScope) { updateAll() }
     private val dependencyListener: IDependencyListener = object : IDependencyListener {
         override fun parentGroupChanged(childGroup: IStateVariableGroup) {}
         override fun accessed(key: IStateVariableReference<*>) {}
-        override fun modified(key: IStateVariableReference<*>) { updateAll() }
+        override fun modified(key: IStateVariableReference<*>) { editorUpdater.invalidate() }
     }
 
     fun install(route: Route) {
@@ -52,10 +62,13 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
     fun dispose() {
         DependencyTracking.removeListener(dependencyListener)
+        editorUpdater.stop()
+        coroutinesScope.cancel("disposed")
     }
 
     private fun Route.installRoutes() {
         DependencyTracking.registerListener(dependencyListener)
+        editorUpdater.start()
 
         webSocket("ws") {
             val session = WebsocketSession(this)
@@ -238,5 +251,37 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 }
             }
         }
+    }
+}
+
+/**
+ * When calling invalidate(), the `validator` function is executed, but avoid executing it too often when there are
+ * many invalidate() calls.
+ */
+class Validator(val coroutineScope: CoroutineScope, private val validator: suspend () -> Unit) {
+    private val channel = Channel<Unit>(capacity = 1, onBufferOverflow = BufferOverflow.DROP_LATEST)
+    private var validationJob: Job? = null
+    fun invalidate() { channel.trySend(Unit) }
+    fun start() {
+        check(validationJob?.isActive != true) { "Already started" }
+        validationJob = coroutineScope.launch {
+            for (x in channel) {
+                try {
+                    validator()
+                } catch (ex: CancellationException) {
+                    throw ex
+                } catch (ex: Throwable) {
+                    LOG.error(ex) { "Validation failed" }
+                }
+            }
+        }
+    }
+    fun stop() {
+        validationJob?.cancel("stopped")
+        validationJob = null
+    }
+
+    companion object {
+        private val LOG = KotlinLogging.logger {  }
     }
 }
