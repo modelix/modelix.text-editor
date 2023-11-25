@@ -38,10 +38,12 @@ import kotlinx.html.title
 import kotlinx.html.ul
 import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
+import org.modelix.model.api.ILanguageRepository
 import org.modelix.model.api.INode
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.mpsadapters.MPSChangeTranslator
+import org.modelix.model.mpsadapters.MPSLanguageRepository
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -67,6 +69,7 @@ class ModelixSSRServerForMPS : Disposable {
     private var ktorServer: ApplicationEngine? = null
     private var aspectsFromMPS: LanguageAspectsFromMPSModules? = null
     private var mpsChangeTranslator: MPSChangeTranslator? = null
+    private var mpsLanguageRepository: MPSLanguageRepository? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
 
     fun registerProject(project: Project) {
@@ -97,6 +100,8 @@ class ModelixSSRServerForMPS : Disposable {
             println("starting modelix SSR server")
 
             val repository = getMPSProjects().first().repository
+            mpsLanguageRepository = MPSLanguageRepository(repository)
+            ILanguageRepository.register(mpsLanguageRepository!!)
             mpsChangeTranslator = MPSChangeTranslator()
             mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
@@ -209,6 +214,9 @@ class ModelixSSRServerForMPS : Disposable {
             println("stopping modelix SSR server")
             ktorServer?.stop()
             ktorServer = null
+
+            mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
+            mpsLanguageRepository = null
         }
     }
 
