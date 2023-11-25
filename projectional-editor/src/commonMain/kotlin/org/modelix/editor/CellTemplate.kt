@@ -173,7 +173,9 @@ class ConstantCellTemplate(concept: IConcept, val text: String)
         }
 
         override fun execute(editor: EditorComponent) {
-            val newNode = location.replaceNode(concept)
+            val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+                location.replaceNode(concept)
+            }
             editor.selectAfterUpdate {
                 CaretPositionPolicy(newNode)
                     .getBestSelection(editor)
