@@ -20,12 +20,17 @@ import org.modelix.editor.ssr.common.INodeUpdateData
 import org.modelix.editor.ssr.common.MessageFromClient
 import org.modelix.editor.ssr.common.MessageFromServer
 import org.modelix.editor.ssr.common.TextNodeUpdateData
+import org.modelix.incremental.DependencyTracking
+import org.modelix.incremental.IDependencyListener
+import org.modelix.incremental.IStateVariableGroup
+import org.modelix.incremental.IStateVariableReference
 import org.modelix.incremental.IncrementalEngine
+import org.modelix.kotlin.utils.runSynchronized
 import org.modelix.model.api.INodeResolutionScope
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
-import org.modelix.model.api.runSynchronized
 import org.modelix.model.area.IArea
+import java.util.Collections
 
 private val LOG = KotlinLogging.logger {  }
 
@@ -33,22 +38,46 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
     private val incrementalEngine = IncrementalEngine()
     val editorEngine: EditorEngine = EditorEngine(incrementalEngine)
+    private val allSessions: MutableSet<WebsocketSession> = Collections.synchronizedSet(LinkedHashSet())
     private val lock = Any()
+    private val dependencyListener: IDependencyListener = object : IDependencyListener {
+        override fun parentGroupChanged(childGroup: IStateVariableGroup) {}
+        override fun accessed(key: IStateVariableReference<*>) {}
+        override fun modified(key: IStateVariableReference<*>) { updateAll() }
+    }
 
     fun install(route: Route) {
         route.installRoutes()
     }
 
-    private fun Route.installRoutes() {
-        route("client") {
+    fun dispose() {
+        DependencyTracking.removeListener(dependencyListener)
+    }
 
-        }
+    private fun Route.installRoutes() {
+        DependencyTracking.registerListener(dependencyListener)
+
         webSocket("ws") {
             val session = WebsocketSession(this)
             try {
+                allSessions.add(session)
                 session.receiveMessages()
             } finally {
+                allSessions.remove(session)
                 session.dispose()
+            }
+        }
+    }
+
+    fun updateAll() {
+        val sessions = runSynchronized(allSessions) { allSessions.toList() }
+        runSynchronized(lock) {
+            sessions.forEach {
+                try {
+                    it.updateAllEditors()
+                } catch (ex: Exception) {
+                    LOG.error(ex) { "Failed to send editor update" }
+                }
             }
         }
     }
@@ -98,6 +127,10 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
         fun dispose() {
             editors.values.forEach { it.dispose() }
             editors.clear()
+        }
+
+        fun updateAllEditors() {
+            editors.values.forEach { it.sendUpdate() }
         }
 
         private inner class EditorSession(val editorId: String) {

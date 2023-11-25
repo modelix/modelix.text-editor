@@ -41,7 +41,7 @@ import org.modelix.model.api.BuiltinLanguages
 import org.modelix.model.api.INode
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
-import org.modelix.model.mpsadapters.MPSLanguageRepository
+import org.modelix.model.mpsadapters.MPSChangeTranslator
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -66,6 +66,7 @@ class ModelixSSRServerForMPS : Disposable {
     private var ssrServer: ModelixSSRServer? = null
     private var ktorServer: ApplicationEngine? = null
     private var aspectsFromMPS: LanguageAspectsFromMPSModules? = null
+    private var mpsChangeTranslator: MPSChangeTranslator? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
 
     fun registerProject(project: Project) {
@@ -95,10 +96,12 @@ class ModelixSSRServerForMPS : Disposable {
 
             println("starting modelix SSR server")
 
+            val repository = getMPSProjects().first().repository
+            mpsChangeTranslator = MPSChangeTranslator()
+            mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
-            val aspectsFromMPS = LanguageAspectsFromMPSModules(getMPSProjects().first().repository)
-            this.aspectsFromMPS = aspectsFromMPS
-            ssrServer.editorEngine.addRegistry(aspectsFromMPS)
+            aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
+            ssrServer.editorEngine.addRegistry(aspectsFromMPS!!)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
             }
