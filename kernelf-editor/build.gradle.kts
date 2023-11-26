@@ -93,6 +93,7 @@ kotlin {
                 implementation(kotlin("test-js"))
                 implementation(npm("jsdom", "20.0.1"))
                 implementation(npm("@types/jsdom", "20.0.1"))
+                implementation(npm("@modelix/ts-model-api", rootProject.property("ts-model-api.version").toString()))
             }
         }
     }
@@ -158,6 +159,37 @@ listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare"
     }
 }
 
+val productionLibraryByKotlinOutputDirectory = layout.buildDirectory.dir("compileSync/js/main/productionLibrary/kotlin")
+val preparedProductionLibraryOutputDirectory = layout.buildDirectory.dir("npmPublication")
+
+val patchTypesScriptInProductionLibrary = tasks.register("patchTypesScriptInProductionLibrary") {
+    dependsOn("compileProductionLibraryKotlinJs")
+    inputs.dir(productionLibraryByKotlinOutputDirectory)
+    outputs.dir(preparedProductionLibraryOutputDirectory)
+    outputs.cacheIf { true }
+    doLast {
+        // Delete old data
+        delete {
+            delete(preparedProductionLibraryOutputDirectory)
+        }
+
+        // Copy over library create by Kotlin
+        copy {
+            from(productionLibraryByKotlinOutputDirectory)
+            into(preparedProductionLibraryOutputDirectory)
+        }
+
+        // Add correct TypeScript imports.
+        val typescriptDeclaration =
+            preparedProductionLibraryOutputDirectory.get().file("modelix.text-editor-kernelf-editor.d.ts").asFile
+        val originalTypescriptDeclarationContent = typescriptDeclaration.readText()
+        typescriptDeclaration.writer().use {
+            it.appendLine("""import { INodeJS } from "@modelix/ts-model-api";""").appendLine()
+            it.append(originalTypescriptDeclarationContent)
+        }
+    }
+}
+
 npmPublish {
 //    registries {
 //        register("itemis-npm-open") {
@@ -169,6 +201,12 @@ npmPublish {
 //    }
     packages {
         named("js") {
+            files {
+                // The files need to be set manually because we patch
+                // the JS/TS produces by `compileProductionLibraryKotlinJs`
+                // with the `patchTypesScriptInProductionLibrary` task
+                setFrom(patchTypesScriptInProductionLibrary)
+            }
             packageJson {
                 name.set("@modelix/kernelf-editor")
             }

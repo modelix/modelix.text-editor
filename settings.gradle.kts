@@ -14,7 +14,7 @@ pluginManagement {
         }
         versionCatalogs {
             create("coreLibs") {
-                from("org.modelix:core-version-catalog:3.3.4")
+                from("org.modelix:core-version-catalog:3.14.2")
             }
         }
     }
