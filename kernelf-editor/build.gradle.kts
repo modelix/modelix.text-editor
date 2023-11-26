@@ -85,7 +85,6 @@ kotlin {
         val jsMain by getting {
             dependencies {
                 api(libs.modelix.model.api)
-                implementation(peerNpm("@modelix/ts-model-api", rootProject.property("ts-model-api.version").toString()))
             }
         }
         val jsTest by getting {
