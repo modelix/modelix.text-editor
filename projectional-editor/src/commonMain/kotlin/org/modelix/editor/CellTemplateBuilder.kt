@@ -196,7 +196,11 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
     }
 
     fun ITypedProperty<Boolean>.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
-        PropertyCellTemplateBuilder(FlagCellTemplate(template.concept, untyped(), text ?: untyped().getSimpleName()), concept, nodeConverter)
+        untyped().flagCell(text, body)
+    }
+
+    fun IProperty.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        PropertyCellTemplateBuilder(FlagCellTemplate(template.concept, this, text ?: getSimpleName()), concept, nodeConverter)
             .also(body).template.also(template::addChild)
     }
 

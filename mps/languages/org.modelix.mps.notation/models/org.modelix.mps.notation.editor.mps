@@ -565,6 +565,7 @@
           <property role="3F0ifm" value="text:" />
         </node>
         <node concept="3F0A7n" id="ziPuhE_Fte" role="3EZMnx">
+          <property role="1O74Pk" value="true" />
           <ref role="1NtTu8" to="f8gn:ziPuhE_FrL" resolve="text" />
         </node>
       </node>
@@ -707,6 +708,15 @@
         </node>
       </node>
       <node concept="2iRfu4" id="ziPuhEAsOK" role="2iSdaV" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="4dQjfTHYohF">
+    <ref role="1XX52x" to="f8gn:4dQjfTHYohE" resolve="NewLineCell" />
+    <node concept="PMmxH" id="4dQjfTHYohH" role="2wV5jI">
+      <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+      <node concept="VechU" id="4dQjfTHYohJ" role="3F10Kt">
+        <property role="Vb096" value="fLJRk5A/lightGray" />
+      </node>
     </node>
   </node>
 </model>

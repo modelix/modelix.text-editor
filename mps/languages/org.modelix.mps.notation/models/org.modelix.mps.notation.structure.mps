@@ -345,5 +345,11 @@
       <property role="t5JxN" value="Specified the text used in the code completion menu when creating the concept" />
     </node>
   </node>
+  <node concept="1TIwiD" id="4dQjfTHYohE">
+    <property role="EcuMT" value="4861157503443502186" />
+    <property role="TrG5h" value="NewLineCell" />
+    <property role="34LRSv" value="\n" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+  </node>
 </model>
 
