@@ -230,7 +230,7 @@ class OptionalCellTemplate(concept: IConcept)
 
     override fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
         // TODO support other cell types as condition for the optional
-        val childLinkCell = getChildren().filterIsInstance<ChildCellTemplate>().firstOrNull()
+        val childLinkCell = descendants().filterIsInstance<ChildCellTemplate>().firstOrNull()
         if (childLinkCell == null || childLinkCell.getChildNodes(node).isNotEmpty()) {
             return super.applyChildren(context, node, cell)
         } else {
@@ -472,3 +472,10 @@ class InsertSubstitutionPlaceholderAction(
 }
 
 fun CellTemplate.firstLeaf(): CellTemplate = if (getChildren().isEmpty()) this else getChildren().first().firstLeaf()
+fun CellTemplate.descendants(includeSelf: Boolean = false): Sequence<CellTemplate> {
+    return if (includeSelf) {
+        sequenceOf(this) + descendants(false)
+    } else {
+        getChildren().asSequence().flatMap { it.descendants(true) }
+    }
+}
