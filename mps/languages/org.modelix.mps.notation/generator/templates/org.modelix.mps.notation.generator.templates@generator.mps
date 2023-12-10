@@ -56,6 +56,9 @@
       <concept id="1068580320020" name="jetbrains.mps.baseLanguage.structure.IntegerConstant" flags="nn" index="3cmrfG">
         <property id="1068580320021" name="value" index="3cmrfH" />
       </concept>
+      <concept id="1081516740877" name="jetbrains.mps.baseLanguage.structure.NotExpression" flags="nn" index="3fqX7Q">
+        <child id="1081516765348" name="expression" index="3fr31v" />
+      </concept>
       <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
         <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
         <child id="1068499141038" name="actualArgument" index="37wK5m" />
@@ -289,6 +292,49 @@
         </node>
       </node>
     </node>
+    <node concept="3aamgX" id="ziPuhEDCPl" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhEA4oz" resolve="RemoveSpace" />
+      <node concept="gft3U" id="ziPuhEDCPm" role="1lVwrX">
+        <node concept="1NbEFs" id="ziPuhEDCPn" role="gfFT$">
+          <ref role="AarEw" to="dbfy:~CellTemplateBuilder.noSpace()" resolve="noSpace" />
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="42C8o9n_Q$D" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhE_FoM" resolve="ConceptAliasCell" />
+      <node concept="gft3U" id="42C8o9n_Q$E" role="1lVwrX">
+        <node concept="1NbEFs" id="42C8o9n_Q$F" role="gfFT$">
+          <ref role="AarEw" to="dbfy:~CellTemplateBuilder.conceptAlias(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="conceptAlias" />
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="26N7cZTNAnB" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhE_VbT" resolve="OptionalCell" />
+      <node concept="gft3U" id="26N7cZTNAnC" role="1lVwrX">
+        <node concept="1NbEFs" id="26N7cZTNAnD" role="gfFT$">
+          <ref role="AarEw" to="dbfy:~CellTemplateBuilder.optional(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="optional" />
+          <node concept="1XD0f0" id="26N7cZTNFTB" role="1XD06E">
+            <node concept="AQkLs" id="26N7cZTNFTD" role="THmaL">
+              <node concept="29HgVG" id="26N7cZTNFTJ" role="lGtFl">
+                <node concept="3NFfHV" id="26N7cZTNFTK" role="3NFExx">
+                  <node concept="3clFbS" id="26N7cZTNFTL" role="2VODD2">
+                    <node concept="3clFbF" id="26N7cZTNFTR" role="3cqZAp">
+                      <node concept="2OqwBi" id="26N7cZTNFTM" role="3clFbG">
+                        <node concept="3TrEf2" id="26N7cZTNFTP" role="2OqNvi">
+                          <ref role="3Tt5mk" to="f8gn:ziPuhE_VbX" resolve="cell" />
+                        </node>
+                        <node concept="30H73N" id="26N7cZTNFTQ" role="2Oq$k0" />
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node concept="AQkLs" id="26N7cZTNG0g" role="THmaL" />
+          </node>
+        </node>
+      </node>
+    </node>
     <node concept="3aamgX" id="CUW2QYNQYQ" role="3acgRq">
       <ref role="30HIoZ" to="f8gn:CUW2QYKUUq" resolve="PropertyCell" />
       <node concept="gft3U" id="CUW2QYNQYR" role="1lVwrX">
@@ -350,7 +396,7 @@
       <node concept="gft3U" id="CUW2QYOQW5" role="1lVwrX">
         <node concept="1XD0a7" id="CUW2QYOQW6" role="gfFT$">
           <node concept="1NbEtQ" id="CUW2QYOQW7" role="1XD07G">
-            <ref role="AarEw" to="dbfy:~CellTemplateBuilder#org/modelix/model/api/IChildLink.horizontal(kotlin/String?,kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="horizontal" />
+            <ref role="AarEw" to="dbfy:~CellTemplateBuilder#org/modelix/model/api/IChildLink.horizontal(kotlin/String?,kotlin/Function1&lt;ChildCellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="horizontal" />
             <node concept="1XD0eI" id="CUW2QYP3Um" role="TWiod">
               <ref role="21Xffc" to="dbfy:~CellTemplateBuilder#org/modelix/model/api/IChildLink.horizontal(kotlin/String?,kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;).separator" resolve="separator" />
               <node concept="1XD08G" id="CUW2QYP3UE" role="1XD0ZN">
@@ -446,15 +492,17 @@
       <node concept="30G5F_" id="CUW2QYOYEN" role="30HLyM">
         <node concept="3clFbS" id="CUW2QYOYEO" role="2VODD2">
           <node concept="3clFbF" id="CUW2QYOZ38" role="3cqZAp">
-            <node concept="2OqwBi" id="CUW2QYP0N0" role="3clFbG">
-              <node concept="2OqwBi" id="CUW2QYOZtp" role="2Oq$k0">
-                <node concept="30H73N" id="CUW2QYOZ37" role="2Oq$k0" />
-                <node concept="3TrEf2" id="CUW2QYP0$b" role="2OqNvi">
-                  <ref role="3Tt5mk" to="f8gn:CUW2QYMi$q" resolve="layout" />
+            <node concept="3fqX7Q" id="42C8o9nB1Cf" role="3clFbG">
+              <node concept="2OqwBi" id="42C8o9nB1Ch" role="3fr31v">
+                <node concept="2OqwBi" id="42C8o9nB1Ci" role="2Oq$k0">
+                  <node concept="30H73N" id="42C8o9nB1Cj" role="2Oq$k0" />
+                  <node concept="3TrEf2" id="42C8o9nB1Ck" role="2OqNvi">
+                    <ref role="3Tt5mk" to="f8gn:CUW2QYMi$q" resolve="layout" />
+                  </node>
                 </node>
-              </node>
-              <node concept="2qgKlT" id="CUW2QYP13H" role="2OqNvi">
-                <ref role="37wK5l" to="wsib:CUW2QYKKme" resolve="isVertical" />
+                <node concept="2qgKlT" id="42C8o9nB1Cl" role="2OqNvi">
+                  <ref role="37wK5l" to="wsib:CUW2QYKKme" resolve="isVertical" />
+                </node>
               </node>
             </node>
           </node>
@@ -505,6 +553,62 @@
                           <node concept="30H73N" id="CUW2QYP195" role="2Oq$k0" />
                           <node concept="3TrEf2" id="CUW2QYP196" role="2OqNvi">
                             <ref role="3Tt5mk" to="f8gn:CUW2QYMipn" resolve="link" />
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="ziPuhEDw$F" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhEA4oI" resolve="SingleChildCell" />
+      <node concept="gft3U" id="ziPuhEDw$G" role="1lVwrX">
+        <node concept="1XD0a7" id="ziPuhEDw$H" role="gfFT$">
+          <node concept="1NbEtQ" id="ziPuhEDw$I" role="1XD07G">
+            <ref role="AarEw" to="dbfy:~CellTemplateBuilder#org/modelix/model/api/IChildLink.cell(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="cell" />
+          </node>
+          <node concept="1NbEFs" id="ziPuhEDw_3" role="21Pmik">
+            <ref role="AarEw" to="1g18:~MPSChildLink.new(org/jetbrains/mps/openapi/language/SContainmentLink)" resolve="MPSChildLink" />
+            <node concept="1XD0eI" id="ziPuhEDw_4" role="TWiod">
+              <node concept="rZEcI" id="ziPuhEDw_5" role="1XD0ZN">
+                <ref role="rZ_zL" to="hcm8:2yYXHtl6Jjv" resolve="ClassType" />
+                <ref role="rZ_F2" to="hcm8:5LVUgW$gbdV" resolve="class" />
+                <node concept="1ZhdrF" id="ziPuhEDw_6" role="lGtFl">
+                  <property role="2qtEX8" value="concept" />
+                  <property role="P3scX" value="eb56ebf4-df56-438e-af06-fc1cd08b495a/3181756179480673613/3181756179480675986" />
+                  <node concept="3$xsQk" id="ziPuhEDw_7" role="3$ytzL">
+                    <node concept="3clFbS" id="ziPuhEDw_8" role="2VODD2">
+                      <node concept="3clFbF" id="ziPuhEDw_9" role="3cqZAp">
+                        <node concept="2OqwBi" id="ziPuhEDw_a" role="3clFbG">
+                          <node concept="2OqwBi" id="ziPuhEDw_b" role="2Oq$k0">
+                            <node concept="30H73N" id="ziPuhEDw_c" role="2Oq$k0" />
+                            <node concept="3TrEf2" id="ziPuhEDw_d" role="2OqNvi">
+                              <ref role="3Tt5mk" to="f8gn:ziPuhEA4oM" resolve="link" />
+                            </node>
+                          </node>
+                          <node concept="2qgKlT" id="ziPuhEDw_e" role="2OqNvi">
+                            <ref role="37wK5l" to="tpcn:7jb4LXpbWaP" resolve="getConceptDeclaration" />
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="1ZhdrF" id="ziPuhEDw_f" role="lGtFl">
+                  <property role="2qtEX8" value="link" />
+                  <property role="P3scX" value="eb56ebf4-df56-438e-af06-fc1cd08b495a/3181756179480673613/3181756179480675489" />
+                  <node concept="3$xsQk" id="ziPuhEDw_g" role="3$ytzL">
+                    <node concept="3clFbS" id="ziPuhEDw_h" role="2VODD2">
+                      <node concept="3clFbF" id="ziPuhEDw_i" role="3cqZAp">
+                        <node concept="2OqwBi" id="ziPuhEDw_j" role="3clFbG">
+                          <node concept="30H73N" id="ziPuhEDw_k" role="2Oq$k0" />
+                          <node concept="3TrEf2" id="ziPuhEDw_l" role="2OqNvi">
+                            <ref role="3Tt5mk" to="f8gn:ziPuhEA4oM" resolve="link" />
                           </node>
                         </node>
                       </node>

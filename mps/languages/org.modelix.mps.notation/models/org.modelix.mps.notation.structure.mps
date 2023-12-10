@@ -335,7 +335,7 @@
     <property role="EcuMT" value="635805674430385442" />
     <property role="TrG5h" value="SubstituteCell" />
     <property role="34LRSv" value="substitute" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
     <node concept="1TJgyi" id="ziPuhEAsOB" role="1TKVEl">
       <property role="IQ2nx" value="635805674430385447" />
       <property role="TrG5h" value="text" />
