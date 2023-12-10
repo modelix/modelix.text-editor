@@ -10,6 +10,7 @@
     <use id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator" version="4" />
     <use id="c7b55726-1795-47bd-aa21-714ac1e30f21" name="org.modelix.mps.notation" version="0" />
     <use id="d7706f63-9be2-479c-a3da-ae92af1e64d5" name="jetbrains.mps.lang.generator.generationContext" version="2" />
+    <use id="df345b11-b8c7-4213-ac66-48d2a9b75d88" name="jetbrains.mps.baseLanguageInternal" version="0" />
     <devkit ref="a2eb3a43-fcc2-4200-80dc-c60110c4862d(jetbrains.mps.devkit.templates)" />
     <devkit ref="3605c367-b661-48bf-8131-d9bd75494e4d(jetbrains.mps.devkit.kotlin)" />
   </languages>
@@ -228,6 +229,12 @@
         <reference id="3181756179480675489" name="link" index="rZ_F2" />
       </concept>
     </language>
+    <language id="df345b11-b8c7-4213-ac66-48d2a9b75d88" name="jetbrains.mps.baseLanguageInternal">
+      <concept id="1176743162354" name="jetbrains.mps.baseLanguageInternal.structure.InternalVariableReference" flags="nn" index="3VmV3z">
+        <property id="1176743296073" name="name" index="3VnrPo" />
+        <child id="1176743202636" name="type" index="3Vn4Tt" />
+      </concept>
+    </language>
     <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
       <concept id="1177026924588" name="jetbrains.mps.lang.smodel.structure.RefConcept_Reference" flags="nn" index="chp4Y">
         <reference id="1177026940964" name="conceptDeclaration" index="cht4Q" />
@@ -254,6 +261,7 @@
       <concept id="1144101972840" name="jetbrains.mps.lang.smodel.structure.OperationParm_Concept" flags="ng" index="1xMEDy">
         <child id="1207343664468" name="conceptArgument" index="ri$Ld" />
       </concept>
+      <concept id="1138055754698" name="jetbrains.mps.lang.smodel.structure.SNodeType" flags="in" index="3Tqbb2" />
       <concept id="1138056022639" name="jetbrains.mps.lang.smodel.structure.SPropertyAccess" flags="nn" index="3TrcHB">
         <reference id="1138056395725" name="property" index="3TsBF5" />
       </concept>
@@ -1077,6 +1085,58 @@
               </node>
             </node>
           </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="22f9nDgRKSe" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhE_FoY" resolve="BL_ExpressionCell" />
+      <node concept="gft3U" id="22f9nDgRLae" role="1lVwrX">
+        <node concept="1NbEFs" id="22f9nDgRLaf" role="gfFT$">
+          <ref role="AarEw" to="dbfy:~CellTemplateBuilder.horizontal(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="horizontal" />
+          <node concept="1XD0f0" id="22f9nDgRLag" role="1XD06E">
+            <node concept="1NbEFs" id="22f9nDgRMjz" role="THmaL">
+              <ref role="AarEw" to="dbfy:~CellTemplateBuilder.withNode(kotlin/Function1&lt;CellTemplateBuilder.WithNodeContext,kotlin/Unit&gt;)" resolve="withNode" />
+              <node concept="1XD0f0" id="22f9nDgRMj$" role="1XD06E">
+                <node concept="1NbEFs" id="22f9nDgRQ9O" role="THmaL">
+                  <ref role="AarEw" to="dbfy:~CellTemplateBuilder.modelAccess(kotlin/Function1&lt;ModelAccessBuilder,kotlin/Unit&gt;)" resolve="modelAccess" />
+                  <node concept="1XD0f0" id="22f9nDgRQ9P" role="1XD06E">
+                    <node concept="1NbEFs" id="22f9nDgRUp$" role="THmaL">
+                      <ref role="AarEw" to="dbfy:~ModelAccessBuilder.get(kotlin/Function0&lt;kotlin/String?&gt;)" resolve="get" />
+                      <node concept="1XD0f0" id="22f9nDgRUp_" role="1XD06E">
+                        <node concept="1KmxGs" id="22f9nDgRU5Z" role="THmaL">
+                          <node concept="10Nm6u" id="22f9nDgRU81" role="1KmxGj">
+                            <node concept="29HgVG" id="22f9nDgRU87" role="lGtFl">
+                              <node concept="3NFfHV" id="22f9nDgRU88" role="3NFExx">
+                                <node concept="3clFbS" id="22f9nDgRU89" role="2VODD2">
+                                  <node concept="3clFbF" id="22f9nDgRU8f" role="3cqZAp">
+                                    <node concept="2OqwBi" id="22f9nDgRU8a" role="3clFbG">
+                                      <node concept="3TrEf2" id="22f9nDgRU8d" role="2OqNvi">
+                                        <ref role="3Tt5mk" to="f8gn:ziPuhE_Fp2" resolve="expression" />
+                                      </node>
+                                      <node concept="30H73N" id="22f9nDgRU8e" role="2Oq$k0" />
+                                    </node>
+                                  </node>
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="22f9nDgS1RE" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:22f9nDgNr2y" resolve="BL_NotationNodeExpression" />
+      <node concept="gft3U" id="22f9nDgS50R" role="1lVwrX">
+        <node concept="3VmV3z" id="22f9nDgS50Z" role="gfFT$">
+          <property role="3VnrPo" value="node" />
+          <node concept="3Tqbb2" id="22f9nDgS519" role="3Vn4Tt" />
         </node>
       </node>
     </node>
