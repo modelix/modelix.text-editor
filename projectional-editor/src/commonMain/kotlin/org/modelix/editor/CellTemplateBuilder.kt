@@ -59,6 +59,20 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         ConstantCellTemplate(template.concept, text).builder().also(body).template.also(template::addChild)
     }
 
+    fun untypedConcept() = when (concept) {
+        is IConcept -> concept
+        is ITypedConcept -> concept.untyped()
+        else -> throw RuntimeException("Unknown concept type: $concept")
+    }
+
+    fun conceptProperty(name: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        (untypedConcept().getConceptProperty(name) ?: untypedConcept().getShortName()).constant(body)
+    }
+
+    fun conceptAlias(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        conceptProperty("alias", body)
+    }
+
     fun label(text: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
         LabelCellTemplate(template.concept, text).builder().also(body).template.also(template::addChild)
     }
