@@ -7,5 +7,6 @@ interface ICellTemplateReference
 
 data class RooCellTemplateReference(val conceptEditor: ConceptEditor, val subConcept: IConceptReference) : ICellTemplateReference
 data class ChildCellTemplateReference(val parent: ICellTemplateReference, val index: Int) : ICellTemplateReference
+data class SeparatorCellTemplateReference(val parent: ICellTemplateReference) : ICellTemplateReference
 
 data class TemplateCellReference(val template: ICellTemplateReference, val node: INodeReference) : CellReference()

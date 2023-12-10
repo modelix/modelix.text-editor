@@ -1,7 +1,6 @@
 package org.modelix.editor
 
 import org.modelix.metamodel.ITypedNode
-import org.modelix.metamodel.typedUnsafe
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
@@ -10,11 +9,14 @@ import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import org.modelix.scopes.ScopeAspect
+import kotlin.jvm.JvmName
 
 abstract class CellTemplate(val concept: IConcept) {
     val properties = CellProperties()
     private val children: MutableList<CellTemplate> = ArrayList()
-    private var reference: ICellTemplateReference? = null
+    @get:JvmName("getReferenceField")
+    @set:JvmName("setReferenceField")
+    protected var reference: ICellTemplateReference? = null
     val withNode: MutableList<(node: INode)->Unit> = ArrayList()
     fun apply(context: CellCreationContext, node: INode): CellData {
         val cellData = createCell(context, node)
@@ -66,7 +68,7 @@ abstract class CellTemplate(val concept: IConcept) {
 
     fun getChildren(): List<CellTemplate> = children
 
-    fun setReference(ref: ICellTemplateReference) {
+    open fun setReference(ref: ICellTemplateReference) {
         if (reference != null) throw IllegalStateException("reference is already set")
         reference = ref
         children.forEachIndexed { index, child -> child.setReference(ChildCellTemplateReference(ref, index)) }
@@ -369,6 +371,19 @@ class ChildCellTemplate(
     concept: IConcept,
     val link: IChildLink
 ) : CellTemplate(concept), IGrammarSymbol {
+
+    private var separatorCell: CellTemplate? = null
+
+    fun setSeparator(newSeparator: CellTemplate) {
+        this.separatorCell = newSeparator
+        reference?.let { newSeparator.setReference(SeparatorCellTemplateReference(it)) }
+    }
+
+    override fun setReference(ref: ICellTemplateReference) {
+        super.setReference(ref)
+        separatorCell?.setReference(SeparatorCellTemplateReference(ref))
+    }
+
     override fun createCell(context: CellCreationContext, node: INode) = CellData().also { cell ->
         val childNodes = getChildNodes(node)
         val substitutionPlaceholder = context.editorState.substitutionPlaceholderPositions[createCellReference(node)]
@@ -401,6 +416,15 @@ class ChildCellTemplate(
         } else {
             val childCells = childNodes.map { ChildDataReference(it) }
             childCells.forEachIndexed { index, child ->
+                val childCellReference = ChildNodeCellReference(node.reference, link, index)
+                if (index != 0) {
+                    separatorCell?.let {
+                        cell.addChild(it.apply(context, node).also {
+                            it.cellReferences += SeparatorCellReference(childCellReference)
+                        })
+                    }
+                }
+
                 if (substitutionPlaceholder != null && placeholderIndex == index) {
                     addSubstitutionPlaceholder(placeholderIndex)
                 } else {
@@ -410,7 +434,7 @@ class ChildCellTemplate(
                 //child.parent?.removeChild(child) // child may be cached and is still attached to the old parent
                 val wrapper = CellData() // allow setting properties by the parent, because the cell is already frozen
                 wrapper.addChild(child)
-                wrapper.cellReferences += ChildNodeCellReference(node.reference, link, index)
+                wrapper.cellReferences += childCellReference
                 cell.addChild(wrapper)
             }
             if (substitutionPlaceholder != null && placeholderIndex == childNodes.size) {

@@ -4,7 +4,6 @@ import org.modelix.metamodel.*
 import org.modelix.model.api.*
 import kotlin.jvm.JvmName
 import kotlin.reflect.KClass
-import kotlin.reflect.cast
 
 open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTemplate, val concept: ConceptT, protected val nodeConverter: INodeConverter<NodeT>) {
     val properties = CellProperties()
@@ -260,8 +259,10 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         this.untyped().horizontal(separator, body)
     }
 
-    fun IChildLink.horizontal(separator: String? = ",", body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
-        ChildCellTemplate(template.concept, this).builder().also(body).template.also(template::addChild)
+    fun IChildLink.horizontal(separator: String? = ",", body: ChildCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        ChildCellTemplateBuilder<NodeT, ConceptT>(ChildCellTemplate(template.concept, this), concept, nodeConverter)
+            .also { if (separator != null) it.separator { constant(separator) } }
+            .also(body).template.also(template::addChild)
     }
 
     fun modelAccess(body: ModelAccessBuilder.()->Unit) {
@@ -306,6 +307,18 @@ class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
 
     fun placeholderText(placeholderText: String) {
         (template as PropertyCellTemplate).placeholderText = placeholderText
+    }
+}
+
+class ChildCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
+    template: ChildCellTemplate,
+    concept: ConceptT,
+    nodeConverter: INodeConverter<NodeT>
+) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
+    fun separator(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit) {
+        (template as ChildCellTemplate).setSeparator(
+            CollectionCellTemplate(template.concept).also { body(it.builder()) }
+        )
     }
 }
 

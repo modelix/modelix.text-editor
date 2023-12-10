@@ -39,4 +39,5 @@ fun EditorComponent.resolveNodeCell(node: ITypedNode): Cell? =
     resolveNodeCell(node.untypedReference())
 
 data class ChildNodeCellReference(val parentNodeRef: INodeReference, val link: IChildLink, val index: Int = 0) : CellReference()
+data class SeparatorCellReference(val before: ChildNodeCellReference) : CellReference()
 data class ReferencedNodeCellReference(val sourceNodeRef: INodeReference, val link: IReferenceLink) : CellReference()
