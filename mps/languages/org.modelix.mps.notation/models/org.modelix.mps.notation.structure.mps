@@ -11,6 +11,9 @@
   </imports>
   <registry>
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
+      <concept id="7862711839422615209" name="jetbrains.mps.lang.structure.structure.DocumentedNodeAnnotation" flags="ng" index="t5JxF">
+        <property id="7862711839422615217" name="text" index="t5JxN" />
+      </concept>
       <concept id="1169125787135" name="jetbrains.mps.lang.structure.structure.AbstractConceptDeclaration" flags="ig" index="PkWjJ">
         <property id="6714410169261853888" name="conceptId" index="EcuMT" />
         <property id="4628067390765956802" name="abstract" index="R5$K7" />
@@ -46,6 +49,7 @@
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
       <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
         <child id="5169995583184591170" name="smodelAttribute" index="lGtFl" />
       </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
@@ -57,7 +61,7 @@
     <property role="EcuMT" value="8310867745953062360" />
     <property role="TrG5h" value="NotationModule" />
     <property role="19KtqR" value="true" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="7dm8yUsMfq9" role="1TKVEi">
       <property role="IQ2ns" value="8310867745953085065" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -76,7 +80,7 @@
   <node concept="1TIwiD" id="7dm8yUsMf_c">
     <property role="EcuMT" value="8310867745953085772" />
     <property role="TrG5h" value="EmptyLine" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="7dm8yUsMfEi" role="PzmwI">
       <ref role="PrY4T" node="7dm8yUsMflU" resolve="INotationModuleContent" />
     </node>
@@ -85,7 +89,7 @@
     <property role="EcuMT" value="8310867745953086317" />
     <property role="TrG5h" value="ConceptNotation" />
     <property role="34LRSv" value="notation" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="7dm8yUsMfYJ" role="1TKVEi">
       <property role="IQ2ns" value="8310867745953087407" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -127,7 +131,7 @@
   <node concept="1TIwiD" id="7dm8yUsMxww">
     <property role="EcuMT" value="8310867745953159200" />
     <property role="TrG5h" value="Cell" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="7dm8yUsMxzU" role="PzmwI">
       <ref role="PrY4T" node="7dm8yUsMxhg" resolve="ICell" />
     </node>
@@ -155,18 +159,21 @@
     <property role="EcuMT" value="737165568293142685" />
     <property role="TrG5h" value="CollectionLayout" />
     <property role="R5$K7" value="true" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <property role="3GE5qa" value="layout" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
   </node>
   <node concept="1TIwiD" id="CUW2QYKK8o">
     <property role="EcuMT" value="737165568293143064" />
     <property role="TrG5h" value="HorizontalLayout" />
     <property role="34LRSv" value="horizontal" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" node="CUW2QYKK2t" resolve="CollectionLayout" />
   </node>
   <node concept="1TIwiD" id="CUW2QYKKdt">
     <property role="EcuMT" value="737165568293143389" />
     <property role="TrG5h" value="VerticalLayout" />
     <property role="34LRSv" value="vertical" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" node="CUW2QYKK2t" resolve="CollectionLayout" />
   </node>
   <node concept="1TIwiD" id="CUW2QYKUUq">
@@ -228,6 +235,114 @@
       <property role="20kJfa" value="cells" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" node="7dm8yUsMxhg" resolve="ICell" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhE_FoM">
+    <property role="EcuMT" value="635805674430182962" />
+    <property role="TrG5h" value="ConceptAliasCell" />
+    <property role="34LRSv" value="alias" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+  </node>
+  <node concept="1TIwiD" id="ziPuhE_FoY">
+    <property role="EcuMT" value="635805674430182974" />
+    <property role="TrG5h" value="ExpressionCell" />
+    <property role="34LRSv" value="*(" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="ziPuhE_Fp2" role="1TKVEi">
+      <property role="IQ2ns" value="635805674430182978" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="expression" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="hcm8:2yYXHtl6Jjg" resolve="IExpression" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhE_FrH">
+    <property role="EcuMT" value="635805674430183149" />
+    <property role="TrG5h" value="FlagCell" />
+    <property role="34LRSv" value="flag" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="ziPuhE_FrT" role="1TKVEi">
+      <property role="IQ2ns" value="635805674430183161" />
+      <property role="20kJfa" value="property" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:f_TJgxF" resolve="PropertyDeclaration" />
+    </node>
+    <node concept="1TJgyi" id="ziPuhE_FrL" role="1TKVEl">
+      <property role="IQ2nx" value="635805674430183153" />
+      <property role="TrG5h" value="text" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="ziPuhE_FrO" role="1TKVEl">
+      <property role="IQ2nx" value="635805674430183156" />
+      <property role="TrG5h" value="inverted" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhE_TwU">
+    <property role="EcuMT" value="635805674430240826" />
+    <property role="TrG5h" value="NotationNodeExpression" />
+    <property role="34LRSv" value="_" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="PrWs8" id="ziPuhE_TwW" role="PzmwI">
+      <ref role="PrY4T" to="hcm8:2yYXHtl6Jjg" resolve="IExpression" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhE_VbT">
+    <property role="EcuMT" value="635805674430247673" />
+    <property role="TrG5h" value="OptionalCell" />
+    <property role="34LRSv" value="?" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="ziPuhE_VbX" role="1TKVEi">
+      <property role="IQ2ns" value="635805674430247677" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="cell" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="7dm8yUsMxhg" resolve="ICell" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhEA2a_">
+    <property role="EcuMT" value="635805674430276261" />
+    <property role="TrG5h" value="ReferenceCell" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="ziPuhEA2aC" role="1TKVEi">
+      <property role="IQ2ns" value="635805674430276264" />
+      <property role="20kJfa" value="link" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:f_TJgxE" resolve="LinkDeclaration" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhEA4oz">
+    <property role="EcuMT" value="635805674430285347" />
+    <property role="TrG5h" value="RemoveSpace" />
+    <property role="34LRSv" value="&gt;&lt;" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="PrWs8" id="ziPuhEA4o_" role="PzmwI">
+      <ref role="PrY4T" node="7dm8yUsMxhg" resolve="ICell" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhEA4oI">
+    <property role="EcuMT" value="635805674430285358" />
+    <property role="TrG5h" value="SingleChildCell" />
+    <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="ziPuhEA4oM" role="1TKVEi">
+      <property role="IQ2ns" value="635805674430285362" />
+      <property role="20kJfa" value="link" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:f_TJgxE" resolve="LinkDeclaration" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="ziPuhEAsOy">
+    <property role="EcuMT" value="635805674430385442" />
+    <property role="TrG5h" value="SubstituteCell" />
+    <property role="34LRSv" value="substitute" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="ziPuhEAsOB" role="1TKVEl">
+      <property role="IQ2nx" value="635805674430385447" />
+      <property role="TrG5h" value="text" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="t5JxF" id="ziPuhEAsOz" role="lGtFl">
+      <property role="t5JxN" value="Specified the text used in the code completion menu when creating the concept" />
     </node>
   </node>
 </model>

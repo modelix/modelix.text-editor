@@ -661,7 +661,7 @@
     </node>
     <node concept="3lhOvk" id="63DBII8qadT" role="3lj3bC">
       <ref role="30HIoZ" to="f8gn:7dm8yUsM9Ro" resolve="NotationModule" />
-      <ref role="3lhOvi" node="63DBII8pVW4" resolve="EditorAspect" />
+      <ref role="3lhOvi" node="63DBII8pVW4" resolve="AspectsDescriptor" />
     </node>
   </node>
   <node concept="1XD0fY" id="63DBII8pVW4">
