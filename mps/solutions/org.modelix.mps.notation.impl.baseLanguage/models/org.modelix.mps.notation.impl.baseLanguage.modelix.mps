@@ -32,6 +32,9 @@
       <concept id="635805674430285358" name="org.modelix.mps.notation.structure.SingleChildCell" flags="ng" index="1yiDfa">
         <reference id="635805674430285362" name="link" index="1yiDfm" />
       </concept>
+      <concept id="635805674430276261" name="org.modelix.mps.notation.structure.ReferenceCell" flags="ng" index="1yiJt1">
+        <reference id="635805674430276264" name="link" index="1yiJtc" />
+      </concept>
       <concept id="8310867745953158874" name="org.modelix.mps.notation.structure.ConstantCell" flags="ng" index="3JB3jO">
         <property id="8310867745953159745" name="text" index="3JB3xJ" />
       </concept>
@@ -250,6 +253,30 @@
       <ref role="3JBHV4" to="tpee:fzcmrck" resolve="IntegerConstant" />
       <node concept="2OYlUR" id="26N7cZTNRNU" role="3JBHQ1">
         <ref role="2OYlZd" to="tpee:fzcmrcl" resolve="value" />
+      </node>
+    </node>
+    <node concept="3JBH_3" id="4dQjfTHX1VY" role="3JBHiB">
+      <ref role="3JBHV4" to="tpee:hiAHcMF" resolve="AnnotationInstance" />
+      <node concept="2OY0tg" id="4dQjfTHX1Xp" role="3JBHQ1">
+        <node concept="3JB3jO" id="4dQjfTHX1Xs" role="2OY0$2">
+          <property role="3JB3xJ" value="@" />
+        </node>
+        <node concept="1yiJt1" id="4dQjfTHX1Xx" role="2OY0$2">
+          <ref role="1yiJtc" to="tpee:hiAI5P0" resolve="annotation" />
+        </node>
+        <node concept="1yhmst" id="4dQjfTHX2kb" role="2OY0$2">
+          <node concept="2OY0tg" id="4dQjfTHX2ki" role="1yhmsp">
+            <node concept="3JB3jO" id="4dQjfTHX2kl" role="2OY0$2">
+              <property role="3JB3xJ" value="(" />
+            </node>
+            <node concept="2OWXkZ" id="4dQjfTHX2ky" role="2OY0$2">
+              <ref role="2OWXpU" to="tpee:hiB76_Z" resolve="value" />
+            </node>
+            <node concept="3JB3jO" id="4dQjfTHX2kq" role="2OY0$2">
+              <property role="3JB3xJ" value=")" />
+            </node>
+          </node>
+        </node>
       </node>
     </node>
   </node>
