@@ -7,6 +7,8 @@
   <imports>
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" />
     <import index="hcm8" ref="r:72a7bf00-0175-42ca-b99b-fe8519b6a16f(jetbrains.mps.kotlin.structure)" />
+    <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" />
+    <import index="ya4x" ref="r:2bbee5fa-3e86-4d20-a22d-b5d5f139bede(org.modelix.mps.baseLanguage2kotlin.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
   </imports>
   <registry>
@@ -280,8 +282,9 @@
   </node>
   <node concept="1TIwiD" id="ziPuhE_TwU">
     <property role="EcuMT" value="635805674430240826" />
-    <property role="TrG5h" value="NotationNodeExpression" />
+    <property role="TrG5h" value="KT_NotationNodeExpression" />
     <property role="34LRSv" value="_" />
+    <property role="3GE5qa" value="expressions" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="ziPuhE_TwW" role="PzmwI">
       <ref role="PrY4T" to="hcm8:2yYXHtl6Jjg" resolve="IExpression" />
@@ -304,6 +307,12 @@
     <property role="EcuMT" value="635805674430276261" />
     <property role="TrG5h" value="ReferenceCell" />
     <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyj" id="22f9nDgMtfW" role="1TKVEi">
+      <property role="IQ2ns" value="2346135138154959868" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="renderTarget" />
+      <ref role="20lvS9" to="ya4x:22f9nDgNaDZ" resolve="IBaseLanguageOrKotlinExpression" />
+    </node>
     <node concept="1TJgyj" id="ziPuhEA2aC" role="1TKVEi">
       <property role="IQ2ns" value="635805674430276264" />
       <property role="20kJfa" value="link" />
@@ -350,6 +359,20 @@
     <property role="TrG5h" value="NewLineCell" />
     <property role="34LRSv" value="\n" />
     <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+  </node>
+  <node concept="1TIwiD" id="22f9nDgNr2y">
+    <property role="EcuMT" value="2346135138155212962" />
+    <property role="TrG5h" value="BL_NotationNodeExpression" />
+    <property role="34LRSv" value="_" />
+    <property role="3GE5qa" value="expressions" />
+    <ref role="1TJDcQ" to="tpee:fz3vP1J" resolve="Expression" />
+  </node>
+  <node concept="1TIwiD" id="22f9nDgOIIh">
+    <property role="EcuMT" value="2346135138155555729" />
+    <property role="TrG5h" value="BL_ReferenceTargetExpression" />
+    <property role="3GE5qa" value="expressions" />
+    <property role="34LRSv" value="target" />
+    <ref role="1TJDcQ" to="tpee:fz3vP1J" resolve="Expression" />
   </node>
 </model>
 

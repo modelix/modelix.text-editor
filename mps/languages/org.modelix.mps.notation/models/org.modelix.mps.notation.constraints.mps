@@ -137,6 +137,9 @@
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
+      </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
@@ -422,7 +425,8 @@
     </node>
   </node>
   <node concept="1M2fIO" id="ziPuhE_Tx4">
-    <ref role="1M2myG" to="f8gn:ziPuhE_TwU" resolve="NotationNodeExpression" />
+    <property role="3GE5qa" value="expressions" />
+    <ref role="1M2myG" to="f8gn:ziPuhE_TwU" resolve="KT_NotationNodeExpression" />
     <node concept="9S07l" id="ziPuhE_Tx6" role="9Vyp8">
       <node concept="3clFbS" id="ziPuhE_Tx7" role="2VODD2">
         <node concept="3clFbF" id="ziPuhE_TWd" role="3cqZAp">
@@ -574,6 +578,30 @@
                 </node>
               </node>
             </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="1M2fIO" id="22f9nDgOIIm">
+    <property role="3GE5qa" value="expressions" />
+    <ref role="1M2myG" to="f8gn:22f9nDgOIIh" resolve="BL_ReferenceTargetExpression" />
+    <node concept="9S07l" id="22f9nDgOIIn" role="9Vyp8">
+      <node concept="3clFbS" id="22f9nDgOIIo" role="2VODD2">
+        <node concept="3clFbF" id="22f9nDgOIW9" role="3cqZAp">
+          <node concept="2OqwBi" id="22f9nDgOJIC" role="3clFbG">
+            <node concept="2OqwBi" id="22f9nDgOJ71" role="2Oq$k0">
+              <node concept="nLn13" id="22f9nDgOIW8" role="2Oq$k0" />
+              <node concept="2Xjw5R" id="22f9nDgOJsI" role="2OqNvi">
+                <node concept="1xMEDy" id="22f9nDgOJsK" role="1xVPHs">
+                  <node concept="chp4Y" id="22f9nDgOJvc" role="ri$Ld">
+                    <ref role="cht4Q" to="f8gn:ziPuhEA2a_" resolve="ReferenceCell" />
+                  </node>
+                </node>
+                <node concept="1xIGOp" id="22f9nDgOJzu" role="1xVPHs" />
+              </node>
+            </node>
+            <node concept="3x8VRR" id="22f9nDgOJY7" role="2OqNvi" />
           </node>
         </node>
       </node>

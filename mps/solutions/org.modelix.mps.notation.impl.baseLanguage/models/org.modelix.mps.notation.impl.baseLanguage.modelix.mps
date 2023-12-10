@@ -2,7 +2,7 @@
 <model ref="r:9565a1ac-337e-4f9a-93cc-5026eb7e7382(org.modelix.mps.notation.impl.baseLanguage.modelix)">
   <persistence version="9" />
   <languages>
-    <use id="c7b55726-1795-47bd-aa21-714ac1e30f21" name="org.modelix.mps.notation" version="0" />
+    <devkit ref="46d68387-81c7-4c54-9dd2-2717eb3f009b(org.modelix.mps.webaspect.devkit)" />
   </languages>
   <imports>
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" />
@@ -10,8 +10,20 @@
     <import index="zqge" ref="r:59e90602-6655-4552-86eb-441a42a9a0e4(jetbrains.mps.lang.text.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
     <import index="tp2q" ref="r:00000000-0000-4000-0000-011c8959032e(jetbrains.mps.baseLanguage.collections.structure)" implicit="true" />
+    <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" implicit="true" />
   </imports>
   <registry>
+    <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
+      <concept id="1197027756228" name="jetbrains.mps.baseLanguage.structure.DotExpression" flags="nn" index="2OqwBi">
+        <child id="1197027771414" name="operand" index="2Oq$k0" />
+        <child id="1197027833540" name="operation" index="2OqNvi" />
+      </concept>
+    </language>
+    <language id="8f2def56-7502-4f14-994f-472d404e528c" name="org.modelix.mps.baseLanguage2kotlin">
+      <concept id="2346135138155145856" name="org.modelix.mps.baseLanguage2kotlin.structure.BaseLanguageExpressionWrapper" flags="ng" index="1KgSZU">
+        <child id="2346135138155145859" name="expression" index="1KgSZT" />
+      </concept>
+    </language>
     <language id="c7b55726-1795-47bd-aa21-714ac1e30f21" name="org.modelix.mps.notation">
       <concept id="4861157503443502186" name="org.modelix.mps.notation.structure.NewLineCell" flags="ng" index="IzWyk" />
       <concept id="737165568293720756" name="org.modelix.mps.notation.structure.IndentCell" flags="ng" index="2OWiap" />
@@ -43,6 +55,7 @@
       </concept>
       <concept id="635805674430276261" name="org.modelix.mps.notation.structure.ReferenceCell" flags="ng" index="1yiJt1">
         <reference id="635805674430276264" name="link" index="1yiJtc" />
+        <child id="2346135138154959868" name="renderTarget" index="1KhJq6" />
       </concept>
       <concept id="8310867745953158874" name="org.modelix.mps.notation.structure.ConstantCell" flags="ng" index="3JB3jO">
         <property id="8310867745953159745" name="text" index="3JB3xJ" />
@@ -55,6 +68,12 @@
         <child id="8310867745953087407" name="cell" index="3JBHQ1" />
       </concept>
       <concept id="8310867745953085772" name="org.modelix.mps.notation.structure.EmptyLine" flags="ng" index="3JBHHy" />
+      <concept id="2346135138155555729" name="org.modelix.mps.notation.structure.BL_ReferenceTargetExpression" flags="ng" index="1KnsVF" />
+    </language>
+    <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
+      <concept id="1138056022639" name="jetbrains.mps.lang.smodel.structure.SPropertyAccess" flags="nn" index="3TrcHB">
+        <reference id="1138056395725" name="property" index="3TsBF5" />
+      </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
@@ -1102,6 +1121,14 @@
       <ref role="3JBHV4" to="tp25:gzTsc4p" resolve="SLinkListAccess" />
       <node concept="1yiJt1" id="22f9nDgLubK" role="3JBHQ1">
         <ref role="1yiJtc" to="tp25:gzTtc_y" resolve="link" />
+        <node concept="1KgSZU" id="22f9nDgOFCc" role="1KhJq6">
+          <node concept="2OqwBi" id="22f9nDgP9fU" role="1KgSZT">
+            <node concept="1KnsVF" id="22f9nDgP96j" role="2Oq$k0" />
+            <node concept="3TrcHB" id="22f9nDgP9xg" role="2OqNvi">
+              <ref role="3TsBF5" to="tpce:fA0kJcN" resolve="role" />
+            </node>
+          </node>
+        </node>
       </node>
     </node>
     <node concept="3JBH_3" id="22f9nDgLvL7" role="3JBHiB">
