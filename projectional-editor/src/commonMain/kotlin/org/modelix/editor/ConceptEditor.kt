@@ -1,19 +1,9 @@
 package org.modelix.editor
 
-import org.modelix.metamodel.GeneratedConcept
-import org.modelix.metamodel.IConceptOfTypedNode
-import org.modelix.metamodel.ITypedChildListLink
-import org.modelix.metamodel.ITypedConcept
-import org.modelix.metamodel.ITypedNode
-import org.modelix.metamodel.ITypedSingleChildLink
 import org.modelix.metamodel.NullConcept
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.typedConcept
-import org.modelix.metamodel.untypedConcept
-import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
-import org.modelix.model.api.serialize
+import org.modelix.model.api.IProperty
 
 class ConceptEditor(
     val declaredConcept: IConcept?,
@@ -41,7 +31,9 @@ val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
             for (link in subConcept.getAllReferenceLinks()) {
                 newLine()
                 label(link.getSimpleName() + ":")
-                link.cell(presentation = { reference.serialize() })
+                link.cell(presentation = {
+                    getPropertyValue(IProperty.fromName("name")) ?: reference.serialize()
+                })
             }
             for (link in subConcept.getAllChildLinks()) {
                 newLine()

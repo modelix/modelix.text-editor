@@ -181,6 +181,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                 val dom = editorComponent!!.getHtmlElement()!!
                 LOG.debug { "($editorId) dom: $dom" }
                 val latestDomState = HashMap<String, HTMLElementUpdateData>()
+                // TODO performance
                 var rootData = toUpdateData(dom, latestDomState)
                 if (rootData is ElementReference) rootData = latestDomState[rootData.id]!!
                 check(rootData is HTMLElementUpdateData)

@@ -142,6 +142,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
 
         fun computeBoundsUpdate(): Map<String, HTMLElementBoundsUpdate>? {
+            // TODO performance
             val origin = containerElement.getAbsoluteBounds()
             val latest = elementMap.entries.associate {
                 val outer = it.value.getAbsoluteBounds().relativeTo(origin)

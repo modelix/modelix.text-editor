@@ -32,7 +32,9 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
     }
 
     fun withNode(body: WithNodeContext.()->Unit) {
-        template.withNode += { node -> body(WithNodeContext(nodeConverter.fromUntyped(node))) }
+        withUntypedNode { node ->
+            body(WithNodeContext(nodeConverter.fromUntyped(node)))
+        }
     }
 
     protected fun withUntypedNode(body: (INode)->Unit) {
