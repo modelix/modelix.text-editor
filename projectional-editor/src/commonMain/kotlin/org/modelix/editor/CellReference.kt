@@ -1,6 +1,7 @@
 package org.modelix.editor
 
 import org.modelix.metamodel.ITypedNode
+import org.modelix.metamodel.ITypedProperty
 import org.modelix.metamodel.untyped
 import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.IChildLink
@@ -26,6 +27,9 @@ fun EditorComponent.resolvePropertyCell(property: IProperty, node: INode): Cell?
 
 fun EditorComponent.resolvePropertyCell(property: IProperty, node: ITypedNode): Cell? =
     resolvePropertyCell(property, node.untyped())
+
+fun EditorComponent.resolvePropertyCell(property: ITypedProperty<*>, node: ITypedNode): Cell? =
+    resolvePropertyCell(property.untyped(), node.untyped())
 
 data class NodeCellReference(val nodeRef: INodeReference) : CellReference()
 
