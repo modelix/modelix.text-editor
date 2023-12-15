@@ -192,6 +192,10 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         propertyCell(body)
     }
 
+    fun ITypedProperty<*>.cell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+        untyped().cell(body)
+    }
+
     fun IProperty.propertyCell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
         PropertyCellTemplateBuilder(PropertyCellTemplate(template.concept, this), concept, nodeConverter)
             .also(body).template.also(template::addChild)
