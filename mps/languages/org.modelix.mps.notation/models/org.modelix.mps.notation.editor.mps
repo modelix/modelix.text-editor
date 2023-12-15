@@ -627,7 +627,7 @@
         <property role="3F0ifm" value="render target:" />
       </node>
       <node concept="3F1sOY" id="22f9nDgMtge" role="3EZMnx">
-        <property role="1$x2rV" value="_.name" />
+        <property role="1$x2rV" value="target.name" />
         <ref role="1NtTu8" to="f8gn:22f9nDgMtfW" resolve="renderTarget" />
       </node>
       <node concept="2iRfu4" id="22f9nDgMtg4" role="2iSdaV" />
