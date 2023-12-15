@@ -589,6 +589,48 @@
                 </node>
               </node>
             </node>
+            <node concept="1XD0f0" id="6xJrM0NrToY" role="1XD06E">
+              <node concept="1NbEFs" id="6xJrM0NrU3f" role="THmaL">
+                <ref role="AarEw" to="dbfy:~ChildCellTemplateBuilder.separator(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="separator" />
+                <node concept="1XD0f0" id="6xJrM0NrU3g" role="1XD06E">
+                  <node concept="AQkLs" id="6xJrM0NrU3h" role="THmaL">
+                    <node concept="29HgVG" id="6xJrM0NrU3i" role="lGtFl">
+                      <node concept="3NFfHV" id="6xJrM0NrU3j" role="3NFExx">
+                        <node concept="3clFbS" id="6xJrM0NrU3k" role="2VODD2">
+                          <node concept="3clFbF" id="6xJrM0NrU3l" role="3cqZAp">
+                            <node concept="2OqwBi" id="6xJrM0NrU3m" role="3clFbG">
+                              <node concept="3TrEf2" id="6xJrM0NrU3n" role="2OqNvi">
+                                <ref role="3Tt5mk" to="f8gn:6xJrM0NrOsd" resolve="separatorCell" />
+                              </node>
+                              <node concept="30H73N" id="6xJrM0NrU3o" role="2Oq$k0" />
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="AQkLs" id="6xJrM0NrZhx" role="THmaL" />
+                </node>
+                <node concept="1W57fq" id="6xJrM0NrZv0" role="lGtFl">
+                  <node concept="3IZrLx" id="6xJrM0NrZv1" role="3IZSJc">
+                    <node concept="3clFbS" id="6xJrM0NrZv2" role="2VODD2">
+                      <node concept="3clFbF" id="6xJrM0NrZPH" role="3cqZAp">
+                        <node concept="2OqwBi" id="6xJrM0Ns1Oa" role="3clFbG">
+                          <node concept="2OqwBi" id="6xJrM0Ns0fY" role="2Oq$k0">
+                            <node concept="30H73N" id="6xJrM0NrZPG" role="2Oq$k0" />
+                            <node concept="3TrEf2" id="6xJrM0Ns1my" role="2OqNvi">
+                              <ref role="3Tt5mk" to="f8gn:6xJrM0NrOsd" resolve="separatorCell" />
+                            </node>
+                          </node>
+                          <node concept="3x8VRR" id="6xJrM0Ns2hr" role="2OqNvi" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+              <node concept="AQkLs" id="6xJrM0NrZ8e" role="THmaL" />
+            </node>
           </node>
           <node concept="1NbEFs" id="CUW2QYOQW8" role="21Pmik">
             <ref role="AarEw" to="1g18:~MPSChildLink.new(org/jetbrains/mps/openapi/language/SContainmentLink)" resolve="MPSChildLink" />
