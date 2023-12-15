@@ -222,6 +222,11 @@ class CollectionCellTemplate(concept: IConcept)
     : CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode) = CellData()
 }
+class NotationRootCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    var condition: ((INode) -> Boolean)? = null
+    override fun createCell(context: CellCreationContext, node: INode) = CellData()
+}
 class OptionalCellTemplate(concept: IConcept)
     : CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode): CellData {

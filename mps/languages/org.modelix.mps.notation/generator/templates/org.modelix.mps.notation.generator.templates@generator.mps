@@ -197,7 +197,9 @@
         <reference id="1243006380188956795" name="parameter" index="21Xffc" />
         <child id="2936055411798374692" name="expression" index="1XD0ZN" />
       </concept>
-      <concept id="2936055411798373655" name="jetbrains.mps.kotlin.structure.LambdaLiteral" flags="ng" index="1XD0f0" />
+      <concept id="2936055411798373655" name="jetbrains.mps.kotlin.structure.LambdaLiteral" flags="ng" index="1XD0f0">
+        <child id="1243006380186866155" name="parameters" index="21PhDs" />
+      </concept>
       <concept id="2936055411798373641" name="jetbrains.mps.kotlin.structure.AnonymousInitializer" flags="ng" index="1XD0fu" />
       <concept id="2936055411798373673" name="jetbrains.mps.kotlin.structure.KotlinFile" flags="ng" index="1XD0fY">
         <child id="2936055411798374537" name="declarations" index="1XD0Tu" />
@@ -1244,7 +1246,7 @@
       <node concept="1XD0fu" id="1ixZ$UHlR6j" role="KS$fE">
         <node concept="1XD0a7" id="1ixZ$UHlRcY" role="THmaL">
           <node concept="1NbEtQ" id="1ixZ$UHlTBU" role="1XD07G">
-            <ref role="AarEw" to="dbfy:~EditorAspect.conceptEditor(org/modelix/model/api/IConcept,kotlin/Function1&lt;CellTemplateBuilder&lt;org/modelix/model/api/INode,org/modelix/model/api/IConcept&gt;,kotlin/Unit&gt;)" resolve="conceptEditor" />
+            <ref role="AarEw" to="dbfy:~EditorAspect.conceptEditor(org/modelix/model/api/IConcept,kotlin/Function1&lt;NotationRootCellTemplateBuilder&lt;org/modelix/model/api/INode,org/modelix/model/api/IConcept&gt;,kotlin/Unit&gt;)" resolve="conceptEditor" />
             <node concept="1XD0eI" id="1ixZ$UHlX_H" role="TWiod">
               <node concept="1NbEFs" id="1ixZ$UHlXAB" role="1XD0ZN">
                 <ref role="AarEw" to="1g18:~MPSConcept.new(org/jetbrains/mps/openapi/language/SAbstractConcept)" resolve="MPSConcept" />
@@ -1339,6 +1341,49 @@
               </node>
             </node>
             <node concept="1XD0f0" id="1ixZ$UHlY6w" role="1XD06E">
+              <node concept="1NbEFs" id="2YOUMOf_FCX" role="THmaL">
+                <ref role="AarEw" to="dbfy:~NotationRootCellTemplateBuilder.condition(kotlin/Function1&lt;org/modelix/model/api/INode,kotlin/Boolean&gt;)" resolve="condition" />
+                <node concept="1XD0f0" id="2YOUMOf_FMv" role="1XD06E">
+                  <node concept="1XD0eA" id="2YOUMOf_J5f" role="21PhDs">
+                    <property role="TrG5h" value="node" />
+                  </node>
+                  <node concept="1KmxGs" id="2YOUMOfA0iO" role="THmaL">
+                    <node concept="10Nm6u" id="2YOUMOfA0iS" role="1KmxGj">
+                      <node concept="29HgVG" id="2YOUMOfA0j2" role="lGtFl">
+                        <node concept="3NFfHV" id="2YOUMOfA0j7" role="3NFExx">
+                          <node concept="3clFbS" id="2YOUMOfA0j8" role="2VODD2">
+                            <node concept="3clFbF" id="2YOUMOfA0lo" role="3cqZAp">
+                              <node concept="2OqwBi" id="2YOUMOfA0yh" role="3clFbG">
+                                <node concept="30H73N" id="2YOUMOfA0ln" role="2Oq$k0" />
+                                <node concept="3TrEf2" id="2YOUMOfA1El" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="f8gn:7dm8yUsMfZC" resolve="condition" />
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="1W57fq" id="2YOUMOf_JeE" role="lGtFl">
+                  <node concept="3IZrLx" id="2YOUMOf_JeF" role="3IZSJc">
+                    <node concept="3clFbS" id="2YOUMOf_JeG" role="2VODD2">
+                      <node concept="3clFbF" id="2YOUMOf_JtB" role="3cqZAp">
+                        <node concept="2OqwBi" id="2YOUMOf_PmH" role="3clFbG">
+                          <node concept="2OqwBi" id="2YOUMOf_JRt" role="2Oq$k0">
+                            <node concept="30H73N" id="2YOUMOf_JtA" role="2Oq$k0" />
+                            <node concept="3TrEf2" id="2YOUMOf_LXW" role="2OqNvi">
+                              <ref role="3Tt5mk" to="f8gn:7dm8yUsMfZC" resolve="condition" />
+                            </node>
+                          </node>
+                          <node concept="3x8VRR" id="2YOUMOf_P_U" role="2OqNvi" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
               <node concept="AQkLs" id="1ixZ$UHlY6x" role="THmaL">
                 <node concept="29HgVG" id="1ixZ$UHlY6y" role="lGtFl">
                   <node concept="3NFfHV" id="1ixZ$UHlY6z" role="3NFExx">

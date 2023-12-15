@@ -7,20 +7,32 @@ import org.modelix.model.api.IProperty
 
 class ConceptEditor(
     val declaredConcept: IConcept?,
-    val templateBuilder: (subConcept: IConcept)->CellTemplate
+    val templateBuilder: (subConcept: IConcept)->NotationRootCellTemplate
 ) {
-    fun apply(subConcept: IConcept): CellTemplate {
+    fun isApplicable(context: CellCreationContext, node: INode): Boolean {
+        return apply(node.concept ?: NullConcept).condition?.invoke(node) != false
+    }
+
+    fun apply(subConcept: IConcept): NotationRootCellTemplate {
         return templateBuilder(subConcept)
             .also { it.setReference(RooCellTemplateReference(this, subConcept.getReference())) }
     }
 
+    fun applyIfApplicable(context: CellCreationContext, node: INode): CellData? {
+        // TODO evaluate .withNode blocks during creation of the template
+        return apply(node.concept ?: NullConcept)
+            .takeIf { it.condition?.invoke(node) != false }
+            ?.apply(context, node)
+    }
+
     fun apply(context: CellCreationContext, node: INode): CellData {
+        // TODO evaluate .withNode blocks during creation of the template
         return apply(node.concept ?: NullConcept).apply(context, node)
     }
 }
 
 val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
-    CollectionCellTemplate(subConcept).builder(subConcept).apply {
+    NotationRootCellTemplateBuilder(NotationRootCellTemplate(subConcept), subConcept, INodeConverter.Untyped).apply {
         subConcept.getShortName().constant()
         curlyBrackets {
             for (property in subConcept.getAllProperties()) {
@@ -48,5 +60,5 @@ val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
                 }
             }
         }
-    }.template
+    }.template as NotationRootCellTemplate
 }

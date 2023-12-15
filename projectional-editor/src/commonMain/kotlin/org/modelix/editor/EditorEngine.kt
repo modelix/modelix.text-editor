@@ -62,7 +62,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
 
     fun createCellModel(concept: IConcept): CellTemplate {
-        val editor: ConceptEditor = resolveConceptEditor(concept)
+        val editor: ConceptEditor = resolveConceptEditor(concept).first()
         val template: CellTemplate = editor.apply(concept)
         return template
     }
@@ -100,7 +100,11 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     private fun doCreateCellData(editorState: EditorState, node: INode): CellData {
         try {
             val editor = resolveConceptEditor(node.concept)
-            val data = editor.apply(CellCreationContext(this, editorState), node)
+            val context = CellCreationContext(this, editorState)
+
+            // TODO do some proper conflict resolution between multiple applicable editors instead of just taking the first one.
+            val data = editor.asSequence().mapNotNull { it.applyIfApplicable(context, node) }.first()
+
             data.properties[CellActionProperties.substitute] = ReplaceNodeActionProvider(ExistingNode(node))
             data.cellReferences += NodeCellReference(node.reference)
             data.properties[CellActionProperties.transformBefore] = SideTransformNode(true, node)
@@ -115,16 +119,15 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private fun resolveConceptEditor(concept: IConcept?): ConceptEditor {
-        if (concept == null) return defaultConceptEditor
+    private fun resolveConceptEditor(concept: IConcept?): List<ConceptEditor> {
+        if (concept == null) return listOf(defaultConceptEditor)
         val editors = concept.getAllConcepts().firstNotNullOfOrNull { superConcept ->
             val conceptReference = superConcept.getReference()
             val allEditors = (editorsForConcept[conceptReference] ?: emptyList()) +
                     conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
             allEditors.takeIf { it.isNotEmpty() }
         }
-        return editors?.firstOrNull() // TODO do some proper conflict resolution between multiple applicable editors
-            ?: defaultConceptEditor
+        return (editors ?: emptyList()) + defaultConceptEditor
     }
 
     fun dispose() {

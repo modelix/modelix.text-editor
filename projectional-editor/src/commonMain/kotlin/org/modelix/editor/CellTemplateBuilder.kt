@@ -294,6 +294,16 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
     inner class WithNodeContext(val node: NodeT)
 }
 
+class NotationRootCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
+    template: NotationRootCellTemplate,
+    concept: ConceptT,
+    nodeConverter: INodeConverter<NodeT>
+) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
+    fun condition(condition: (INode) -> Boolean) {
+        (template as NotationRootCellTemplate).condition = condition
+    }
+}
+
 class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
     template: PropertyCellTemplate,
     concept: ConceptT,

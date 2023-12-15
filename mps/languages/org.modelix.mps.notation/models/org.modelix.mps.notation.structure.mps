@@ -103,7 +103,7 @@
       <property role="IQ2ns" value="8310867745953087464" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="condition" />
-      <ref role="20lvS9" to="hcm8:2yYXHtl6Jjg" resolve="IExpression" />
+      <ref role="20lvS9" to="ya4x:22f9nDgNaDZ" resolve="IBaseLanguageOrKotlinExpression" />
     </node>
     <node concept="1TJgyj" id="7dm8yUsMfNE" role="1TKVEi">
       <property role="IQ2ns" value="8310867745953086698" />
