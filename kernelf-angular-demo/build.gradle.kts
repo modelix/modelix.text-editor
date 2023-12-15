@@ -34,7 +34,7 @@ val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
     val replacement = if (localPath.exists()) {
       """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir)}""""
     } else {
-      """"@modelix/ts-model-api": "${libs.versions.modelixCore.get()}""""
+      """"@modelix/ts-model-api": "${rootProject.property("ts-model-api.version")}""""
     }
     println("ts-model-api version: $replacement")
     text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), replacement)
