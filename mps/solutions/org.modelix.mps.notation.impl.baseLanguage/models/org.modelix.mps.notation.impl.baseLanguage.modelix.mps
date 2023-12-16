@@ -1397,6 +1397,22 @@
         </node>
       </node>
     </node>
+    <node concept="3JBH_3" id="6akTR9rV7gc" role="3JBHiB">
+      <ref role="3JBHV4" to="tpee:f_0M0x6" resolve="StaticFieldReference" />
+      <node concept="2OY0tg" id="6akTR9rV7R9" role="3JBHQ1">
+        <node concept="1yiJt1" id="6akTR9rV7Vj" role="2OY0$2">
+          <ref role="1yiJtc" to="tpee:gDPxDYr" resolve="classifier" />
+        </node>
+        <node concept="1yiDf7" id="6akTR9rV83P" role="2OY0$2" />
+        <node concept="3JB3jO" id="6akTR9rV83v" role="2OY0$2">
+          <property role="3JB3xJ" value="." />
+        </node>
+        <node concept="1yiDf7" id="6akTR9rV843" role="2OY0$2" />
+        <node concept="1yiJt1" id="6akTR9rV83D" role="2OY0$2">
+          <ref role="1yiJtc" to="tpee:f_2Pw7K" resolve="staticFieldDeclaration" />
+        </node>
+      </node>
+    </node>
     <node concept="3JBHHy" id="4dQjfTHY9SY" role="3JBHiB" />
   </node>
   <node concept="3JBFZQ" id="22f9nDgKep2">
