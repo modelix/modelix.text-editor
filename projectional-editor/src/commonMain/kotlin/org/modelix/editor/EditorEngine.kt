@@ -68,7 +68,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
 
     fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {
-        return EditorComponent(this, virtualDom = virtualDom) { editorState ->
+        return EditorComponent(this, virtualDom = virtualDom, transactionManager = node.getArea()) { editorState ->
             node.getArea().executeRead { createCell(editorState, node) }
         }
     }

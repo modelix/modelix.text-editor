@@ -321,6 +321,10 @@ class ReferenceCellTemplate(
         val data = TextCellData(getText(node), "<no ${link.getSimpleName()}>")
         data.cellReferences += ReferencedNodeCellReference(node.reference, link)
         data.properties[CommonCellProperties.tabTarget] = true
+        data.properties[CellActionProperties.substitute] =
+            ReferenceTargetActionProvider(ExistingNode(node), link, { it.getNode()?.let(presentation) ?: "" }).after {
+                context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+            }
         return data
     }
     private fun getText(node: INode): String = getTargetNode(node)?.let(presentation) ?: ""
@@ -329,7 +333,7 @@ class ReferenceCellTemplate(
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         val specializedLocation = location.ofSubConcept(concept)
-        val scope = ScopeAspect.getScope(link)
+        val scope = ScopeAspect.getScope(specializedLocation, link)
         val targets = scope.getVisibleElements(specializedLocation, link)
         return targets.map { target ->
             val text = when (target) {

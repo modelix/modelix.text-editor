@@ -148,3 +148,29 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
         return link.targetConcept
     }
 }
+
+data class NonExistingNode(val concept: IConcept) : INonExistingNode {
+    override fun getExistingAncestor(): INode? = null
+
+    override fun getParent() = null
+
+    override fun getContainmentLink() = null
+
+    override fun index(): Int = 0
+
+    override fun replaceNode(subConcept: IConcept?): INode {
+        throw UnsupportedOperationException("Don't know where to create the node")
+    }
+
+    override fun getOrCreateNode(subConcept: IConcept?): INode {
+        return replaceNode(subConcept)
+    }
+
+    override fun getNode(): INode? {
+        return null
+    }
+
+    override fun expectedConcept(): IConcept {
+        return concept
+    }
+}

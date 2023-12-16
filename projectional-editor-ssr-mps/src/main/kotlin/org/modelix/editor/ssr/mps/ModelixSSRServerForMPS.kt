@@ -18,14 +18,22 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
-import io.ktor.server.application.*
-import io.ktor.server.engine.*
-import io.ktor.server.html.*
-import io.ktor.server.http.content.*
-import io.ktor.server.netty.*
-import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.html.respondHtml
+import io.ktor.server.http.content.staticResources
+import io.ktor.server.netty.Netty
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
+import io.ktor.server.websocket.WebSockets
+import io.ktor.server.websocket.pingPeriod
+import io.ktor.server.websocket.timeout
 import jetbrains.mps.project.MPSProject
+import jetbrains.mps.scope.Scope
+import jetbrains.mps.smodel.constraints.ModelConstraints
 import kotlinx.html.a
 import kotlinx.html.base
 import kotlinx.html.body
@@ -36,19 +44,33 @@ import kotlinx.html.link
 import kotlinx.html.script
 import kotlinx.html.title
 import kotlinx.html.ul
+import org.jetbrains.mps.openapi.language.SAbstractConcept
+import org.jetbrains.mps.openapi.language.SContainmentLink
+import org.jetbrains.mps.openapi.language.SReferenceLink
+import org.jetbrains.mps.openapi.model.SNode
+import org.modelix.editor.ExistingNode
+import org.modelix.editor.INonExistingNode
 import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
 import org.modelix.model.api.ILanguageRepository
 import org.modelix.model.api.INode
+import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.mpsadapters.MPSChangeTranslator
+import org.modelix.model.mpsadapters.MPSChildLink
+import org.modelix.model.mpsadapters.MPSConcept
 import org.modelix.model.mpsadapters.MPSLanguageRepository
+import org.modelix.model.mpsadapters.MPSNode
+import org.modelix.model.mpsadapters.MPSReferenceLink
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
+import org.modelix.scopes.IScope
+import org.modelix.scopes.IScopeProvider
+import org.modelix.scopes.ScopeAspect
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
-import java.util.*
+import java.util.Collections
 
 @Service(Service.Level.PROJECT)
 class ModelixSSRServerForMPSProject(private val project: Project) : Disposable {
@@ -106,6 +128,7 @@ class ModelixSSRServerForMPS : Disposable {
             mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
             aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
+            ScopeAspect.registerScopeProvider(MPSScopeProvider)
             ssrServer.editorEngine.addRegistry(aspectsFromMPS!!)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
@@ -217,6 +240,8 @@ class ModelixSSRServerForMPS : Disposable {
 
             mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
             mpsLanguageRepository = null
+
+            ScopeAspect.unregisterScopeProvider(MPSScopeProvider)
         }
     }
 
@@ -228,5 +253,34 @@ class ModelixSSRServerForMPS : Disposable {
 class ModelixSSRServerForMPSStartupActivity : ProjectActivity {
     override suspend fun execute(project: Project) {
         project.service<ModelixSSRServerForMPSProject>() // just ensure it's initialized
+    }
+}
+
+object MPSScopeProvider : IScopeProvider {
+    override fun getScope(sourceNode: INonExistingNode, link: IReferenceLink): IScope {
+        val mpsSourceNode = sourceNode.getNode() as? MPSNode
+        val descriptor = if (mpsSourceNode == null) {
+            val contextNode: SNode = (sourceNode.getExistingAncestor() as? MPSNode)?.node!!
+            val containmentLink: SContainmentLink = (sourceNode.getContainmentLink() as? MPSChildLink)?.link!!
+            val index = sourceNode.index()
+            val association: SReferenceLink = (link as? MPSReferenceLink)?.link!!
+            val concept: SAbstractConcept = ((sourceNode.getNode()?.concept ?: sourceNode.expectedConcept()) as? MPSConcept)?.concept!!
+            ModelConstraints.getReferenceDescriptor(
+                contextNode,
+                containmentLink,
+                index,
+                association,
+                concept
+            )
+        } else {
+            ModelConstraints.getReferenceDescriptor(mpsSourceNode.node, (link as MPSReferenceLink).link)
+        }
+        return MPSScope(descriptor.getScope())
+    }
+}
+
+class MPSScope(val scope: Scope) : IScope {
+    override fun getVisibleElements(node: INonExistingNode, link: IReferenceLink): List<INonExistingNode> {
+        return scope.getAvailableElements("").map { ExistingNode(MPSNode(it)) }
     }
 }

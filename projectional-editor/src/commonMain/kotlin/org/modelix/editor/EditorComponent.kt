@@ -3,6 +3,7 @@ package org.modelix.editor
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.modelix.incremental.IncrementalIndex
+import org.modelix.model.area.IArea
 import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -10,6 +11,7 @@ import kotlin.math.roundToInt
 open class EditorComponent(
     val engine: EditorEngine?,
     val virtualDom: IVirtualDom = IVirtualDom.newInstance(),
+    private val transactionManager: IArea? = null,
     private val rootCellCreator: (EditorState) -> Cell
 ) : IProducesHtml {
     val state: EditorState = EditorState()
@@ -234,6 +236,22 @@ open class EditorComponent(
             div("popup-layer relative-layer") {
                 produceChild(codeCompletionMenu)
             }
+        }
+    }
+
+    fun <R> runRead(body: () -> R): R {
+        return if (transactionManager == null) {
+            body()
+        } else {
+            transactionManager.executeRead { body() }
+        }
+    }
+
+    fun <R> runWrite(body: () -> R): R {
+        return if (transactionManager == null) {
+            body()
+        } else {
+            transactionManager.executeWrite { body() }
         }
     }
 
