@@ -331,10 +331,10 @@ class ReferenceCellTemplate(
     private fun getTargetNode(sourceNode: INode): INode? {
         return sourceNode.getReferenceTarget(link)
     }
-    override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        val specializedLocation = location.ofSubConcept(concept)
-        val scope = ScopeAspect.getScope(specializedLocation, link)
-        val targets = scope.getVisibleElements(specializedLocation, link)
+    override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
+        val sourceNode = NonExistingChild(location.getParent()!!, location.getContainmentLink()!!, location.index()).ofSubConcept(concept)
+        val scope = ScopeAspect.getScope(sourceNode, link)
+        val targets = scope.getVisibleElements(sourceNode, link)
         return targets.map { target ->
             val text = when (target) {
                 is ExistingNode -> presentation(target.getNode()) ?: ""

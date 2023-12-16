@@ -5,7 +5,6 @@ import org.modelix.aspects.ILanguageAspectFactory
 import org.modelix.aspects.LanguageAspectsBuilder
 import org.modelix.aspects.getInstance
 import org.modelix.editor.INonExistingNode
-import org.modelix.editor.NonExistingNode
 import org.modelix.editor.toNonExisting
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.ITypedReferenceLink
