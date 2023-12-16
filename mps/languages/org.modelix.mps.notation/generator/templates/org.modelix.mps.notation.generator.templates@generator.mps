@@ -31,6 +31,7 @@
     <import index="hcm8" ref="r:72a7bf00-0175-42ca-b99b-fe8519b6a16f(jetbrains.mps.kotlin.structure)" />
     <import index="8jio" ref="771cf896-ab1b-409b-93b4-48c3bbb6b23f/kotlinJvm:org.modelix.editor.ssr.mps(org.modelix.mps.editor.ssr.stubs/)" />
     <import index="ya4x" ref="r:2bbee5fa-3e86-4d20-a22d-b5d5f139bede(org.modelix.mps.baseLanguage2kotlin.structure)" />
+    <import index="18ew" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.util(MPS.Core/)" />
     <import index="wsib" ref="r:d1d5cd51-6710-43f8-bd5b-f958da6e1ca2(org.modelix.mps.notation.behavior)" implicit="true" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" implicit="true" />
@@ -316,11 +317,15 @@
                     <property role="P4ACc" value="6b3888c1-9802-44d8-8baf-f8e6c33ed689/1243006380188575965/1243006380188575966" />
                     <node concept="3zFVjK" id="1NttIwKSwOW" role="3zH0cK">
                       <node concept="3clFbS" id="1NttIwKSwOX" role="2VODD2">
-                        <node concept="3clFbF" id="1NttIwKSx9t" role="3cqZAp">
-                          <node concept="2OqwBi" id="1NttIwKSxAn" role="3clFbG">
-                            <node concept="30H73N" id="1NttIwKSx9s" role="2Oq$k0" />
-                            <node concept="3TrcHB" id="1NttIwKSxPc" role="2OqNvi">
-                              <ref role="3TsBF5" to="f8gn:7dm8yUsMxD1" resolve="text" />
+                        <node concept="3clFbF" id="4JzlXapj_Ln" role="3cqZAp">
+                          <node concept="2YIFZM" id="4JzlXapjAtU" role="3clFbG">
+                            <ref role="37wK5l" to="18ew:~NameUtil.escapeString(java.lang.String)" resolve="escapeString" />
+                            <ref role="1Pybhc" to="18ew:~NameUtil" resolve="NameUtil" />
+                            <node concept="2OqwBi" id="1NttIwKSxAn" role="37wK5m">
+                              <node concept="30H73N" id="1NttIwKSx9s" role="2Oq$k0" />
+                              <node concept="3TrcHB" id="1NttIwKSxPc" role="2OqNvi">
+                                <ref role="3TsBF5" to="f8gn:7dm8yUsMxD1" resolve="text" />
+                              </node>
                             </node>
                           </node>
                         </node>
