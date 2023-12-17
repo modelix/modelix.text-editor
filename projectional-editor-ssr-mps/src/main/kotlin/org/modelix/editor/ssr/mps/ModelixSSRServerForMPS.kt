@@ -31,8 +31,12 @@ import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
 import io.ktor.server.websocket.pingPeriod
 import io.ktor.server.websocket.timeout
+import jetbrains.mps.core.aspects.constraints.rules.Rule
+import jetbrains.mps.core.aspects.constraints.rules.kinds.CanBeAncestorContext
+import jetbrains.mps.core.aspects.constraints.rules.kinds.ContainmentContext
 import jetbrains.mps.project.MPSProject
 import jetbrains.mps.scope.Scope
+import jetbrains.mps.smodel.constraints.ConstraintsCanBeFacade
 import jetbrains.mps.smodel.constraints.ModelConstraints
 import kotlinx.html.a
 import kotlinx.html.base
@@ -46,14 +50,22 @@ import kotlinx.html.title
 import kotlinx.html.ul
 import org.jetbrains.mps.openapi.language.SAbstractConcept
 import org.jetbrains.mps.openapi.language.SContainmentLink
+import org.jetbrains.mps.openapi.language.SProperty
 import org.jetbrains.mps.openapi.language.SReferenceLink
 import org.jetbrains.mps.openapi.model.SNode
+import org.modelix.constraints.ConstraintsAspect
+import org.modelix.constraints.IConstraintViolation
+import org.modelix.constraints.IConstraintsChecker
 import org.modelix.editor.ExistingNode
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.ancestors
 import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
+import org.modelix.model.api.IChildLink
+import org.modelix.model.api.IConcept
 import org.modelix.model.api.ILanguageRepository
 import org.modelix.model.api.INode
+import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
@@ -62,6 +74,7 @@ import org.modelix.model.mpsadapters.MPSChildLink
 import org.modelix.model.mpsadapters.MPSConcept
 import org.modelix.model.mpsadapters.MPSLanguageRepository
 import org.modelix.model.mpsadapters.MPSNode
+import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
 import org.modelix.scopes.IScope
@@ -129,6 +142,7 @@ class ModelixSSRServerForMPS : Disposable {
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
             aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
             ScopeAspect.registerScopeProvider(MPSScopeProvider)
+            ConstraintsAspect.checkers.add(MPSConstraints)
             ssrServer.editorEngine.addRegistry(aspectsFromMPS!!)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
@@ -242,6 +256,7 @@ class ModelixSSRServerForMPS : Disposable {
             mpsLanguageRepository = null
 
             ScopeAspect.unregisterScopeProvider(MPSScopeProvider)
+            ConstraintsAspect.checkers.remove(MPSConstraints)
         }
     }
 
@@ -260,11 +275,11 @@ object MPSScopeProvider : IScopeProvider {
     override fun getScope(sourceNode: INonExistingNode, link: IReferenceLink): IScope {
         val mpsSourceNode = sourceNode.getNode() as? MPSNode
         val descriptor = if (mpsSourceNode == null) {
-            val contextNode: SNode = (sourceNode.getExistingAncestor() as? MPSNode)?.node!!
-            val containmentLink: SContainmentLink = (sourceNode.getContainmentLink() as? MPSChildLink)?.link!!
+            val contextNode: SNode = sourceNode.getExistingAncestor().toMPS()!!
+            val containmentLink: SContainmentLink = sourceNode.getContainmentLink().toMPS()!!
             val index = sourceNode.index()
-            val association: SReferenceLink = (link as? MPSReferenceLink)?.link!!
-            val concept: SAbstractConcept = ((sourceNode.getNode()?.concept ?: sourceNode.expectedConcept()) as? MPSConcept)?.concept!!
+            val association: SReferenceLink = link.toMPS()!!
+            val concept: SAbstractConcept = (sourceNode.getNode()?.concept ?: sourceNode.expectedConcept()).toMPS()!!
             ModelConstraints.getReferenceDescriptor(
                 contextNode,
                 containmentLink,
@@ -273,7 +288,7 @@ object MPSScopeProvider : IScopeProvider {
                 concept
             )
         } else {
-            ModelConstraints.getReferenceDescriptor(mpsSourceNode.node, (link as MPSReferenceLink).link)
+            ModelConstraints.getReferenceDescriptor(mpsSourceNode.node, link.toMPS()!!)
         }
         return MPSScope(descriptor.getScope())
     }
@@ -284,3 +299,44 @@ class MPSScope(val scope: Scope) : IScope {
         return scope.getAvailableElements("").map { ExistingNode(MPSNode(it)) }
     }
 }
+
+object MPSConstraints : IConstraintsChecker {
+    override fun check(node: INonExistingNode): List<IConstraintViolation> {
+        // Constraints only prevent creating a node. If it already exists, it's handled by the model checker.
+        if (node.getNode() != null) return emptyList()
+
+        // ConstraintsCanBeFacade.checkCanBeRoot()
+
+        val containmentContext = ContainmentContext.Builder()
+            .parentNode(node.getParent()?.getNode().toMPS())
+            .link(node.getContainmentLink().toMPS())
+            .childConcept(node.expectedConcept().toMPS()!!)
+            .build()
+
+        val ancestorViolations = node.ancestors().flatMap { ancestor ->
+            val ancestorNode = ancestor.getNode().toMPS() ?: return@flatMap emptyList()
+
+            ConstraintsCanBeFacade.checkCanBeAncestor(
+                CanBeAncestorContext.Builder()
+                    .ancestorNode(ancestorNode)
+                    .parentNode(node.getParent()?.getNode().toMPS())
+                    .childConcept(node.expectedConcept().toMPS()!!)
+                    .descendantNode(node.getNode().toMPS())
+                    .link(node.getContainmentLink().toMPS())
+                    .build()
+            )
+        }
+        val parentViolations = ConstraintsCanBeFacade.checkCanBeParent(containmentContext).asSequence()
+        val childViolations = ConstraintsCanBeFacade.checkCanBeChild(containmentContext).asSequence()
+        return (ancestorViolations + parentViolations + childViolations).map { MPSConstraintViolation(it) }.toList() +
+                (node.getParent()?.let { check(it) } ?: emptyList())
+    }
+}
+
+fun INode?.toMPS(): SNode? = if (this is MPSNode) this.node else null
+fun IChildLink?.toMPS(): SContainmentLink? = if (this is MPSChildLink) this.link else null
+fun IReferenceLink?.toMPS(): SReferenceLink? = if (this is MPSReferenceLink) this.link else null
+fun IProperty?.toMPS(): SProperty? = if (this is MPSProperty) this.property else null
+fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept else null
+
+class MPSConstraintViolation(val rule: Rule<*>) : IConstraintViolation

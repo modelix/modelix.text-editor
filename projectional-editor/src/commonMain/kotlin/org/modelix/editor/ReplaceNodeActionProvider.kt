@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.constraints.ConstraintsAspect
 import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.getAllSubConcepts
 import org.modelix.scopes.ScopeAspect
@@ -8,7 +9,12 @@ data class ReplaceNodeActionProvider(val location: INonExistingNode) : ICodeComp
     override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
         val engine = parameters.editor.engine ?: return emptyList()
         val expectedConcept = location.expectedConcept() ?: return emptyList()
-        val allowedConcepts = expectedConcept.getAllSubConcepts(true).filterNot { it.isAbstract() }
+        val allowedConcepts = expectedConcept.getAllSubConcepts(true)
+            .filterNot { it.isAbstract() }
+            .filter { concept ->
+                val newNode = SpecializedNonExistingNode(NonExistingChild(location.getParent()!!, location.getContainmentLink()!!, location.index()), concept)
+                ConstraintsAspect.canCreate(newNode)
+            }
         val cellModels = allowedConcepts.map { concept ->
             engine.createCellModel(concept)
         }
