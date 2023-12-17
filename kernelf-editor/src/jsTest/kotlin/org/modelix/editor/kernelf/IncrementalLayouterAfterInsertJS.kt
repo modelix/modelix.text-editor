@@ -37,7 +37,7 @@ open class IncrementalLayoutAfterInsertJS {
         val engine = EditorEngine(IncrementalEngine())
         KernelfEditor.register(engine)
         testSuite = branch.computeRead { branch.getArea().getRoot().allChildren.ofType<N_Module>().models.rootNodes.ofType<N_TestSuite>().first() }
-        editor = JsEditorComponent(engine, { editorState -> branch.computeRead { engine.createCell(editorState, testSuite.untyped()) } })
+        editor = JsEditorComponent(engine, branch.getArea(), { editorState -> branch.computeRead { engine.createCell(editorState, testSuite.untyped()) } })
         assertTestItem = branch.computeRead { testSuite.descendants<N_AssertTestItem>().drop(1).first() }
         editor.selectAfterUpdate {
             val cell = editor.resolveNodeCell(assertTestItem)!!.firstLeaf().nextLeafs(true).first { it.isVisible() }
