@@ -11,3 +11,6 @@ dependencies {
     implementation(libs.kotlin.logging)
 }
 
+kotlin {
+    jvmToolchain(11)
+}

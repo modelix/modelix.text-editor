@@ -87,7 +87,6 @@
   </generators>
   <dependencies>
     <dependency reexport="false">f3061a53-9226-4cc5-a443-f952ceaf5816(jetbrains.mps.baseLanguage)</dependency>
-    <dependency reexport="false">6b3888c1-9802-44d8-8baf-f8e6c33ed689(jetbrains.mps.kotlin)</dependency>
     <dependency reexport="false">ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)</dependency>
     <dependency reexport="false">c7b55726-1795-47bd-aa21-714ac1e30f21(org.modelix.mps.notation)</dependency>
   </dependencies>
@@ -143,6 +142,8 @@
     <module reference="8f2def56-7502-4f14-994f-472d404e528c(org.modelix.mps.baseLanguage2kotlin)" version="0" />
     <module reference="c7b55726-1795-47bd-aa21-714ac1e30f21(org.modelix.mps.notation)" version="0" />
   </dependencyVersions>
-  <extendedLanguages />
+  <extendedLanguages>
+    <extendedLanguage>6b3888c1-9802-44d8-8baf-f8e6c33ed689(jetbrains.mps.kotlin)</extendedLanguage>
+  </extendedLanguages>
 </language>
 

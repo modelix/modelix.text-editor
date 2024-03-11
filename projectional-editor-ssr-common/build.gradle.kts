@@ -1,10 +1,11 @@
 plugins {
-    alias(coreLibs.plugins.kotlin.multiplatform)
+    kotlin("multiplatform")
     alias(coreLibs.plugins.kotlin.serialization)
     `maven-publish`
 }
 
 kotlin {
+    jvmToolchain(11)
     jvm()
     js(IR) {
         browser {}

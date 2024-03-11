@@ -1,7 +1,6 @@
 import com.jetbrains.plugin.structure.intellij.utils.JDOMUtil
 import org.jdom2.Element
 import org.jetbrains.intellij.transformXml
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 buildscript {
     dependencies {
@@ -10,28 +9,13 @@ buildscript {
 }
 
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    kotlin("jvm")
     id("org.jetbrains.intellij") version "1.16.0"
 }
 
-val mpsToIdeaMap = mapOf(
-    "2020.3.6" to "203.8084.24", // https://github.com/JetBrains/MPS/blob/2020.3.6/build/version.properties
-    "2021.1.4" to "211.7628.21", // https://github.com/JetBrains/MPS/blob/2021.1.4/build/version.properties
-    "2021.2.6" to "212.5284.40", // https://github.com/JetBrains/MPS/blob/2021.2.5/build/version.properties (?)
-    "2021.3.3" to "213.7172.25", // https://github.com/JetBrains/MPS/blob/2021.3.3/build/version.properties
-    "2022.2" to "222.4554.10", // https://github.com/JetBrains/MPS/blob/2021.2.1/build/version.properties
-    "2022.3" to "223.8836.41", // https://github.com/JetBrains/MPS/blob/2022.3.0/build/version.properties (?)
-    "2023.2" to "232.10072.27", // https://github.com/JetBrains/MPS/blob/2023.2.0/build/version.properties (?)
-)
-// use the given MPS version, or 2022.2 (last version with JAVA 11) as default
-val mpsVersion = project.findProperty("mps.version")?.toString().takeIf { !it.isNullOrBlank() } ?: "2023.2"
-if (!mpsToIdeaMap.containsKey(mpsVersion)) {
-    throw GradleException("Build for the given MPS version '$mpsVersion' is not supported.")
+kotlin {
+    jvmToolchain(11)
 }
-// identify the corresponding intelliJ platform version used by the MPS version
-val ideaVersion = mpsToIdeaMap.getValue(mpsVersion)
-val mpsJavaVersion = if (mpsVersion >= "2022.3") 17 else 11
-println("Building for MPS version $mpsVersion and IntelliJ version $ideaVersion and Java $mpsJavaVersion")
 
 dependencies {
     implementation(project(":projectional-editor"))
@@ -44,12 +28,6 @@ dependencies {
     implementation(coreLibs.ktor.server.html.builder)
     implementation(coreLibs.logback.classic)
     implementation(coreLibs.kotlin.logging)
-
-    val mpsZip by configurations.creating
-    mpsZip("com.jetbrains:mps:$mpsVersion")
-    compileOnly(zipTree({ mpsZip.singleFile }).matching {
-        include("lib/*.jar")
-    })
 }
 
 tasks.processResources {
@@ -64,34 +42,23 @@ sourceSets {
     }
 }
 
+val mpsVersion = project.findProperty("mps.version").toString()
+val mpsPlatformVersion = project.findProperty("mps.platform.version").toString().toInt()
+val mpsHome = rootProject.layout.buildDirectory.dir("mps-$mpsVersion")
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-
-    // IDEA platform version used in MPS 2021.1.4: https://github.com/JetBrains/MPS/blob/2021.1.4/build/version.properties#L11
-    version.set(ideaVersion)
-
-    // type.set("IC") // Target IDE Platform
-
-    // plugins.set(listOf("jetbrains.mps.core", "com.intellij.modules.mps"))
-}
-
-java {
-    sourceCompatibility = JavaVersion.toVersion(mpsJavaVersion)
-    targetCompatibility = JavaVersion.toVersion(mpsJavaVersion)
-}
-
-kotlin {
-    compilerOptions {
-        jvmTarget.set(JvmTarget.fromTarget(mpsJavaVersion.toString()))
-    }
+    localPath = mpsHome.map { it.asFile.absolutePath }
+    instrumentCode = false
 }
 
 tasks {
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = mpsJavaVersion.toString()
+    compileKotlin {
+        kotlinOptions {
+            apiVersion = "1.6"
+        }
     }
-
     patchPluginXml {
         sinceBuild.set("232.10072.781")
         untilBuild.set("232.10072.781")
@@ -165,8 +132,14 @@ tasks {
 
     prepareSandbox {
         dependsOn(packageStubsSolution)
+        dependsOn(project(":mps").tasks.named("packageMpsPublications"))
         intoChild(pluginName.map { "$it/languages" })
             .from(packageStubsSolution.map { it.archiveFile })
+        intoChild(pluginName.map { "$it/languages" })
+            .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/editor-languages.zip") }))
+            .eachFile {
+                path = path.replaceFirst("packaged-modules/", "")
+            }
     }
 }
 

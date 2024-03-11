@@ -14,6 +14,7 @@
 package org.modelix.editor.ssr.mps
 
 import com.intellij.openapi.Disposable
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
@@ -89,11 +90,11 @@ import java.util.Collections
 class ModelixSSRServerForMPSProject(private val project: Project) : Disposable {
 
     init {
-        service<ModelixSSRServerForMPS>().registerProject(project)
+        ApplicationManager.getApplication().service<ModelixSSRServerForMPS>().registerProject(project)
     }
 
     override fun dispose() {
-        service<ModelixSSRServerForMPS>().unregisterProject(project)
+        ApplicationManager.getApplication().service<ModelixSSRServerForMPS>().unregisterProject(project)
     }
 }
 
