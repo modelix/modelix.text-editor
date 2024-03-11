@@ -16,7 +16,6 @@ import org.modelix.model.api.ILanguage
 import org.modelix.model.api.INode
 import org.modelix.model.api.getAllConcepts
 import org.modelix.model.api.getRoot
-import org.modelix.model.api.tryGetConcept
 
 class TypesystemAspect : ILanguageAspect {
     private val constraintBuilders: MutableMap<IConceptReference, ITypesystemConstraintsBuilderFactory> = HashMap()
