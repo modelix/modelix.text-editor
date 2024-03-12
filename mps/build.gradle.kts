@@ -1,3 +1,5 @@
+import org.gradle.internal.jvm.Jvm
+
 plugins {
     base
     `maven-publish`
@@ -10,6 +12,8 @@ val mpsHomeDir = rootProject.layout.buildDirectory.dir("mps-$mpsVersion")
 
 mpsBuild {
     mpsHome = mpsHomeDir.get().asFile.absolutePath
+    javaHome = Jvm.current().javaHome
+
     search(".")
     publication("editor-languages") {
         module("org.modelix.mps.webaspect.devkit")
