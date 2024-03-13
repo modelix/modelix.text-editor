@@ -106,7 +106,7 @@ class CodeCompletionTest {
     fun noDuplicates() {
         val parameters = CodeCompletionParameters(editor, "")
         val actions = getSubstituteActions(getNumberLiteralCell())
-        val knownDuplicates = setOf("none", "", "empty", "[", "it", "|", "ParamRef")
+        val knownDuplicates = setOf("none", "[", "it", "|", "ParamRef")
         val actualDuplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 }.map { it.key }
         val unexpectedDuplicates = actualDuplicates - knownDuplicates
         val missingDuplicates = knownDuplicates - actualDuplicates

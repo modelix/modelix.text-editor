@@ -276,9 +276,9 @@ fun TextLine.createBestMatchingCaretSelection(x: Int): CaretSelection? {
         val range = currentOffset..(currentOffset + length)
         if (layoutable is LayoutableCell) {
             if (x < range.first) return CaretSelection(layoutable, 0, desiredXPosition = x)
-            if (range.contains(x)) return CaretSelection(layoutable, x - range.first, desiredXPosition = x)
+            if (range.contains(x)) return CaretSelection(layoutable, (x - range.first).coerceAtMost(layoutable.cell.getMaxCaretPos()), desiredXPosition = x)
         }
         currentOffset += length
     }
-    return words.filterIsInstance<LayoutableCell>().lastOrNull()?.let { CaretSelection(it, it.getLength(), desiredXPosition = x) }
+    return words.filterIsInstance<LayoutableCell>().lastOrNull()?.let { CaretSelection(it, it.cell.getMaxCaretPos(), desiredXPosition = x) }
 }

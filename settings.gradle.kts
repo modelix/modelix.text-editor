@@ -14,7 +14,11 @@ pluginManagement {
         }
         versionCatalogs {
             create("coreLibs") {
-                from("org.modelix:core-version-catalog:3.14.2")
+                val modelixCoreVersion = file("gradle/libs.versions.toml").readLines()
+                    .first { it.startsWith("modelixCore = ") }
+                    .substringAfter('"')
+                    .substringBefore('"')
+                from("org.modelix:core-version-catalog:$modelixCoreVersion")
             }
         }
     }
@@ -25,5 +29,11 @@ rootProject.name = "modelix.text-editor"
 include("kernelf-angular-demo")
 include("kernelf-editor")
 include("kernelf-apigen")
+include("kernelf-ssr-demo")
 include("projectional-editor")
+include("mps")
+include("projectional-editor-ssr-client")
+include("projectional-editor-ssr-common")
+include("projectional-editor-ssr-mps")
+include("projectional-editor-ssr-server")
 

@@ -1,18 +1,34 @@
 package org.modelix.editor
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class JSKeyboardEvent(
+    val eventType: JSKeyboardEventType,
     val typedText: String?,
     val knownKey: KnownKeys?,
     val rawKey: String,
-    val modifiers: Modifiers,
-    val location: KeyLocation,
-    val repeat: Boolean,
-    val composing: Boolean
+    val modifiers: Modifiers = Modifiers.NONE,
+    val location: KeyLocation = KeyLocation.STANDARD,
+    val repeat: Boolean = false,
+    val composing: Boolean = false
 ) {
-    constructor(knownKey: KnownKeys) : this(null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
+    constructor(eventType: JSKeyboardEventType, knownKey: KnownKeys)
+            : this(eventType, null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
 }
 
-data class Modifiers(val ctrl: Boolean, val alt: Boolean, val shift: Boolean, val meta: Boolean) {
+enum class JSKeyboardEventType {
+    KEYDOWN,
+    KEYUP
+}
+
+@Serializable
+data class Modifiers(
+    val ctrl: Boolean = false,
+    val alt: Boolean = false,
+    val shift: Boolean = false,
+    val meta: Boolean = false
+) {
     companion object {
         val NONE = Modifiers(ctrl = false, alt = false, shift = false, meta = false)
         val CTRL = Modifiers(ctrl = true, alt = false, shift = false, meta = false)

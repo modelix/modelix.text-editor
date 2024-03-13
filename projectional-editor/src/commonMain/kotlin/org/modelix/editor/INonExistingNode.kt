@@ -3,9 +3,7 @@ package org.modelix.editor
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
-import org.modelix.model.api.addNewChild
-import org.modelix.model.api.getChildren
-import org.modelix.model.api.getContainmentLink
+import org.modelix.model.api.NullChildLink
 import org.modelix.model.api.index
 import org.modelix.model.api.isInstanceOf
 import org.modelix.model.api.isSubConceptOf
@@ -96,7 +94,7 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
 
     override fun replaceNode(subConcept: IConcept?): INode {
         val parent = node.parent ?: throw RuntimeException("cannot replace the root node")
-        val newNode = parent.addNewChild(node.roleInParent, node.index(), coerceOutputConcept(subConcept))
+        val newNode = parent.addNewChild(node.getContainmentLink() ?: NullChildLink, node.index(), coerceOutputConcept(subConcept))
         node.remove()
         return newNode
     }
@@ -148,5 +146,31 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
 
     override fun expectedConcept(): IConcept {
         return link.targetConcept
+    }
+}
+
+data class NonExistingNode(val concept: IConcept) : INonExistingNode {
+    override fun getExistingAncestor(): INode? = null
+
+    override fun getParent() = null
+
+    override fun getContainmentLink() = null
+
+    override fun index(): Int = 0
+
+    override fun replaceNode(subConcept: IConcept?): INode {
+        throw UnsupportedOperationException("Don't know where to create the node")
+    }
+
+    override fun getOrCreateNode(subConcept: IConcept?): INode {
+        return replaceNode(subConcept)
+    }
+
+    override fun getNode(): INode? {
+        return null
+    }
+
+    override fun expectedConcept(): IConcept {
+        return concept
     }
 }

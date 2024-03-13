@@ -1,33 +1,24 @@
 package org.modelix.editor
 
-import org.modelix.aspects.getInstance
-import org.modelix.metamodel.GeneratedConcept
-import org.modelix.metamodel.IConceptOfTypedNode
-import org.modelix.metamodel.ITypedConcept
 import org.modelix.metamodel.ITypedNode
-import org.modelix.metamodel.ITypedReferenceLink
-import org.modelix.metamodel.getPropertyValue
-import org.modelix.metamodel.getReferenceTargetOrNull
-import org.modelix.metamodel.setReferenceTarget
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.typedUnsafe
 import org.modelix.metamodel.untyped
-import org.modelix.metamodel.untypedReference
 import org.modelix.model.api.IChildLink
+import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
+import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
-import org.modelix.model.api.addNewChild
-import org.modelix.model.api.getChildren
-import org.modelix.model.api.moveChild
-import org.modelix.model.api.setPropertyValue
+import org.modelix.model.api.IReferenceLink
 import org.modelix.scopes.ScopeAspect
+import kotlin.jvm.JvmName
 
-abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(val concept: ConceptT) {
+abstract class CellTemplate(val concept: IConcept) {
     val properties = CellProperties()
-    private val children: MutableList<CellTemplate<NodeT, ConceptT>> = ArrayList()
-    private var reference: ICellTemplateReference? = null
-    val withNode: MutableList<(node: NodeT)->Unit> = ArrayList()
-    fun apply(context: CellCreationContext, node: NodeT): CellData {
+    private val children: MutableList<CellTemplate> = ArrayList()
+    @get:JvmName("getReferenceField")
+    @set:JvmName("setReferenceField")
+    protected var reference: ICellTemplateReference? = null
+    val withNode: MutableList<(node: INode)->Unit> = ArrayList()
+    fun apply(context: CellCreationContext, node: INode): CellData {
         val cellData = createCell(context, node)
         cellData.properties.addAll(properties)
         cellData.children.addAll(applyChildren(context, node, cellData))
@@ -40,10 +31,10 @@ abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         applyTextReplacement(cellData, context.editorState)
         return cellData
     }
-    protected open fun applyChildren(context: CellCreationContext, node: NodeT, cell: CellData): List<CellData> {
+    protected open fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
         return children.map { it.apply(context, node) }
     }
-    protected abstract fun createCell(context: CellCreationContext, node: NodeT): CellData
+    protected abstract fun createCell(context: CellCreationContext, node: INode): CellData
 
     open fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return children.asSequence().mapNotNull { it.getInstantiationActions(location, parameters) }.firstOrNull()
@@ -53,7 +44,7 @@ abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         val symbols = getGrammarSymbols().toList()
         val conceptToReplace = nodeToReplace.concept ?: return null
         return symbols.mapIndexedNotNull { index, symbol ->
-            if (symbol is ChildCellTemplate<*, *> && conceptToReplace.isSubConceptOf(symbol.link.targetConcept)) {
+            if (symbol is ChildCellTemplate && conceptToReplace.isSubConceptOf(symbol.link.targetConcept)) {
                 val prevNextIndex = if (before)index - 1 else index + 1
                 val prevNextSymbol = symbols.getOrNull(prevNextIndex) ?: return@mapIndexedNotNull null
                 return@mapIndexedNotNull prevNextSymbol.createWrapperAction(nodeToReplace, symbol.link)
@@ -70,14 +61,14 @@ abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         }
     }
 
-    fun addChild(child: CellTemplate<NodeT, ConceptT>) {
+    fun addChild(child: CellTemplate) {
         children.add(child)
         reference?.let { child.setReference(ChildCellTemplateReference(it, children.size - 1)) }
     }
 
-    fun getChildren(): List<CellTemplate<NodeT, ConceptT>> = children
+    fun getChildren(): List<CellTemplate> = children
 
-    fun setReference(ref: ICellTemplateReference) {
+    open fun setReference(ref: ICellTemplateReference) {
         if (reference != null) throw IllegalStateException("reference is already set")
         reference = ref
         children.forEachIndexed { index, child -> child.setReference(ChildCellTemplateReference(ref, index)) }
@@ -85,7 +76,14 @@ abstract class CellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
 
     fun getReference() = reference ?: throw IllegalStateException("reference isn't set yet")
 
-    fun createCellReference(node: INode) = TemplateCellReference(getReference(), node.reference)
+    fun createCellReference(node: Any) = when (node) {
+        is INodeReference -> createCellReference(node)
+        is INode -> createCellReference(node)
+        is ITypedNode -> createCellReference(node)
+        else -> throw IllegalArgumentException("Unsupported node type: $node")
+    }
+    fun createCellReference(nodeRef: INodeReference) = TemplateCellReference(getReference(), nodeRef)
+    fun createCellReference(node: INode) = createCellReference(node.reference)
     fun createCellReference(node: ITypedNode) = createCellReference(node.untyped())
 
     private fun applyTextReplacement(cellData: CellData, editorState: EditorState) {
@@ -129,9 +127,9 @@ class OverrideText(val cell: TextCellData, val delegate: ITextChangeAction?) : I
     }
 }
 
-class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val text: String)
-    : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: NodeT) = TextCellData(text, "")
+class ConstantCellTemplate(concept: IConcept, val text: String)
+    : CellTemplate(concept), IGrammarSymbol {
+    override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(InstantiateNodeAction(location))
     }
@@ -142,9 +140,9 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
 
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) : ICodeCompletionAction {
         override fun getMatchingText(): String = text
-        override fun getDescription(): String = concept.untyped().getShortName()
+        override fun getDescription(): String = concept.getShortName()
         override fun execute(editor: EditorComponent) {
-            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept.untyped())
+            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept)
             wrapper.moveChild(wrappingLink, 0, nodeToWrap.getOrCreateNode(null))
             editor.selectAfterUpdate {
                 CaretPositionPolicy(wrapper)
@@ -155,7 +153,7 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
         }
 
         override fun shadows(shadowed: ICodeCompletionAction): Boolean {
-            if (shadowed !is ConstantCellTemplate<*, *>.SideTransformWrapper) return false
+            if (shadowed !is ConstantCellTemplate.SideTransformWrapper) return false
             if (shadowed.getTemplate().concept != concept) return false
             val commonAncestor = nodeToWrap.commonAncestor(shadowed.nodeToWrap)
             val ownDepth = nodeToWrap.ancestors(true).takeWhile { it != commonAncestor }.count()
@@ -173,11 +171,13 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
         }
 
         override fun getDescription(): String {
-            return concept.untyped().getShortName()
+            return concept.getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val newNode = location.replaceNode(concept.untyped())
+            val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+                location.replaceNode(concept)
+            }
             editor.selectAfterUpdate {
                 CaretPositionPolicy(newNode)
                     .getBestSelection(editor)
@@ -192,9 +192,9 @@ class ConstantCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
  * It is ignored when generating transformation action.
  * A constant is part of the grammar.
  */
-class LabelCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val text: String)
-    : CellTemplate<NodeT, ConceptT>(concept) {
-    override fun createCell(context: CellCreationContext, node: NodeT): TextCellData {
+class LabelCellTemplate(concept: IConcept, val text: String)
+    : CellTemplate(concept) {
+    override fun createCell(context: CellCreationContext, node: INode): TextCellData {
         return TextCellData(text, "").also {
             if (!it.properties.isSet(CommonCellProperties.textColor)) {
                 it.properties[CommonCellProperties.textColor] = "LightGray"
@@ -206,31 +206,36 @@ class LabelCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT
     }
 }
 
-class NewLineCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
-    : CellTemplate<NodeT, ConceptT>(concept) {
-    override fun createCell(context: CellCreationContext, node: NodeT): CellData {
+class NewLineCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.onNewLine] = true }
     }
 }
-class NoSpaceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
-    : CellTemplate<NodeT, ConceptT>(concept) {
-    override fun createCell(context: CellCreationContext, node: NodeT): CellData {
+class NoSpaceCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.noSpace] = true }
     }
 }
-class CollectionCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
-    : CellTemplate<NodeT, ConceptT>(concept) {
-    override fun createCell(context: CellCreationContext, node: NodeT) = CellData()
+class CollectionCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    override fun createCell(context: CellCreationContext, node: INode) = CellData()
 }
-class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT)
-    : CellTemplate<NodeT, ConceptT>(concept) {
-    override fun createCell(context: CellCreationContext, node: NodeT): CellData {
+class NotationRootCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    var condition: ((INode) -> Boolean)? = null
+    override fun createCell(context: CellCreationContext, node: INode) = CellData()
+}
+class OptionalCellTemplate(concept: IConcept)
+    : CellTemplate(concept) {
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData()
     }
 
-    override fun applyChildren(context: CellCreationContext, node: NodeT, cell: CellData): List<CellData> {
+    override fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
         // TODO support other cell types as condition for the optional
-        val childLinkCell = getChildren().filterIsInstance<ChildCellTemplate<NodeT, *>>().firstOrNull()
+        val childLinkCell = descendants().filterIsInstance<ChildCellTemplate>().firstOrNull()
         if (childLinkCell == null || childLinkCell.getChildNodes(node).isNotEmpty()) {
             return super.applyChildren(context, node, cell)
         } else {
@@ -247,16 +252,16 @@ class OptionalCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<No
     }
 }
 
-open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(concept: ConceptT, val property: IProperty)
-    : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
-    var placeholderText: String = "<no ${property.name}>"
+open class PropertyCellTemplate(concept: IConcept, val property: IProperty)
+    : CellTemplate(concept), IGrammarSymbol {
+    var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: (String) -> Boolean = { true }
-    override fun createCell(context: CellCreationContext, node: NodeT): CellData {
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
         data.properties[CellActionProperties.replaceText] = ChangePropertyAction(node)
         data.properties[CommonCellProperties.tabTarget] = true
-        data.cellReferences += PropertyCellReference(property, node.untypedReference())
+        data.cellReferences += PropertyCellReference(property, node.reference)
         return data
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
@@ -279,11 +284,11 @@ open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNo
         }
 
         override fun getDescription(): String {
-            return concept.untyped().getShortName()
+            return concept.getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val node = location.getOrCreateNode(concept.untyped())
+            val node = location.getOrCreateNode(concept)
             node.setPropertyValue(property, value)
             editor.selectAfterUpdate {
                 CaretPositionPolicy(createCellReference(node))
@@ -292,41 +297,47 @@ open class PropertyCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNo
         }
     }
 
-    inner class ChangePropertyAction(val node: ITypedNode) : ITextChangeAction {
+    inner class ChangePropertyAction(val node: INode) : ITextChangeAction {
         override fun isValid(value: String?): Boolean {
             if (value == null) return true
             return validator(value)
         }
 
         override fun replaceText(editor: EditorComponent, range: IntRange, replacement: String, newText: String): Boolean {
-            node.unwrap().setPropertyValue(property, newText)
+            node.getArea().executeWrite {
+                node.setPropertyValue(property, newText)
+            }
             return true
         }
     }
 }
 
-class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>, TargetNodeT : ITypedNode>(
-    concept: ConceptT,
-    val link: ITypedReferenceLink<TargetNodeT>,
-    val presentation: TargetNodeT.() -> String?
-) : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: NodeT): CellData {
-        val data = TextCellData(getText(node), "<no ${link.untyped().name}>")
-        data.cellReferences += ReferencedNodeCellReference(node.untypedReference(), link.untyped())
+class ReferenceCellTemplate(
+    concept: IConcept,
+    val link: IReferenceLink,
+    val presentation: INode.() -> String?
+) : CellTemplate(concept), IGrammarSymbol {
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
+        val data = TextCellData(getText(node), "<no ${link.getSimpleName()}>")
+        data.cellReferences += ReferencedNodeCellReference(node.reference, link)
         data.properties[CommonCellProperties.tabTarget] = true
+        data.properties[CellActionProperties.substitute] =
+            ReferenceTargetActionProvider(ExistingNode(node), link, { it.getNode()?.let(presentation) ?: "" }).after {
+                context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+            }
         return data
     }
-    private fun getText(node: NodeT): String = getTargetNode(node)?.let(presentation) ?: ""
-    private fun getTargetNode(sourceNode: NodeT): TargetNodeT? {
-        return sourceNode.unwrap().getReferenceTargetOrNull(link)
+    private fun getText(node: INode): String = getTargetNode(node)?.let(presentation) ?: ""
+    private fun getTargetNode(sourceNode: INode): INode? {
+        return sourceNode.getReferenceTarget(link)
     }
-    override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        val specializedLocation = location.ofSubConcept(concept.untyped())
-        val scope = ScopeAspect.getScope(link.untyped())
-        val targets = scope.getVisibleElements(specializedLocation, link.untyped())
+    override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
+        val sourceNode = NonExistingChild(location.getParent()!!, location.getContainmentLink()!!, location.index()).ofSubConcept(concept)
+        val scope = ScopeAspect.getScope(sourceNode, link)
+        val targets = scope.getVisibleElements(sourceNode, link)
         return targets.map { target ->
             val text = when (target) {
-                is ExistingNode -> presentation(target.getNode().typedUnsafe()) ?: ""
+                is ExistingNode -> presentation(target.getNode()) ?: ""
                 else -> "<create new target node>"
             }
             WrapReferenceTarget(location, target, text)
@@ -339,12 +350,12 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
         }
 
         override fun getDescription(): String {
-            return concept.untyped().getShortName()
+            return concept.getShortName()
         }
 
         override fun execute(editor: EditorComponent) {
-            val sourceNode = location.getOrCreateNode(concept.untyped())
-            sourceNode.setReferenceTarget(link, link.castTarget(target.getOrCreateNode()))
+            val sourceNode = location.getOrCreateNode(concept)
+            sourceNode.setReferenceTarget(link, target.getOrCreateNode())
             editor.selectAfterUpdate {
                 CaretPositionPolicy(createCellReference(sourceNode))
                     .getBestSelection(editor)
@@ -353,37 +364,50 @@ class ReferenceCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<N
     }
 }
 
-class FlagCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
-    concept: ConceptT,
+class FlagCellTemplate(
+    concept: IConcept,
     property: IProperty,
     val text: String
-) : PropertyCellTemplate<NodeT, ConceptT>(concept, property), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: NodeT) = if (node.getPropertyValue(property) == "true") TextCellData(text, "") else CellData()
+) : PropertyCellTemplate(concept, property), IGrammarSymbol {
+    override fun createCell(context: CellCreationContext, node: INode) = if (node.getPropertyValue(property) == "true") TextCellData(text, "") else CellData()
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         // TODO
         return listOf()
     }
 }
 
-class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
-    concept: ConceptT,
+class ChildCellTemplate(
+    concept: IConcept,
     val link: IChildLink
-) : CellTemplate<NodeT, ConceptT>(concept), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: NodeT) = CellData().also { cell ->
+) : CellTemplate(concept), IGrammarSymbol {
+
+    private var separatorCell: CellTemplate? = null
+
+    fun setSeparator(newSeparator: CellTemplate) {
+        this.separatorCell = newSeparator
+        reference?.let { newSeparator.setReference(SeparatorCellTemplateReference(it)) }
+    }
+
+    override fun setReference(ref: ICellTemplateReference) {
+        super.setReference(ref)
+        separatorCell?.setReference(SeparatorCellTemplateReference(ref))
+    }
+
+    override fun createCell(context: CellCreationContext, node: INode) = CellData().also { cell ->
         val childNodes = getChildNodes(node)
         val substitutionPlaceholder = context.editorState.substitutionPlaceholderPositions[createCellReference(node)]
         val placeholderIndex = substitutionPlaceholder?.index?.coerceIn(0..childNodes.size) ?: 0
         val addSubstitutionPlaceholder: (Int) -> Unit = { index ->
             val isDefaultPlaceholder = childNodes.isEmpty()
-            val placeholderText = if (isDefaultPlaceholder) "<no ${link.name}>" else "<choose ${link.name}>"
+            val placeholderText = if (isDefaultPlaceholder) "<no ${link.getSimpleName()}>" else "<choose ${link.getSimpleName()}>"
             val placeholder = TextCellData("", placeholderText)
             placeholder.properties[CellActionProperties.substitute] =
-                ReplaceNodeActionProvider(NonExistingChild(node.untyped().toNonExisting(), link, index)).after {
+                ReplaceNodeActionProvider(NonExistingChild(node.toNonExisting(), link, index)).after {
                     context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
                 }
             placeholder.cellReferences.add(PlaceholderCellReference(createCellReference(node)))
             if (isDefaultPlaceholder) {
-                placeholder.cellReferences += ChildNodeCellReference(node.untypedReference(), link, index)
+                placeholder.cellReferences += ChildNodeCellReference(node.reference, link, index)
             }
             placeholder.properties[CommonCellProperties.tabTarget] = true
             cell.addChild(placeholder)
@@ -399,8 +423,17 @@ class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT
         if (childNodes.isEmpty()) {
             addSubstitutionPlaceholder(0)
         } else {
-            val childCells = childNodes.map { ChildDataReference(it.typed()) }
+            val childCells = childNodes.map { ChildDataReference(it) }
             childCells.forEachIndexed { index, child ->
+                val childCellReference = ChildNodeCellReference(node.reference, link, index)
+                if (index != 0) {
+                    separatorCell?.let {
+                        cell.addChild(it.apply(context, node).also {
+                            it.cellReferences += SeparatorCellReference(childCellReference)
+                        })
+                    }
+                }
+
                 if (substitutionPlaceholder != null && placeholderIndex == index) {
                     addSubstitutionPlaceholder(placeholderIndex)
                 } else {
@@ -410,7 +443,7 @@ class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT
                 //child.parent?.removeChild(child) // child may be cached and is still attached to the old parent
                 val wrapper = CellData() // allow setting properties by the parent, because the cell is already frozen
                 wrapper.addChild(child)
-                wrapper.cellReferences += ChildNodeCellReference(node.untypedReference(), link, index)
+                wrapper.cellReferences += childCellReference
                 cell.addChild(wrapper)
             }
             if (substitutionPlaceholder != null && placeholderIndex == childNodes.size) {
@@ -421,7 +454,7 @@ class ChildCellTemplate<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT
         }
     }
 
-    fun getChildNodes(node: NodeT) = node.unwrap().getChildren(link).toList()
+    fun getChildNodes(node: INode) = node.getChildren(link).toList()
 
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         // TODO
@@ -447,4 +480,11 @@ class InsertSubstitutionPlaceholderAction(
     }
 }
 
-fun CellTemplate<*, *>.firstLeaf(): CellTemplate<*, *> = if (getChildren().isEmpty()) this else getChildren().first().firstLeaf()
+fun CellTemplate.firstLeaf(): CellTemplate = if (getChildren().isEmpty()) this else getChildren().first().firstLeaf()
+fun CellTemplate.descendants(includeSelf: Boolean = false): Sequence<CellTemplate> {
+    return if (includeSelf) {
+        sequenceOf(this) + descendants(false)
+    } else {
+        getChildren().asSequence().flatMap { it.descendants(true) }
+    }
+}

@@ -1,9 +1,11 @@
 plugins {
     kotlin("multiplatform")
+    alias(coreLibs.plugins.kotlin.serialization)
     `maven-publish`
 }
 
 kotlin {
+    jvmToolchain(11)
     jvm()
     js(IR) {
         browser {}
@@ -24,6 +26,7 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(coreLibs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
+                implementation(coreLibs.kotlin.serialization.json)
                 api(coreLibs.modelix.incremental)
                 api(libs.kotlin.html)
             }

@@ -53,7 +53,7 @@ open class IncrementalLayoutAfterInsert {
 
     @Test
     fun layoutAfterInsert() {
-        editor.processKeyDown(JSKeyboardEvent(KnownKeys.Enter))
+        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, KnownKeys.Enter))
         val incrementalText = editor.getRootCell().layout.toString()
         editor.clearLayoutCache()
         val nonIncrementalText = editor.getRootCell().layout.toString()

@@ -6,9 +6,13 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
-import org.modelix.editor.IncrementalJSDOMBuilder
+import org.modelix.editor.GeneratedHtmlMap
+import org.modelix.editor.IVirtualDom
+import org.modelix.editor.IncrementalVirtualDOMBuilder
+import org.modelix.editor.JSDom
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.kernelf.KernelfAPI
+import org.modelix.editor.unwrap
 import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
 import org.modelix.model.api.*
@@ -20,6 +24,7 @@ import org.w3c.dom.Node
 @JsExport
 object KernelfApiJS {
     private val LOG = mu.KotlinLogging.logger {}
+    private val generatedHtmlMap = GeneratedHtmlMap()
 
     fun connectToModelServer(json: Array<String>, callback: (INode) -> Unit) {
         KernelfAPI.connectToModelServer(
@@ -42,18 +47,19 @@ object KernelfApiJS {
 
     fun updateNodeAsDom(editorState: EditorState, rootNode: INode, parentElement: HTMLElement) {
         val existing = parentElement.firstElementChild as? HTMLElement
-        val consumer = IncrementalJSDOMBuilder(parentElement.ownerDocument!!, existing)
+        val virtualDom = JSDom(parentElement.ownerDocument!!)
+        val consumer = IncrementalVirtualDOMBuilder(virtualDom, existing?.let { virtualDom.wrap(it) }, generatedHtmlMap)
         KernelfAPI.renderNode(editorState, rootNode, consumer)
         val newHtml = consumer.finalize()
         if (newHtml != existing) {
             if (existing != null) parentElement.removeChild(existing)
-            parentElement.appendChild(newHtml)
+            parentElement.appendChild(newHtml.unwrap())
         }
     }
 
     fun renderAndUpdateNodeAsDom(rootNode: INode): HTMLElement {
-        val editor = JsEditorComponent(KernelfAPI.editorEngine) { state ->
-            KernelfAPI.editorEngine.createCell(state, rootNode.typed())
+        val editor = JsEditorComponent(KernelfAPI.editorEngine, rootNode.getArea()) { state ->
+            KernelfAPI.editorEngine.createCell(state, rootNode)
         }
         val branch = ModelFacade.getBranch(rootNode)?.deepUnwrap()
         if (branch != null) {
@@ -61,7 +67,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun treeChanged(oldTree: ITree?, newTree: ITree) {
-                    if (editor.getHtmlElement().isInDocument()) {
+                    if (editor.containerElement.unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -81,7 +87,7 @@ object KernelfApiJS {
                 private var updateScheduled = atomic(false)
                 private val coroutinesScope = CoroutineScope(Dispatchers.Main)
                 override fun areaChanged(changes: IAreaChangeList) {
-                    if (editor.getHtmlElement().isInDocument()) {
+                    if (editor.containerElement.unwrap().isInDocument()) {
                         if (!updateScheduled.getAndSet(true)) {
                             coroutinesScope.launch {
                                 updateScheduled.getAndSet(false)
@@ -98,7 +104,7 @@ object KernelfApiJS {
             })
         }
         editor.updateHtml()
-        return editor.getHtmlElement()
+        return editor.containerElement.unwrap()
     }
 }
 

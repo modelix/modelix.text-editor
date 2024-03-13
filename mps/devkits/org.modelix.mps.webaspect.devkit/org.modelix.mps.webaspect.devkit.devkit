@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dev-kit name="org.modelix.mps.webaspect.devkit" uuid="46d68387-81c7-4c54-9dd2-2717eb3f009b">
+  <exported-language name="c7b55726-1795-47bd-aa21-714ac1e30f21(org.modelix.mps.notation)" />
+  <exported-language name="8f2def56-7502-4f14-994f-472d404e528c(org.modelix.mps.baseLanguage2kotlin)" />
+  <exported-language name="f3061a53-9226-4cc5-a443-f952ceaf5816(jetbrains.mps.baseLanguage)" />
+  <exported-language name="7866978e-a0f0-4cc7-81bc-4d213d9375e1(jetbrains.mps.lang.smodel)" />
+  <exported-language name="6b3888c1-9802-44d8-8baf-f8e6c33ed689(jetbrains.mps.kotlin)" />
+  <exported-language name="b17a9ec8-44a5-40a1-9216-058d277424eb(jetbrains.mps.kotlin.internal)" />
+  <exported-language name="eb56ebf4-df56-438e-af06-fc1cd08b495a(jetbrains.mps.kotlin.smodel)" />
+  <exported-solutions>
+    <exported-solution>02ad200e-1634-449d-8b0b-db88f7ea0f2d(org.modelix.mps.webaspect.genplan)</exported-solution>
+  </exported-solutions>
+  <generation-plan model="r:184047e0-0f39-454d-9ffe-ea892e7db656(org.modelix.mps.webaspect.genplan)" />
+</dev-kit>
+

@@ -4,26 +4,24 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import kotlinx.html.span
 import kotlinx.html.style
-import org.w3c.dom.HTMLElement
-import org.w3c.dom.asList
 
-class JSCellSelectionView(selection: CellSelection, val editor: JsEditorComponent) : SelectionView<CellSelection>(selection) {
+class CellSelectionView(selection: CellSelection, val editor: EditorComponent) : SelectionView<CellSelection>(selection) {
 
     override fun update() {
-        val mainLayerBounds = editor.getMainLayer()?.getAbsoluteBounds() ?: ZERO_BOUNDS
-        val selectionDom = GeneratedHtmlMap.getOutput(this) ?: return
+        val mainLayerBounds = editor.getMainLayer()?.getOuterBounds() ?: Bounds.ZERO
+        val selectionDom = editor.generatedHtmlMap.getOutput(this) ?: return
         val lines: Map<TextLine, List<Layoutable>> = selection.getLayoutables().groupBy { it.getLine()!! }
-        val lineSelectionDoms = selectionDom.childNodes.asList().filterIsInstance<HTMLElement>()
+        val lineSelectionDoms = selectionDom.childNodes.filterIsInstance<IVirtualDom.HTMLElement>()
 
         val applyBounds = ArrayList<() -> Unit>()
 
         var selectionBounds: Bounds? = null
         for ((words, lineSelectionDom) in lines.values.zip(lineSelectionDoms)) {
-            val wordSelectionDoms = lineSelectionDom.childNodes.asList().filterIsInstance<HTMLElement>()
+            val wordSelectionDoms = lineSelectionDom.childNodes.filterIsInstance<IVirtualDom.HTMLElement>()
             var lineBounds: Bounds? = null
             for ((word, wordSelectionDom) in words.zip(wordSelectionDoms)) {
-                val wordDom = GeneratedHtmlMap.getOutput(word) ?: continue
-                val wordBounds = wordDom.getAbsoluteBounds().relativeTo(mainLayerBounds)
+                val wordDom = editor.generatedHtmlMap.getOutput(word) ?: continue
+                val wordBounds = wordDom.getOuterBounds().relativeTo(mainLayerBounds)
                 lineBounds = lineBounds.union(wordBounds)
                 applyBounds += {
                     with(wordSelectionDom.style) {
@@ -74,24 +72,6 @@ class JSCellSelectionView(selection: CellSelection, val editor: JsEditorComponen
                     }
                 }
             }
-        }
-    }
-
-    companion object {
-        fun updateCaretBounds(textElement: HTMLElement, caretPos: Int, coordinatesElement: HTMLElement?, caretElement: HTMLElement) {
-            val text = textElement.innerText
-            val textLength = text.length
-            val cellAbsoluteBounds = textElement.getAbsoluteInnerBounds()
-            val cellRelativeBounds = cellAbsoluteBounds.relativeTo(coordinatesElement?.getAbsoluteBounds() ?: ZERO_BOUNDS)
-            val characterWidth = if (textLength == 0) 0.0 else cellAbsoluteBounds.width / textLength
-            val caretX = cellRelativeBounds.x + caretPos * characterWidth
-            val leftEnd = caretPos == 0
-            val rightEnd = caretPos == textLength
-            val caretOffsetX = if (rightEnd && !leftEnd) -4 else -1
-            val caretOffsetY = if (leftEnd || rightEnd) -1 else 0
-            caretElement.style.height = "${cellRelativeBounds.height}px"
-            caretElement.style.left = "${caretX + caretOffsetX}px"
-            caretElement.style.top = "${cellRelativeBounds.y + caretOffsetY}px"
         }
     }
 }

@@ -22,14 +22,16 @@ class CodeCompletionMenu(
     override fun isHtmlOutputValid(): Boolean = false
 
     fun updateActions() {
-        val parameters = parameters()
-        entries = actionsCache.update(parameters)
-            .filter {
-                val matchingText = it.getMatchingText()
-                matchingText.isNotEmpty() && matchingText.startsWith(parameters.pattern)
-            }
-            .applyShadowing()
-            .sortedBy { it.getMatchingText().lowercase() }
+        editor.runRead {
+            val parameters = parameters()
+            entries = actionsCache.update(parameters)
+                .filter {
+                    val matchingText = it.getMatchingText()
+                    matchingText.isNotEmpty() && matchingText.startsWith(parameters.pattern)
+                }
+                .applyShadowing()
+                .sortedBy { it.getMatchingText().lowercase() }
+        }
     }
 
     private fun parameters() = CodeCompletionParameters(editor, patternEditor.getTextBeforeCaret())
@@ -54,7 +56,11 @@ class CodeCompletionMenu(
             KnownKeys.ArrowRight -> patternEditor.moveCaret(1)
             KnownKeys.Escape -> editor.closeCodeCompletionMenu()
             KnownKeys.Enter -> {
-                getSelectedEntry()?.execute(editor)
+                getSelectedEntry()?.let { entry ->
+                    editor.runWrite {
+                        entry.execute(editor)
+                    }
+                }
                 editor.closeCodeCompletionMenu()
             }
             KnownKeys.Backspace -> patternEditor.deleteText(true)

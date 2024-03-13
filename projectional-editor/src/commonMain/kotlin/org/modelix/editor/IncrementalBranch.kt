@@ -233,6 +233,29 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
         }
 
+        override fun addNewChildren(
+            parentId: Long,
+            role: String?,
+            index: Int,
+            concepts: Array<IConceptReference?>
+        ): LongArray {
+            val result = transaction.addNewChildren(parentId, role, index, concepts)
+            modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
+            return result
+        }
+
+        override fun addNewChildren(
+            parentId: Long,
+            role: String?,
+            index: Int,
+            childIds: LongArray,
+            concepts: Array<IConceptReference?>
+        ) {
+            val result = transaction.addNewChildren(parentId, role, index, childIds, concepts)
+            modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
+            return result
+        }
+
         override fun deleteNode(nodeId: Long) {
             val oldParentId = transaction.getParent(nodeId)
             val oldRole = transaction.getRole(nodeId)

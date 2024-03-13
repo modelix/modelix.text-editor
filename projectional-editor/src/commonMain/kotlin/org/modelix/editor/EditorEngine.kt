@@ -3,25 +3,20 @@ package org.modelix.editor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import org.modelix.metamodel.ITypedNode
-import org.modelix.model.api.IConceptReference
-import org.modelix.model.api.getAllConcepts
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
-import org.modelix.metamodel.GeneratedConcept
-import org.modelix.metamodel.IConceptOfTypedNode
-import org.modelix.metamodel.ITypedConcept
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.untyped
-import org.modelix.metamodel.untypedConcept
-import org.modelix.metamodel.untypedReference
+import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.IConceptReference
+import org.modelix.model.api.INode
+import org.modelix.model.api.getAllConcepts
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     private val incrementalEngine: IncrementalEngine
     private val ownsIncrementalEngine: Boolean
-    private val editorsForConcept: MutableMap<IConceptReference, MutableList<ConceptEditor<*, *>>> = LinkedHashMap()
+    private val editorsForConcept: MutableMap<IConceptReference, MutableList<ConceptEditor>> = LinkedHashMap()
+    private val conceptEditorRegistries = ArrayList<IConceptEditorRegistry>()
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     init {
@@ -34,43 +29,54 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private val createCellIncremental: (EditorState, ITypedNode)->Cell = this.incrementalEngine.incrementalFunction("createCell") { _, editorState, node ->
+    private val createCellIncremental: (EditorState, INode)->Cell = this.incrementalEngine.incrementalFunction("createCell") { _, editorState, node ->
         val cell = doCreateCell(editorState, node)
         cell.freeze()
         LOG.trace { "Cell created for $node: $cell" }
         cell
     }
-    private val createCellDataIncremental: (EditorState, ITypedNode)->CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
+    private val createCellDataIncremental: (EditorState, INode)->CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
         val cellData = doCreateCellData(editorState, node)
         cellData.freeze()
         LOG.trace { "Cell created for $node: $cellData" }
         cellData
     }
 
+    fun addRegistry(registry: IConceptEditorRegistry) {
+        conceptEditorRegistries += registry
+    }
+
+    fun removeRegistry(registry: IConceptEditorRegistry) {
+        conceptEditorRegistries.remove(registry)
+    }
+
     fun registerEditors(editorAspect: EditorAspect) {
         editorAspect.conceptEditors.forEach {
             val declaredConcept = it.declaredConcept ?: return@forEach
-            editorsForConcept.getOrPut(declaredConcept.untyped().getReference()) { ArrayList() }.add(it)
+            editorsForConcept.getOrPut(declaredConcept.getReference()) { ArrayList() }.add(it)
         }
     }
 
-    fun <NodeT : ITypedNode> createCell(editorState: EditorState, node: NodeT): Cell {
+    fun createCell(editorState: EditorState, node: INode): Cell {
         return createCellIncremental(editorState, node)
     }
 
-    fun createCellModel(concept: IConcept): CellTemplate<*, *> {
-        val editor: ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>> = resolveConceptEditor(concept) as ConceptEditor<ITypedNode, IConceptOfTypedNode<ITypedNode>>
-        val template: CellTemplate<ITypedNode, IConceptOfTypedNode<ITypedNode>> = editor.apply(concept.typed() as IConceptOfTypedNode<ITypedNode>)
+    fun createCellModel(concept: IConcept): CellTemplate {
+        val editor: ConceptEditor = resolveConceptEditor(concept).first()
+        val template: CellTemplate = editor.apply(concept)
         return template
     }
 
-    fun editNode(node: ITypedNode): EditorComponent {
-        return EditorComponent(this) { editorState ->
-            node.unwrap().getArea().executeRead { createCell(editorState, node) }
+    fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {
+        return EditorComponent(this, virtualDom = virtualDom, transactionManager = node.getArea()) { editorState ->
+            node.getArea().executeRead { createCell(editorState, node) }
         }
     }
 
-    private fun doCreateCell(editorState: EditorState, node: ITypedNode): Cell {
+    @Deprecated("provide an untyped node", ReplaceWith("editorNode(node.unwrap(), virtualDom)"))
+    fun editNode(node: ITypedNode, virtualDom: IVirtualDom = IVirtualDom.newInstance()) = editNode(node.unwrap(), virtualDom)
+
+    private fun doCreateCell(editorState: EditorState, node: INode): Cell {
         return dataToCell(editorState, createCellDataIncremental(editorState, node))
     }
 
@@ -91,14 +97,18 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         return cell
     }
 
-    private fun <NodeT : ITypedNode> doCreateCellData(editorState: EditorState, node: NodeT): CellData {
+    private fun doCreateCellData(editorState: EditorState, node: INode): CellData {
         try {
-            val editor = resolveConceptEditor(node.untypedConcept()) as ConceptEditor<NodeT, *>
-            val data = editor.apply(CellCreationContext(this, editorState), node)
-            data.properties[CellActionProperties.substitute] = ReplaceNodeActionProvider(ExistingNode(node.unwrap()))
-            data.cellReferences += NodeCellReference(node.untypedReference())
-            data.properties[CellActionProperties.transformBefore] = SideTransformNode(true, node.untyped())
-            data.properties[CellActionProperties.transformAfter] = SideTransformNode(false, node.untyped())
+            val editor = resolveConceptEditor(node.concept)
+            val context = CellCreationContext(this, editorState)
+
+            // TODO do some proper conflict resolution between multiple applicable editors instead of just taking the first one.
+            val data = editor.asSequence().mapNotNull { it.applyIfApplicable(context, node) }.first()
+
+            data.properties[CellActionProperties.substitute] = ReplaceNodeActionProvider(ExistingNode(node))
+            data.cellReferences += NodeCellReference(node.reference)
+            data.properties[CellActionProperties.transformBefore] = SideTransformNode(true, node)
+            data.properties[CellActionProperties.transformAfter] = SideTransformNode(false, node)
             data.properties[CommonCellProperties.selectable] = true
             return data
         } catch (ex: Exception) {
@@ -109,11 +119,15 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private fun resolveConceptEditor(concept: IConcept): ConceptEditor<*, out IConceptOfTypedNode<*>> {
-        val editors = concept.getAllConcepts()
-            .firstNotNullOfOrNull { editorsForConcept[it.getReference()] }
-        return editors?.firstOrNull()
-            ?: defaultConceptEditor
+    private fun resolveConceptEditor(concept: IConcept?): List<ConceptEditor> {
+        if (concept == null) return listOf(defaultConceptEditor)
+        val editors = concept.getAllConcepts().firstNotNullOfOrNull { superConcept ->
+            val conceptReference = superConcept.getReference()
+            val allEditors = (editorsForConcept[conceptReference] ?: emptyList()) +
+                    conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
+            allEditors.takeIf { it.isNotEmpty() }
+        }
+        return (editors ?: emptyList()) + defaultConceptEditor
     }
 
     fun dispose() {

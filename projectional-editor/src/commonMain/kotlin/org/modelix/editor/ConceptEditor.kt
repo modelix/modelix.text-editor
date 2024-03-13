@@ -1,58 +1,64 @@
 package org.modelix.editor
 
-import org.modelix.metamodel.GeneratedConcept
-import org.modelix.metamodel.IConceptOfTypedNode
-import org.modelix.metamodel.ITypedChildListLink
-import org.modelix.metamodel.ITypedConcept
-import org.modelix.metamodel.ITypedNode
-import org.modelix.metamodel.ITypedSingleChildLink
-import org.modelix.metamodel.typed
-import org.modelix.metamodel.typedConcept
-import org.modelix.metamodel.untypedConcept
-import org.modelix.metamodel.untypedReference
-import org.modelix.model.api.serialize
+import org.modelix.metamodel.NullConcept
+import org.modelix.model.api.IConcept
+import org.modelix.model.api.INode
+import org.modelix.model.api.IProperty
 
-class ConceptEditor<NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>>(
-    val declaredConcept: ConceptT?,
-    val templateBuilder: (subConcept: ConceptT)->CellTemplate<NodeT, ConceptT>
+class ConceptEditor(
+    val declaredConcept: IConcept?,
+    val templateBuilder: (subConcept: IConcept)->NotationRootCellTemplate
 ) {
-    fun apply(subConcept: ConceptT): CellTemplate<NodeT, ConceptT> {
-        return templateBuilder(subConcept)
-            .also { it.setReference(RooCellTemplateReference(this, subConcept.untyped().getReference())) }
+    fun isApplicable(context: CellCreationContext, node: INode): Boolean {
+        return apply(node.concept ?: NullConcept).condition?.invoke(node) != false
     }
 
-    fun apply(context: CellCreationContext, node: NodeT): CellData {
-        return apply(node.typedConcept() as ConceptT).apply(context, node)
+    fun apply(subConcept: IConcept): NotationRootCellTemplate {
+        return templateBuilder(subConcept)
+            .also { it.setReference(RooCellTemplateReference(this, subConcept.getReference())) }
+    }
+
+    fun applyIfApplicable(context: CellCreationContext, node: INode): CellData? {
+        // TODO evaluate .withNode blocks during creation of the template
+        return apply(node.concept ?: NullConcept)
+            .takeIf { it.condition?.invoke(node) != false }
+            ?.apply(context, node)
+    }
+
+    fun apply(context: CellCreationContext, node: INode): CellData {
+        // TODO evaluate .withNode blocks during creation of the template
+        return apply(node.concept ?: NullConcept).apply(context, node)
     }
 }
 
-val defaultConceptEditor = ConceptEditor(null as IConceptOfTypedNode<ITypedNode>?) { subConcept ->
-    CellTemplateBuilder(CollectionCellTemplate(subConcept)).apply {
-        subConcept.untyped().getShortName().constant()
+val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
+    NotationRootCellTemplateBuilder(NotationRootCellTemplate(subConcept), subConcept, INodeConverter.Untyped).apply {
+        subConcept.getShortName().constant()
         curlyBrackets {
-            for (property in subConcept.untyped().getAllProperties()) {
+            for (property in subConcept.getAllProperties()) {
                 newLine()
-                label(property.name + ":")
+                label(property.getSimpleName() + ":")
                 property.cell()
             }
-            for (link in subConcept.untyped().getAllReferenceLinks()) {
+            for (link in subConcept.getAllReferenceLinks()) {
                 newLine()
-                label(link.name + ":")
-                link.typed()?.cell(presentation = { untypedReference().serialize() })
+                label(link.getSimpleName() + ":")
+                link.cell(presentation = {
+                    getPropertyValue(IProperty.fromName("name")) ?: reference.serialize()
+                })
             }
-            for (link in subConcept.untyped().getAllChildLinks()) {
+            for (link in subConcept.getAllChildLinks()) {
                 newLine()
-                label(link.name + ":")
-                when (val l = link.typed()) {
-                    is ITypedSingleChildLink -> l.cell()
-                    is ITypedChildListLink -> {
-                        newLine()
-                        indented {
-                            l.vertical()
-                        }
+                label(link.getSimpleName() + ":")
+                if (link.isMultiple) {
+                    newLine()
+                    indented {
+                        link.vertical()
                     }
+                } else {
+                    link.cell()
                 }
             }
         }
-    }.template
+    }.template as NotationRootCellTemplate
 }
