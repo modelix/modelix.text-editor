@@ -141,6 +141,7 @@ class ModelixSSRServerForMPS : Disposable {
             mpsChangeTranslator = MPSChangeTranslator()
             mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
+            this.ssrServer = ssrServer
             aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
             ScopeAspect.registerScopeProvider(MPSScopeProvider)
             ConstraintsAspect.checkers.add(MPSConstraints)
@@ -252,6 +253,8 @@ class ModelixSSRServerForMPS : Disposable {
             println("stopping modelix SSR server")
             ktorServer?.stop()
             ktorServer = null
+            ssrServer?.dispose()
+            ssrServer = null
 
             mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
             mpsLanguageRepository = null
