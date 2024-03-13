@@ -6,7 +6,7 @@ npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.1" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
 
 [versions]
-modelixCore = "5.1.1-pr336.2f1ce06"
+modelixCore = "5.1.1"
 modelixBuildtools="1.4.0"
 
 [libraries]
