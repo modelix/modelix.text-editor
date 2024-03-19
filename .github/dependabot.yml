@@ -15,11 +15,17 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build(deps)"
+      prefix-development: "build(deps)"
   - package-ecosystem: "github-actions"
     open-pull-requests-limit: 20
     directory: "/"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "build(deps)"
+      prefix-development: "build(deps)"
   - package-ecosystem: "npm"
     open-pull-requests-limit: 20
     directory: "/"
