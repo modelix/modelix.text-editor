@@ -16,15 +16,15 @@ jobs:
 #        with:
 #          node-version: '18.3.0'
 #          registry-url: 'https://npm.pkg.github.com'
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
-          java-version: '17'
+          java-version: '21'
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }} -Pmps.version.major=2023.3
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
