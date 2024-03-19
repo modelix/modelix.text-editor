@@ -2,7 +2,18 @@ package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.tests.N_AssertTestItem
 import org.iets3.core.expr.tests.N_TestSuite
-import org.modelix.editor.*
+import org.modelix.editor.CaretSelection
+import org.modelix.editor.EditorComponent
+import org.modelix.editor.EditorEngine
+import org.modelix.editor.IncrementalBranch
+import org.modelix.editor.JSKeyboardEvent
+import org.modelix.editor.JSKeyboardEventType
+import org.modelix.editor.KnownKeys
+import org.modelix.editor.firstLeaf
+import org.modelix.editor.isVisible
+import org.modelix.editor.layoutable
+import org.modelix.editor.nextLeafs
+import org.modelix.editor.resolveNodeCell
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.ModelData

@@ -1,9 +1,12 @@
 package org.modelix.editor.ssr.client
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.client.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.websocket.*
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.DefaultClientWebSocketSession
+import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
+import io.ktor.websocket.send
 import kotlinx.browser.document
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -86,10 +89,12 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         editors[editorSession.editorId] = editorSession
         ws.launch {
             try {
-                ws.send(MessageFromClient(
-                    editorId = editorSession.editorId,
-                    rootNodeReference = rootNodeReference.serialize()
-                ).toJson())
+                ws.send(
+                    MessageFromClient(
+                        editorId = editorSession.editorId,
+                        rootNodeReference = rootNodeReference.serialize(),
+                    ).toJson(),
+                )
             } catch (ex: Throwable) {
                 LOG.error(ex) { "Failed to initialized editor ${editorSession.editorId}" }
             }
@@ -122,20 +127,20 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
             containerElement.onclick = { event ->
                 MessageFromClient(
                     editorId = editorId,
-                    mouseEvent = event.convert(JSMouseEventType.CLICK, containerElement)
+                    mouseEvent = event.convert(JSMouseEventType.CLICK, containerElement),
                 ).withBounds().send()
             }
             containerElement.onkeydown = { event ->
                 MessageFromClient(
                     editorId = editorId,
-                    keyboardEvent = event.convert(JSKeyboardEventType.KEYDOWN)
+                    keyboardEvent = event.convert(JSKeyboardEventType.KEYDOWN),
                 ).withBounds().send()
                 event.preventDefault()
             }
             containerElement.onkeyup = { event ->
                 MessageFromClient(
                     editorId = editorId,
-                    keyboardEvent = event.convert(JSKeyboardEventType.KEYUP)
+                    keyboardEvent = event.convert(JSKeyboardEventType.KEYUP),
                 ).withBounds().send()
                 event.preventDefault()
             }
@@ -167,9 +172,11 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         fun applyUpdate(update: DomTreeUpdate) {
             LOG.trace { "($editorId) Updating DOM" }
             // this map allows updating nodes in a different order to resolve references during syncChildren
-            pendingUpdates.putAll(update.elements.associateBy {
-                requireNotNull(it.id) { "Elements in DomTreeUpdate.elements are expected to have an ID" }
-            })
+            pendingUpdates.putAll(
+                update.elements.associateBy {
+                    requireNotNull(it.id) { "Elements in DomTreeUpdate.elements are expected to have an ID" }
+                },
+            )
 
             for (elementUpdate in update.elements) {
                 if (!pendingUpdates.containsKey(elementUpdate.id)) continue

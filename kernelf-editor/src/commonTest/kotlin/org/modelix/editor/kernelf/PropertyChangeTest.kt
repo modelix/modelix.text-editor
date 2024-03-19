@@ -16,7 +16,6 @@ import org.modelix.editor.JSKeyboardEvent
 import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.KeyLocation
 import org.modelix.editor.Modifiers
-import org.modelix.editor.PropertyCellReference
 import org.modelix.editor.flattenApplicableActions
 import org.modelix.editor.getSubstituteActions
 import org.modelix.editor.layoutable
@@ -25,7 +24,6 @@ import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.setNew
 import org.modelix.metamodel.typed
-import org.modelix.metamodel.untypedReference
 import org.modelix.model.ModelFacade
 import org.modelix.model.area.PArea
 import kotlin.test.AfterTest

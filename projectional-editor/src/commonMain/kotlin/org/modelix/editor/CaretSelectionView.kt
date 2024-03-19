@@ -12,7 +12,7 @@ class CaretSelectionView(selection: CaretSelection, val editor: EditorComponent)
     private fun hasRange() = selection.start != selection.end
 
     override fun <T> produceHtml(consumer: TagConsumer<T>) {
-        consumer.div ("caret-selection") {
+        consumer.div("caret-selection") {
             style = "position: absolute"
             if (hasRange()) {
                 div("selected-word") {

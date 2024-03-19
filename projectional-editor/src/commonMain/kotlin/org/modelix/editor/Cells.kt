@@ -34,7 +34,7 @@ class Cell(val data: CellData = CellData()) : Freezable() {
     val referencesIndexList: IncrementalList<Pair<CellReference, Cell>> by lazy {
         IncrementalList.concat(
             IncrementalList.of(data.cellReferences.map { it to this }),
-            IncrementalList.concat(children.map { it.referencesIndexList })
+            IncrementalList.concat(children.map { it.referencesIndexList }),
         )
     }
     var editorComponent: EditorComponent?
@@ -85,14 +85,14 @@ class Cell(val data: CellData = CellData()) : Freezable() {
 }
 
 fun Cell.getVisibleText(): String? {
-    return getProperty(CommonCellProperties.textReplacement) ?:  (data as? TextCellData)?.getVisibleText(this)
+    return getProperty(CommonCellProperties.textReplacement) ?: (data as? TextCellData)?.getVisibleText(this)
 }
 fun Cell.getSelectableText(): String? {
     return getProperty(CommonCellProperties.textReplacement) ?: (data as? TextCellData)?.text
 }
 fun Cell.getMaxCaretPos(): Int = getSelectableText()?.length ?: 0
 
-class ResettableLazy<E>(private val initializer: () -> E): Lazy<E> {
+class ResettableLazy<E>(private val initializer: () -> E) : Lazy<E> {
     private var lazy: Lazy<E> = lazy(initializer)
     override val value: E
         get() = lazy.value

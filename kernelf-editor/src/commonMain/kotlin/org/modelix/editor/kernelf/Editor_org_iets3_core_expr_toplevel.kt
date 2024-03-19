@@ -102,7 +102,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
     }
     editor(language.ExtensionFunctionCall) {
         concept.extFun.cell({ name })
-        //TODO effect descriptor
+        // TODO effect descriptor
         noSpace()
         parentheses {
             concept.args.horizontal(",")
@@ -137,7 +137,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         indented {
             concept.body.cell()
         }
-        //TODO ? = for single line body
+        // TODO ? = for single line body
     }
     typesystem(language.Function) {
         val body = node.body.get()
@@ -151,7 +151,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
     }
     editor(language.FunctionCall) {
         concept.function.cell({ name })
-        //TODO effect descriptor
+        // TODO effect descriptor
         noSpace()
         parentheses {
             concept.args.horizontal()
@@ -194,7 +194,7 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         }
     }
     editor(language.Library) {
-        //TODO custom cells
+        // TODO custom cells
         "library".constant {
             iets3keyword()
         }
@@ -326,5 +326,4 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
     editor(language.TypedefType) {
         concept.typedef.cell({ name })
     }
-
 }

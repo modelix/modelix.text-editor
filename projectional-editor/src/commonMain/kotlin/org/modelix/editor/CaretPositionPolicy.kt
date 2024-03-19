@@ -4,7 +4,7 @@ import org.modelix.model.api.INode
 
 data class CaretPositionPolicy(
     private val avoidedCellRefs: Set<CellReference>,
-    private val preferredCellRefs: Set<CellReference>
+    private val preferredCellRefs: Set<CellReference>,
 ) {
     constructor(preferredCellRef: CellReference) : this(emptySet(), setOf(preferredCellRef))
     constructor(preferredNode: INode) : this(NodeCellReference(preferredNode.reference))
@@ -14,7 +14,7 @@ data class CaretPositionPolicy(
 
     fun merge(other: CaretPositionPolicy) = CaretPositionPolicy(
         avoidedCellRefs + other.avoidedCellRefs,
-        preferredCellRefs + other.preferredCellRefs
+        preferredCellRefs + other.preferredCellRefs,
     )
 
     fun getBestSelection(editor: EditorComponent): CaretSelection? {
@@ -36,5 +36,5 @@ data class CaretPositionPolicy(
 
 enum class CaretPositionType {
     START,
-    END
+    END,
 }

@@ -3,7 +3,17 @@ package org.modelix.editor
 import org.modelix.incremental.DependencyTracking
 import org.modelix.incremental.IStateVariableGroup
 import org.modelix.incremental.IStateVariableReference
-import org.modelix.model.api.*
+import org.modelix.model.api.IBranch
+import org.modelix.model.api.IBranchListener
+import org.modelix.model.api.IBranchWrapper
+import org.modelix.model.api.IConcept
+import org.modelix.model.api.IConceptReference
+import org.modelix.model.api.INodeReference
+import org.modelix.model.api.IReadTransaction
+import org.modelix.model.api.ITransaction
+import org.modelix.model.api.ITree
+import org.modelix.model.api.ITreeChangeVisitor
+import org.modelix.model.api.IWriteTransaction
 
 class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
 
@@ -11,23 +21,26 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
         branch.addListener(object : IBranchListener {
             override fun treeChanged(oldTree: ITree?, newTree: ITree) {
                 if (oldTree != null) {
-                    newTree.visitChanges(oldTree, object : ITreeChangeVisitor {
-                        override fun containmentChanged(nodeId: Long) {
-                            modified(ContainmentDependency(this@IncrementalBranch, nodeId))
-                        }
+                    newTree.visitChanges(
+                        oldTree,
+                        object : ITreeChangeVisitor {
+                            override fun containmentChanged(nodeId: Long) {
+                                modified(ContainmentDependency(this@IncrementalBranch, nodeId))
+                            }
 
-                        override fun childrenChanged(nodeId: Long, role: String?) {
-                            modified(ChildrenDependency(this@IncrementalBranch, nodeId, role))
-                        }
+                            override fun childrenChanged(nodeId: Long, role: String?) {
+                                modified(ChildrenDependency(this@IncrementalBranch, nodeId, role))
+                            }
 
-                        override fun referenceChanged(nodeId: Long, role: String) {
-                            modified(ReferenceDependency(this@IncrementalBranch, nodeId, role))
-                        }
+                            override fun referenceChanged(nodeId: Long, role: String) {
+                                modified(ReferenceDependency(this@IncrementalBranch, nodeId, role))
+                            }
 
-                        override fun propertyChanged(nodeId: Long, role: String) {
-                            modified(PropertyDependency(this@IncrementalBranch, nodeId, role))
-                        }
-                    })
+                            override fun propertyChanged(nodeId: Long, role: String) {
+                                modified(PropertyDependency(this@IncrementalBranch, nodeId, role))
+                            }
+                        },
+                    )
                 }
             }
         })
@@ -227,7 +240,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             role: String?,
             index: Int,
             childId: Long,
-            concept: IConceptReference?
+            concept: IConceptReference?,
         ) {
             transaction.addNewChild(parentId, role, index, childId, concept)
             modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
@@ -237,7 +250,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             parentId: Long,
             role: String?,
             index: Int,
-            concepts: Array<IConceptReference?>
+            concepts: Array<IConceptReference?>,
         ): LongArray {
             val result = transaction.addNewChildren(parentId, role, index, concepts)
             modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
@@ -249,7 +262,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             role: String?,
             index: Int,
             childIds: LongArray,
-            concepts: Array<IConceptReference?>
+            concepts: Array<IConceptReference?>,
         ) {
             val result = transaction.addNewChildren(parentId, role, index, childIds, concepts)
             modified(ChildrenDependency(this@IncrementalBranch, parentId, role))
@@ -360,7 +373,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             role: String?,
             index: Int,
             childId: Long,
-            concept: IConceptReference?
+            concept: IConceptReference?,
         ): ITree {
             TODO("Not yet implemented")
         }
@@ -370,7 +383,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             role: String?,
             index: Int,
             newIds: LongArray,
-            concepts: Array<IConcept?>
+            concepts: Array<IConcept?>,
         ): ITree {
             TODO("Not yet implemented")
         }
@@ -380,7 +393,7 @@ class IncrementalBranch(val branch: IBranch) : IBranch, IBranchWrapper {
             role: String?,
             index: Int,
             newIds: LongArray,
-            concepts: Array<IConceptReference?>
+            concepts: Array<IConceptReference?>,
         ): ITree {
             TODO("Not yet implemented")
         }

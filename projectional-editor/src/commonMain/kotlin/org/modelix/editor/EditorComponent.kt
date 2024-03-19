@@ -12,7 +12,7 @@ open class EditorComponent(
     val engine: EditorEngine?,
     val virtualDom: IVirtualDom = IVirtualDom.newInstance(),
     private val transactionManager: IArea? = null,
-    private val rootCellCreator: (EditorState) -> Cell
+    private val rootCellCreator: (EditorState) -> Cell,
 ) : IProducesHtml {
     val state: EditorState = EditorState()
     private var selection: Selection? = null
@@ -66,7 +66,7 @@ open class EditorComponent(
         codeCompletionMenu?.let { CodeCompletionMenuUI(it, this).updateBounds() }
     }
 
-    open protected fun editorElementChanged(newElement: IVirtualDom.HTMLElement) {}
+    protected open fun editorElementChanged(newElement: IVirtualDom.HTMLElement) {}
 
     fun updateHtml() {
         val oldEditorElement = generatedHtmlMap.getOutput(this)
@@ -126,7 +126,7 @@ open class EditorComponent(
         position: CompletionPosition,
         entries: List<ICodeCompletionActionProvider>,
         pattern: String = "",
-        caretPosition: Int? = null
+        caretPosition: Int? = null,
     ) {
         codeCompletionMenu = CodeCompletionMenu(this, anchor, position, entries, pattern, caretPosition)
         codeCompletionMenu?.updateActions()
@@ -139,7 +139,6 @@ open class EditorComponent(
     }
 
     fun dispose() {
-
     }
 
     protected open fun processKeyUp(event: JSKeyboardEvent): Boolean {
@@ -209,7 +208,7 @@ open class EditorComponent(
         val closest = words.map { it to generatedHtmlMap.getOutput(it)!! }.minByOrNull {
             min(
                 abs(absoluteClickX - it.second.getOuterBounds().minX()),
-                abs(absoluteClickX - it.second.getOuterBounds().maxX())
+                abs(absoluteClickX - it.second.getOuterBounds().maxX()),
             )
         } ?: return false
         val caretPos = if (absoluteClickX <= closest.second.getOuterBounds().minX()) {

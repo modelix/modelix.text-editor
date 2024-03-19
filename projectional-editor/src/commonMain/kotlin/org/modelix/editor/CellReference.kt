@@ -13,9 +13,7 @@ import org.modelix.model.api.IReferenceLink
 /**
  * A cell can have multiple CellReferences. Multiple CellReferences can resolve to the same cell.
  */
-abstract class CellReference {
-
-}
+abstract class CellReference
 
 data class PropertyCellReference(val property: IProperty, val nodeRef: INodeReference) : CellReference()
 

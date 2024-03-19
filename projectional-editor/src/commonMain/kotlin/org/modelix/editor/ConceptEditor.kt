@@ -7,7 +7,7 @@ import org.modelix.model.api.IProperty
 
 class ConceptEditor(
     val declaredConcept: IConcept?,
-    val templateBuilder: (subConcept: IConcept)->NotationRootCellTemplate
+    val templateBuilder: (subConcept: IConcept) -> NotationRootCellTemplate,
 ) {
     fun isApplicable(context: CellCreationContext, node: INode): Boolean {
         return apply(node.concept ?: NullConcept).condition?.invoke(node) != false

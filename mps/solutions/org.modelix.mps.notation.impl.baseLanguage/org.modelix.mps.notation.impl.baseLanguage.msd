@@ -58,4 +58,3 @@
     <module reference="02ad200e-1634-449d-8b0b-db88f7ea0f2d(org.modelix.mps.webaspect.genplan)" version="0" />
   </dependencyVersions>
 </solution>
-

@@ -22,7 +22,7 @@ class MessageFromServer(
     /**
      * An exception was thrown on the server side.
      */
-    val error: String? = null
+    val error: String? = null,
 ) {
     fun toJson() = Json.encodeToString(this)
     companion object {
@@ -32,11 +32,12 @@ class MessageFromServer(
 
 @Serializable
 data class DomTreeUpdate(
-    val elements: List<HTMLElementUpdateData> = emptyList()
+    val elements: List<HTMLElementUpdateData> = emptyList(),
 )
 
 @Serializable
 sealed interface INodeUpdateData
+
 @Serializable
 sealed interface IElementUpdateData : INodeUpdateData {
     val id: String?
@@ -52,7 +53,7 @@ data class HTMLElementUpdateData(
     override val id: String? = null,
     val tagName: String,
     val attributes: Map<String, String> = emptyMap(),
-    val children: List<INodeUpdateData>
+    val children: List<INodeUpdateData>,
 ) : IElementUpdateData
 
 @Serializable

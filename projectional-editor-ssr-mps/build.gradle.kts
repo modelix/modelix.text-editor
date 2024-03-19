@@ -82,7 +82,6 @@ tasks {
         autoReloadPlugins.set(true)
     }
 
-
     val stubsSolutionName = "org.modelix.mps.editor.ssr.stubs"
     val patchedStubsSolutionDir = project.layout.buildDirectory.dir(stubsSolutionName)
     val patchedStubsSolutionFile = project.layout.buildDirectory.file("$stubsSolutionName/$stubsSolutionName.msd")
@@ -132,14 +131,18 @@ tasks {
 
     prepareSandbox {
         dependsOn(packageStubsSolution)
-        dependsOn(project(":mps").tasks.named("packageMpsPublications"))
         intoChild(pluginName.map { "$it/languages" })
             .from(packageStubsSolution.map { it.archiveFile })
-        intoChild(pluginName.map { "$it/languages" })
-            .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/editor-languages.zip") }))
-            .eachFile {
-                path = path.replaceFirst("packaged-modules/", "")
-            }
+
+        if ("true" == project.findProperty("ciBuild")) {
+            // packaging the MPS modules during development would make them all read-only
+            dependsOn(project(":mps").tasks.named("packageMpsPublications"))
+            intoChild(pluginName.map { "$it/languages" })
+                .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/editor-languages.zip") }))
+                .eachFile {
+                    path = path.replaceFirst("packaged-modules/", "")
+                }
+        }
     }
 }
 

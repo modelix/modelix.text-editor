@@ -26,20 +26,20 @@ tasks.named("assemble") {
 }
 
 val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
-  doLast {
-    val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-    val packageJsonFile = projectDir.resolve("package.json")
-    var text = packageJsonFile.readText()
-    println("ts-model-api path: $localPath")
-    val replacement = if (localPath.exists()) {
-      """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir)}""""
-    } else {
-      """"@modelix/ts-model-api": "${rootProject.property("ts-model-api.version")}""""
+    doLast {
+        val localPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
+        val packageJsonFile = projectDir.resolve("package.json")
+        var text = packageJsonFile.readText()
+        println("ts-model-api path: $localPath")
+        val replacement = if (localPath.exists()) {
+            """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir)}""""
+        } else {
+            """"@modelix/ts-model-api": "${rootProject.property("ts-model-api.version")}""""
+        }
+        println("ts-model-api version: $replacement")
+        text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), replacement)
+        packageJsonFile.writeText(text)
     }
-    println("ts-model-api version: $replacement")
-    text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), replacement)
-    packageJsonFile.writeText(text)
-  }
 }
 
 tasks.withType<NpmSetupTask> {

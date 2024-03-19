@@ -102,7 +102,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     }
                     val legalRange = 0 until (layoutable.cell.getSelectableText()?.length ?: 0)
                     if (legalRange.contains(posToDelete)) {
-                        replaceText(posToDelete .. posToDelete, "", editor)
+                        replaceText(posToDelete..posToDelete, "", editor)
                     }
                 } else {
                     replaceText(min(start, end) until max(start, end), "", editor)
@@ -153,14 +153,16 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         val leftTransform = start == end && end == 0
         val rightTransform = start == end && end == textLength
         if (leftTransform || rightTransform) {
-            //if (replaceText(range, typedText, editor, false)) return
+            // if (replaceText(range, typedText, editor, false)) return
 
             val completionPosition = if (leftTransform) CompletionPosition.LEFT else CompletionPosition.RIGHT
-            val providers = (if (completionPosition == CompletionPosition.LEFT) {
-                layoutable.cell.getActionsBefore()
-            } else {
-                layoutable.cell.getActionsAfter()
-            }).toList()
+            val providers = (
+                if (completionPosition == CompletionPosition.LEFT) {
+                    layoutable.cell.getActionsBefore()
+                } else {
+                    layoutable.cell.getActionsAfter()
+                }
+                ).toList()
             val params = CodeCompletionParameters(editor, typedText)
             val actions = providers.flatMap { it.flattenApplicableActions(params) }
             val matchingActions = actions
@@ -176,7 +178,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     position = completionPosition,
                     entries = providers,
                     pattern = typedText,
-                    caretPosition = typedText.length
+                    caretPosition = typedText.length,
                 )
                 return
             }
@@ -196,7 +198,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             position = CompletionPosition.CENTER,
             entries = actionProviders,
             pattern = layoutable.cell.getSelectableText() ?: "",
-            caretPosition = end
+            caretPosition = end,
         )
     }
 

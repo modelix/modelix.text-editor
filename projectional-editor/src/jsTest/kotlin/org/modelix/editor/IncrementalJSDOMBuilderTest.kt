@@ -23,11 +23,13 @@ class IncrementalJSDOMBuilderTest {
         val textCellToChange = Cell(TextCellData("b"))
         val cell = Cell(CellData()).apply {
             addChild(Cell(TextCellData("a")))
-            addChild(Cell(CellData()).apply {
-                addChild(textCellToChange)
-                addChild(Cell(CellData().also { it.properties[CommonCellProperties.onNewLine] = true }))
-                addChild(Cell(TextCellData("c")))
-            })
+            addChild(
+                Cell(CellData()).apply {
+                    addChild(textCellToChange)
+                    addChild(Cell(CellData().also { it.properties[CommonCellProperties.onNewLine] = true }))
+                    addChild(Cell(TextCellData("c")))
+                },
+            )
             addChild(Cell(TextCellData("d")))
         }
 
@@ -78,10 +80,12 @@ class IncrementalJSDOMBuilderTest {
 
     fun insertCell(tree: Cell, anchor: Cell, newCell: Cell): Cell {
         val oldTreeStr = tree.toString()
-        if (tree == anchor) return Cell().also { newParent ->
-            newParent.addChild(newCell)
-            anchor.parent?.removeChild(anchor)
-            newParent.addChild(anchor)
+        if (tree == anchor) {
+            return Cell().also { newParent ->
+                newParent.addChild(newCell)
+                anchor.parent?.removeChild(anchor)
+                newParent.addChild(anchor)
+            }
         }
         val oldChildren = tree.getChildren()
         val newChildren = oldChildren.map { insertCell(it, anchor, newCell) }
@@ -99,16 +103,27 @@ class IncrementalJSDOMBuilderTest {
     }
 
     @Test fun runRandomTest_4_3() = runRandomTests(567454, 4, 3)
+
     @Test fun runRandomTest_1_1() = runRandomTests(567454, 1, 1)
+
     @Test fun runRandomTest_1_2() = runRandomTests(567454, 1, 2)
+
     @Test fun runRandomTest_1_3() = runRandomTests(567454, 1, 3)
+
     @Test fun runRandomTest_2_1() = runRandomTests(567454, 2, 1)
+
     @Test fun runRandomTest_2_2() = runRandomTests(567454, 2, 2)
+
     @Test fun runRandomTest_2_3() = runRandomTests(567454, 2, 3)
+
     @Test fun runRandomTest_3_1() = runRandomTests(567454, 3, 1)
+
     @Test fun runRandomTest_3_2() = runRandomTests(567454, 3, 2)
+
     @Test fun runRandomTest_3_3() = runRandomTests(567454, 3, 3)
+
     @Test fun runRandomTest_5_4_567462() = runRandomTests(567462, 5, 4)
+
     @Ignore
     @Test fun runRandomTest_5_4() {
         for (seed in 1..10) {
@@ -126,7 +141,7 @@ class IncrementalJSDOMBuilderTest {
             replaceCell(
                 cell,
                 randomLeafCell,
-                Cell(TextCellData("replacement"))
+                Cell(TextCellData("replacement")),
             )
         }
         runRandomTest(rand, cellsPerLevel, levels) { cell ->
@@ -136,7 +151,7 @@ class IncrementalJSDOMBuilderTest {
             insertCell(
                 cell,
                 randomCell,
-                Cell(TextCellData("insertion"))
+                Cell(TextCellData("insertion")),
             )
         }
     }

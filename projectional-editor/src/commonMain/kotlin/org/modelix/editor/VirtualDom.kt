@@ -138,7 +138,6 @@ fun IVirtualDom.HTMLElement.setBounds(bounds: Bounds) {
     }
 }
 
-
 interface IVirtualDomUI {
     fun getOuterBounds(element: IVirtualDom.Element): Bounds
     fun getInnerBounds(element: IVirtualDom.Element): Bounds
@@ -221,11 +220,9 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
         override fun getOuterBounds(): Bounds = ui.getOuterBounds(this)
     }
 
-    inner class HTMLElement(tagName: String) : Element(tagName), IVirtualDom.HTMLElement {
-    }
+    inner class HTMLElement(tagName: String) : Element(tagName), IVirtualDom.HTMLElement
 
     inner class Text : Node(), IVirtualDom.Text {
         override var textContent: String? = null
     }
-
 }

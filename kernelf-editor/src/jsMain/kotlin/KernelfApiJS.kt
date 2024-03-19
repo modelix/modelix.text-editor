@@ -7,15 +7,17 @@ import kotlinx.coroutines.launch
 import kotlinx.html.dom.createTree
 import org.modelix.editor.EditorState
 import org.modelix.editor.GeneratedHtmlMap
-import org.modelix.editor.IVirtualDom
 import org.modelix.editor.IncrementalVirtualDOMBuilder
 import org.modelix.editor.JSDom
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.kernelf.KernelfAPI
 import org.modelix.editor.unwrap
-import org.modelix.metamodel.typed
 import org.modelix.model.ModelFacade
-import org.modelix.model.api.*
+import org.modelix.model.api.IBranchListener
+import org.modelix.model.api.INode
+import org.modelix.model.api.ITree
+import org.modelix.model.api.JSNodeConverter
+import org.modelix.model.api.deepUnwrap
 import org.modelix.model.area.IAreaChangeList
 import org.modelix.model.area.IAreaListener
 import org.w3c.dom.HTMLElement
@@ -30,7 +32,7 @@ object KernelfApiJS {
         KernelfAPI.connectToModelServer(
             initialJsonData = json,
             callback = callback,
-            errorCallback = { LOG.error(it) { "Failed to connect to model server" } }
+            errorCallback = { LOG.error(it) { "Failed to connect to model server" } },
         )
     }
     fun loadModelsFromJson(json: Array<String>): INode = KernelfAPI.loadModelsFromJson(json)
@@ -100,7 +102,6 @@ object KernelfApiJS {
                         editor.dispose()
                     }
                 }
-
             })
         }
         editor.updateHtml()

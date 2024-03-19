@@ -145,7 +145,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         language.RoundDownRoundingMode to "round down",
         language.RoundHalfUpRoundingMode to "round half up",
         language.RoundUpRoundingMode to "round up",
-        language.TruncateRoundingMode to "truncate"
+        language.TruncateRoundingMode to "truncate",
     )
     editor(language.RoundingMode) {
         val mode = roundingModes[concept]

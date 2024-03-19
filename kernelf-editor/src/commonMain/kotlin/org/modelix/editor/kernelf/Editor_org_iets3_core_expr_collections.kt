@@ -119,7 +119,6 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             noSpace()
             ",".constant()
             concept.valueType.cell()
-
         }
     }
     editor(language.MapValuesOp) {

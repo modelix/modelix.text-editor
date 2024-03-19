@@ -44,7 +44,7 @@ fun computeVersion(): Any {
 }
 
 val tsModelApiPath = rootDir.parentFile.resolve("modelix.core").resolve("ts-model-api")
-val tsModelApiVersion = "3.16.0" //if (tsModelApiPath.exists()) "file:${tsModelApiPath.absolutePath}" else libs.versions.modelixCore.get()
+val tsModelApiVersion = "3.16.0" // if (tsModelApiPath.exists()) "file:${tsModelApiPath.absolutePath}" else libs.versions.modelixCore.get()
 ext.set("ts-model-api.version", tsModelApiVersion)
 
 subprojects {
@@ -64,10 +64,11 @@ subprojects {
             if (project.hasProperty("artifacts.itemis.cloud.user")) {
                 maven {
                     name = "itemis"
-                    url = if (version.toString().contains("SNAPSHOT"))
+                    url = if (version.toString().contains("SNAPSHOT")) {
                         uri("https://artifacts.itemis.cloud/repository/maven-mps-snapshots/")
-                    else
+                    } else {
                         uri("https://artifacts.itemis.cloud/repository/maven-mps-releases/")
+                    }
                     credentials {
                         username = project.findProperty("artifacts.itemis.cloud.user").toString()
                         password = project.findProperty("artifacts.itemis.cloud.pw").toString()

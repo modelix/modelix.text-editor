@@ -9,7 +9,7 @@ data class JSMouseEvent(
     val y: Double,
     val modifiers: Modifiers = Modifiers.NONE,
     val button: Short,
-    val buttons: Short
+    val buttons: Short,
 ) {
     fun getButtonAsEnum(): JSMouseButton = when (button) {
         0.toShort() -> JSMouseButton.PRIMARY
@@ -38,10 +38,9 @@ enum class JSMouseButton {
     SECONDARY,
     AUXILIARY,
     FOURTH,
-    FIFTH
+    FIFTH,
 }
 
 enum class JSMouseEventType {
-    CLICK
+    CLICK,
 }
-

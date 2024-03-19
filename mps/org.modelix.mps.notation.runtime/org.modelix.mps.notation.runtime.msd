@@ -15,4 +15,3 @@
     <module reference="9985d38b-4a59-4237-ad4f-5ce71e9e5b11(org.modelix.mps.notation.runtime)" version="0" />
   </dependencyVersions>
 </solution>
-

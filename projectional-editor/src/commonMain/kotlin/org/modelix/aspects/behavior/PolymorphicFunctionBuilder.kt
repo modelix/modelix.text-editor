@@ -6,7 +6,6 @@ import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untypedConcept
 import kotlin.reflect.KProperty
 
-
 fun buildPolymorphicFunction() = PolymorphicFunctionBuilder()
 class PolymorphicFunctionBuilder {
 
@@ -91,7 +90,7 @@ class SingleInstanceDelegate<E>(val initializer: (String) -> E) {
     private val instance by lazy { initializer(name) }
     operator fun getValue(
         nothing: Nothing?,
-        property: KProperty<*>
+        property: KProperty<*>,
     ): E {
         name = property.name
         return instance

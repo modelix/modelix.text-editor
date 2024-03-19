@@ -29,13 +29,13 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private val createCellIncremental: (EditorState, INode)->Cell = this.incrementalEngine.incrementalFunction("createCell") { _, editorState, node ->
+    private val createCellIncremental: (EditorState, INode) -> Cell = this.incrementalEngine.incrementalFunction("createCell") { _, editorState, node ->
         val cell = doCreateCell(editorState, node)
         cell.freeze()
         LOG.trace { "Cell created for $node: $cell" }
         cell
     }
-    private val createCellDataIncremental: (EditorState, INode)->CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
+    private val createCellDataIncremental: (EditorState, INode) -> CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
         val cellData = doCreateCellData(editorState, node)
         cellData.freeze()
         LOG.trace { "Cell created for $node: $cellData" }
@@ -124,7 +124,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         val editors = concept.getAllConcepts().firstNotNullOfOrNull { superConcept ->
             val conceptReference = superConcept.getReference()
             val allEditors = (editorsForConcept[conceptReference] ?: emptyList()) +
-                    conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
+                conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
             allEditors.takeIf { it.isNotEmpty() }
         }
         return (editors ?: emptyList()) + defaultConceptEditor
@@ -139,5 +139,3 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         private val LOG = mu.KotlinLogging.logger {}
     }
 }
-
-

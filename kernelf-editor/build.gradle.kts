@@ -1,5 +1,5 @@
-import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 import org.jetbrains.kotlin.com.google.gson.JsonParser
+import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 
 buildscript {
     repositories {
@@ -125,25 +125,24 @@ val fixSourceMaps by tasks.registering {
 //        )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-api/src").canonicalFile,
-            jsOutputDir.resolve("modelix.core-model-api.js.map")
+            jsOutputDir.resolve("modelix.core-model-api.js.map"),
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-api-gen-runtime/src").canonicalFile,
-            jsOutputDir.resolve("modelix.core-model-api-gen-runtime.js.map")
+            jsOutputDir.resolve("modelix.core-model-api-gen-runtime.js.map"),
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
-            jsOutputDir.resolve("modelix.core-model-client.js.map")
+            jsOutputDir.resolve("modelix.core-model-client.js.map"),
         )
         fixSourceMap(
             rootDir.resolve("../modelix.core/light-model-client/src").canonicalFile,
-            jsOutputDir.resolve("modelix.core-light-model-client.js.map")
+            jsOutputDir.resolve("modelix.core-light-model-client.js.map"),
         )
         fixSourceMap(
             rootDir.resolve("../incremental/src").canonicalFile,
-            jsOutputDir.resolve("incremental.js.map")
+            jsOutputDir.resolve("incremental.js.map"),
         )
-
     }
 }
 tasks.named("packJsPackage") {

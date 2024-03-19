@@ -14,10 +14,11 @@ import kotlin.jvm.JvmName
 abstract class CellTemplate(val concept: IConcept) {
     val properties = CellProperties()
     private val children: MutableList<CellTemplate> = ArrayList()
+
     @get:JvmName("getReferenceField")
     @set:JvmName("setReferenceField")
     protected var reference: ICellTemplateReference? = null
-    val withNode: MutableList<(node: INode)->Unit> = ArrayList()
+    val withNode: MutableList<(node: INode) -> Unit> = ArrayList()
     fun apply(context: CellCreationContext, node: INode): CellData {
         val cellData = createCell(context, node)
         cellData.properties.addAll(properties)
@@ -127,8 +128,8 @@ class OverrideText(val cell: TextCellData, val delegate: ITextChangeAction?) : I
     }
 }
 
-class ConstantCellTemplate(concept: IConcept, val text: String)
-    : CellTemplate(concept), IGrammarSymbol {
+class ConstantCellTemplate(concept: IConcept, val text: String) :
+    CellTemplate(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(InstantiateNodeAction(location))
@@ -192,8 +193,8 @@ class ConstantCellTemplate(concept: IConcept, val text: String)
  * It is ignored when generating transformation action.
  * A constant is part of the grammar.
  */
-class LabelCellTemplate(concept: IConcept, val text: String)
-    : CellTemplate(concept) {
+class LabelCellTemplate(concept: IConcept, val text: String) :
+    CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode): TextCellData {
         return TextCellData(text, "").also {
             if (!it.properties.isSet(CommonCellProperties.textColor)) {
@@ -206,29 +207,29 @@ class LabelCellTemplate(concept: IConcept, val text: String)
     }
 }
 
-class NewLineCellTemplate(concept: IConcept)
-    : CellTemplate(concept) {
+class NewLineCellTemplate(concept: IConcept) :
+    CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.onNewLine] = true }
     }
 }
-class NoSpaceCellTemplate(concept: IConcept)
-    : CellTemplate(concept) {
+class NoSpaceCellTemplate(concept: IConcept) :
+    CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData().also { cell -> cell.properties[CommonCellProperties.noSpace] = true }
     }
 }
-class CollectionCellTemplate(concept: IConcept)
-    : CellTemplate(concept) {
+class CollectionCellTemplate(concept: IConcept) :
+    CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode) = CellData()
 }
-class NotationRootCellTemplate(concept: IConcept)
-    : CellTemplate(concept) {
+class NotationRootCellTemplate(concept: IConcept) :
+    CellTemplate(concept) {
     var condition: ((INode) -> Boolean)? = null
     override fun createCell(context: CellCreationContext, node: INode) = CellData()
 }
-class OptionalCellTemplate(concept: IConcept)
-    : CellTemplate(concept) {
+class OptionalCellTemplate(concept: IConcept) :
+    CellTemplate(concept) {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData()
     }
@@ -252,8 +253,8 @@ class OptionalCellTemplate(concept: IConcept)
     }
 }
 
-open class PropertyCellTemplate(concept: IConcept, val property: IProperty)
-    : CellTemplate(concept), IGrammarSymbol {
+open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
+    CellTemplate(concept), IGrammarSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: (String) -> Boolean = { true }
     override fun createCell(context: CellCreationContext, node: INode): CellData {
@@ -315,7 +316,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty)
 class ReferenceCellTemplate(
     concept: IConcept,
     val link: IReferenceLink,
-    val presentation: INode.() -> String?
+    val presentation: INode.() -> String?,
 ) : CellTemplate(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val data = TextCellData(getText(node), "<no ${link.getSimpleName()}>")
@@ -344,7 +345,7 @@ class ReferenceCellTemplate(
         }
     }
 
-    inner class WrapReferenceTarget(val location: INonExistingNode, val target: INonExistingNode, val presentation: String): ICodeCompletionAction {
+    inner class WrapReferenceTarget(val location: INonExistingNode, val target: INonExistingNode, val presentation: String) : ICodeCompletionAction {
         override fun getMatchingText(): String {
             return presentation
         }
@@ -367,7 +368,7 @@ class ReferenceCellTemplate(
 class FlagCellTemplate(
     concept: IConcept,
     property: IProperty,
-    val text: String
+    val text: String,
 ) : PropertyCellTemplate(concept, property), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode) = if (node.getPropertyValue(property) == "true") TextCellData(text, "") else CellData()
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
@@ -378,7 +379,7 @@ class FlagCellTemplate(
 
 class ChildCellTemplate(
     concept: IConcept,
-    val link: IChildLink
+    val link: IChildLink,
 ) : CellTemplate(concept), IGrammarSymbol {
 
     private var separatorCell: CellTemplate? = null
@@ -428,9 +429,11 @@ class ChildCellTemplate(
                 val childCellReference = ChildNodeCellReference(node.reference, link, index)
                 if (index != 0) {
                     separatorCell?.let {
-                        cell.addChild(it.apply(context, node).also {
-                            it.cellReferences += SeparatorCellReference(childCellReference)
-                        })
+                        cell.addChild(
+                            it.apply(context, node).also {
+                                it.cellReferences += SeparatorCellReference(childCellReference)
+                            },
+                        )
                     }
                 }
 
@@ -440,7 +443,7 @@ class ChildCellTemplate(
                     addInsertActionCell(index)
                 }
 
-                //child.parent?.removeChild(child) // child may be cached and is still attached to the old parent
+                // child.parent?.removeChild(child) // child may be cached and is still attached to the old parent
                 val wrapper = CellData() // allow setting properties by the parent, because the cell is already frozen
                 wrapper.addChild(child)
                 wrapper.cellReferences += childCellReference
@@ -466,7 +469,7 @@ data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : C
 class InsertSubstitutionPlaceholderAction(
     val editorState: EditorState,
     val ref: TemplateCellReference,
-    val index: Int
+    val index: Int,
 ) : ICellAction {
     override fun isApplicable(): Boolean = true
 

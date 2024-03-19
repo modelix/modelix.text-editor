@@ -34,7 +34,7 @@ data class ReferenceTargetActionProvider(val sourceNode: INonExistingNode, val l
     }
 }
 
-class ChangeReferenceTargetAction(val sourceLocation: INonExistingNode, val link: IReferenceLink, val targetNode: INonExistingNode, val presentation: String): ICodeCompletionAction {
+class ChangeReferenceTargetAction(val sourceLocation: INonExistingNode, val link: IReferenceLink, val targetNode: INonExistingNode, val presentation: String) : ICodeCompletionAction {
     override fun getMatchingText(): String {
         return presentation
     }

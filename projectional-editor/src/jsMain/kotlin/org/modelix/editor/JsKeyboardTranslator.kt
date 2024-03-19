@@ -22,7 +22,7 @@ fun KeyboardEvent.convert(eventType: JSKeyboardEventType): JSKeyboardEvent {
         modifiers = Modifiers(ctrlKey, altKey, shiftKey, metaKey),
         location = locationEnum,
         repeat = this.repeat,
-        composing = this.isComposing
+        composing = this.isComposing,
     )
 }
 
@@ -34,6 +34,6 @@ fun MouseEvent.convert(eventType: JSMouseEventType, relativeTo: HTMLElement?): J
         y = this.getAbsolutePositionY() - origin.y,
         modifiers = Modifiers(ctrlKey, altKey, shiftKey, metaKey),
         button = button,
-        buttons = buttons
+        buttons = buttons,
     )
 }

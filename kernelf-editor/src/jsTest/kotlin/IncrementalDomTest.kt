@@ -4,7 +4,9 @@ import kotlinx.html.js.div
 import org.modelix.editor.EditorState
 import org.modelix.editor.kernelf.KernelfAPI
 import org.modelix.editor.kernelf.modelJson
-import org.w3c.dom.*
+import org.w3c.dom.Node
+import org.w3c.dom.Text
+import org.w3c.dom.asList
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -20,7 +22,7 @@ class IncrementalDomTest {
 
     @Test
     fun test() {
-        //val jsdom = JsDom.JSDOM("<!DOCTYPE html>")
+        // val jsdom = JsDom.JSDOM("<!DOCTYPE html>")
 
         val model = KernelfAPI.loadModelFromJson(modelJson)
         val testSuites = KernelfAPI.findTestSuites(model)

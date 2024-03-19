@@ -27,7 +27,7 @@ class CodeCompletionMenuUI(val ccmenu: CodeCompletionMenu, val editor: EditorCom
             patternElement,
             ccmenu.patternEditor.caretPos,
             ccContainerElement,
-            caretElement
+            caretElement,
         )
 
         // TODO

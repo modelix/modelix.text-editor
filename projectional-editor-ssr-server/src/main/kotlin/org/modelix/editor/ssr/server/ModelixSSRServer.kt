@@ -1,10 +1,12 @@
 package org.modelix.editor.ssr.server
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
-import io.ktor.utils.io.*
-import io.ktor.websocket.*
+import io.ktor.server.routing.Route
+import io.ktor.server.websocket.DefaultWebSocketServerSession
+import io.ktor.server.websocket.webSocket
+import io.ktor.utils.io.CancellationException
+import io.ktor.websocket.Frame
+import io.ktor.websocket.readText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -39,8 +41,26 @@ import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
 import org.modelix.model.area.IArea
 import java.util.Collections
+import kotlin.collections.HashMap
+import kotlin.collections.LinkedHashSet
+import kotlin.collections.List
+import kotlin.collections.Map
+import kotlin.collections.MutableMap
+import kotlin.collections.MutableSet
+import kotlin.collections.asSequence
+import kotlin.collections.emptyMap
+import kotlin.collections.filter
+import kotlin.collections.forEach
+import kotlin.collections.get
+import kotlin.collections.getOrPut
+import kotlin.collections.map
+import kotlin.collections.mapNotNull
+import kotlin.collections.minus
+import kotlin.collections.remove
+import kotlin.collections.set
+import kotlin.collections.toList
 
-private val LOG = KotlinLogging.logger {  }
+private val LOG = KotlinLogging.logger { }
 
 class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
@@ -117,12 +137,15 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                     }
                 } catch (ex: Throwable) {
                     LOG.error(ex) { "Failed to process $wsMessage" }
-                    ws.outgoing.send(Frame.Text(MessageFromServer(
-                        editorId = clientMessage?.editorId,
-                        error = ex.stackTraceToString()
-                    ).toJson()))
+                    ws.outgoing.send(
+                        Frame.Text(
+                            MessageFromServer(
+                                editorId = clientMessage?.editorId,
+                                error = ex.stackTraceToString(),
+                            ).toJson(),
+                        ),
+                    )
                 }
-
             }
         }
 
@@ -154,7 +177,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             private fun getEditor() = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
 
             fun processMessage(msg: MessageFromClient) {
-                msg.rootNodeReference?.let {  rootNodeReferenceString ->
+                msg.rootNodeReference?.let { rootNodeReferenceString ->
                     (nodeResolutionScope as IArea).executeRead {
                         val rootNode = checkNotNull(NodeReference(rootNodeReferenceString).resolveIn(nodeResolutionScope)) {
                             "Root node not found: $rootNodeReferenceString"
@@ -198,12 +221,16 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
 
                 domStateOnClient = latestDomState
 
-                ws.outgoing.trySend(Frame.Text(MessageFromServer(
-                    editorId = editorId,
-                    domUpdate = DomTreeUpdate(
-                        elements = changesOnly
-                    )
-                ).toJson()))
+                ws.outgoing.trySend(
+                    Frame.Text(
+                        MessageFromServer(
+                            editorId = editorId,
+                            domUpdate = DomTreeUpdate(
+                                elements = changesOnly,
+                            ),
+                        ).toJson(),
+                    ),
+                )
             }
 
             fun toUpdateData(node: IVirtualDom.Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
@@ -217,7 +244,7 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
                             id = id,
                             tagName = node.tagName,
                             attributes = node.getAttributes() - "id",
-                            children = node.childNodes.toList().map { toUpdateData(it, id2data) }
+                            children = node.childNodes.toList().map { toUpdateData(it, id2data) },
                         )
                         if (id == null) {
                             data
@@ -283,6 +310,6 @@ class Validator(val coroutineScope: CoroutineScope, private val validator: suspe
     }
 
     companion object {
-        private val LOG = KotlinLogging.logger {  }
+        private val LOG = KotlinLogging.logger { }
     }
 }

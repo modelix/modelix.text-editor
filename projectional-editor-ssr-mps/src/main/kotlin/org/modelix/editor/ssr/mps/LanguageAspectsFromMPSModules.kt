@@ -1,7 +1,6 @@
 package org.modelix.editor.ssr.mps
 
 import com.intellij.openapi.application.ApplicationManager
-import jetbrains.mps.classloading.ClassLoaderManager
 import jetbrains.mps.classloading.DeployListener
 import jetbrains.mps.ide.MPSCoreComponents
 import jetbrains.mps.module.ReloadableModule
@@ -14,7 +13,7 @@ import org.modelix.editor.EditorAspect
 import org.modelix.editor.IConceptEditorRegistry
 import org.modelix.model.api.IConceptReference
 
-private val LOG = KotlinLogging.logger {  }
+private val LOG = KotlinLogging.logger { }
 
 class LanguageAspectsFromMPSModules(val repository: SRepository) : IConceptEditorRegistry {
 
