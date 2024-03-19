@@ -9,4 +9,3 @@ interface IEditorComponentUI {
 
     fun getElementsAt(x: Double, y: Double): List<IVirtualDom.Element>
 }
-

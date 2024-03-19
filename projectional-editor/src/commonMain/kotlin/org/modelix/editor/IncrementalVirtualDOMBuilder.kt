@@ -1,6 +1,8 @@
 package org.modelix.editor
 
-import kotlinx.html.*
+import kotlinx.html.Entities
+import kotlinx.html.Tag
+import kotlinx.html.Unsafe
 import kotlinx.html.org.w3c.dom.events.Event
 import org.modelix.incremental.AtomicLong
 
@@ -47,17 +49,16 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
                     } else {
                         parent.appendChild(expectedChild)
                     }
-
                 }
             }
         }
     }
 
-    private var lastClosed : StackFrame? = null
+    private var lastClosed: StackFrame? = null
     private val stack = arrayListOf(StackFrame().also { it.reusableChildren = ReusableChildren(listOfNotNull(existingRootElement)) })
-    private val childHandler: (IProducesHtml)->Unit = { produce(it) }
+    private val childHandler: (IProducesHtml) -> Unit = { produce(it) }
 
-    override fun produce(producer: IProducesHtml): ()->IVirtualDom.HTMLElement {
+    override fun produce(producer: IProducesHtml): () -> IVirtualDom.HTMLElement {
         stack.last().generatedChildren.add(NodeOrProducer.producer(producer))
         if (stack.size == 1) {
             stack.last().close()
@@ -134,13 +135,11 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
         throw UnsupportedOperationException()
     }
 
-
     override fun onTagComment(content: CharSequence) {
         throw UnsupportedOperationException()
     }
 
     override fun finalize(): IVirtualDom.HTMLElement = lastClosed!!.resultingHtml!!
-
 
     private inner class ReusableChildren {
         val reusableChildren: MutableList<IVirtualDom.Node>
@@ -149,7 +148,7 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
         }
         constructor(parent: IVirtualDom.HTMLElement) {
             reusableChildren = parent.childNodes
-                //.filter { it.generatedBy == null }
+                // .filter { it.generatedBy == null }
                 .toMutableList()
         }
         fun processStillUsed(childProducers: List<IProducesHtml>) {
@@ -183,8 +182,6 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
         }
     }
 }
-
-
 
 class GeneratedHtmlMap {
     private val producer2element: MutableMap<IProducesHtml, IVirtualDom.HTMLElement> = HashMap()

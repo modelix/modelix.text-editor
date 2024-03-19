@@ -34,7 +34,7 @@ data class MessageFromClient(
 
     val mouseEvent: JSMouseEvent? = null,
 
-    val boundUpdates: Map<String, HTMLElementBoundsUpdate>? = null
+    val boundUpdates: Map<String, HTMLElementBoundsUpdate>? = null,
 ) {
     fun toJson() = Json.encodeToString(this)
 

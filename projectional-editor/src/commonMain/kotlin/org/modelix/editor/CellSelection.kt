@@ -1,6 +1,6 @@
 package org.modelix.editor
 
-data class CellSelection(val cell: Cell, val directionLeft: Boolean, val previousSelection: Selection?): Selection() {
+data class CellSelection(val cell: Cell, val directionLeft: Boolean, val previousSelection: Selection?) : Selection() {
     fun getEditor(): EditorComponent? = cell.editorComponent
 
     override fun isValid(): Boolean {
@@ -69,7 +69,7 @@ data class CellSelection(val cell: Cell, val directionLeft: Boolean, val previou
                                 position = CompletionPosition.CENTER,
                                 entries = actionProviders,
                                 pattern = "",
-                                caretPosition = 0
+                                caretPosition = 0,
                             )
                         } else {
                             editor.showCodeCompletionMenu(
@@ -77,7 +77,7 @@ data class CellSelection(val cell: Cell, val directionLeft: Boolean, val previou
                                 position = CompletionPosition.CENTER,
                                 entries = actionProviders,
                                 pattern = typedText,
-                                caretPosition = typedText.length
+                                caretPosition = typedText.length,
                             )
                         }
                     }

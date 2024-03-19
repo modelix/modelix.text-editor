@@ -1,6 +1,5 @@
 package org.modelix.editor
 
-import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.INode
 
 open class CellData : Freezable(), ILocalOrChildNodeCell {
@@ -13,7 +12,7 @@ open class CellData : Freezable(), ILocalOrChildNodeCell {
     }
 
     open fun layout(buffer: TextLayouter, cell: Cell) {
-        val body: ()->Unit = {
+        val body: () -> Unit = {
             if (properties[CommonCellProperties.onNewLine]) buffer.onNewLine()
             if (properties[CommonCellProperties.noSpace]) buffer.noSpace()
             cell.getChildren().forEach { buffer.append(it.layout) }
@@ -33,13 +32,9 @@ open class CellData : Freezable(), ILocalOrChildNodeCell {
 
 fun Cell.isVisible() = data.isVisible()
 
-interface ILocalOrChildNodeCell {
+interface ILocalOrChildNodeCell
 
-}
-
-class ChildDataReference(val childNode: INode) : ILocalOrChildNodeCell {
-
-}
+class ChildDataReference(val childNode: INode) : ILocalOrChildNodeCell
 
 class TextCellData(val text: String, private val placeholderText: String = "") : CellData() {
     fun getVisibleText(cell: Cell): String {

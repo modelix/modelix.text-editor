@@ -18,6 +18,5 @@ val Editor_jetbrains_mps_lang_test = languageAspects(L_jetbrains_mps_lang_test) 
                 }
             }
         }
-
     }
 }

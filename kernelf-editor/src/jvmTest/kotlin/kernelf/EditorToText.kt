@@ -1,7 +1,6 @@
 package kernelf
 
 import org.modelix.editor.kernelf.KernelfAPI
-import org.modelix.metamodel.modelDataFromYaml
 import java.io.File
 import kotlin.test.Test
 
@@ -15,6 +14,4 @@ class EditorToText {
         val modelAsText = KernelfAPI.renderTypedNodeAsHtmlText(testSuites.first())
         println(modelAsText)
     }
-
-
 }

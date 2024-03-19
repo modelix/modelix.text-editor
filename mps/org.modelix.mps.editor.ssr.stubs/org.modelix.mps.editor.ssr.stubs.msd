@@ -99,4 +99,3 @@
     <module reference="771cf896-ab1b-409b-93b4-48c3bbb6b23f(org.modelix.mps.editor.ssr.stubs)" version="0" />
   </dependencyVersions>
 </solution>
-

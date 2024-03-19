@@ -1,7 +1,5 @@
 package org.modelix.editor
 
-import kotlin.reflect.KProperty
-
 class CellProperties : Freezable() {
     private val properties: MutableMap<CellPropertyKey<*>, Any?> = HashMap()
     operator fun <T> get(key: CellPropertyKey<T>): T {
@@ -34,7 +32,7 @@ fun <E> CellPropertyKey<E>.from(cell: Cell) = cell.data.properties[this]
 
 enum class ECellLayout {
     VERTICAL,
-    HORIZONTAL;
+    HORIZONTAL,
 }
 
 object CommonCellProperties {

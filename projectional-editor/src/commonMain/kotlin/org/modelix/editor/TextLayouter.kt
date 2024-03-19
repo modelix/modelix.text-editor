@@ -1,6 +1,9 @@
 package org.modelix.editor
 
-import kotlinx.html.*
+import kotlinx.html.TagConsumer
+import kotlinx.html.div
+import kotlinx.html.span
+import kotlinx.html.style
 import org.modelix.incremental.IncrementalList
 
 class TextLine(words_: Iterable<Layoutable>) : IProducesHtml {
@@ -51,7 +54,7 @@ class LayoutedText(
     val endsWithNewLine: Boolean,
     val beginsWithNoSpace: Boolean,
     val endsWithNoSpace: Boolean,
-    var indent: Int = 0
+    var indent: Int = 0,
 ) : IProducesHtml {
     var owner: LayoutedText? = null
     val layoutablesIndexList: IncrementalList<Pair<Cell, LayoutableCell>> =
@@ -106,7 +109,7 @@ class TextLayouter {
             beginsWithNewLine = beginsWithNewLine,
             endsWithNewLine = endsWithNewLine,
             beginsWithNoSpace = beginsWithNoSpace,
-            endsWithNoSpace = endsWithNoSpace
+            endsWithNoSpace = endsWithNoSpace,
         )
         childTexts.forEach { it.owner = newText }
         return newText
@@ -149,7 +152,7 @@ class TextLayouter {
         addNewLine()
         onNewLine()
     }
-    fun withIndent(body: ()->Unit) {
+    fun withIndent(body: () -> Unit) {
         val oldIndent = currentIndent
         try {
             currentIndent++
@@ -215,7 +218,7 @@ class TextLayouter {
             }
         }
         if (currentIndent > 0 && lastLine!!.isEmpty()) {
-            //lastLine!!.add(LayoutableIndent(currentIndent))
+            // lastLine!!.add(LayoutableIndent(currentIndent))
         }
         val lastOnLine = lastLine!!.lastOrNull()
         if (autoInsertSpace && lastOnLine != null && !lastOnLine.isWhitespace() && element !is LayoutableSpace) {
@@ -249,7 +252,7 @@ abstract class Layoutable : IProducesHtml {
         val line = getLine() ?: return null
         val index = line.words.indexOf(this)
         if (index < 0) return null
-        val siblingIndex = index + (if (next) + 1 else -1)
+        val siblingIndex = index + (if (next) +1 else -1)
         if (siblingIndex < 0 || siblingIndex >= line.words.size) return null
         return line.words[siblingIndex]
     }
@@ -311,11 +314,11 @@ class LayoutableCell(val cell: Cell) : Layoutable() {
 }
 
 fun Cell.layoutable(): LayoutableCell? {
-    //return rootCell().layout.lines.asSequence().flatMap { it.words }.filterIsInstance<LayoutableCell>().find { it.cell == this }
+    // return rootCell().layout.lines.asSequence().flatMap { it.words }.filterIsInstance<LayoutableCell>().find { it.cell == this }
     return editorComponent?.resolveLayoutable(this)
 }
 
-class LayoutableIndent(val indentSize: Int): Layoutable() {
+class LayoutableIndent(val indentSize: Int) : Layoutable() {
     fun totalIndent() = indentSize + (initialLine?.getContextIndent() ?: 0)
     override fun getLength(): Int = totalIndent() * 2
     override fun isWhitespace(): Boolean = true
@@ -326,7 +329,7 @@ class LayoutableIndent(val indentSize: Int): Layoutable() {
         }
     }
 }
-class LayoutableSpace(): Layoutable() {
+class LayoutableSpace() : Layoutable() {
     override fun getLength(): Int = 1
     override fun isWhitespace(): Boolean = true
     override fun toText(): String = " "

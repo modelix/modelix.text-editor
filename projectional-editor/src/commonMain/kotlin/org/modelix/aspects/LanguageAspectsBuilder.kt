@@ -2,7 +2,7 @@ package org.modelix.aspects
 
 import org.modelix.model.api.ILanguage
 
-fun <LanguageT : ILanguage> languageAspects(language: LanguageT, body: LanguageAspectsBuilder<LanguageT>.()->Unit): LanguageAspectsBuilder<LanguageT> {
+fun <LanguageT : ILanguage> languageAspects(language: LanguageT, body: LanguageAspectsBuilder<LanguageT>.() -> Unit): LanguageAspectsBuilder<LanguageT> {
     return LanguageAspectsBuilder(LanguageAspects.getInstanceFromContext(), language).also(body)
 }
 

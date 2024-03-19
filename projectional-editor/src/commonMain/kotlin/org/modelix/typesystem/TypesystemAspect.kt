@@ -32,13 +32,16 @@ class TypesystemAspect : ILanguageAspect {
 }
 
 fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.typesystem(concept: ConceptT, body: TypesystemConstraintsBuilder<NodeT>.() -> Unit) {
-    aspects.getAspect(language, TypesystemAspect).registerConstraintsBuilder(concept.untyped(), object : ITypesystemConstraintsBuilderFactory {
-        override fun buildConstraints(node: INode): List<Constraint> {
-            val builder = TypesystemConstraintsBuilder<NodeT>(node.typed(concept.getInstanceInterface()))
-            body(builder)
-            return builder.constraints
-        }
-    })
+    aspects.getAspect(language, TypesystemAspect).registerConstraintsBuilder(
+        concept.untyped(),
+        object : ITypesystemConstraintsBuilderFactory {
+            override fun buildConstraints(node: INode): List<Constraint> {
+                val builder = TypesystemConstraintsBuilder<NodeT>(node.typed(concept.getInstanceInterface()))
+                body(builder)
+                return builder.constraints
+            }
+        },
+    )
 }
 
 interface ITypesystemConstraintsBuilderFactory {
@@ -103,7 +106,7 @@ object TypesystemEngine {
 
     private fun doGetConstraintsFromSubtree(node: INode): IncrementalList<Constraint> {
         return IncrementalList.concat(
-            listOf(getConstraintsFromNode(node)) + node.allChildren.map { getConstraintsFromSubtree(it) }
+            listOf(getConstraintsFromNode(node)) + node.allChildren.map { getConstraintsFromSubtree(it) },
         )
     }
 
@@ -229,9 +232,9 @@ data class IndirectValue(val variable: Variable) : VariableValue() {
 
 sealed interface IOperand
 interface IVariableReference : IOperand
-data class TypeofNode(val node: INode): IVariableReference
-data class NamedVariable(val name: String): IVariableReference
-class UnnamedVariable(): IVariableReference
+data class TypeofNode(val node: INode) : IVariableReference
+data class NamedVariable(val name: String) : IVariableReference
+class UnnamedVariable() : IVariableReference
 
 data class KnownValue(val value: ITypesystemType) : IOperand
 

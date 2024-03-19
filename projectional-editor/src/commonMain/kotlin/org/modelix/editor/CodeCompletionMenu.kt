@@ -128,7 +128,7 @@ class CodeCompletionMenu(
                 caretPos--
             } else {
                 if (caretPos == pattern.length) return false
-                pattern = pattern.removeRange(caretPos .. caretPos)
+                pattern = pattern.removeRange(caretPos..caretPos)
             }
             updateActions()
             executeIfSingleAction()
@@ -152,7 +152,7 @@ class CodeCompletionMenu(
                 div("ccmenu-pattern") {
                     +pattern.useNbsp()
                 }
-                div("caret own") {  }
+                div("caret own") { }
             }
         }
     }
@@ -219,7 +219,7 @@ class CodeCompletionActionWithPostprocessor(val action: ICodeCompletionAction, v
 }
 class CodeCompletionActionProviderWithPostprocessor(
     val actionProvider: ICodeCompletionActionProvider,
-    val after: () -> Unit
+    val after: () -> Unit,
 ) : ICodeCompletionActionProvider {
     override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
         return actionProvider.getApplicableActions(parameters).map {
@@ -251,7 +251,7 @@ class CodeCompletionParameters(val editor: EditorComponent, pattern: String) {
 enum class CompletionPosition {
     CENTER,
     LEFT,
-    RIGHT
+    RIGHT,
 }
 
 fun List<ICodeCompletionAction>.applyShadowing(): List<ICodeCompletionAction> {

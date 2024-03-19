@@ -9,7 +9,7 @@ interface IProducesHtml {
 }
 
 interface IIncrementalTagConsumer<E> : TagConsumer<E> {
-    fun produce(producer: IProducesHtml): ()->E
+    fun produce(producer: IProducesHtml): () -> E
 }
 
 fun Tag.produceChild(child: IProducesHtml?) {

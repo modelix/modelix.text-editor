@@ -8,11 +8,11 @@ fun Cell.nextLeafs(includeSelf: Boolean = false): Sequence<Cell> {
     return generateSequence(this) { it.nextLeaf() }.drop(if (includeSelf) 0 else 1)
 }
 
-fun Cell.previousLeaf(condition: (Cell)->Boolean): Cell? {
+fun Cell.previousLeaf(condition: (Cell) -> Boolean): Cell? {
     return previousLeafs(false).find(condition)
 }
 
-fun Cell.nextLeaf(condition: (Cell)->Boolean): Cell? {
+fun Cell.nextLeaf(condition: (Cell) -> Boolean): Cell? {
     return nextLeafs(false).find(condition)
 }
 

@@ -1,10 +1,14 @@
 package org.modelix.editor.ssr.demo.kernelf
 
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.ktor.server.websocket.*
-import io.ktor.websocket.*
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.response.respondText
+import io.ktor.server.routing.get
+import io.ktor.server.routing.routing
+import io.ktor.server.websocket.WebSockets
+import io.ktor.server.websocket.pingPeriod
+import io.ktor.server.websocket.timeout
 import org.modelix.editor.kernelf.KernelfEditor
 import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.editor.withIncrementalComputationSupport
@@ -28,7 +32,7 @@ fun Application.module() {
     val tree = CLTree.builder(store).repositoryId("ssr-demo").useRoleIds(false).build()
     val branch = PBranch(tree, IdGenerator.newInstance(0x8888)).withIncrementalComputationSupport()
     val modelData = ModelData.fromJson(
-        javaClass.getResourceAsStream("/test.in.expr.os.strings@tests.json")!!.use { it.reader().readText() }
+        javaClass.getResourceAsStream("/test.in.expr.os.strings@tests.json")!!.use { it.reader().readText() },
     )
     modelData.load(branch)
     val rootNodeRefs = branch.computeRead {

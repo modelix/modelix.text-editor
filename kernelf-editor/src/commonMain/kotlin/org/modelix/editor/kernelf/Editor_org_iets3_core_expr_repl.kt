@@ -9,7 +9,7 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
         language.BottomBorderCellStyle to "bottom border",
         language.LeftBorderCellStyle to "left border",
         language.RightBorderCellStyle to "right border",
-        language.TopBorderCellStyle to "top border"
+        language.TopBorderCellStyle to "top border",
     )
     editor(language.BorderCellStyle) {
         val alias = borderCellStyles[concept]
@@ -54,13 +54,13 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
             "/".constant()
         }
         concept.cell.cell()
-        //TODO argList if needActuals
+        // TODO argList if needActuals
     }
 //    editor(language.DefaultEntry) {
 //        //TODO
 //    }
     val fontStyles = mapOf(
-        language.FontBoldStyle to "font-bold"
+        language.FontBoldStyle to "font-bold",
     )
     editor(language.FontStyle) {
         val alias = fontStyles[concept] ?: "Unknown font style: ${concept.untyped().getLongName()}"
@@ -99,7 +99,7 @@ val Editor_org_iets3_core_expr_repl = languageAspects(L_org_iets3_core_expr_repl
     }
     editor(language.NamedCellRef) {
         concept.label.cell({ name })
-        //TODO argList if needActuals
+        // TODO argList if needActuals
     }
     editor(language.NamedSheetFinder) {
         concept.sheet.cell({ name })

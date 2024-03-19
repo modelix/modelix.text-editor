@@ -11,15 +11,15 @@ class JSKeyboardEvent(
     val modifiers: Modifiers = Modifiers.NONE,
     val location: KeyLocation = KeyLocation.STANDARD,
     val repeat: Boolean = false,
-    val composing: Boolean = false
+    val composing: Boolean = false,
 ) {
-    constructor(eventType: JSKeyboardEventType, knownKey: KnownKeys)
-            : this(eventType, null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
+    constructor(eventType: JSKeyboardEventType, knownKey: KnownKeys) :
+        this(eventType, null, knownKey, knownKey.name, Modifiers.NONE, KeyLocation.STANDARD, false, false)
 }
 
 enum class JSKeyboardEventType {
     KEYDOWN,
-    KEYUP
+    KEYUP,
 }
 
 @Serializable
@@ -27,7 +27,7 @@ data class Modifiers(
     val ctrl: Boolean = false,
     val alt: Boolean = false,
     val shift: Boolean = false,
-    val meta: Boolean = false
+    val meta: Boolean = false,
 ) {
     companion object {
         val NONE = Modifiers(ctrl = false, alt = false, shift = false, meta = false)
@@ -91,7 +91,8 @@ enum class KnownKeys {
     PrintScreen,
     ScrollLock,
     Shift,
-    Tab;
+    Tab,
+    ;
 
     companion object {
         private val allEntries: Map<String, KnownKeys> = KnownKeys.values().associateBy { it.name }
@@ -104,5 +105,5 @@ enum class KeyLocation {
     STANDARD,
     LEFT,
     RIGHT,
-    NUMPAD
+    NUMPAD,
 }

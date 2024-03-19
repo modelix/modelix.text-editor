@@ -18,5 +18,5 @@ class PolymorphicValue<ValueT>(val name: String) {
     }
 }
 
-class NoImplementationException(val value: PolymorphicValue<*>, val concept: IConcept)
-    : Exception("${value.name} has no implementation for concept ${concept.getLongName()}")
+class NoImplementationException(val value: PolymorphicValue<*>, val concept: IConcept) :
+    Exception("${value.name} has no implementation for concept ${concept.getLongName()}")

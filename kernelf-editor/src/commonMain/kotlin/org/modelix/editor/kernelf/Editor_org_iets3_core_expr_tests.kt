@@ -27,7 +27,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             iets3keyword()
         }
         concept.what.cell()
-        //TODO editor component actualAndError
+        // TODO editor component actualAndError
     }
     editor(language.AssertTestItem) {
         optional {
@@ -63,7 +63,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             iets3keyword()
         }
         concept.matcher.cell()
-        //TODO editor component actualAndError
+        // TODO editor component actualAndError
     }
     editor(language.ConstraintFailedTestItem) {
         "confail".constant {
@@ -119,7 +119,6 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             "mutator:".constant()
             concept.mutator.cell()
         }
-
     }
     editor(language.IgnoredConcept) {
         "concept".constant()
@@ -153,7 +152,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
     }
     editor(language.InvalidInputOutcome) {
         "invalid input".constant()
-        //TODO text color
+        // TODO text color
     }
     editor(language.InvalidValueTestItem) {
         "inval".constant {
@@ -208,7 +207,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             concept.concept.cell({ name })
         }
         "complete?".constant()
-        //TODO checkbox
+        // TODO checkbox
     }
 //    editor(language.ModelsCoverageAssResult) {
 //        //TODO
@@ -277,7 +276,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
         }
         concept.actual.cell()
         "=>".constant()
-        //TODO model access
+        // TODO model access
     }
 //    editor(language.StackTraceElement) {
 //        //TODO
@@ -306,13 +305,13 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
                 }
                 newLine()
                 "show limit errors:".constant()
-                //TODO checkbox
+                // TODO checkbox
                 newLine()
                 "look outside suites:".constant()
-                //TODO checkbox
+                // TODO checkbox
                 newLine()
                 "track properties:".constant()
-                //TODO checkbox
+                // TODO checkbox
                 newLine()
                 "nodes filter:".constant()
                 concept.nodesFilter.cell()
@@ -360,13 +359,13 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
             newLine()
             indented {
                 "effective models:".constant()
-                //TODO custom cell
+                // TODO custom cell
                 newLine()
                 "problems only:".constant()
-                //TODO checkbox
+                // TODO checkbox
                 newLine()
                 "measure for:".constant()
-                //TODO calculate number of concepts
+                // TODO calculate number of concepts
                 foldable("{X concepts}") {
                     concept.measureFor.vertical()
                 }
@@ -391,7 +390,7 @@ val Editor_org_iets3_core_expr_tests = languageAspects(L_org_iets3_core_expr_tes
     }
     editor(language.ValidOutcome) {
         "valid".constant()
-        //TODO text color
+        // TODO text color
     }
     editor(language.VectorTestItem) {
         "vectors".constant {

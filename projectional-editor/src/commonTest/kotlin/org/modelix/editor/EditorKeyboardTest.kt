@@ -8,7 +8,7 @@ class EditorKeyboardTest {
     fun arrowLeft() {
         val rootCell = EditorTestUtils.buildCells(listOf(listOf("111"), listOf(EditorTestUtils.indentChildren, "222", listOf(EditorTestUtils.newLine, listOf("333")), listOf(listOf("444"), "555")), EditorTestUtils.newLine, "666", "777", "888"))
         val editor = EditorComponent(engine = null) { rootCell }
-        val findByText: (String)->LayoutableCell = { text -> rootCell.descendants().find { it.getVisibleText() == text }!!.layoutable()!! }
+        val findByText: (String) -> LayoutableCell = { text -> rootCell.descendants().find { it.getVisibleText() == text }!!.layoutable()!! }
         val layoutable444 = findByText("444")
         editor.changeSelection(CaretSelection(layoutable444, 2))
         assertEquals(CaretSelection(layoutable444, 2), editor.getSelection())
@@ -34,7 +34,7 @@ class EditorKeyboardTest {
     fun arrowRight() {
         val rootCell = EditorTestUtils.buildCells(listOf("111", "222", EditorTestUtils.newLine, "333", "444", "555", EditorTestUtils.newLine, "666", "777", "888"))
         val editor = EditorComponent(engine = null) { rootCell }
-        val findByText: (String)->LayoutableCell = { text -> rootCell.descendants().find { it.getVisibleText() == text }!!.layoutable()!! }
+        val findByText: (String) -> LayoutableCell = { text -> rootCell.descendants().find { it.getVisibleText() == text }!!.layoutable()!! }
         val layoutable444 = findByText("444")
         editor.changeSelection(CaretSelection(layoutable444, 2))
         assertEquals(CaretSelection(layoutable444, 2), editor.getSelection())

@@ -37,7 +37,7 @@ fun INonExistingNode.commonAncestor(otherNode: INonExistingNode): INonExistingNo
     return null
 }
 
-data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept: IConcept): INonExistingNode {
+data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept: IConcept) : INonExistingNode {
     override fun getExistingAncestor(): INode? = node.getExistingAncestor()
 
     override fun getParent(): INonExistingNode? = node.getParent()

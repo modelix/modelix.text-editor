@@ -32,7 +32,7 @@ import org.modelix.model.withAutoTransactions
 import kotlin.time.Duration.Companion.seconds
 
 object KernelfAPI {
-    private val LOG = mu.KotlinLogging.logger {  }
+    private val LOG = mu.KotlinLogging.logger { }
     val editorEngine = EditorEngine()
 
     init {
@@ -47,16 +47,16 @@ object KernelfAPI {
     fun loadModelFromJson(json: String): INode = loadModelsFromJson(arrayOf(json))
 
     fun loadModelsFromJson(json: Array<String>): INode {
-        //val branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(0xabcdef)))
+        // val branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(0xabcdef)))
         val branch = IncrementalBranch(ModelFacade.toLocalBranch(ModelFacade.newLocalTree()))
         // TODO call IncrementalBranch.dispose
 
-        json.forEach { ModelData.fromJson(it).load(branch)  }
+        json.forEach { ModelData.fromJson(it).load(branch) }
         val rootNode = ModelFacade.getRootNode(branch)
         return rootNode
     }
 
-    fun connectToModelServer(url: String? = null, initialJsonData: Array<String> = emptyArray() , callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
+    fun connectToModelServer(url: String? = null, initialJsonData: Array<String> = emptyArray(), callback: (INode) -> Unit, errorCallback: (Exception) -> Unit = {}) {
         GlobalScope.launch {
             try {
                 if (url != null && (url.endsWith("/v2") || url.endsWith("/v2/"))) {
@@ -72,7 +72,7 @@ object KernelfAPI {
                     model.start()
                     val branch = model.getBranch().withIncrementalComputationSupport()
                     if (!repositoryExisted) {
-                        initialJsonData.forEach { ModelData.fromJson(it).load(branch)  }
+                        initialJsonData.forEach { ModelData.fromJson(it).load(branch) }
                     }
                     val rootNode = branch.withAutoTransactions().getRootNode()
                     LOG.debug { "Connected to model server" }
@@ -83,18 +83,20 @@ object KernelfAPI {
                         builder.url(url)
                     }
                     val client = builder.autoTransactions().autoFilterNonLoadedNodes().build()
-                    client.changeQuery(buildModelQuery {
-                        root {
-                            children("modules") {
-                                whereProperty("name").startsWith("test.in.expr.")
-                                children("models") {
-                                    children("rootNodes") {
-                                        descendants {}
+                    client.changeQuery(
+                        buildModelQuery {
+                            root {
+                                children("modules") {
+                                    whereProperty("name").startsWith("test.in.expr.")
+                                    children("models") {
+                                        children("rootNodes") {
+                                            descendants {}
+                                        }
                                     }
                                 }
                             }
-                        }
-                    })
+                        },
+                    )
                     val rootNode = client.waitForRootNode(30.seconds) ?: throw RuntimeException("Root node not received")
                     callback(rootNode)
                 }

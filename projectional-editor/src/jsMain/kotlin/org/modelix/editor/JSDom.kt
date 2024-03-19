@@ -156,7 +156,6 @@ class JSDom(private val doc: Document = document) : IVirtualDom, IVirtualDomUI {
     }
 }
 
-
 fun IVirtualDom.HTMLElement.unwrap(): HTMLElement = (this as JSDom.HTMLElementWrapper).getWrappedNode()
 fun IVirtualDom.Element.unwrap(): Element = (this as JSDom.ElementWrapper).getWrappedNode()
 fun IVirtualDom.Node.unwrap(): Node = (this as JSDom.NodeWrapper).getWrappedNode()

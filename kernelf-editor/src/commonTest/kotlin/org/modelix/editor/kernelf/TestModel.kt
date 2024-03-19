@@ -3744,7 +3744,7 @@ val modelJson = """
             }
         ]
     }
-}    
+}
 """.trimIndent()
 
 val modelJson2 = """
@@ -15158,5 +15158,5 @@ val modelJson2 = """
             }
         ]
     }
-} 
+}
 """

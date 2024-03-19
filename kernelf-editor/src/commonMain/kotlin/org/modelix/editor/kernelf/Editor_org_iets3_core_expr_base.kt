@@ -11,7 +11,7 @@ import org.modelix.editor.editor
 val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base) {
     val abstractMinMaxAliases = mapOf(
         language.MinExpression to "min",
-        language.MaxExpression to "max"
+        language.MaxExpression to "max",
     )
     editor(language.AbstractMinMaxExpression) {
         val alias = abstractMinMaxAliases[concept]
@@ -23,10 +23,10 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         }
     }
     editor(language.AlternativesExpression) {
-        "alt".constant{
+        "alt".constant {
             iets3keyword()
         }
-        //TODO custom OpeningBracketCell
+        // TODO custom OpeningBracketCell
         concept.alternatives.vertical()
     }
     editor(language.AltOption) {
@@ -343,7 +343,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         language.AndTag to "&&",
         language.MulTag to "*",
         language.OrTag to "||",
-        language.PlusTag to "+"
+        language.PlusTag to "+",
     )
     editor(language.OperatorTag) {
         val symbol = operatorTagSymbols[concept]
@@ -441,7 +441,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
 //    }
     editor(language.SomeValExpr) {
         concept.someQuery.cell(presentation = {
-            expr.read {exprNode ->
+            expr.read { exprNode ->
                 if (exprNode == null) {
                     null
                 } else {
@@ -478,7 +478,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         }
     }
     editor(language.SuccessValueExpr) {
-        concept.`try`.cell({name})
+        concept.`try`.cell({ name })
     }
     editor(language.ThisExpression) {
         "this".constant {

@@ -23,7 +23,11 @@ import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
 import org.modelix.typesystem.NodeAsType
 import org.modelix.typesystem.TypesystemEngine
-import kotlin.test.*
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
+import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 
 class TypesystemTest {
     lateinit var recordMemberRef: N_PathElement
@@ -67,4 +71,3 @@ class TypesystemTest {
         }
     }
 }
-

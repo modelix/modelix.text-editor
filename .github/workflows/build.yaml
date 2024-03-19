@@ -36,7 +36,7 @@ jobs:
           name: test-report
           path: |
             */build/test-results
-            */build/reports      
+            */build/reports
 
 # Disabled because the repository is private and they need payment
 #  # Deploy job

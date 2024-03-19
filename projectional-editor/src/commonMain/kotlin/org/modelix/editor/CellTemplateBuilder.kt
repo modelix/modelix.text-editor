@@ -1,7 +1,20 @@
 package org.modelix.editor
 
-import org.modelix.metamodel.*
-import org.modelix.model.api.*
+import org.modelix.metamodel.IConceptOfTypedNode
+import org.modelix.metamodel.ITypedChildLink
+import org.modelix.metamodel.ITypedChildListLink
+import org.modelix.metamodel.ITypedConcept
+import org.modelix.metamodel.ITypedNode
+import org.modelix.metamodel.ITypedProperty
+import org.modelix.metamodel.ITypedReferenceLink
+import org.modelix.metamodel.ITypedSingleChildLink
+import org.modelix.metamodel.typed
+import org.modelix.metamodel.untyped
+import org.modelix.model.api.IChildLink
+import org.modelix.model.api.IConcept
+import org.modelix.model.api.INode
+import org.modelix.model.api.IProperty
+import org.modelix.model.api.IReferenceLink
 import kotlin.jvm.JvmName
 import kotlin.reflect.KClass
 
@@ -12,10 +25,10 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         return CellTemplateBuilder<NodeT, ConceptT>(this, this@CellTemplateBuilder.concept, nodeConverter)
     }
 
-    fun ifEmpty(link: ITypedChildLink<*>, body: ()->Unit) = ifEmpty(link.untyped(), body)
-    fun ifNotEmpty(link: ITypedChildLink<*>, body: ()->Unit) = ifNotEmpty(link.untyped(), body)
+    fun ifEmpty(link: ITypedChildLink<*>, body: () -> Unit) = ifEmpty(link.untyped(), body)
+    fun ifNotEmpty(link: ITypedChildLink<*>, body: () -> Unit) = ifNotEmpty(link.untyped(), body)
 
-    fun ifEmpty(link: IChildLink, body: ()->Unit) {
+    fun ifEmpty(link: IChildLink, body: () -> Unit) {
         withUntypedNode { node ->
             if (!node.getChildren(link).iterator().hasNext()) {
                 body()
@@ -23,7 +36,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-    fun ifNotEmpty(link: IChildLink, body: ()->Unit) {
+    fun ifNotEmpty(link: IChildLink, body: () -> Unit) {
         withUntypedNode { node ->
             if (node.getChildren(link).iterator().hasNext()) {
                 body()
@@ -31,32 +44,32 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-    fun withNode(body: WithNodeContext.()->Unit) {
+    fun withNode(body: WithNodeContext.() -> Unit) {
         withUntypedNode { node ->
             body(WithNodeContext(nodeConverter.fromUntyped(node)))
         }
     }
 
-    protected fun withUntypedNode(body: (INode)->Unit) {
+    protected fun withUntypedNode(body: (INode) -> Unit) {
         template.withNode += body
     }
 
     @Deprecated("use .constant or .label")
-    fun String.cell(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun String.cell(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         constant(this, body)
     }
 
     @JvmName("string2constant")
-    fun String.constant(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun String.constant(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         constant(this, body)
     }
 
     @JvmName("string2label")
-    fun String.label(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun String.label(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         constant(this, body)
     }
 
-    fun constant(text: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun constant(text: String, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         ConstantCellTemplate(template.concept, text).builder().also(body).template.also(template::addChild)
     }
 
@@ -66,15 +79,15 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         else -> throw RuntimeException("Unknown concept type: $concept")
     }
 
-    fun conceptProperty(name: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun conceptProperty(name: String, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         (untypedConcept().getConceptProperty(name) ?: untypedConcept().getShortName()).constant(body)
     }
 
-    fun conceptAlias(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun conceptAlias(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         conceptProperty("alias", body)
     }
 
-    fun label(text: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun label(text: String, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         LabelCellTemplate(template.concept, text).builder().also(body).template.also(template::addChild)
     }
 
@@ -86,24 +99,24 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         template.properties[CommonCellProperties.backgroundColor] = color
     }
 
-    fun vertical(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun vertical(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO add correct layout information
         CollectionCellTemplate(template.concept).builder()
             .also { it.template.properties[CommonCellProperties.layout] = ECellLayout.VERTICAL }.also(body).template.also(template::addChild)
     }
 
-    fun horizontal(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun horizontal(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO add layout information
         CollectionCellTemplate(template.concept).builder()
             .also(body).template.also(template::addChild)
     }
 
-    fun optional(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun optional(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         OptionalCellTemplate(template.concept).builder()
             .also(body).template.also(template::addChild)
     }
 
-    fun brackets(singleLine: Boolean = true, leftSymbol: String, rightSymbol: String, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun brackets(singleLine: Boolean = true, leftSymbol: String, rightSymbol: String, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         if (singleLine) {
             constant(leftSymbol)
             noSpace()
@@ -123,24 +136,24 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-    fun parentheses(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun parentheses(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         brackets(singleLine, "(", ")", body)
     }
 
-    fun curlyBrackets(singleLine: Boolean = false, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun curlyBrackets(singleLine: Boolean = false, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         brackets(singleLine, "{", "}", body)
     }
 
-    fun angleBrackets(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun angleBrackets(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         brackets(singleLine, "<", ">", body)
     }
 
-    fun largeBrackets(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun largeBrackets(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO the body should be displayed inline and the bracket symbol should span multiple lines
         curlyBrackets(false, body)
     }
 
-    fun squareBrackets(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun squareBrackets(singleLine: Boolean = true, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         brackets(singleLine, "[", "]", body)
     }
 
@@ -166,7 +179,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
             .template.also(template::addChild)
     }
 
-    fun indented(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun indented(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         horizontal {
             template.properties[CommonCellProperties.indentChildren] = true
             body()
@@ -176,7 +189,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
     /**
      * The content is foldable
      */
-    fun foldable(foldedText: String = "...", body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun foldable(foldedText: String = "...", body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO
         horizontal(body)
     }
@@ -188,29 +201,29 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         // TODO
     }
 
-    fun IProperty.cell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IProperty.cell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         propertyCell(body)
     }
 
-    fun ITypedProperty<*>.cell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedProperty<*>.cell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         untyped().cell(body)
     }
 
-    fun IProperty.propertyCell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IProperty.propertyCell(body: PropertyCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         PropertyCellTemplateBuilder(PropertyCellTemplate(template.concept, this), concept, nodeConverter)
             .also(body).template.also(template::addChild)
     }
 
-    fun ITypedProperty<Boolean>.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedProperty<Boolean>.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         untyped().flagCell(text, body)
     }
 
-    fun IProperty.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IProperty.flagCell(text: String? = null, body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         PropertyCellTemplateBuilder(FlagCellTemplate(template.concept, this, text ?: getSimpleName()), concept, nodeConverter)
             .also(body).template.also(template::addChild)
     }
 
-    fun ITypedProperty<Boolean>.booleanCell(trueText: String = "true", falseText: String = "false", body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedProperty<Boolean>.booleanCell(trueText: String = "true", falseText: String = "false", body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO generate code completion entries for the two possible values
         untyped().propertyCell {
             readReplace { if (it == "true") trueText else falseText }
@@ -219,45 +232,44 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-
-    private fun <TargetNodeT> IReferenceLink.cell(presentation: TargetNodeT.()->String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, TargetNodeT>.()->Unit = {}, targetNodeConverter: INodeConverter<TargetNodeT>) {
+    private fun <TargetNodeT> IReferenceLink.cell(presentation: TargetNodeT.() -> String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, TargetNodeT>.() -> Unit = {}, targetNodeConverter: INodeConverter<TargetNodeT>) {
         ReferenceCellTemplateBuilder(
             template = ReferenceCellTemplate(
                 concept = template.concept,
                 link = this,
-                presentation = { presentation(targetNodeConverter.fromUntyped(this)) }
+                presentation = { presentation(targetNodeConverter.fromUntyped(this)) },
             ),
             link = this,
             concept = concept,
             sourceNodeConverter = nodeConverter,
-            targetNodeConverter = targetNodeConverter
+            targetNodeConverter = targetNodeConverter,
         ).also(body).template.also(template::addChild)
     }
 
-    fun <TargetNodeT : ITypedNode> ITypedReferenceLink<TargetNodeT>.cell(presentation: TargetNodeT.()->String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, TargetNodeT>.()->Unit = {}) {
+    fun <TargetNodeT : ITypedNode> ITypedReferenceLink<TargetNodeT>.cell(presentation: TargetNodeT.() -> String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, TargetNodeT>.() -> Unit = {}) {
         val targetNodeConverter = INodeConverter.Typed(this.getTypedTargetConcept())
         this.untyped().cell(presentation, body, targetNodeConverter)
     }
 
-    fun IReferenceLink.cell(presentation: INode.()->String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, INode>.()->Unit = {}) {
+    fun IReferenceLink.cell(presentation: INode.() -> String?, body: ReferenceCellTemplateBuilder<NodeT, ConceptT, INode>.() -> Unit = {}) {
         val targetNodeConverter = INodeConverter.Untyped
         this.cell(presentation, body, targetNodeConverter)
     }
 
-    fun ITypedSingleChildLink<*>.cell(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedSingleChildLink<*>.cell(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         untyped().cell(body)
     }
 
-    fun IChildLink.cell(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IChildLink.cell(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         require(!this.isMultiple) { "Not allowed on child lists" }
         ChildCellTemplate(template.concept, this).builder().also(body).template.also(template::addChild)
     }
 
-    fun ITypedChildListLink<*>.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedChildListLink<*>.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         this.untyped().vertical(body)
     }
 
-    fun IChildLink.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IChildLink.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         // TODO add layout information
         horizontal(separator = null) {
             template.properties[CommonCellProperties.layout] = ECellLayout.VERTICAL
@@ -265,19 +277,19 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-    fun ITypedChildListLink<*>.horizontal(separator: String? = ",", body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun ITypedChildListLink<*>.horizontal(separator: String? = ",", body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         this.untyped().horizontal(separator, body)
     }
 
-    fun IChildLink.horizontal(separator: String? = ",", body: ChildCellTemplateBuilder<NodeT, ConceptT>.()->Unit = {}) {
+    fun IChildLink.horizontal(separator: String? = ",", body: ChildCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         ChildCellTemplateBuilder<NodeT, ConceptT>(ChildCellTemplate(template.concept, this), concept, nodeConverter)
             .also { if (separator != null) it.separator { constant(separator) } }
             .also(body).template.also(template::addChild)
     }
 
-    fun modelAccess(body: ModelAccessBuilder.()->Unit) {
-        var setter: (String?)->Unit = {}
-        var getter: ()->String? = { "<getter missing>" }
+    fun modelAccess(body: ModelAccessBuilder.() -> Unit) {
+        var setter: (String?) -> Unit = {}
+        var getter: () -> String? = { "<getter missing>" }
         body(object : ModelAccessBuilder {
             override fun get(body: () -> String?) {
                 getter = body
@@ -290,7 +302,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         modelAccess(getter, setter)
     }
 
-    fun modelAccess(getter: ()->String?, setter: (String?)->Unit) {
+    fun modelAccess(getter: () -> String?, setter: (String?) -> Unit) {
         // TODO ModelAccessCellTemplate
         ConstantCellTemplate(template.concept, "<model access>").builder().template.also(template::addChild)
     }
@@ -301,7 +313,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
 class NotationRootCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
     template: NotationRootCellTemplate,
     concept: ConceptT,
-    nodeConverter: INodeConverter<NodeT>
+    nodeConverter: INodeConverter<NodeT>,
 ) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
     fun condition(condition: (INode) -> Boolean) {
         (template as NotationRootCellTemplate).condition = condition
@@ -311,17 +323,17 @@ class NotationRootCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
 class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
     template: PropertyCellTemplate,
     concept: ConceptT,
-    nodeConverter: INodeConverter<NodeT>
+    nodeConverter: INodeConverter<NodeT>,
 ) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
-    fun validateValue(validator: (String)->Boolean) {
+    fun validateValue(validator: (String) -> Boolean) {
         (template as PropertyCellTemplate).validator = validator
     }
 
-    fun readReplace(replacement: (String)->String) {
+    fun readReplace(replacement: (String) -> String) {
         // TODO
     }
 
-    fun writeReplace(replacement: (String)->String) {
+    fun writeReplace(replacement: (String) -> String) {
         // TODO
     }
 
@@ -333,11 +345,11 @@ class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
 class ChildCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
     template: ChildCellTemplate,
     concept: ConceptT,
-    nodeConverter: INodeConverter<NodeT>
+    nodeConverter: INodeConverter<NodeT>,
 ) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
-    fun separator(body: CellTemplateBuilder<NodeT, ConceptT>.()->Unit) {
+    fun separator(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit) {
         (template as ChildCellTemplate).setSeparator(
-            CollectionCellTemplate(template.concept).also { body(it.builder()) }
+            CollectionCellTemplate(template.concept).also { body(it.builder()) },
         )
     }
 }
@@ -347,13 +359,13 @@ class ReferenceCellTemplateBuilder<SourceNodeT : Any, SourceConceptT : Any, Targ
     val link: IReferenceLink,
     concept: SourceConceptT,
     sourceNodeConverter: INodeConverter<SourceNodeT>,
-    private val targetNodeConverter: INodeConverter<TargetNodeT>
+    private val targetNodeConverter: INodeConverter<TargetNodeT>,
 ) : CellTemplateBuilder<SourceNodeT, SourceConceptT>(template, concept, sourceNodeConverter) {
-    fun presentation(f: (TargetNodeT)->String?) {
+    fun presentation(f: (TargetNodeT) -> String?) {
         TODO("Not implemented yet")
     }
 
-    fun withTargetNode(body: WithTargetNodeContext.()->Unit) {
+    fun withTargetNode(body: WithTargetNodeContext.() -> Unit) {
         withUntypedNode { node ->
             val targetNode: INode? = node.getReferenceTarget(link)
             if (targetNode != null) {

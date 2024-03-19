@@ -141,6 +141,7 @@ class ModelixSSRServerForMPS : Disposable {
             mpsChangeTranslator = MPSChangeTranslator()
             mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
+            this.ssrServer = ssrServer
             aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
             ScopeAspect.registerScopeProvider(MPSScopeProvider)
             ConstraintsAspect.checkers.add(MPSConstraints)
@@ -252,6 +253,8 @@ class ModelixSSRServerForMPS : Disposable {
             println("stopping modelix SSR server")
             ktorServer?.stop()
             ktorServer = null
+            ssrServer?.dispose()
+            ssrServer = null
 
             mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
             mpsLanguageRepository = null
@@ -286,7 +289,7 @@ object MPSScopeProvider : IScopeProvider {
                 containmentLink,
                 index,
                 association,
-                concept
+                concept,
             )
         } else {
             ModelConstraints.getReferenceDescriptor(mpsSourceNode.node, link.toMPS()!!)
@@ -324,13 +327,13 @@ object MPSConstraints : IConstraintsChecker {
                     .childConcept(node.expectedConcept().toMPS()!!)
                     .descendantNode(node.getNode().toMPS())
                     .link(node.getContainmentLink().toMPS())
-                    .build()
+                    .build(),
             )
         }
         val parentViolations = ConstraintsCanBeFacade.checkCanBeParent(containmentContext).asSequence()
         val childViolations = ConstraintsCanBeFacade.checkCanBeChild(containmentContext).asSequence()
         return (ancestorViolations + parentViolations + childViolations).map { MPSConstraintViolation(it) }.toList() +
-                (node.getParent()?.let { check(it) } ?: emptyList())
+            (node.getParent()?.let { check(it) } ?: emptyList())
     }
 }
 

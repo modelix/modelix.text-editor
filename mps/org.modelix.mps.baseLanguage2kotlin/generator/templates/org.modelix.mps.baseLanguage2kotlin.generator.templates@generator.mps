@@ -21,7 +21,7 @@
     <import index="tpcu" ref="r:00000000-0000-4000-0000-011c89590282(jetbrains.mps.lang.core.behavior)" />
     <import index="tp68" ref="r:00000000-0000-4000-0000-011c895903ac(jetbrains.mps.baseLanguageInternal.structure)" />
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" implicit="true" />
-    <import index="zoxz" ref="771cf896-ab1b-409b-93b4-48c3bbb6b23f/kotlinJvm:org.modelix.metamodel(org.modelix.mps.editor.ssr.stubs/)" implicit="true" />
+    <import index="dbfy" ref="771cf896-ab1b-409b-93b4-48c3bbb6b23f/kotlinJvm:org.modelix.editor(org.modelix.mps.editor.ssr.stubs/)" implicit="true" />
   </imports>
   <registry>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
@@ -271,7 +271,7 @@
               <property role="21SRas" value="true" />
               <node concept="1XD0df" id="22f9nDgPBo_" role="21Pmik" />
               <node concept="1NbEtQ" id="22f9nDgPxRz" role="1XD07G">
-                <ref role="AarEw" to="zoxz:~#org/modelix/model/api/INode.getBooleanPropertyValue(org/modelix/model/api/IProperty)" resolve="getBooleanPropertyValue" />
+                <ref role="AarEw" to="dbfy:~#org/modelix/model/api/INode.getBooleanPropertyValue(org/modelix/model/api/IProperty)" resolve="getBooleanPropertyValue" />
                 <node concept="1XD0eI" id="22f9nDgPAeg" role="TWiod">
                   <node concept="1NbEFs" id="4dQjfTHZOAp" role="1XD0ZN">
                     <ref role="AarEw" to="1g18:~MPSProperty.new(jetbrains/mps/smodel/adapter/structure/property/SPropertyAdapter)" resolve="MPSProperty" />
@@ -327,7 +327,7 @@
             <property role="21SRas" value="true" />
             <node concept="1XD0df" id="22f9nDgPB_z" role="21Pmik" />
             <node concept="1NbEtQ" id="22f9nDgPB_e" role="1XD07G">
-              <ref role="AarEw" to="zoxz:~#org/modelix/model/api/INode.setBooleanPropertyValue(org/modelix/model/api/IProperty,kotlin/Boolean?)" resolve="setBooleanPropertyValue" />
+              <ref role="AarEw" to="dbfy:~#org/modelix/model/api/INode.setBooleanPropertyValue(org/modelix/model/api/IProperty,kotlin/Boolean?)" resolve="setBooleanPropertyValue" />
               <node concept="1XD0eI" id="22f9nDgPB_f" role="TWiod">
                 <node concept="1NbEFs" id="22f9nDgPB_g" role="1XD0ZN">
                   <ref role="AarEw" to="1g18:~MPSProperty.new(jetbrains/mps/smodel/adapter/structure/property/SPropertyAdapter)" resolve="MPSProperty" />
@@ -438,7 +438,7 @@
               <property role="21SRas" value="true" />
               <node concept="1XD0df" id="58hR5f$j0gi" role="21Pmik" />
               <node concept="1NbEtQ" id="58hR5f$j0gj" role="1XD07G">
-                <ref role="AarEw" to="zoxz:~#org/modelix/model/api/INode.getIntPropertyValue(org/modelix/model/api/IProperty)" resolve="getIntPropertyValue" />
+                <ref role="AarEw" to="dbfy:~#org/modelix/model/api/INode.getIntPropertyValue(org/modelix/model/api/IProperty)" resolve="getIntPropertyValue" />
                 <node concept="1XD0eI" id="58hR5f$j0gk" role="TWiod">
                   <node concept="1NbEFs" id="58hR5f$j0gl" role="1XD0ZN">
                     <ref role="AarEw" to="1g18:~MPSProperty.new(jetbrains/mps/smodel/adapter/structure/property/SPropertyAdapter)" resolve="MPSProperty" />
@@ -494,7 +494,7 @@
             <property role="21SRas" value="true" />
             <node concept="1XD0df" id="58hR5f$j0gD" role="21Pmik" />
             <node concept="1NbEtQ" id="58hR5f$j0gE" role="1XD07G">
-              <ref role="AarEw" to="zoxz:~#org/modelix/model/api/INode.setIntPropertyValue(org/modelix/model/api/IProperty,kotlin/Int?)" resolve="setIntPropertyValue" />
+              <ref role="AarEw" to="dbfy:~#org/modelix/model/api/INode.setIntPropertyValue(org/modelix/model/api/IProperty,kotlin/Int?)" resolve="setIntPropertyValue" />
               <node concept="1XD0eI" id="58hR5f$j0gF" role="TWiod">
                 <node concept="1NbEFs" id="58hR5f$j0gG" role="1XD0ZN">
                   <ref role="AarEw" to="1g18:~MPSProperty.new(jetbrains/mps/smodel/adapter/structure/property/SPropertyAdapter)" resolve="MPSProperty" />
@@ -1181,4 +1181,3 @@
     </node>
   </node>
 </model>
-

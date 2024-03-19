@@ -2,9 +2,11 @@ import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.oshai.kotlinlogging.KotlinLoggingConfiguration
 import io.github.oshai.kotlinlogging.Level
-import io.ktor.client.*
-import io.ktor.client.plugins.websocket.*
-import io.ktor.http.*
+import io.ktor.client.HttpClient
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.http.DEFAULT_PORT
+import io.ktor.http.URLBuilder
+import io.ktor.http.URLProtocol
 import kotlinx.browser.document
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -15,7 +17,7 @@ import org.w3c.dom.HTMLDivElement
 import org.w3c.dom.asList
 import org.w3c.dom.get
 
-private val LOG = KotlinLogging.logger {  }
+private val LOG = KotlinLogging.logger { }
 
 fun main() {
     KotlinLoggingConfiguration.logLevel = Level.TRACE
@@ -32,7 +34,6 @@ fun main() {
         host = currentUrl.hostname
         port = currentUrl.port.toIntOrNull() ?: DEFAULT_PORT
         pathSegments = listOf("ws")
-
     }.buildString()
     val client = ModelixSSRClient(httpClient, wsUrl)
     client.connect {

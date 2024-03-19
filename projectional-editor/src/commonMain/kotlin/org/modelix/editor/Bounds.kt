@@ -22,7 +22,7 @@ fun Bounds.relativeTo(origin: Bounds): Bounds {
         x - origin.x,
         y - origin.y,
         width,
-        height
+        height,
     )
 }
 
@@ -45,7 +45,7 @@ fun Bounds.expanded(delta: Double) = copy(
     x = x - delta,
     y = y - delta,
     width = width + delta * 2.0,
-    height = height + delta * 2.0
+    height = height + delta * 2.0,
 )
 
 fun Bounds.contains(x: Double, y: Double): Boolean {
