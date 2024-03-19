@@ -1,7 +1,30 @@
 version: 2
+registries:
+  maven-central:
+    type: maven-repository
+    url: https://repo.maven.apache.org/maven2/
+  maven-itemis:
+    type: maven-repository
+    url: https://artifacts.itemis.cloud/repository/maven-mps/
 updates:
   - package-ecosystem: "gradle"
     open-pull-requests-limit: 20
+    registries:
+      - maven-central
+      - maven-itemis
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+  - package-ecosystem: "github-actions"
+    open-pull-requests-limit: 20
+    directory: "/"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "npm"
+    open-pull-requests-limit: 20
+    directory: "/"
+    schedule:
+      interval: "daily"
+    commit-message:
+      prefix: "build(deps)"
+      prefix-development: "build(deps)"
