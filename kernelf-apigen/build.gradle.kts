@@ -1,3 +1,6 @@
+import org.gradle.internal.jvm.Jvm
+import org.modelix.mpsHomeDir
+
 buildscript {
     repositories {
         mavenLocal()
@@ -13,7 +16,7 @@ plugins {
     kotlin("multiplatform")
     `maven-publish`
     alias(libs.plugins.modelix.model.api.gen)
-    alias(coreLibs.plugins.modelix.mps.buildtools)
+    alias(libs.plugins.modelix.mps.buildtools)
 }
 
 val generatorOutputDir = buildDir.resolve("apigen").resolve("src_gen")
@@ -64,14 +67,15 @@ kotlin {
 }
 
 mpsBuild {
-    mpsVersion("2022.2.1")
+    mpsHome = mpsHomeDir.get().asFile.absolutePath
+    javaHome = Jvm.current().javaHome
     externalModules("org.iets3:opensource:2022.2.6365.50b1f50")
 }
 
 metamodel {
     mpsHeapSize = "2g"
     dependsOn("copyDependencies")
-    mpsHome = buildDir.resolve("mpsbuild/mps/mps-2022.2.1.zip")
+    mpsHome = mpsHomeDir.get().asFile.absoluteFile
     modulesFrom(buildDir.resolve("mpsbuild/dependencies"))
     includeNamespace("org.iets3.core.expr")
     includeLanguage("org.modelix.model.repositoryconcepts")

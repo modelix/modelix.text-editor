@@ -1,14 +1,11 @@
 import org.gradle.internal.jvm.Jvm
+import org.modelix.mpsHomeDir
 
 plugins {
     base
     `maven-publish`
     alias(libs.plugins.modelix.mps.buildtools)
 }
-
-val mpsVersion = project.findProperty("mps.version").toString()
-val mpsPlatformVersion = project.findProperty("mps.platform.version").toString().toInt()
-val mpsHomeDir = rootProject.layout.buildDirectory.dir("mps-$mpsVersion")
 
 mpsBuild {
     mpsHome = mpsHomeDir.get().asFile.absolutePath

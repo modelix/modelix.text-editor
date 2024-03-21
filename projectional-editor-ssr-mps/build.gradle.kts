@@ -1,6 +1,7 @@
 import com.jetbrains.plugin.structure.intellij.utils.JDOMUtil
 import org.jdom2.Element
 import org.jetbrains.intellij.transformXml
+import org.modelix.mpsHomeDir
 
 buildscript {
     dependencies {
@@ -42,14 +43,10 @@ sourceSets {
     }
 }
 
-val mpsVersion = project.findProperty("mps.version").toString()
-val mpsPlatformVersion = project.findProperty("mps.platform.version").toString().toInt()
-val mpsHome = rootProject.layout.buildDirectory.dir("mps-$mpsVersion")
-
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
-    localPath = mpsHome.map { it.asFile.absolutePath }
+    localPath = mpsHomeDir.map { it.asFile.absolutePath }
     instrumentCode = false
 }
 
