@@ -1,4 +1,4 @@
-name: Build
+name: MPS Compatibility
 
 on:
   push:
@@ -8,10 +8,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-mps-plugin:
 
     runs-on: ubuntu-latest
-
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - "2021.1"
+          - "2021.2"
+          - "2021.3"
+          - "2022.2"
+          - "2022.3"
+          - "2023.2"
+          - "2023.3"
     steps:
       - uses: actions/checkout@v4
 #      - uses: actions/setup-node@v3
@@ -26,16 +36,12 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }} -Pmps.version.major=2023.3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: kernelf-angular-demo/dist/kernelf-angular-demo
+        run: ./gradlew :projectional-editor-ssr-mps:build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }} -Pmps.version.major=${{ matrix.version }}
       - name: Archive test report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-report
+          name: test-report-${{ matrix.version }}
           path: |
             */build/test-results
             */build/reports
