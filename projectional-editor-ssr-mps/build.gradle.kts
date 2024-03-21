@@ -148,6 +148,7 @@ group = "org.modelix.mps"
 publishing {
     publications {
         create<MavenPublication>("maven") {
+            artifactId = "projectional-editor-plugin"
             artifact(tasks.buildPlugin) {
                 extension = "zip"
             }
