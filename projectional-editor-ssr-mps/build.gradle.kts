@@ -57,8 +57,8 @@ tasks {
         }
     }
     patchPluginXml {
-        sinceBuild.set("232.10072.781")
-        untilBuild.set("232.10072.781")
+        sinceBuild.set("232")
+        untilBuild.set("233.*")
     }
 
     buildSearchableOptions {
