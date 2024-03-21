@@ -15,11 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - "2021.1"
-          - "2021.2"
-          - "2021.3"
-          - "2022.2"
-          - "2022.3"
+          # also adjust the compatibility version range of the MPS plugin
           - "2023.2"
           - "2023.3"
     steps:
