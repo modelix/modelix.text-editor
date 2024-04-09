@@ -14,7 +14,7 @@ updates:
       - maven-itemis
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: "build(deps)"
       prefix-development: "build(deps)"
@@ -22,7 +22,7 @@ updates:
     open-pull-requests-limit: 20
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: "build(deps)"
       prefix-development: "build(deps)"
@@ -30,7 +30,7 @@ updates:
     open-pull-requests-limit: 20
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
     commit-message:
       prefix: "build(deps)"
       prefix-development: "build(deps)"
