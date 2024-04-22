@@ -10,9 +10,7 @@ import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.client.light.LightModelClient
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.EditorState
-import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.toHtml
-import org.modelix.editor.withIncrementalComputationSupport
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.TypedLanguagesRegistry
@@ -29,6 +27,7 @@ import org.modelix.model.lazy.RepositoryId
 import org.modelix.model.repositoryconcepts.N_Module
 import org.modelix.model.server.api.buildModelQuery
 import org.modelix.model.withAutoTransactions
+import org.modelix.model.withIncrementalComputationSupport
 import kotlin.time.Duration.Companion.seconds
 
 object KernelfAPI {
@@ -48,7 +47,7 @@ object KernelfAPI {
 
     fun loadModelsFromJson(json: Array<String>): INode {
         // val branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(0xabcdef)))
-        val branch = IncrementalBranch(ModelFacade.toLocalBranch(ModelFacade.newLocalTree()))
+        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree()).withIncrementalComputationSupport()
         // TODO call IncrementalBranch.dispose
 
         json.forEach { ModelData.fromJson(it).load(branch) }

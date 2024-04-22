@@ -11,7 +11,6 @@ import io.ktor.server.websocket.pingPeriod
 import io.ktor.server.websocket.timeout
 import org.modelix.editor.kernelf.KernelfEditor
 import org.modelix.editor.ssr.server.ModelixSSRServer
-import org.modelix.editor.withIncrementalComputationSupport
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IProperty
@@ -23,6 +22,7 @@ import org.modelix.model.data.ModelData
 import org.modelix.model.lazy.CLTree
 import org.modelix.model.lazy.ObjectStoreCache
 import org.modelix.model.persistent.MapBasedStore
+import org.modelix.model.withIncrementalComputationSupport
 import java.time.Duration
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
