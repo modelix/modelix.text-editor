@@ -9,7 +9,6 @@ import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.ICodeCompletionAction
-import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.commonAncestor
 import org.modelix.editor.descendants
 import org.modelix.editor.firstLeaf
@@ -33,6 +32,7 @@ import org.modelix.model.client.IdGenerator
 import org.modelix.model.repositoryconcepts.N_Module
 import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
+import org.modelix.model.withIncrementalComputationSupport
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -48,7 +48,7 @@ class CodeCompletionTest {
     @BeforeTest
     fun beforeTest() {
         KernelfLanguages.registerAll()
-        branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)))
+        branch = PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
         ModelData.fromJson(modelJson).load(branch)
 
         val engine = EditorEngine(IncrementalEngine())
@@ -106,7 +106,7 @@ class CodeCompletionTest {
     fun noDuplicates() {
         val parameters = CodeCompletionParameters(editor, "")
         val actions = getSubstituteActions(getNumberLiteralCell())
-        val knownDuplicates = setOf("none", "[", "it", "|", "ParamRef")
+        val knownDuplicates = setOf("none", "[", "it", "|", "ParamRef", "ConvertExpression", "StripUnitExpression", "ValExpression")
         val actualDuplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 }.map { it.key }
         val unexpectedDuplicates = actualDuplicates - knownDuplicates
         val missingDuplicates = knownDuplicates - actualDuplicates

@@ -10,6 +10,7 @@ dependencies {
     implementation(project(":projectional-editor"))
     implementation(project(":projectional-editor-ssr-server"))
     implementation(libs.modelix.model.datastructure)
+    implementation(libs.modelix.model.client)
     implementation(coreLibs.ktor.server.core)
     implementation(coreLibs.ktor.server.netty)
     implementation(coreLibs.ktor.server.websockets)

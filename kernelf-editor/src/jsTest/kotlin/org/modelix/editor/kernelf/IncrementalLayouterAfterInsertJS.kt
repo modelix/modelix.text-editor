@@ -8,7 +8,6 @@ import org.iets3.core.expr.tests.N_TestSuite
 import org.modelix.editor.CaretSelection
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.GeneratedHtmlMap
-import org.modelix.editor.IncrementalBranch
 import org.modelix.editor.IncrementalVirtualDOMBuilder
 import org.modelix.editor.JSDom
 import org.modelix.editor.JSKeyboardEvent
@@ -36,6 +35,7 @@ import org.modelix.model.client.IdGenerator
 import org.modelix.model.repositoryconcepts.N_Module
 import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
+import org.modelix.model.withIncrementalComputationSupport
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Ignore
@@ -51,7 +51,7 @@ open class IncrementalLayoutAfterInsertJS {
     @BeforeTest
     fun beforeTest() {
         KernelfLanguages.registerAll()
-        branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)))
+        branch = PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
         ModelData.fromJson(modelJson).load(branch)
 
         val engine = EditorEngine(IncrementalEngine())

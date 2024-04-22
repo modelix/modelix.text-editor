@@ -5,7 +5,6 @@ import org.iets3.core.expr.path.N_PathElement
 import org.iets3.core.expr.tests.N_TestSuite
 import org.iets3.core.expr.toplevel.N_RecordType
 import org.modelix.editor.EditorEngine
-import org.modelix.editor.IncrementalBranch
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.metamodel.descendants
@@ -21,6 +20,7 @@ import org.modelix.model.data.ModelData
 import org.modelix.model.repositoryconcepts.N_Module
 import org.modelix.model.repositoryconcepts.models
 import org.modelix.model.repositoryconcepts.rootNodes
+import org.modelix.model.withIncrementalComputationSupport
 import org.modelix.typesystem.NodeAsType
 import org.modelix.typesystem.TypesystemEngine
 import kotlin.test.AfterTest
@@ -42,7 +42,7 @@ class TypesystemTest {
         val engine = EditorEngine(IncrementalEngine())
         KernelfEditor.register(engine)
 
-        branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)))
+        branch = PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
         ModelData.fromJson(modelJson2).load(branch)
 
         testSuite = branch.computeRead {
