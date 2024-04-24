@@ -61,6 +61,14 @@ val Project.mpsHomeDir: Provider<Directory> get() {
     return project.layout.buildDirectory.dir("mps-$mpsVersion")
 }
 
+val Project.mpsPluginsDir: File? get() {
+    val candidates = listOfNotNull(
+        project.findProperty("mps$mpsPlatformVersion.plugins.dir")?.toString()?.let { file(it) },
+        System.getProperty("user.home")?.let { file(it).resolve("/Library/Application Support/JetBrains/MPS2023.2/plugins/") },
+    )
+    return candidates.firstOrNull { it.isDirectory }
+}
+
 fun Project.copyMps(): File {
     if (project != rootProject) return rootProject.copyMps()
 
