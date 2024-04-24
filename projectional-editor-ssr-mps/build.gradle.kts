@@ -2,6 +2,7 @@ import com.jetbrains.plugin.structure.intellij.utils.JDOMUtil
 import org.jdom2.Element
 import org.jetbrains.intellij.transformXml
 import org.modelix.mpsHomeDir
+import org.modelix.mpsPluginsDir
 
 buildscript {
     dependencies {
@@ -117,12 +118,12 @@ tasks {
         archiveFileName = "$stubsSolutionName.jar"
     }
 
-    val mpsPluginDir = project.findProperty("mps232.plugins.dir")?.toString()?.let { file(it) }
-    if (mpsPluginDir != null && mpsPluginDir.isDirectory) {
+    val pluginDir = mpsPluginsDir
+    if (pluginDir != null) {
         create<Sync>("installMpsPlugin") {
             dependsOn(prepareSandbox)
             from(project.layout.buildDirectory.dir("idea-sandbox/plugins/${project.name}"))
-            into(mpsPluginDir.resolve(project.name))
+            into(pluginDir.resolve(project.name))
         }
     }
 
