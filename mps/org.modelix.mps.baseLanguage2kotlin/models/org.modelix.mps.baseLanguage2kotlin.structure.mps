@@ -55,7 +55,7 @@
       <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
     </node>
     <node concept="PrWs8" id="22f9nDgNaE1" role="PzmwI">
-      <ref role="PrY4T" node="22f9nDgNaDZ" />
+      <ref role="PrY4T" node="22f9nDgNaDZ" resolve="IBaseLanguageOrKotlinExpression" />
     </node>
   </node>
   <node concept="PlHQZ" id="22f9nDgNaDZ">
@@ -84,7 +84,7 @@
     <property role="EcuMT" value="2346135138155708006" />
     <property role="3GE5qa" value="expressions" />
     <property role="TrG5h" value="ConvertToKotlin" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="22f9nDgPjTD" role="1TKVEi">
       <property role="IQ2ns" value="2346135138155708009" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
