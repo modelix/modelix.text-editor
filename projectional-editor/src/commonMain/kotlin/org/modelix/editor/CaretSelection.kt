@@ -209,7 +209,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         // complete immediately if there is a single matching action
         val providers = layoutable.cell.getSubstituteActions()
         val params = CodeCompletionParameters(editor, newText)
-        val actions = providers.flatMap { it.flattenApplicableActions(params) }.toList()
+        val actions = editor.runRead { providers.flatMap { it.flattenApplicableActions(params) }.toList() }
         val matchingActions = actions
             .filter { it.getMatchingText() == newText }
             .applyShadowing()

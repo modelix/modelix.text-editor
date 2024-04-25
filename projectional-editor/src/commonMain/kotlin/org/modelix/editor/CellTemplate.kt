@@ -333,7 +333,7 @@ class ReferenceCellTemplate(
         return sourceNode.getReferenceTarget(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        val sourceNode = NonExistingChild(location.getParent()!!, location.getContainmentLink()!!, location.index()).ofSubConcept(concept)
+        val sourceNode = location.ofSubConcept(concept)
         val scope = ScopeAspect.getScope(sourceNode, link)
         val targets = scope.getVisibleElements(sourceNode, link)
         return targets.map { target ->
