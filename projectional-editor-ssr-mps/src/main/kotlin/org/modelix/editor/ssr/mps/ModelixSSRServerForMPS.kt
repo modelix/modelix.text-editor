@@ -167,11 +167,11 @@ class ModelixSSRServerForMPS : Disposable {
                     repository.getArea().executeRead {
                         body {
                             ul {
-                                repository.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Repository.modules).forEach {
+                                repository.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Repository.modules).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "module/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -188,11 +188,11 @@ class ModelixSSRServerForMPS : Disposable {
                         val module = repository.getArea().resolveNode(NodeReference(moduleRef))!!
                         body {
                             ul {
-                                module.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Module.models).forEach {
+                                module.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Module.models).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "../../model/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -209,11 +209,11 @@ class ModelixSSRServerForMPS : Disposable {
                         val model = repository.getArea().resolveNode(NodeReference(modelRef))!!
                         body {
                             ul {
-                                model.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Model.rootNodes).forEach {
+                                model.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Model.rootNodes).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "../../editor/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -342,5 +342,7 @@ fun IChildLink?.toMPS(): SContainmentLink? = if (this is MPSChildLink) this.link
 fun IReferenceLink?.toMPS(): SReferenceLink? = if (this is MPSReferenceLink) this.link else null
 fun IProperty?.toMPS(): SProperty? = if (this is MPSProperty) this.property else null
 fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept else null
+
+val INode.name get() = getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name)
 
 class MPSConstraintViolation(val rule: Rule<*>) : IConstraintViolation
