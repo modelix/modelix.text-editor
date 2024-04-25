@@ -265,19 +265,18 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         ChildCellTemplate(template.concept, this).builder().also(body).template.also(template::addChild)
     }
 
-    fun ITypedChildListLink<*>.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
+    fun ITypedChildListLink<*>.vertical(body: ChildCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         this.untyped().vertical(body)
     }
 
-    fun IChildLink.vertical(body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
-        // TODO add layout information
+    fun IChildLink.vertical(body: ChildCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         horizontal(separator = null) {
             template.properties[CommonCellProperties.layout] = ECellLayout.VERTICAL
             body()
         }
     }
 
-    fun ITypedChildListLink<*>.horizontal(separator: String? = ",", body: CellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
+    fun ITypedChildListLink<*>.horizontal(separator: String? = ",", body: ChildCellTemplateBuilder<NodeT, ConceptT>.() -> Unit = {}) {
         this.untyped().horizontal(separator, body)
     }
 
@@ -351,6 +350,10 @@ class ChildCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
         (template as ChildCellTemplate).setSeparator(
             CollectionCellTemplate(template.concept).also { body(it.builder()) },
         )
+    }
+
+    fun newLineConcept(newLineConcept: IConcept) {
+        (template as ChildCellTemplate).newLineConcept = newLineConcept
     }
 }
 

@@ -100,8 +100,7 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
     }
 
     override fun getOrCreateNode(subConcept: IConcept?): INode {
-        val outputConcept = coerceOutputConcept(subConcept)
-        return if (node.isInstanceOf(outputConcept)) {
+        return if (subConcept == null || node.isInstanceOf(coerceOutputConcept(subConcept))) {
             node
         } else {
             replaceNode(subConcept)
@@ -130,9 +129,7 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
 
     override fun replaceNode(subConcept: IConcept?): INode {
         val parentNode = parent.getOrCreateNode(null)
-        val existing = parentNode.getChildren(link).toList().getOrNull(index)
         val newNode = parentNode.addNewChild(link, index, coerceOutputConcept(subConcept))
-        existing?.remove()
         return newNode
     }
 
