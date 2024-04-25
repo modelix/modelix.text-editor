@@ -180,22 +180,40 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
             if (referenceNode == null) return appendChild(newNode)
             val index = childNodes.indexOf(referenceNode)
             require(index >= 0) { "$referenceNode is not a child of $this" }
-            childNodes.add(index, newNode)
+            addChild(index, newNode)
             return newNode
         }
+
         override fun appendChild(child: IVirtualDom.Node): IVirtualDom.Node {
-            childNodes += child
+            addChild(childNodes.size, child)
             return child
         }
+
         override fun replaceChild(newChild: IVirtualDom.Node, oldChild: IVirtualDom.Node): IVirtualDom.Node {
             val index = childNodes.indexOf(oldChild)
             require(index >= 0) { "$oldChild is not a child of $this" }
-            childNodes[index] = newChild
+
+            removeChildAt(index)
+            addChild(index, newChild)
             return oldChild
         }
+
         override fun removeChild(child: IVirtualDom.Node): IVirtualDom.Node {
-            require(childNodes.remove(child)) { "$child is not a child of $this" }
+            val index = childNodes.indexOf(child)
+            require(index >= 0) { "$child is not a child of $this" }
+            removeChildAt(index)
             return child
+        }
+
+        fun removeChildAt(index: Int) {
+            val child = childNodes.removeAt(index)
+            (child as Node).parent = null
+        }
+
+        fun addChild(index: Int, child: IVirtualDom.Node) {
+            check(child.parent == null) { "Node is already attached to a parent node" }
+            childNodes.add(index, child)
+            (child as Node).parent = this
         }
 
         override fun remove() {
@@ -218,11 +236,32 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
 
         override fun getInnerBounds(): Bounds = ui.getInnerBounds(this)
         override fun getOuterBounds(): Bounds = ui.getOuterBounds(this)
+
+        override fun toString(): String {
+            return buildString {
+                append("<$tagName>")
+                attributes.forEach { attribute ->
+                    append(" ")
+                    append(attribute.key)
+                    append("=\"")
+                    append(attribute.value)
+                    append("\"")
+                }
+                append(">")
+                childNodes.forEach { child ->
+                    append(child)
+                }
+                append("</$tagName>")
+            }
+        }
     }
 
     inner class HTMLElement(tagName: String) : Element(tagName), IVirtualDom.HTMLElement
 
     inner class Text : Node(), IVirtualDom.Text {
         override var textContent: String? = null
+        override fun toString(): String {
+            return textContent ?: ""
+        }
     }
 }
