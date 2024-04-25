@@ -34,6 +34,7 @@
       <concept id="737165568293720756" name="org.modelix.mps.notation.structure.IndentCell" flags="ng" index="2OWiap" />
       <concept id="737165568293545234" name="org.modelix.mps.notation.structure.ChildrenCollectionCell" flags="ng" index="2OWXkZ">
         <reference id="737165568293545559" name="link" index="2OWXpU" />
+        <reference id="737165568293545885" name="subconceptToInsert" index="2OWXuK" />
         <child id="737165568293546266" name="layout" index="2OWX$R" />
         <child id="7525355686451955469" name="separatorCell" index="1r02wH" />
       </concept>
@@ -121,6 +122,7 @@
           <node concept="2OWiap" id="CUW2QYNjjz" role="2OY0$2" />
           <node concept="2OWXkZ" id="CUW2QYMNqb" role="2OY0$2">
             <ref role="2OWXpU" to="tpee:4EqhHTp4Mw3" resolve="member" />
+            <ref role="2OWXuK" to="tpee:1hodSy9TH5A" resolve="PlaceholderMember" />
             <node concept="2OYvdK" id="CUW2QYNjnP" role="2OWX$R" />
           </node>
         </node>
@@ -1437,7 +1439,10 @@
       <ref role="3JBHV4" to="tpee:h_B$H5g" resolve="AbstractOperation" />
       <node concept="3JB3jO" id="4JzlXapjSpU" role="3JBHQ1" />
     </node>
-    <node concept="3JBHHy" id="4dQjfTHY9SY" role="3JBHiB" />
+    <node concept="3JBH_3" id="m1OUzpj50M" role="3JBHiB">
+      <ref role="3JBHV4" to="tpee:1hodSy9TH5A" resolve="PlaceholderMember" />
+      <node concept="3JB3jO" id="m1OUzpj59Z" role="3JBHQ1" />
+    </node>
   </node>
   <node concept="3JBFZQ" id="22f9nDgKep2">
     <property role="TrG5h" value="jetbrains.mps.lang.smodel" />

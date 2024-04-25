@@ -384,6 +384,13 @@ class ChildCellTemplate(
 
     private var separatorCell: CellTemplate? = null
 
+    /**
+     * When pressing ENTER a new node of this concept is inserted.
+     * If this concept is null, then a special placeholder cell is added to the editor and a node can be created using
+     * the code completion menu.
+     */
+    var newLineConcept: IConcept? = null
+
     fun setSeparator(newSeparator: CellTemplate) {
         this.separatorCell = newSeparator
         reference?.let { newSeparator.setReference(SeparatorCellTemplateReference(it)) }
@@ -398,7 +405,7 @@ class ChildCellTemplate(
         val childNodes = getChildNodes(node)
         val substitutionPlaceholder = context.editorState.substitutionPlaceholderPositions[createCellReference(node)]
         val placeholderIndex = substitutionPlaceholder?.index?.coerceIn(0..childNodes.size) ?: 0
-        val addSubstitutionPlaceholder: (Int) -> Unit = { index ->
+        fun addSubstitutionPlaceholder(index: Int) {
             val isDefaultPlaceholder = childNodes.isEmpty()
             val placeholderText = if (isDefaultPlaceholder) "<no ${link.getSimpleName()}>" else "<choose ${link.getSimpleName()}>"
             val placeholder = TextCellData("", placeholderText)
@@ -413,10 +420,12 @@ class ChildCellTemplate(
             placeholder.properties[CommonCellProperties.tabTarget] = true
             cell.addChild(placeholder)
         }
-        val addInsertActionCell: (Int) -> Unit = { index ->
+        fun addInsertActionCell(index: Int) {
             if (link.isMultiple) {
                 val actionCell = CellData()
-                val action = InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
+                val action = newLineConcept?.let {
+                    InstantiateNodeAction(NonExistingChild(ExistingNode(node), link, index), it)
+                } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
                 cell.addChild(actionCell)
             }
@@ -479,6 +488,19 @@ class InsertSubstitutionPlaceholderAction(
         editor.selectAfterUpdate {
             editor.resolveCell(PlaceholderCellReference(ref))
                 .firstOrNull()?.layoutable()?.let { CaretSelection(it, 0) }
+        }
+    }
+}
+
+class InstantiateNodeAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
+    override fun isApplicable(): Boolean = true
+
+    override fun execute(editor: EditorComponent) {
+        val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+            location.replaceNode(concept)
+        }
+        editor.selectAfterUpdate {
+            CaretPositionPolicy(newNode).getBestSelection(editor)
         }
     }
 }
