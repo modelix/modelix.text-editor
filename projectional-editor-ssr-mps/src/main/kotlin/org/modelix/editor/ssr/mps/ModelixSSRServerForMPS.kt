@@ -283,7 +283,7 @@ object MPSScopeProvider : IScopeProvider {
             val containmentLink: SContainmentLink = sourceNode.getContainmentLink().toMPS()!!
             val index = sourceNode.index()
             val association: SReferenceLink = link.toMPS()!!
-            val concept: SAbstractConcept = (sourceNode.getNode()?.concept ?: sourceNode.expectedConcept()).toMPS()!!
+            val concept: SAbstractConcept = sourceNode.expectedConcept().toMPS()!!
             ModelConstraints.getReferenceDescriptor(
                 contextNode,
                 containmentLink,
