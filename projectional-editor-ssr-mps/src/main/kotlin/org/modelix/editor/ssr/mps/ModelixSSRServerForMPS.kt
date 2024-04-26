@@ -309,10 +309,14 @@ object MPSConstraints : IConstraintsChecker {
         // Constraints only prevent creating a node. If it already exists, it's handled by the model checker.
         if (node.getNode() != null) return emptyList()
 
+        val parentNode = node.getParent()?.getNode().toMPS()
+        // MPS doesn't support constraint checking without a parent node
+        if (parentNode == null) return emptyList()
+
         // ConstraintsCanBeFacade.checkCanBeRoot()
 
         val containmentContext = ContainmentContext.Builder()
-            .parentNode(node.getParent()?.getNode().toMPS())
+            .parentNode(parentNode)
             .link(node.getContainmentLink().toMPS())
             .childConcept(node.expectedConcept().toMPS()!!)
             .build()
@@ -323,7 +327,7 @@ object MPSConstraints : IConstraintsChecker {
             ConstraintsCanBeFacade.checkCanBeAncestor(
                 CanBeAncestorContext.Builder()
                     .ancestorNode(ancestorNode)
-                    .parentNode(node.getParent()?.getNode().toMPS())
+                    .parentNode(parentNode)
                     .childConcept(node.expectedConcept().toMPS()!!)
                     .descendantNode(node.getNode().toMPS())
                     .link(node.getContainmentLink().toMPS())

@@ -8,6 +8,7 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
+import org.modelix.model.api.isSubConceptOf
 import org.modelix.scopes.ScopeAspect
 import kotlin.jvm.JvmName
 
@@ -468,8 +469,20 @@ class ChildCellTemplate(
     fun getChildNodes(node: INode) = node.getChildren(link).toList()
 
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        // TODO
-        return listOf()
+        // This cell produces "wrappers".
+        // For example, in MPS baseLanguage you can type "int" (which is a Type) where a Statement is expected,
+        // and it is automatically wrapped with a LocalVariableDeclarationStatement.
+        // If the to-be-wrapped concept is already allowed without the wrapper, then it's not necessary to generate
+        // such an action.
+        if (link.targetConcept.isSubConceptOf(location.expectedConcept())) {
+            return emptyList()
+        }
+
+        // prevent endless nesting
+        if (location.ancestors(true).takeWhile { it.getNode() == null }.count() > 10) return emptyList()
+
+        val childNode = NonExistingChild(location.replacement(concept), link)
+        return listOf(ReplaceNodeActionProvider(childNode))
     }
 }
 data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : CellReference()
