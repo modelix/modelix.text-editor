@@ -12,7 +12,7 @@ data class ReplaceNodeActionProvider(val location: INonExistingNode) : ICodeComp
         val allowedConcepts = expectedConcept.getAllSubConcepts(true)
             .filterNot { it.isAbstract() }
             .filter { concept ->
-                val newNode = SpecializedNonExistingNode(location, concept)
+                val newNode = location.replacement(concept)
                 ConstraintsAspect.canCreate(newNode)
             }
         val cellModels = allowedConcepts.map { concept ->

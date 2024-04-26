@@ -333,7 +333,7 @@ class ReferenceCellTemplate(
         return sourceNode.getReferenceTarget(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        val sourceNode = location.ofSubConcept(concept)
+        val sourceNode = location.replacement(concept)
         val scope = ScopeAspect.getScope(sourceNode, link)
         val targets = scope.getVisibleElements(sourceNode, link)
         return targets.map { target ->
@@ -358,8 +358,7 @@ class ReferenceCellTemplate(
             val sourceNode = location.getOrCreateNode(concept)
             sourceNode.setReferenceTarget(link, target.getOrCreateNode())
             editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(sourceNode))
-                    .getBestSelection(editor)
+                CaretPositionPolicy(createCellReference(sourceNode)).getBestSelection(editor)
             }
         }
     }
