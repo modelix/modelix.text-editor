@@ -44,11 +44,8 @@ import java.util.Collections
 import kotlin.collections.HashMap
 import kotlin.collections.LinkedHashSet
 import kotlin.collections.List
-import kotlin.collections.Map
 import kotlin.collections.MutableMap
 import kotlin.collections.MutableSet
-import kotlin.collections.asSequence
-import kotlin.collections.emptyMap
 import kotlin.collections.filter
 import kotlin.collections.forEach
 import kotlin.collections.get
@@ -172,7 +169,6 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
         private inner class EditorSession(val editorId: String) {
             private var editorComponent: EditorComponent? = null
             private val commonElementPrefix = editorId + "-"
-            private var domStateOnClient: Map<String, HTMLElementUpdateData> = emptyMap()
 
             private fun getEditor() = checkNotNull(editorComponent) { "Editor $editorId isn't initialized" }
 
@@ -201,55 +197,57 @@ class ModelixSSRServer(private val nodeResolutionScope: INodeResolutionScope) {
             fun sendUpdate() {
                 LOG.debug { "($editorId) sendUpdate" }
                 editorComponent!!.update()
-                val dom = editorComponent!!.getHtmlElement()!!
-                LOG.debug { "($editorId) dom: $dom" }
-                val latestDomState = HashMap<String, HTMLElementUpdateData>()
-                // TODO performance
-                var rootData = toUpdateData(dom, latestDomState)
-                if (rootData is ElementReference) rootData = latestDomState[rootData.id]!!
-                check(rootData is HTMLElementUpdateData)
-                if (rootData.id != editorId) {
-                    latestDomState.remove(rootData.id)
-                    rootData = rootData.copy(id = editorId)
-                    latestDomState[editorId] = rootData
+                val dom = editorComponent!!.getHtmlElement()!! as VirtualDom.Node
+                val changedElements = HashMap<String, HTMLElementUpdateData>()
+                var rootData: INodeUpdateData? = toUpdateData(dom, changedElements)
+                dom.resetModificationMarker()
+                if (rootData is ElementReference) rootData = changedElements[rootData.id]
+                if (rootData != null) {
+                    check(rootData is HTMLElementUpdateData)
+                    if (rootData.id != editorId) {
+                        changedElements.remove(rootData.id)
+                        rootData = rootData.copy(id = editorId)
+                        changedElements[editorId] = rootData
+                    }
                 }
 
-                val changesOnly = latestDomState.entries.asSequence()
-                    .filter { domStateOnClient[it.key] != it.value }
-                    .map { it.value }.toList()
-                if (changesOnly.isEmpty()) return
-
-                domStateOnClient = latestDomState
+                if (changedElements.isEmpty()) return
 
                 ws.outgoing.trySend(
                     Frame.Text(
                         MessageFromServer(
                             editorId = editorId,
                             domUpdate = DomTreeUpdate(
-                                elements = changesOnly,
+                                elements = changedElements.values.toList(),
                             ),
                         ).toJson(),
                     ),
                 )
             }
 
-            fun toUpdateData(node: IVirtualDom.Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
+            fun toUpdateData(node: VirtualDom.Node, id2data: MutableMap<String, HTMLElementUpdateData>): INodeUpdateData {
                 return when (node) {
-                    is IVirtualDom.Text -> TextNodeUpdateData(node.textContent ?: "")
-                    is IVirtualDom.Element -> {
+                    is VirtualDom.Text -> TextNodeUpdateData(node.textContent ?: "")
+                    is VirtualDom.Element -> {
                         val id = node.id?.takeIf { it.isNotEmpty() }?.let {
                             if (it.startsWith(commonElementPrefix)) it else commonElementPrefix + it
                         }
-                        val data = HTMLElementUpdateData(
+                        fun createData() = HTMLElementUpdateData(
                             id = id,
                             tagName = node.tagName,
                             attributes = node.getAttributes() - "id",
                             children = node.childNodes.toList().map { toUpdateData(it, id2data) },
                         )
                         if (id == null) {
-                            data
+                            createData()
                         } else {
-                            id2data[id] = data
+                            if (node.wasModified()) {
+                                id2data[id] = createData()
+                            } else {
+                                if (node.wasAnyDescendantModified()) {
+                                    node.childNodes.forEach { toUpdateData(it, id2data) }
+                                }
+                            }
                             ElementReference(id)
                         }
                     }
