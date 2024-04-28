@@ -54,7 +54,6 @@ import org.jetbrains.mps.openapi.language.SContainmentLink
 import org.jetbrains.mps.openapi.language.SProperty
 import org.jetbrains.mps.openapi.language.SReferenceLink
 import org.jetbrains.mps.openapi.model.SNode
-import org.modelix.constraints.ConstraintsAspect
 import org.modelix.constraints.IConstraintViolation
 import org.modelix.constraints.IConstraintsChecker
 import org.modelix.editor.ExistingNode
@@ -64,23 +63,19 @@ import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
-import org.modelix.model.api.ILanguageRepository
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
-import org.modelix.model.mpsadapters.MPSChangeTranslator
 import org.modelix.model.mpsadapters.MPSChildLink
 import org.modelix.model.mpsadapters.MPSConcept
-import org.modelix.model.mpsadapters.MPSLanguageRepository
 import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
 import org.modelix.scopes.IScope
 import org.modelix.scopes.IScopeProvider
-import org.modelix.scopes.ScopeAspect
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
@@ -103,10 +98,8 @@ class ModelixSSRServerForMPS : Disposable {
 
     private var ssrServer: ModelixSSRServer? = null
     private var ktorServer: ApplicationEngine? = null
-    private var aspectsFromMPS: LanguageAspectsFromMPSModules? = null
-    private var mpsChangeTranslator: MPSChangeTranslator? = null
-    private var mpsLanguageRepository: MPSLanguageRepository? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
+    private var mpsIntegration: EditorIntegrationForMPS? = null
 
     fun registerProject(project: Project) {
         projects.add(project)
@@ -135,17 +128,10 @@ class ModelixSSRServerForMPS : Disposable {
 
             println("starting modelix SSR server")
 
-            val repository = getMPSProjects().first().repository
-            mpsLanguageRepository = MPSLanguageRepository(repository)
-            ILanguageRepository.register(mpsLanguageRepository!!)
-            mpsChangeTranslator = MPSChangeTranslator()
-            mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
             this.ssrServer = ssrServer
-            aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
-            ScopeAspect.registerScopeProvider(MPSScopeProvider)
-            ConstraintsAspect.checkers.add(MPSConstraints)
-            ssrServer.editorEngine.addRegistry(aspectsFromMPS!!)
+            mpsIntegration = EditorIntegrationForMPS(ssrServer.editorEngine)
+            mpsIntegration!!.init(getMPSProjects().first().repository)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
             }
@@ -255,12 +241,8 @@ class ModelixSSRServerForMPS : Disposable {
             ktorServer = null
             ssrServer?.dispose()
             ssrServer = null
-
-            mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
-            mpsLanguageRepository = null
-
-            ScopeAspect.unregisterScopeProvider(MPSScopeProvider)
-            ConstraintsAspect.checkers.remove(MPSConstraints)
+            mpsIntegration?.dispose()
+            mpsIntegration = null
         }
     }
 

@@ -7,6 +7,7 @@ import org.modelix.mpsPluginsDir
 buildscript {
     dependencies {
         classpath(coreLibs.semver)
+        classpath(libs.modelix.build.tools.lib)
     }
 }
 
@@ -88,7 +89,7 @@ tasks {
         doLast {
             val ownJar: File = prepareSandbox.get().pluginJar.get().asFile
 
-            val originalFile = project(":mps").layout.projectDirectory.file("$stubsSolutionName/$stubsSolutionName.msd").asFile
+            val originalFile = project(":mps").layout.projectDirectory.file("stubs-template/$stubsSolutionName/$stubsSolutionName.msd").asFile
             val xml = originalFile.inputStream().use { JDOMUtil.loadDocument(it) }
 
             val modelRoot = xml.descendants.filterIsInstance<org.jdom2.Element>().first { it.name == "modelRoot" }
@@ -131,16 +132,11 @@ tasks {
         dependsOn(packageStubsSolution)
         intoChild(pluginName.map { "$it/languages" })
             .from(packageStubsSolution.map { it.archiveFile })
-
-        if ("true" == project.findProperty("ciBuild")) {
-            // packaging the MPS modules during development would make them all read-only
-            dependsOn(project(":mps").tasks.named("packageMpsPublications"))
-            intoChild(pluginName.map { "$it/languages" })
-                .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/editor-languages.zip") }))
-                .eachFile {
-                    path = path.replaceFirst("packaged-modules/", "")
-                }
-        }
+        intoChild(pluginName.map { "$it/META-INF" })
+            .from(project.layout.projectDirectory.file("src/main/resources/META-INF"))
+            .exclude("plugin.xml")
+        intoChild(pluginName.map { "$it/META-INF" })
+            .from(patchPluginXml.flatMap { it.outputFiles })
     }
 }
 

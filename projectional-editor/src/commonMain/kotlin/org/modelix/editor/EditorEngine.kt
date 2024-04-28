@@ -119,7 +119,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         }
     }
 
-    private fun resolveConceptEditor(concept: IConcept?): List<ConceptEditor> {
+    fun resolveConceptEditor(concept: IConcept?): List<ConceptEditor> {
         if (concept == null) return listOf(defaultConceptEditor)
         val editors = concept.getAllConcepts().firstNotNullOfOrNull { superConcept ->
             val conceptReference = superConcept.getReference()

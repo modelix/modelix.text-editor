@@ -8,15 +8,20 @@ plugins {
 }
 
 mpsBuild {
+    dependsOn(":projectional-editor-ssr-mps:buildPlugin")
     mpsHome = mpsHomeDir.get().asFile.absolutePath
     javaHome = Jvm.current().javaHome
 
-    search(".")
+    search("../projectional-editor-ssr-mps/build/idea-sandbox/plugins/projectional-editor-ssr-mps")
+    search("modules")
     publication("editor-languages") {
         module("org.modelix.mps.webaspect.devkit")
+        module("org.modelix.mps.webaspect.genplan")
+        module("org.modelix.mps.baseLanguage2kotlin")
+        module("org.modelix.mps.notation")
     }
-    publication("already-packaged-modules") {
-        module("org.modelix.mps.editor.ssr.stubs")
+    publication("baseLanguage-notation") {
+        module("org.modelix.mps.notation.impl.baseLanguage")
     }
 }
 

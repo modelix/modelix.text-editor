@@ -27,7 +27,7 @@ val Project.mpsMajorVersion: String get() {
     if (project != rootProject) return rootProject.mpsVersion
     return project.findProperty("mps.version.major")?.toString()?.takeIf { it.isNotEmpty() }
         ?: project.findProperty("mps.version")?.toString()?.takeIf { it.isNotEmpty() }?.replace(Regex("""(20\d\d\.\d+).*"""), "$1")
-        ?: "2023.3"
+        ?: "2023.2"
 }
 
 val Project.mpsVersion: String get() {

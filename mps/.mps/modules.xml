@@ -2,13 +2,12 @@
 <project version="4">
   <component name="MPSProject">
     <projectModules>
-      <modulePath path="$PROJECT_DIR$/devkits/org.modelix.mps.webaspect.devkit/org.modelix.mps.webaspect.devkit.devkit" folder="" />
-      <modulePath path="$PROJECT_DIR$/languages/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="" />
-      <modulePath path="$PROJECT_DIR$/org.modelix.mps.baseLanguage2kotlin/org.modelix.mps.baseLanguage2kotlin.mpl" folder="" />
-      <modulePath path="$PROJECT_DIR$/org.modelix.mps.editor.ssr.stubs/org.modelix.mps.editor.ssr.stubs.msd" folder="" />
-      <modulePath path="$PROJECT_DIR$/org.modelix.mps.notation.runtime/org.modelix.mps.notation.runtime.msd" folder="" />
-      <modulePath path="$PROJECT_DIR$/solutions/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="" />
-      <modulePath path="$PROJECT_DIR$/solutions/org.modelix.mps.webaspect.genplan/org.modelix.mps.webaspect.genplan.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguage2kotlin/org.modelix.mps.baseLanguage2kotlin.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.devkit/org.modelix.mps.webaspect.devkit.devkit" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.genplan/org.modelix.mps.webaspect.genplan.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/stubs-template/org.modelix.mps.editor.ssr.stubs/org.modelix.mps.editor.ssr.stubs.msd" folder="" />
     </projectModules>
   </component>
 </project>
