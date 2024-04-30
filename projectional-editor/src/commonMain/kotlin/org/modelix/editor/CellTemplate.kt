@@ -201,6 +201,26 @@ class InstantiateNodeCompletionAction(
                 .getBestSelection(editor)
         }
     }
+
+    override fun shadowedBy(shadowing: ICodeCompletionAction): Boolean {
+        return when (shadowing) {
+            is InstantiateNodeCompletionAction -> {
+                // Avoid showing the same entry twice, once with and once without a wrapper.
+                shadowing.concept == concept && shadowing.location.nodeCreationDepth() < location.nodeCreationDepth()
+            }
+            else -> false
+        }
+    }
+
+    override fun shadows(shadowed: ICodeCompletionAction): Boolean {
+        return when (shadowed) {
+            is InstantiateNodeCompletionAction -> {
+                // Avoid showing the same entry twice, once with and once without a wrapper.
+                shadowed.concept == concept && shadowed.location.nodeCreationDepth() > location.nodeCreationDepth()
+            }
+            else -> false
+        }
+    }
 }
 
 /**

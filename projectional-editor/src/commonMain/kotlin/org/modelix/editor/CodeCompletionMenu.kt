@@ -216,6 +216,14 @@ class CodeCompletionActionWithPostprocessor(val action: ICodeCompletionAction, v
         action.execute(editor)
         after()
     }
+
+    override fun shadowedBy(shadowing: ICodeCompletionAction): Boolean {
+        return action.shadowedBy(if (shadowing is CodeCompletionActionWithPostprocessor) shadowing.action else shadowing)
+    }
+
+    override fun shadows(shadowed: ICodeCompletionAction): Boolean {
+        return action.shadows(if (shadowed is CodeCompletionActionWithPostprocessor) shadowed.action else shadowed)
+    }
 }
 class CodeCompletionActionProviderWithPostprocessor(
     val actionProvider: ICodeCompletionActionProvider,
