@@ -27,7 +27,7 @@ val Project.mpsMajorVersion: String get() {
     if (project != rootProject) return rootProject.mpsVersion
     return project.findProperty("mps.version.major")?.toString()?.takeIf { it.isNotEmpty() }
         ?: project.findProperty("mps.version")?.toString()?.takeIf { it.isNotEmpty() }?.replace(Regex("""(20\d\d\.\d+).*"""), "$1")
-        ?: "2023.3"
+        ?: "2023.2"
 }
 
 val Project.mpsVersion: String get() {
@@ -59,6 +59,14 @@ val Project.mpsJavaVersion: Int get() = if (mpsPlatformVersion >= 223) 17 else 1
 val Project.mpsHomeDir: Provider<Directory> get() {
     if (project != rootProject) return rootProject.mpsHomeDir
     return project.layout.buildDirectory.dir("mps-$mpsVersion")
+}
+
+val Project.mpsPluginsDir: File? get() {
+    val candidates = listOfNotNull(
+        project.findProperty("mps$mpsPlatformVersion.plugins.dir")?.toString()?.let { file(it) },
+        System.getProperty("user.home")?.let { file(it).resolve("/Library/Application Support/JetBrains/MPS2023.2/plugins/") },
+    )
+    return candidates.firstOrNull { it.isDirectory }
 }
 
 fun Project.copyMps(): File {

@@ -32,7 +32,13 @@ jobs:
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew :projectional-editor-ssr-mps:build -PciBuild=true -Pgpr.token=${{ secrets.GITHUB_TOKEN }} -Pmps.version.major=${{ matrix.version }}
+        run: >-
+          ./gradlew
+          :projectional-editor-ssr-mps:build
+          :projectional-editor-ssr-mps-languages:build
+          -PciBuild=true
+          -Pgpr.token=${{ secrets.GITHUB_TOKEN }}
+          -Pmps.version.major=${{ matrix.version }}
       - name: Archive test report
         uses: actions/upload-artifact@v4
         if: always()

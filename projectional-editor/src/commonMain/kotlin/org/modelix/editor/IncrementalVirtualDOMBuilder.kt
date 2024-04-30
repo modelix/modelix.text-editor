@@ -44,9 +44,11 @@ class IncrementalVirtualDOMBuilder(val document: IVirtualDom, existingRootElemen
                     if (index < parent.childNodes.size) {
                         val actualChild = parent.childNodes.get(index)
                         if (actualChild != expectedChild) {
+                            expectedChild.parent?.removeChild(expectedChild)
                             parent.insertBefore(expectedChild, actualChild)
                         }
                     } else {
+                        expectedChild.parent?.removeChild(expectedChild)
                         parent.appendChild(expectedChild)
                     }
                 }

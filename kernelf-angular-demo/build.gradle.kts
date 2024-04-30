@@ -32,12 +32,12 @@ val updateTsModelApiVersion = tasks.create("updateTsModelApiVersion") {
         var text = packageJsonFile.readText()
         println("ts-model-api path: $localPath")
         val replacement = if (localPath.exists()) {
-            """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir)}""""
+            """"@modelix/ts-model-api": "file:${localPath.relativeTo(projectDir).toString().replace("\\", "\\\\")}""""
         } else {
             """"@modelix/ts-model-api": "${rootProject.property("ts-model-api.version")}""""
         }
         println("ts-model-api version: $replacement")
-        text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), replacement)
+        text = text.replace(Regex(""""@modelix/ts-model-api": ".*""""), { replacement })
         packageJsonFile.writeText(text)
     }
 }

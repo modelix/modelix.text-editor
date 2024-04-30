@@ -54,7 +54,6 @@ import org.jetbrains.mps.openapi.language.SContainmentLink
 import org.jetbrains.mps.openapi.language.SProperty
 import org.jetbrains.mps.openapi.language.SReferenceLink
 import org.jetbrains.mps.openapi.model.SNode
-import org.modelix.constraints.ConstraintsAspect
 import org.modelix.constraints.IConstraintViolation
 import org.modelix.constraints.IConstraintsChecker
 import org.modelix.editor.ExistingNode
@@ -64,23 +63,19 @@ import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
-import org.modelix.model.api.ILanguageRepository
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
-import org.modelix.model.mpsadapters.MPSChangeTranslator
 import org.modelix.model.mpsadapters.MPSChildLink
 import org.modelix.model.mpsadapters.MPSConcept
-import org.modelix.model.mpsadapters.MPSLanguageRepository
 import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
 import org.modelix.scopes.IScope
 import org.modelix.scopes.IScopeProvider
-import org.modelix.scopes.ScopeAspect
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import java.time.Duration
@@ -103,10 +98,8 @@ class ModelixSSRServerForMPS : Disposable {
 
     private var ssrServer: ModelixSSRServer? = null
     private var ktorServer: ApplicationEngine? = null
-    private var aspectsFromMPS: LanguageAspectsFromMPSModules? = null
-    private var mpsChangeTranslator: MPSChangeTranslator? = null
-    private var mpsLanguageRepository: MPSLanguageRepository? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
+    private var mpsIntegration: EditorIntegrationForMPS? = null
 
     fun registerProject(project: Project) {
         projects.add(project)
@@ -135,17 +128,10 @@ class ModelixSSRServerForMPS : Disposable {
 
             println("starting modelix SSR server")
 
-            val repository = getMPSProjects().first().repository
-            mpsLanguageRepository = MPSLanguageRepository(repository)
-            ILanguageRepository.register(mpsLanguageRepository!!)
-            mpsChangeTranslator = MPSChangeTranslator()
-            mpsChangeTranslator!!.start(repository)
             val ssrServer = ModelixSSRServer((getRootNode() ?: return).getArea())
             this.ssrServer = ssrServer
-            aspectsFromMPS = LanguageAspectsFromMPSModules(repository)
-            ScopeAspect.registerScopeProvider(MPSScopeProvider)
-            ConstraintsAspect.checkers.add(MPSConstraints)
-            ssrServer.editorEngine.addRegistry(aspectsFromMPS!!)
+            mpsIntegration = EditorIntegrationForMPS(ssrServer.editorEngine)
+            mpsIntegration!!.init(getMPSProjects().first().repository)
             ktorServer = embeddedServer(Netty, port = 43593) {
                 initKtorServer(ssrServer)
             }
@@ -167,11 +153,11 @@ class ModelixSSRServerForMPS : Disposable {
                     repository.getArea().executeRead {
                         body {
                             ul {
-                                repository.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Repository.modules).forEach {
+                                repository.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Repository.modules).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "module/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -188,11 +174,11 @@ class ModelixSSRServerForMPS : Disposable {
                         val module = repository.getArea().resolveNode(NodeReference(moduleRef))!!
                         body {
                             ul {
-                                module.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Module.models).forEach {
+                                module.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Module.models).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "../../model/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -209,11 +195,11 @@ class ModelixSSRServerForMPS : Disposable {
                         val model = repository.getArea().resolveNode(NodeReference(modelRef))!!
                         body {
                             ul {
-                                model.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Model.rootNodes).forEach {
+                                model.getChildren(BuiltinLanguages.MPSRepositoryConcepts.Model.rootNodes).sortedBy { it.name }.forEach {
                                     li {
                                         a {
                                             href = "../../editor/${URLEncoder.encode(it.reference.serialize(), StandardCharsets.UTF_8)}/"
-                                            +(it.getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name) ?: "<no name>")
+                                            +(it.name ?: "<no name>")
                                         }
                                     }
                                 }
@@ -255,12 +241,8 @@ class ModelixSSRServerForMPS : Disposable {
             ktorServer = null
             ssrServer?.dispose()
             ssrServer = null
-
-            mpsLanguageRepository?.let { ILanguageRepository.unregister(it) }
-            mpsLanguageRepository = null
-
-            ScopeAspect.unregisterScopeProvider(MPSScopeProvider)
-            ConstraintsAspect.checkers.remove(MPSConstraints)
+            mpsIntegration?.dispose()
+            mpsIntegration = null
         }
     }
 
@@ -283,7 +265,7 @@ object MPSScopeProvider : IScopeProvider {
             val containmentLink: SContainmentLink = sourceNode.getContainmentLink().toMPS()!!
             val index = sourceNode.index()
             val association: SReferenceLink = link.toMPS()!!
-            val concept: SAbstractConcept = (sourceNode.getNode()?.concept ?: sourceNode.expectedConcept()).toMPS()!!
+            val concept: SAbstractConcept = sourceNode.expectedConcept().toMPS()!!
             ModelConstraints.getReferenceDescriptor(
                 contextNode,
                 containmentLink,
@@ -309,10 +291,14 @@ object MPSConstraints : IConstraintsChecker {
         // Constraints only prevent creating a node. If it already exists, it's handled by the model checker.
         if (node.getNode() != null) return emptyList()
 
+        val parentNode = node.getParent()?.getNode().toMPS()
+        // MPS doesn't support constraint checking without a parent node
+        if (parentNode == null) return emptyList()
+
         // ConstraintsCanBeFacade.checkCanBeRoot()
 
         val containmentContext = ContainmentContext.Builder()
-            .parentNode(node.getParent()?.getNode().toMPS())
+            .parentNode(parentNode)
             .link(node.getContainmentLink().toMPS())
             .childConcept(node.expectedConcept().toMPS()!!)
             .build()
@@ -323,7 +309,7 @@ object MPSConstraints : IConstraintsChecker {
             ConstraintsCanBeFacade.checkCanBeAncestor(
                 CanBeAncestorContext.Builder()
                     .ancestorNode(ancestorNode)
-                    .parentNode(node.getParent()?.getNode().toMPS())
+                    .parentNode(parentNode)
                     .childConcept(node.expectedConcept().toMPS()!!)
                     .descendantNode(node.getNode().toMPS())
                     .link(node.getContainmentLink().toMPS())
@@ -342,5 +328,7 @@ fun IChildLink?.toMPS(): SContainmentLink? = if (this is MPSChildLink) this.link
 fun IReferenceLink?.toMPS(): SReferenceLink? = if (this is MPSReferenceLink) this.link else null
 fun IProperty?.toMPS(): SProperty? = if (this is MPSProperty) this.property else null
 fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept else null
+
+val INode.name get() = getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name)
 
 class MPSConstraintViolation(val rule: Rule<*>) : IConstraintViolation

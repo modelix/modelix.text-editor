@@ -164,10 +164,12 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 }
                 ).toList()
             val params = CodeCompletionParameters(editor, typedText)
-            val actions = providers.flatMap { it.flattenApplicableActions(params) }
-            val matchingActions = actions
-                .filter { it.getMatchingText().startsWith(typedText) }
-                .applyShadowing()
+            val matchingActions = editor.runRead {
+                val actions = providers.flatMap { it.flattenApplicableActions(params) }
+                actions
+                    .filter { it.getMatchingText().startsWith(typedText) }
+                    .applyShadowing()
+            }
             if (matchingActions.isNotEmpty()) {
                 if (matchingActions.size == 1 && matchingActions.first().getMatchingText() == typedText) {
                     matchingActions.first().execute(editor)
@@ -209,7 +211,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         // complete immediately if there is a single matching action
         val providers = layoutable.cell.getSubstituteActions()
         val params = CodeCompletionParameters(editor, newText)
-        val actions = providers.flatMap { it.flattenApplicableActions(params) }.toList()
+        val actions = editor.runRead { providers.flatMap { it.flattenApplicableActions(params) }.toList() }
         val matchingActions = actions
             .filter { it.getMatchingText() == newText }
             .applyShadowing()

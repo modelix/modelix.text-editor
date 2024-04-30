@@ -8,6 +8,7 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
+import org.modelix.model.api.isSubConceptOf
 import org.modelix.scopes.ScopeAspect
 import kotlin.jvm.JvmName
 
@@ -333,7 +334,7 @@ class ReferenceCellTemplate(
         return sourceNode.getReferenceTarget(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        val sourceNode = NonExistingChild(location.getParent()!!, location.getContainmentLink()!!, location.index()).ofSubConcept(concept)
+        val sourceNode = location.replacement(concept)
         val scope = ScopeAspect.getScope(sourceNode, link)
         val targets = scope.getVisibleElements(sourceNode, link)
         return targets.map { target ->
@@ -358,8 +359,7 @@ class ReferenceCellTemplate(
             val sourceNode = location.getOrCreateNode(concept)
             sourceNode.setReferenceTarget(link, target.getOrCreateNode())
             editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(sourceNode))
-                    .getBestSelection(editor)
+                CaretPositionPolicy(createCellReference(sourceNode)).getBestSelection(editor)
             }
         }
     }
@@ -384,6 +384,13 @@ class ChildCellTemplate(
 
     private var separatorCell: CellTemplate? = null
 
+    /**
+     * When pressing ENTER a new node of this concept is inserted.
+     * If this concept is null, then a special placeholder cell is added to the editor and a node can be created using
+     * the code completion menu.
+     */
+    var newLineConcept: IConcept? = null
+
     fun setSeparator(newSeparator: CellTemplate) {
         this.separatorCell = newSeparator
         reference?.let { newSeparator.setReference(SeparatorCellTemplateReference(it)) }
@@ -398,7 +405,7 @@ class ChildCellTemplate(
         val childNodes = getChildNodes(node)
         val substitutionPlaceholder = context.editorState.substitutionPlaceholderPositions[createCellReference(node)]
         val placeholderIndex = substitutionPlaceholder?.index?.coerceIn(0..childNodes.size) ?: 0
-        val addSubstitutionPlaceholder: (Int) -> Unit = { index ->
+        fun addSubstitutionPlaceholder(index: Int) {
             val isDefaultPlaceholder = childNodes.isEmpty()
             val placeholderText = if (isDefaultPlaceholder) "<no ${link.getSimpleName()}>" else "<choose ${link.getSimpleName()}>"
             val placeholder = TextCellData("", placeholderText)
@@ -413,10 +420,12 @@ class ChildCellTemplate(
             placeholder.properties[CommonCellProperties.tabTarget] = true
             cell.addChild(placeholder)
         }
-        val addInsertActionCell: (Int) -> Unit = { index ->
+        fun addInsertActionCell(index: Int) {
             if (link.isMultiple) {
                 val actionCell = CellData()
-                val action = InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
+                val action = newLineConcept?.let {
+                    InstantiateNodeAction(NonExistingChild(ExistingNode(node), link, index), it)
+                } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
                 cell.addChild(actionCell)
             }
@@ -460,8 +469,20 @@ class ChildCellTemplate(
     fun getChildNodes(node: INode) = node.getChildren(link).toList()
 
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        // TODO
-        return listOf()
+        // This cell produces "wrappers".
+        // For example, in MPS baseLanguage you can type "int" (which is a Type) where a Statement is expected,
+        // and it is automatically wrapped with a LocalVariableDeclarationStatement.
+        // If the to-be-wrapped concept is already allowed without the wrapper, then it's not necessary to generate
+        // such an action.
+        if (link.targetConcept.isSubConceptOf(location.expectedConcept())) {
+            return emptyList()
+        }
+
+        // prevent endless nesting
+        if (location.ancestors(true).takeWhile { it.getNode() == null }.count() > 10) return emptyList()
+
+        val childNode = NonExistingChild(location.replacement(concept), link)
+        return listOf(ReplaceNodeActionProvider(childNode))
     }
 }
 data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : CellReference()
@@ -479,6 +500,19 @@ class InsertSubstitutionPlaceholderAction(
         editor.selectAfterUpdate {
             editor.resolveCell(PlaceholderCellReference(ref))
                 .firstOrNull()?.layoutable()?.let { CaretSelection(it, 0) }
+        }
+    }
+}
+
+class InstantiateNodeAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
+    override fun isApplicable(): Boolean = true
+
+    override fun execute(editor: EditorComponent) {
+        val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+            location.replaceNode(concept)
+        }
+        editor.selectAfterUpdate {
+            CaretPositionPolicy(newNode).getBestSelection(editor)
         }
     }
 }

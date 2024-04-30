@@ -6,8 +6,8 @@ npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
 
 [versions]
-modelixCore = "7.2.0-pr707.7a5dda1"
-modelixBuildtools="1.4.1"
+modelixCore = "7.3.0"
+modelixBuildtools="1.4.2-kotlin.support"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
@@ -21,3 +21,4 @@ modelix-model-datastructure = { group = "org.modelix", name = "model-datastructu
 modelix-mps-model-adapters = { group = "org.modelix.mps", name = "model-adapters", version.ref = "modelixCore" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "6.0.9" }
 kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.11.0"
+modelix-build-tools-lib = { group = "org.modelix.mps", name = "build-tools-lib", version.ref = "modelixBuildtools" }

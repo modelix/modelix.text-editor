@@ -2,10 +2,12 @@ import com.jetbrains.plugin.structure.intellij.utils.JDOMUtil
 import org.jdom2.Element
 import org.jetbrains.intellij.transformXml
 import org.modelix.mpsHomeDir
+import org.modelix.mpsPluginsDir
 
 buildscript {
     dependencies {
         classpath(coreLibs.semver)
+        classpath(libs.modelix.build.tools.lib)
     }
 }
 
@@ -87,7 +89,7 @@ tasks {
         doLast {
             val ownJar: File = prepareSandbox.get().pluginJar.get().asFile
 
-            val originalFile = project(":mps").layout.projectDirectory.file("$stubsSolutionName/$stubsSolutionName.msd").asFile
+            val originalFile = project(":mps").layout.projectDirectory.file("stubs-template/$stubsSolutionName/$stubsSolutionName.msd").asFile
             val xml = originalFile.inputStream().use { JDOMUtil.loadDocument(it) }
 
             val modelRoot = xml.descendants.filterIsInstance<org.jdom2.Element>().first { it.name == "modelRoot" }
@@ -117,12 +119,12 @@ tasks {
         archiveFileName = "$stubsSolutionName.jar"
     }
 
-    val mpsPluginDir = project.findProperty("mps232.plugins.dir")?.toString()?.let { file(it) }
-    if (mpsPluginDir != null && mpsPluginDir.isDirectory) {
+    val pluginDir = mpsPluginsDir
+    if (pluginDir != null) {
         create<Sync>("installMpsPlugin") {
             dependsOn(prepareSandbox)
             from(project.layout.buildDirectory.dir("idea-sandbox/plugins/${project.name}"))
-            into(mpsPluginDir.resolve(project.name))
+            into(pluginDir.resolve(project.name))
         }
     }
 
@@ -130,16 +132,11 @@ tasks {
         dependsOn(packageStubsSolution)
         intoChild(pluginName.map { "$it/languages" })
             .from(packageStubsSolution.map { it.archiveFile })
-
-        if ("true" == project.findProperty("ciBuild")) {
-            // packaging the MPS modules during development would make them all read-only
-            dependsOn(project(":mps").tasks.named("packageMpsPublications"))
-            intoChild(pluginName.map { "$it/languages" })
-                .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/editor-languages.zip") }))
-                .eachFile {
-                    path = path.replaceFirst("packaged-modules/", "")
-                }
-        }
+        intoChild(pluginName.map { "$it/META-INF" })
+            .from(project.layout.projectDirectory.file("src/main/resources/META-INF"))
+            .exclude("plugin.xml")
+        intoChild(pluginName.map { "$it/META-INF" })
+            .from(patchPluginXml.flatMap { it.outputFiles })
     }
 }
 

@@ -37,39 +37,33 @@ fun INonExistingNode.commonAncestor(otherNode: INonExistingNode): INonExistingNo
     return null
 }
 
-data class SpecializedNonExistingNode(val node: INonExistingNode, val subConcept: IConcept) : INonExistingNode {
-    override fun getExistingAncestor(): INode? = node.getExistingAncestor()
+data class NodeReplacement(val nodeToReplace: INonExistingNode, val replacementConcept: IConcept) : INonExistingNode {
+    override fun getExistingAncestor(): INode? = nodeToReplace.getExistingAncestor()
 
-    override fun getParent(): INonExistingNode? = node.getParent()
+    override fun getParent(): INonExistingNode? = nodeToReplace.getParent()
 
-    override fun getContainmentLink(): IChildLink? = node.getContainmentLink()
+    override fun getContainmentLink(): IChildLink? = nodeToReplace.getContainmentLink()
 
-    override fun index(): Int = node.index()
+    override fun index(): Int = nodeToReplace.index()
 
     override fun replaceNode(subConcept: IConcept?): INode {
-        return node.replaceNode(coerceOutputConcept(subConcept))
+        return nodeToReplace.replaceNode(coerceOutputConcept(subConcept))
     }
 
     override fun getOrCreateNode(subConcept: IConcept?): INode {
-        return node.getOrCreateNode(coerceOutputConcept(subConcept))
+        return replaceNode(subConcept)
     }
 
     override fun getNode(): INode? {
-        return node.getNode()
+        return null
     }
 
     override fun expectedConcept(): IConcept {
-        return subConcept
+        return replacementConcept
     }
 }
 
-fun INonExistingNode.ofSubConcept(subConcept: IConcept): INonExistingNode {
-    return if (expectedConcept().isSubConceptOf(subConcept)) {
-        this
-    } else {
-        SpecializedNonExistingNode(this, subConcept)
-    }
-}
+fun INonExistingNode.replacement(newConcept: IConcept): INonExistingNode = NodeReplacement(this, newConcept)
 
 fun INonExistingNode.coerceOutputConcept(subConcept: IConcept?): IConcept? {
     val expectedConcept = expectedConcept()
@@ -100,8 +94,7 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
     }
 
     override fun getOrCreateNode(subConcept: IConcept?): INode {
-        val outputConcept = coerceOutputConcept(subConcept)
-        return if (node.isInstanceOf(outputConcept)) {
+        return if (subConcept == null || node.isInstanceOf(coerceOutputConcept(subConcept))) {
             node
         } else {
             replaceNode(subConcept)
@@ -130,9 +123,7 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
 
     override fun replaceNode(subConcept: IConcept?): INode {
         val parentNode = parent.getOrCreateNode(null)
-        val existing = parentNode.getChildren(link).toList().getOrNull(index)
         val newNode = parentNode.addNewChild(link, index, coerceOutputConcept(subConcept))
-        existing?.remove()
         return newNode
     }
 

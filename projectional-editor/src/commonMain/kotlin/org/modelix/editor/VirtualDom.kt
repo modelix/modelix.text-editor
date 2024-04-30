@@ -160,9 +160,33 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
     }
 
     open inner class Node : IVirtualDom.Node {
+        private var wasModified: Boolean = true
+        private var wasAnyDescendantModified: Boolean = true
         private val userObjects: MutableMap<String, Any> = HashMap()
-        override var parent: IVirtualDom.Node? = null
-        override val childNodes: MutableList<IVirtualDom.Node> = ArrayList()
+        override var parent: Node? = null
+        override val childNodes: MutableList<Node> = ArrayList()
+
+        fun resetModificationMarker() {
+            if (!wasModified && wasAnyDescendantModified) return
+            childNodes.forEach { it.resetModificationMarker() }
+            wasAnyDescendantModified = false
+            wasModified = false
+        }
+
+        fun markModified() {
+            wasModified = true
+            parent?.markDescendantModified()
+        }
+
+        fun markDescendantModified() {
+            if (wasAnyDescendantModified) return
+            wasAnyDescendantModified = true
+            parent?.markDescendantModified()
+        }
+
+        fun wasAnyDescendantModified() = wasAnyDescendantModified
+
+        fun wasModified(): Boolean = wasModified
 
         override fun getVDom(): IVirtualDom = this@VirtualDom
 
@@ -180,22 +204,44 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
             if (referenceNode == null) return appendChild(newNode)
             val index = childNodes.indexOf(referenceNode)
             require(index >= 0) { "$referenceNode is not a child of $this" }
-            childNodes.add(index, newNode)
+            addChild(index, newNode)
             return newNode
         }
+
         override fun appendChild(child: IVirtualDom.Node): IVirtualDom.Node {
-            childNodes += child
+            addChild(childNodes.size, child)
             return child
         }
+
         override fun replaceChild(newChild: IVirtualDom.Node, oldChild: IVirtualDom.Node): IVirtualDom.Node {
             val index = childNodes.indexOf(oldChild)
             require(index >= 0) { "$oldChild is not a child of $this" }
-            childNodes[index] = newChild
+
+            removeChildAt(index)
+            addChild(index, newChild)
             return oldChild
         }
+
         override fun removeChild(child: IVirtualDom.Node): IVirtualDom.Node {
-            require(childNodes.remove(child)) { "$child is not a child of $this" }
+            val index = childNodes.indexOf(child)
+            require(index >= 0) { "$child is not a child of $this" }
+            removeChildAt(index)
             return child
+        }
+
+        fun removeChildAt(index: Int) {
+            val child = childNodes.removeAt(index)
+            child.parent = null
+            markModified()
+        }
+
+        fun addChild(index: Int, child: IVirtualDom.Node) {
+            require(child is Node)
+            check(child.parent == null) { "Node is already attached to a parent node" }
+            childNodes.add(index, child)
+            child.parent = this
+            markModified()
+            if (child.wasModified() || child.wasAnyDescendantModified()) markDescendantModified()
         }
 
         override fun remove() {
@@ -208,21 +254,54 @@ class VirtualDom(override val ui: IVirtualDomUI, val idPrefix: String = "") : IV
         override fun getAttributeNames(): Array<String> = attributes.keys.toTypedArray()
         override fun getAttribute(qualifiedName: String): String? = attributes[qualifiedName]
         override fun setAttribute(qualifiedName: String, value: String) {
+            if (attributes[qualifiedName] == value) return
             attributes[qualifiedName] = value
             if (qualifiedName == "id") {
                 elementsMap[value] = this
             }
+            markModified()
         }
-        override fun removeAttribute(qualifiedName: String) { attributes.remove(qualifiedName) }
+        override fun removeAttribute(qualifiedName: String) {
+            if (attributes.remove(qualifiedName) != null) {
+                markModified()
+            }
+        }
         override fun getAttributes(): Map<String, String> = attributes
 
         override fun getInnerBounds(): Bounds = ui.getInnerBounds(this)
         override fun getOuterBounds(): Bounds = ui.getOuterBounds(this)
+
+        override fun toString(): String {
+            return buildString {
+                append("<$tagName>")
+                attributes.forEach { attribute ->
+                    append(" ")
+                    append(attribute.key)
+                    append("=\"")
+                    append(attribute.value)
+                    append("\"")
+                }
+                append(">")
+                childNodes.forEach { child ->
+                    append(child)
+                }
+                append("</$tagName>")
+            }
+        }
     }
 
     inner class HTMLElement(tagName: String) : Element(tagName), IVirtualDom.HTMLElement
 
     inner class Text : Node(), IVirtualDom.Text {
         override var textContent: String? = null
+            set(value) {
+                if (field == value) return
+                field = value
+                markModified()
+            }
+
+        override fun toString(): String {
+            return textContent ?: ""
+        }
     }
 }
