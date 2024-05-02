@@ -37,8 +37,10 @@ import jetbrains.mps.core.aspects.constraints.rules.kinds.CanBeAncestorContext
 import jetbrains.mps.core.aspects.constraints.rules.kinds.ContainmentContext
 import jetbrains.mps.project.MPSProject
 import jetbrains.mps.scope.Scope
+import jetbrains.mps.smodel.ModelDependencyResolver
 import jetbrains.mps.smodel.constraints.ConstraintsCanBeFacade
 import jetbrains.mps.smodel.constraints.ModelConstraints
+import jetbrains.mps.smodel.language.LanguageRegistry
 import kotlinx.html.a
 import kotlinx.html.base
 import kotlinx.html.body
@@ -70,6 +72,7 @@ import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.mpsadapters.MPSChildLink
 import org.modelix.model.mpsadapters.MPSConcept
+import org.modelix.model.mpsadapters.MPSModelAsNode
 import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
@@ -322,7 +325,20 @@ object MPSConstraints : IConstraintsChecker {
         val parentViolations = ConstraintsCanBeFacade.checkCanBeParent(containmentContext).asSequence()
         val childViolations = ConstraintsCanBeFacade.checkCanBeChild(containmentContext).asSequence()
         return (ancestorViolations + parentViolations + childViolations).map { MPSConstraintViolation(it) }.toList() +
-            (node.getParent()?.let { check(it) } ?: emptyList())
+            (node.getParent()?.let { check(it) } ?: emptyList()) + checkLanguageImported(node)
+    }
+
+    fun checkLanguageImported(node: INonExistingNode): List<IConstraintViolation> {
+        val concept = node.expectedConcept() as? MPSConcept ?: return emptyList()
+        val language = concept.concept.language
+        val model = node.ancestors().map { it.getNode() }.filterIsInstance<MPSModelAsNode>()
+            .map { it.model }.firstOrNull() ?: return emptyList()
+        val usedLanguages = ModelDependencyResolver(LanguageRegistry.getInstance(model.repository), model.repository).usedLanguages(model).toSet()
+        return if (!usedLanguages.contains(language)) {
+            listOf(MPSLanguageNotImportedViolation(concept.concept))
+        } else {
+            emptyList()
+        }
     }
 }
 
@@ -335,3 +351,4 @@ fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept 
 val INode.name get() = getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name)
 
 class MPSConstraintViolation(val rule: Rule<*>) : IConstraintViolation
+class MPSLanguageNotImportedViolation(val concept: SAbstractConcept) : IConstraintViolation
