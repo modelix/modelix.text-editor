@@ -168,13 +168,20 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
     }
 
     inner class InstantiateNodeAction(val location: INonExistingNode) : ICodeCompletionAction {
+        private val description = let {
+            fun wrapperText(innerText: String, wrapper: INonExistingNode?): String = if (wrapper != null && wrapper.getNode() == null) {
+                wrapperText("${wrapper.expectedConcept()?.getShortName()}[$innerText]", wrapper.getParent())
+            } else {
+                innerText
+            }
+            wrapperText(concept.getShortName(), location.getParent())
+        }
+
         override fun getMatchingText(): String {
             return text
         }
 
-        override fun getDescription(): String {
-            return concept.getShortName()
-        }
+        override fun getDescription(): String = description
 
         override fun execute(editor: EditorComponent) {
             val newNode = location.getExistingAncestor()!!.getArea().executeWrite {

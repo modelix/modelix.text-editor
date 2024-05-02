@@ -6,7 +6,6 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.NullChildLink
 import org.modelix.model.api.index
 import org.modelix.model.api.isInstanceOf
-import org.modelix.model.api.isSubConceptOf
 import org.modelix.model.api.remove
 
 interface INonExistingNode {
