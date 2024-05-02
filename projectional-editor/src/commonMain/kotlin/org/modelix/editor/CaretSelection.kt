@@ -7,6 +7,11 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
     constructor(cell: LayoutableCell, pos: Int) : this(cell, pos, pos)
     constructor(cell: LayoutableCell, pos: Int, desiredXPosition: Int?) : this(cell, pos, pos, desiredXPosition)
 
+    init {
+        require(start >= 0) { "invalid start: $start" }
+        require(end >= 0) { "invalid end: $start" }
+    }
+
     override fun isValid(): Boolean {
         val editor = getEditor() ?: return false
         val visibleText = editor.getRootCell().layout
