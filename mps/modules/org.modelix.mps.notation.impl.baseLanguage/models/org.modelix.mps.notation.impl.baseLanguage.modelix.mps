@@ -66,6 +66,7 @@
         <reference id="635805674430276264" name="link" index="1yiJtc" />
         <child id="2346135138154959868" name="renderTarget" index="1KhJq6" />
       </concept>
+      <concept id="635805674430385442" name="org.modelix.mps.notation.structure.SubstituteCell" flags="ng" index="1yiLz6" />
       <concept id="8310867745953158874" name="org.modelix.mps.notation.structure.ConstantCell" flags="ng" index="3JB3jO">
         <property id="8310867745953159745" name="text" index="3JB3xJ" />
       </concept>
@@ -288,6 +289,30 @@
             </node>
             <node concept="1yiDfa" id="26N7cZTMFz_" role="2OY0$2">
               <ref role="1yiDfm" to="tpee:fz3vP1I" resolve="initializer" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3JBH_3" id="5tIuOqbX3l8" role="3JBHiB">
+      <ref role="3JBHV4" to="tpee:4D3iSq_h_ou" resolve="ResourceVariable" />
+      <node concept="2OY0tg" id="5tIuOqbX3ur" role="3JBHQ1">
+        <node concept="1yiLz6" id="5tIuOqbX3uu" role="2OY0$2" />
+        <node concept="2OY0tg" id="5tIuOqbX3H3" role="2OY0$2">
+          <node concept="1yiDfa" id="5tIuOqbX3H4" role="2OY0$2">
+            <ref role="1yiDfm" to="tpee:4VkOLwjf83e" resolve="type" />
+          </node>
+          <node concept="2OYlUR" id="5tIuOqbX3H5" role="2OY0$2">
+            <ref role="2OYlZd" to="tpck:h0TrG11" resolve="name" />
+          </node>
+          <node concept="1yhmst" id="5tIuOqbX3H6" role="2OY0$2">
+            <node concept="2OY0tg" id="5tIuOqbX3H7" role="1yhmsp">
+              <node concept="3JB3jO" id="5tIuOqbX3H8" role="2OY0$2">
+                <property role="3JB3xJ" value="=" />
+              </node>
+              <node concept="1yiDfa" id="5tIuOqbX3H9" role="2OY0$2">
+                <ref role="1yiDfm" to="tpee:fz3vP1I" resolve="initializer" />
+              </node>
             </node>
           </node>
         </node>
@@ -1722,3 +1747,4 @@
     </node>
   </node>
 </model>
+

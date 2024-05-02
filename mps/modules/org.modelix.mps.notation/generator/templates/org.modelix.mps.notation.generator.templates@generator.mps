@@ -48,11 +48,15 @@
       <concept id="1137021947720" name="jetbrains.mps.baseLanguage.structure.ConceptFunction" flags="in" index="2VMwT0">
         <child id="1137022507850" name="body" index="2VODD2" />
       </concept>
+      <concept id="1070475926800" name="jetbrains.mps.baseLanguage.structure.StringLiteral" flags="nn" index="Xl_RD">
+        <property id="1070475926801" name="value" index="Xl_RC" />
+      </concept>
       <concept id="1081236700937" name="jetbrains.mps.baseLanguage.structure.StaticMethodCall" flags="nn" index="2YIFZM">
         <reference id="1144433194310" name="classConcept" index="1Pybhc" />
       </concept>
       <concept id="1070534058343" name="jetbrains.mps.baseLanguage.structure.NullLiteral" flags="nn" index="10Nm6u" />
       <concept id="1225271408483" name="jetbrains.mps.baseLanguage.structure.IsNotEmptyOperation" flags="nn" index="17RvpY" />
+      <concept id="1068580123152" name="jetbrains.mps.baseLanguage.structure.EqualsExpression" flags="nn" index="3clFbC" />
       <concept id="1068580123155" name="jetbrains.mps.baseLanguage.structure.ExpressionStatement" flags="nn" index="3clFbF">
         <child id="1068580123156" name="expression" index="3clFbG" />
       </concept>
@@ -68,6 +72,18 @@
       <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
         <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
         <child id="1068499141038" name="actualArgument" index="37wK5m" />
+      </concept>
+      <concept id="1081773326031" name="jetbrains.mps.baseLanguage.structure.BinaryOperation" flags="nn" index="3uHJSO">
+        <child id="1081773367579" name="rightExpression" index="3uHU7w" />
+        <child id="1081773367580" name="leftExpression" index="3uHU7B" />
+      </concept>
+      <concept id="1163668896201" name="jetbrains.mps.baseLanguage.structure.TernaryOperatorExpression" flags="nn" index="3K4zz7">
+        <child id="1163668914799" name="condition" index="3K4Cdx" />
+        <child id="1163668922816" name="ifTrue" index="3K4E3e" />
+        <child id="1163668934364" name="ifFalse" index="3K4GZi" />
+      </concept>
+      <concept id="6329021646629104954" name="jetbrains.mps.baseLanguage.structure.SingleLineComment" flags="nn" index="3SKdUt">
+        <child id="8356039341262087992" name="line" index="1aUNEU" />
       </concept>
     </language>
     <language id="8f2def56-7502-4f14-994f-472d404e528c" name="org.modelix.mps.baseLanguage2kotlin">
@@ -301,6 +317,14 @@
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
     </language>
+    <language id="c7fb639f-be78-4307-89b0-b5959c3fa8c8" name="jetbrains.mps.lang.text">
+      <concept id="155656958578482948" name="jetbrains.mps.lang.text.structure.Word" flags="nn" index="3oM_SD">
+        <property id="155656958578482949" name="value" index="3oM_SC" />
+      </concept>
+      <concept id="2535923850359271782" name="jetbrains.mps.lang.text.structure.Line" flags="nn" index="1PaTwC">
+        <child id="2535923850359271783" name="elements" index="1PaTwD" />
+      </concept>
+    </language>
     <language id="83888646-71ce-4f1c-9c53-c54016f6ad4f" name="jetbrains.mps.baseLanguage.collections">
       <concept id="1172650591544" name="jetbrains.mps.baseLanguage.collections.structure.SkipOperation" flags="nn" index="7r0gD">
         <child id="1172658456740" name="elementsToSkip" index="7T0AP" />
@@ -371,6 +395,87 @@
       <node concept="gft3U" id="42C8o9n_Q$E" role="1lVwrX">
         <node concept="1NbEFs" id="42C8o9n_Q$F" role="gfFT$">
           <ref role="AarEw" to="dbfy:~CellTemplateBuilder.conceptAlias(kotlin/Function1&lt;CellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="conceptAlias" />
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="3CJpHJsa$LZ" role="3acgRq">
+      <ref role="30HIoZ" to="f8gn:ziPuhEAsOy" resolve="SubstituteCell" />
+      <node concept="gft3U" id="3CJpHJsa$M0" role="1lVwrX">
+        <node concept="1NbEFs" id="3CJpHJsa$M1" role="gfFT$">
+          <ref role="AarEw" to="dbfy:~NotationRootCellTemplateBuilder.completionText(kotlin/String)" resolve="completionText" />
+          <node concept="1XD0eI" id="3CJpHJsaFK3" role="TWiod">
+            <node concept="1XD08G" id="3CJpHJsaFK2" role="1XD0ZN">
+              <node concept="Df6$J" id="3CJpHJsaFK8" role="Df6Hu">
+                <node concept="21VMdE" id="3CJpHJsaFK7" role="Df7GE">
+                  <property role="21VMdD" value="text" />
+                  <node concept="17Uvod" id="3CJpHJsaFKb" role="lGtFl">
+                    <property role="2qtEX9" value="content" />
+                    <property role="P4ACc" value="6b3888c1-9802-44d8-8baf-f8e6c33ed689/1243006380188575965/1243006380188575966" />
+                    <node concept="3zFVjK" id="3CJpHJsaFKc" role="3zH0cK">
+                      <node concept="3clFbS" id="3CJpHJsaFKd" role="2VODD2">
+                        <node concept="3SKdUt" id="3CJpHJsaPA6" role="3cqZAp">
+                          <node concept="1PaTwC" id="3CJpHJsaPA7" role="1aUNEU">
+                            <node concept="3oM_SD" id="3CJpHJsaPTH" role="1PaTwD">
+                              <property role="3oM_SC" value="empty" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaPTO" role="1PaTwD">
+                              <property role="3oM_SC" value="string" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaPTY" role="1PaTwD">
+                              <property role="3oM_SC" value="hides" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaPU8" role="1PaTwD">
+                              <property role="3oM_SC" value="the" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaPUh" role="1PaTwD">
+                              <property role="3oM_SC" value="entry." />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaQes" role="1PaTwD">
+                              <property role="3oM_SC" value="null" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaQfg" role="1PaTwD">
+                              <property role="3oM_SC" value="would" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaQgy" role="1PaTwD">
+                              <property role="3oM_SC" value="have" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaQgK" role="1PaTwD">
+                              <property role="3oM_SC" value="no" />
+                            </node>
+                            <node concept="3oM_SD" id="3CJpHJsaQgX" role="1PaTwD">
+                              <property role="3oM_SC" value="effect." />
+                            </node>
+                          </node>
+                        </node>
+                        <node concept="3clFbF" id="3CJpHJsaJVK" role="3cqZAp">
+                          <node concept="3K4zz7" id="3CJpHJsaO8f" role="3clFbG">
+                            <node concept="Xl_RD" id="3CJpHJsaOrx" role="3K4E3e">
+                              <property role="Xl_RC" value="" />
+                            </node>
+                            <node concept="3clFbC" id="3CJpHJsaLJ3" role="3K4Cdx">
+                              <node concept="10Nm6u" id="3CJpHJsaMY9" role="3uHU7w" />
+                              <node concept="2OqwBi" id="3CJpHJsaGu$" role="3uHU7B">
+                                <node concept="30H73N" id="3CJpHJsaG0p" role="2Oq$k0" />
+                                <node concept="3TrcHB" id="3CJpHJsaID4" role="2OqNvi">
+                                  <ref role="3TsBF5" to="f8gn:ziPuhEAsOB" resolve="text" />
+                                </node>
+                              </node>
+                            </node>
+                            <node concept="2OqwBi" id="3CJpHJsaOIz" role="3K4GZi">
+                              <node concept="30H73N" id="3CJpHJsaOI$" role="2Oq$k0" />
+                              <node concept="3TrcHB" id="3CJpHJsaOI_" role="2OqNvi">
+                                <ref role="3TsBF5" to="f8gn:ziPuhEAsOB" resolve="text" />
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
         </node>
       </node>
     </node>
@@ -1567,3 +1672,4 @@
     </node>
   </node>
 </model>
+

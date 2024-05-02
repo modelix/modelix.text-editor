@@ -8,7 +8,6 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
-import org.modelix.model.api.isSubConceptOf
 import org.modelix.scopes.ScopeAspect
 import kotlin.jvm.JvmName
 
@@ -39,6 +38,10 @@ abstract class CellTemplate(val concept: IConcept) {
     protected abstract fun createCell(context: CellCreationContext, node: INode): CellData
 
     open fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
+        val completionText = properties[CommonCellProperties.codeCompletionText]
+        if (completionText != null) {
+            return listOf(InstantiateNodeCompletionAction(completionText, concept, location))
+        }
         return children.asSequence().mapNotNull { it.getInstantiationActions(location, parameters) }.firstOrNull()
     }
 
@@ -133,7 +136,7 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
     CellTemplate(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        return listOf(InstantiateNodeAction(location))
+        return listOf(InstantiateNodeCompletionAction(text, concept, location))
     }
 
     override fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
@@ -166,31 +169,35 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
 
         fun getTemplate() = this@ConstantCellTemplate
     }
+}
 
-    inner class InstantiateNodeAction(val location: INonExistingNode) : ICodeCompletionAction {
-        private val description = let {
-            fun wrapperText(innerText: String, wrapper: INonExistingNode?): String = if (wrapper != null && wrapper.getNode() == null) {
-                wrapperText("${wrapper.expectedConcept()?.getShortName()}[$innerText]", wrapper.getParent())
-            } else {
-                innerText
-            }
-            wrapperText(concept.getShortName(), location.getParent())
+class InstantiateNodeCompletionAction(
+    private val matchingText: String,
+    val concept: IConcept,
+    val location: INonExistingNode,
+) : ICodeCompletionAction {
+    private val description = let {
+        fun wrapperText(innerText: String, wrapper: INonExistingNode?): String = if (wrapper != null && wrapper.getNode() == null) {
+            wrapperText("${wrapper.expectedConcept()?.getShortName()}[$innerText]", wrapper.getParent())
+        } else {
+            innerText
         }
+        wrapperText(concept.getShortName(), location.getParent())
+    }
 
-        override fun getMatchingText(): String {
-            return text
+    override fun getMatchingText(): String {
+        return matchingText
+    }
+
+    override fun getDescription(): String = description
+
+    override fun execute(editor: EditorComponent) {
+        val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+            location.replaceNode(concept)
         }
-
-        override fun getDescription(): String = description
-
-        override fun execute(editor: EditorComponent) {
-            val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
-                location.replaceNode(concept)
-            }
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(newNode)
-                    .getBestSelection(editor)
-            }
+        editor.selectAfterUpdate {
+            CaretPositionPolicy(newNode)
+                .getBestSelection(editor)
         }
     }
 }
@@ -431,7 +438,7 @@ class ChildCellTemplate(
             if (link.isMultiple) {
                 val actionCell = CellData()
                 val action = newLineConcept?.let {
-                    InstantiateNodeAction(NonExistingChild(ExistingNode(node), link, index), it)
+                    InstantiateNodeCellAction(NonExistingChild(ExistingNode(node), link, index), it)
                 } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
                 cell.addChild(actionCell)
@@ -511,7 +518,7 @@ class InsertSubstitutionPlaceholderAction(
     }
 }
 
-class InstantiateNodeAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
+class InstantiateNodeCellAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
     override fun isApplicable(): Boolean = true
 
     override fun execute(editor: EditorComponent) {
