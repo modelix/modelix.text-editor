@@ -35,12 +35,16 @@ import io.ktor.server.websocket.timeout
 import jetbrains.mps.core.aspects.constraints.rules.Rule
 import jetbrains.mps.core.aspects.constraints.rules.kinds.CanBeAncestorContext
 import jetbrains.mps.core.aspects.constraints.rules.kinds.ContainmentContext
+import jetbrains.mps.core.aspects.feedback.messages.FailingPropertyConstraintContext
+import jetbrains.mps.core.aspects.feedback.problem.Problem
 import jetbrains.mps.project.MPSProject
 import jetbrains.mps.scope.Scope
 import jetbrains.mps.smodel.ModelDependencyResolver
 import jetbrains.mps.smodel.constraints.ConstraintsCanBeFacade
+import jetbrains.mps.smodel.constraints.ConstraintsChildAndPropFacade
 import jetbrains.mps.smodel.constraints.ModelConstraints
 import jetbrains.mps.smodel.language.LanguageRegistry
+import jetbrains.mps.smodel.presentation.IPropertyPresentationProvider
 import kotlinx.html.a
 import kotlinx.html.base
 import kotlinx.html.body
@@ -52,6 +56,7 @@ import kotlinx.html.script
 import kotlinx.html.title
 import kotlinx.html.ul
 import org.jetbrains.mps.openapi.language.SAbstractConcept
+import org.jetbrains.mps.openapi.language.SConcept
 import org.jetbrains.mps.openapi.language.SContainmentLink
 import org.jetbrains.mps.openapi.language.SProperty
 import org.jetbrains.mps.openapi.language.SReferenceLink
@@ -340,6 +345,15 @@ object MPSConstraints : IConstraintsChecker {
             emptyList()
         }
     }
+
+    override fun checkPropertyValue(node: INonExistingNode, property: IProperty, value: String): List<IConstraintViolation> {
+        val mpsProperty = property.toMPS() ?: return emptyList()
+        val internalValue = IPropertyPresentationProvider.getPresentationProviderFor(mpsProperty).fromPresentation(value)
+        val mpsNode = node.getNode()?.toMPS()
+            ?: jetbrains.mps.smodel.SNode(node.expectedConcept().toMPS() as? SConcept ?: jetbrains.mps.smodel.SNodeUtil.concept_BaseConcept)
+        val context = FailingPropertyConstraintContext(mpsNode, mpsProperty, internalValue)
+        return ConstraintsChildAndPropFacade.checkPropertyValue(context).map { MPSProblem(it) }
+    }
 }
 
 fun INode?.toMPS(): SNode? = if (this is MPSNode) this.node else null
@@ -351,4 +365,5 @@ fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept 
 val INode.name get() = getPropertyValue(BuiltinLanguages.jetbrains_mps_lang_core.INamedConcept.name)
 
 class MPSConstraintViolation(val rule: Rule<*>) : IConstraintViolation
+class MPSProblem(val problem: Problem) : IConstraintViolation
 class MPSLanguageNotImportedViolation(val concept: SAbstractConcept) : IConstraintViolation

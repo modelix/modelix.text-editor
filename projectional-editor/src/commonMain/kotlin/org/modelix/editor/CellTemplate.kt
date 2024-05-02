@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.constraints.ConstraintsAspect
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IChildLink
@@ -271,7 +272,7 @@ class OptionalCellTemplate(concept: IConcept) :
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
-    var validator: (String) -> Boolean = { true }
+    var validator: ((String) -> Boolean)? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
@@ -286,12 +287,17 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {
         override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
-            return if (validator(parameters.pattern)) {
+            return if (validateValue(location.replacement(concept), parameters.pattern)) {
                 listOf(WrapPropertyValue(location, parameters.pattern))
             } else {
                 emptyList()
             }
         }
+    }
+
+    private fun validateValue(node: INonExistingNode, value: String): Boolean {
+        return validator?.invoke(value)
+            ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
     }
 
     inner class WrapPropertyValue(val location: INonExistingNode, val value: String) : ICodeCompletionAction {
@@ -316,7 +322,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     inner class ChangePropertyAction(val node: INode) : ITextChangeAction {
         override fun isValid(value: String?): Boolean {
             if (value == null) return true
-            return validator(value)
+            return validateValue(node.toNonExisting(), value)
         }
 
         override fun replaceText(editor: EditorComponent, range: IntRange, replacement: String, newText: String): Boolean {
