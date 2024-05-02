@@ -291,9 +291,12 @@ object MPSConstraints : IConstraintsChecker {
         // Constraints only prevent creating a node. If it already exists, it's handled by the model checker.
         if (node.getNode() != null) return emptyList()
 
-        val parentNode = node.getParent()?.getNode().toMPS()
-        // MPS doesn't support constraint checking without a parent node
-        if (parentNode == null) return emptyList()
+        // Correct would be `parentNode = node.getParent()?.getNode().toMPS()`
+        // but the parent node is not allowed to be null.
+        // MPS itself then just passes the nearest existing ancestor to the constraints.
+        // Without this hack we cannot evaluate any constraints and there would be too many incorrect entries in the
+        // code completion menu.
+        val parentNode = node.getExistingAncestor().toMPS()
 
         // ConstraintsCanBeFacade.checkCanBeRoot()
 
