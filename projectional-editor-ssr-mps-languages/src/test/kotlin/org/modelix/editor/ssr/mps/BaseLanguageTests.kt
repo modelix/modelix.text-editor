@@ -25,6 +25,7 @@ import org.modelix.model.mpsadapters.MPSNode
 /**
  * Test editor for MPS baseLanguage ClassConcept
  */
+@Suppress("ktlint:standard:wrapping", "ktlint:standard:trailing-comma-on-call-site")
 class BaseLanguageTests : TestBase("SimpleProject") {
     lateinit var editor: EditorComponent
     lateinit var mpsIntegration: EditorIntegrationForMPS
@@ -46,6 +47,21 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         mpsIntegration = EditorIntegrationForMPS(editorEngine)
         mpsIntegration.init(mpsProject.repository)
         editor = editorEngine.editNode(classNode)
+    }
+
+    override fun tearDown() {
+        editor.dispose()
+        mpsIntegration.dispose()
+        editorEngine.dispose()
+        incrementalEngine.dispose()
+        super.tearDown()
+    }
+
+    fun assertFinalEditorText(expected: String) {
+        assertEditorText(expected)
+        editor.state.reset()
+        editor.update()
+        assertEditorText(expected)
     }
 
     fun assertEditorText(expected: String) {
@@ -97,31 +113,27 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     }
 
     fun `test initial editor`() {
-        assertEditorText(
-            """
+        assertFinalEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
             }
-            """.trimIndent(),
-        )
+        """)
     }
 
     fun `test inserting new line into class`() {
         val lastMember = readAction { classNode.allChildren.last { it.getContainmentLink()?.getSimpleName() == "member" } }
         placeCaretAtEnd(lastMember)
         pressEnter()
-        assertEditorText(
-            """
+        assertFinalEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
               
             }
-        """,
-        )
+        """)
     }
 
     fun `test creating LocalVariableDeclarationStatement by typing a type`() {
@@ -132,15 +144,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             actions.joinToString("\n") { it.getMatchingText() + " | " + it.getDescription() },
         )
         typeText("int")
-        assertEditorText(
-            """
+        assertFinalEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 int <no name>;
               }
             }
-        """,
-        )
+        """)
     }
 
     fun `test naming LocalVariableDeclaration`() {
@@ -148,15 +158,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("int")
         pressKey(KnownKeys.Tab)
         typeText("abc")
-        assertEditorText(
-            """
+        assertFinalEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 int abc;
               }
             }
-        """,
-        )
+        """)
     }
 
     fun `test showing initializer of LocalVariableDeclaration`() {
@@ -165,15 +173,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("abc")
         typeText("=")
-        assertEditorText(
-            """
+        assertEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 int abc = <no initializer>;
               }
             }
-        """,
-        )
+        """)
     }
 
     fun `test adding initializer to LocalVariableDeclaration`() {
@@ -183,14 +189,55 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("abc")
         typeText("=")
         typeText("10")
-        assertEditorText(
-            """
+        assertFinalEditorText("""
             class Class1 {
               public void method1(<no parameter>) {
                 int abc = 10;
               }
             }
-        """,
-        )
+        """)
+    }
+
+    fun `test adding second parameter to InstanceMethodDeclaration by pressing ENTER`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        pressKey(KnownKeys.Enter)
+        assertEditorText("""
+            class Class1 {
+              public void method1(int p1, <choose parameter>) {
+                <no statement>
+              }
+            }
+        """)
+        typeText("string")
+        pressKey(KnownKeys.Tab)
+        typeText("p2")
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(int p1, string p2) {
+                <no statement>
+              }
+            }
+        """)
+    }
+
+    fun `test adding second parameter to InstanceMethodDeclaration by typing separator`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        typeText(",")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p2")
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(int p1, int p2) {
+                <no statement>
+              }
+            }
+        """)
     }
 }

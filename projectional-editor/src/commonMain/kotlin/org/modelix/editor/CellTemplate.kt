@@ -520,7 +520,27 @@ class ChildCellTemplate(
                     InstantiateNodeCellAction(NonExistingChild(ExistingNode(node), link, index), it)
                 } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
+
+                val separatorText = separatorCell?.getGrammarSymbols()?.filterIsInstance<ConstantCellTemplate>()
+                    ?.firstOrNull()?.text
+                if (separatorText != null) {
+                    actionCell.properties[CellActionProperties.transformBefore] = InsertSubstitutionPlaceholderCompletionAction(
+                        index,
+                        separatorText,
+                        createCellReference(node),
+                    ).asProvider()
+                }
+
                 cell.addChild(actionCell)
+            }
+        }
+        fun addSeparator(before: CellReference) {
+            separatorCell?.let {
+                cell.addChild(
+                    it.apply(context, node).also {
+                        it.cellReferences += SeparatorCellReference(before)
+                    },
+                )
             }
         }
         if (childNodes.isEmpty()) {
@@ -530,17 +550,12 @@ class ChildCellTemplate(
             childCells.forEachIndexed { index, child ->
                 val childCellReference = ChildNodeCellReference(node.reference, link, index)
                 if (index != 0) {
-                    separatorCell?.let {
-                        cell.addChild(
-                            it.apply(context, node).also {
-                                it.cellReferences += SeparatorCellReference(childCellReference)
-                            },
-                        )
-                    }
+                    addSeparator(childCellReference)
                 }
 
                 if (substitutionPlaceholder != null && placeholderIndex == index) {
                     addSubstitutionPlaceholder(placeholderIndex)
+                    addSeparator(PlaceholderCellReference(createCellReference(node)))
                 } else {
                     addInsertActionCell(index)
                 }
@@ -552,6 +567,9 @@ class ChildCellTemplate(
                 cell.addChild(wrapper)
             }
             if (substitutionPlaceholder != null && placeholderIndex == childNodes.size) {
+                if (childCells.isNotEmpty()) {
+                    addSeparator(PlaceholderCellReference(createCellReference(node)))
+                }
                 addSubstitutionPlaceholder(placeholderIndex)
             } else {
                 addInsertActionCell(childNodes.size)
@@ -588,6 +606,26 @@ class ChildCellTemplate(
 
     override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
         return ReplaceNodeActionProvider(NonExistingChild(node.toNonExisting(), link))
+    }
+
+    inner class InsertSubstitutionPlaceholderCompletionAction(
+        val index: Int,
+        val separatorText: String,
+        val ref: TemplateCellReference,
+    ) : ICodeCompletionAction {
+        override fun getDescription(): String {
+            return "Add new node to ${link.getSimpleName()}"
+        }
+
+        override fun getMatchingText(): String {
+            return separatorText
+        }
+
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+            editor.state.substitutionPlaceholderPositions[ref] = SubstitutionPlaceholderPosition(index)
+            editor.state.textReplacements.remove(PlaceholderCellReference(ref))
+            return CaretPositionPolicy(PlaceholderCellReference(ref))
+        }
     }
 }
 data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : CellReference()
