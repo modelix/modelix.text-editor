@@ -197,6 +197,19 @@ fun ICodeCompletionActionProvider.flattenApplicableActions(parameters: CodeCompl
     return flatten(parameters).toList()
 }
 
+class ActionAsProvider(val action: ICodeCompletionAction) : ICodeCompletionActionProvider {
+    override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
+        return listOf(action)
+    }
+}
+
+fun ICodeCompletionAction.asProvider(): ICodeCompletionActionProvider = ActionAsProvider(this)
+fun IActionOrProvider.asProvider(): ICodeCompletionActionProvider = when (this) {
+    is ICodeCompletionAction -> ActionAsProvider(this)
+    is ICodeCompletionActionProvider -> this
+    else -> error("Unknown type: $this")
+}
+
 private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Sequence<ICodeCompletionAction> = when (this) {
     is ICodeCompletionAction -> sequenceOf(this)
     is ICodeCompletionActionProvider -> getApplicableActions(parameters).asSequence().flatMap { it.flatten(parameters) }
@@ -210,37 +223,6 @@ interface ICodeCompletionAction : IActionOrProvider {
     fun shadows(shadowed: ICodeCompletionAction) = false
     fun shadowedBy(shadowing: ICodeCompletionAction) = false
 }
-
-class CodeCompletionActionWithPostprocessor(val action: ICodeCompletionAction, val after: () -> Unit) : ICodeCompletionAction by action {
-    override fun execute(editor: EditorComponent) {
-        action.execute(editor)
-        after()
-    }
-
-    override fun shadowedBy(shadowing: ICodeCompletionAction): Boolean {
-        return action.shadowedBy(if (shadowing is CodeCompletionActionWithPostprocessor) shadowing.action else shadowing)
-    }
-
-    override fun shadows(shadowed: ICodeCompletionAction): Boolean {
-        return action.shadows(if (shadowed is CodeCompletionActionWithPostprocessor) shadowed.action else shadowed)
-    }
-}
-class CodeCompletionActionProviderWithPostprocessor(
-    val actionProvider: ICodeCompletionActionProvider,
-    val after: () -> Unit,
-) : ICodeCompletionActionProvider {
-    override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        return actionProvider.getApplicableActions(parameters).map {
-            when (it) {
-                is ICodeCompletionAction -> CodeCompletionActionWithPostprocessor(it, after)
-                is ICodeCompletionActionProvider -> CodeCompletionActionProviderWithPostprocessor(it, after)
-                else -> throw RuntimeException("Unexpected type: " + it::class)
-            }
-        }
-    }
-}
-
-fun ICodeCompletionActionProvider.after(body: () -> Unit) = CodeCompletionActionProviderWithPostprocessor(this, body)
 
 class CodeCompletionParameters(val editor: EditorComponent, pattern: String) {
     val pattern: String = pattern

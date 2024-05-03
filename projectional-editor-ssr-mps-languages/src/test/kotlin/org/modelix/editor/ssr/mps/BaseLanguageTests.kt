@@ -63,8 +63,10 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         editor.changeSelection(CaretSelection(cell.layoutable()!!, cell.getMaxCaretPos()))
     }
 
-    fun pressEnter() {
-        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, KnownKeys.Enter))
+    fun pressEnter() = pressKey(KnownKeys.Enter)
+
+    fun pressKey(key: KnownKeys) {
+        editor.processKeyEvent(JSKeyboardEvent(JSKeyboardEventType.KEYDOWN, key))
     }
 
     fun typeText(text: CharSequence) {
@@ -135,6 +137,39 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             class Class1 {
               public void method1(<no parameter>) {
                 int <no name>;
+              }
+            }
+        """,
+        )
+    }
+
+    fun `test naming LocalVariableDeclaration`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        assertEditorText(
+            """
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc;
+              }
+            }
+        """,
+        )
+    }
+
+    fun `test adding initializer to LocalVariableDeclaration`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        typeText("=")
+        assertEditorText(
+            """
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc = <no initializer>;
               }
             }
         """,

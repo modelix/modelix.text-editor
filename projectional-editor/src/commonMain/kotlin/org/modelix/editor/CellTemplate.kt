@@ -9,6 +9,7 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
+import org.modelix.model.api.remove
 import org.modelix.scopes.ScopeAspect
 import kotlin.jvm.JvmName
 
@@ -110,6 +111,13 @@ interface IGrammarSymbol {
     fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
         return emptyList()
     }
+
+    fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider?
+}
+
+interface IGrammarConditionSymbol : IGrammarSymbol {
+    fun getSymbolConditionState(node: INode): Boolean
+    fun setSymbolConditionFalse(node: INode)
 }
 
 class OverrideText(val cell: TextCellData, val delegate: ITextChangeAction?) : ITextChangeAction {
@@ -142,6 +150,10 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
 
     override fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
         return listOf(SideTransformWrapper(nodeToWrap.toNonExisting(), wrappingLink))
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return ForceShowOptionalCellAction(optionalCell).withMatchingText(text)
     }
 
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) : ICodeCompletionAction {
@@ -271,12 +283,25 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 
     override fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
-        // TODO support other cell types as condition for the optional
-        val childLinkCell = descendants().filterIsInstance<ChildCellTemplate>().firstOrNull()
-        if (childLinkCell == null || childLinkCell.getChildNodes(node).isNotEmpty()) {
+        val forceShow = context.editorState.forceShowOptionals[createCellReference(node)] == true
+
+        val symbols = getChildren().asSequence().flatMap { it.getGrammarSymbols() }
+        val conditionSymbol = symbols.filterIsInstance<IGrammarConditionSymbol>().firstOrNull()
+        val transformationSymbol = symbols.firstOrNull()
+
+        if (conditionSymbol == null) return emptyList()
+        if (forceShow || conditionSymbol.getSymbolConditionState(node)) {
             return super.applyChildren(context, node, cell)
         } else {
-            return emptyList()
+            if (transformationSymbol == null) return emptyList()
+            val symbolTransformationAction = transformationSymbol.getSymbolTransformationAction(node, createCellReference(node))
+            if (symbolTransformationAction != null) {
+                val sideTransformCell = CellData()
+                sideTransformCell.properties[CellActionProperties.transformBefore] = symbolTransformationAction.asProvider()
+                return listOf(sideTransformCell)
+            } else {
+                return emptyList()
+            }
         }
     }
 
@@ -289,8 +314,22 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 }
 
+class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeCompletionAction {
+    override fun execute(editor: EditorComponent) {
+        editor.state.forceShowOptionals[cell] = true
+    }
+
+    override fun getMatchingText(): String {
+        return ""
+    }
+
+    override fun getDescription(): String {
+        return "Add optional part"
+    }
+}
+
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
-    CellTemplate(concept), IGrammarSymbol {
+    CellTemplate(concept), IGrammarConditionSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: ((String) -> Boolean)? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
@@ -301,8 +340,26 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
         data.cellReferences += PropertyCellReference(property, node.reference)
         return data
     }
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(WrapPropertyValueProvider(location))
+    }
+
+    private fun validateValue(node: INonExistingNode, value: String): Boolean {
+        return validator?.invoke(value)
+            ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
+    }
+
+    override fun getSymbolConditionState(node: INode): Boolean {
+        return node.getPropertyValue(property) != null
+    }
+
+    override fun setSymbolConditionFalse(node: INode) {
+        return node.setPropertyValue(property, null)
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return WrapPropertyValueProvider(node.toNonExisting())
     }
 
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {
@@ -313,11 +370,6 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
                 emptyList()
             }
         }
-    }
-
-    private fun validateValue(node: INonExistingNode, value: String): Boolean {
-        return validator?.invoke(value)
-            ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
     }
 
     inner class WrapPropertyValue(val location: INonExistingNode, val value: String) : ICodeCompletionAction {
@@ -374,15 +426,24 @@ class ReferenceCellTemplate(
         return sourceNode.getReferenceTarget(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        val sourceNode = location.replacement(concept)
-        val scope = ScopeAspect.getScope(sourceNode, link)
-        val targets = scope.getVisibleElements(sourceNode, link)
-        return targets.map { target ->
-            val text = when (target) {
-                is ExistingNode -> presentation(target.getNode()) ?: ""
-                else -> "<create new target node>"
+        return listOf(WrapReferenceTargetProvider(location.replacement(concept)))
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return WrapReferenceTargetProvider(node.toNonExisting())
+    }
+
+    inner class WrapReferenceTargetProvider(val sourceNode: INonExistingNode) : ICodeCompletionActionProvider {
+        override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
+            val scope = ScopeAspect.getScope(sourceNode, link)
+            val targets = scope.getVisibleElements(sourceNode, link)
+            return targets.map { target ->
+                val text = when (target) {
+                    is ExistingNode -> presentation(target.getNode()) ?: ""
+                    else -> "<create new target node>"
+                }
+                WrapReferenceTarget(sourceNode, target, text)
             }
-            WrapReferenceTarget(location, target, text)
         }
     }
 
@@ -420,7 +481,7 @@ class FlagCellTemplate(
 class ChildCellTemplate(
     concept: IConcept,
     val link: IChildLink,
-) : CellTemplate(concept), IGrammarSymbol {
+) : CellTemplate(concept), IGrammarConditionSymbol {
 
     private var separatorCell: CellTemplate? = null
 
@@ -523,6 +584,18 @@ class ChildCellTemplate(
 
         val childNode = NonExistingChild(location.replacement(concept), link)
         return listOf(ReplaceNodeActionProvider(childNode))
+    }
+
+    override fun getSymbolConditionState(node: INode): Boolean {
+        return node.getChildren(link).iterator().hasNext()
+    }
+
+    override fun setSymbolConditionFalse(node: INode) {
+        node.getChildren(link).toList().forEach { it.remove() }
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return ReplaceNodeActionProvider(NonExistingChild(node.toNonExisting(), link))
     }
 }
 data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : CellReference()
