@@ -74,9 +74,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         editor.changeSelection(CaretSelection(lastLeafCell.layoutable()!!, lastLeafCell.getMaxCaretPos()))
     }
 
-    fun placeCaretIntoCellWithText(text: String) {
+    fun placeCaretIntoCellWithText(text: String, position: Int = -1) {
         val cell = editor.getRootCell().descendantsAndSelf().first { it.getVisibleText() == text }
-        editor.changeSelection(CaretSelection(cell.layoutable()!!, cell.getMaxCaretPos()))
+        editor.changeSelection(CaretSelection(cell.layoutable()!!, if (position == -1) cell.getMaxCaretPos() else position))
     }
 
     fun pressEnter() = pressKey(KnownKeys.Enter)
@@ -223,7 +223,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `test adding second parameter to InstanceMethodDeclaration by typing separator`() {
+    fun `test adding second parameter to InstanceMethodDeclaration by typing separator after last`() {
         placeCaretIntoCellWithText("<no parameter>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -235,6 +235,29 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertFinalEditorText("""
             class Class1 {
               public void method1(int p1, int p2) {
+                <no statement>
+              }
+            }
+        """)
+    }
+
+    fun `test adding second parameter to InstanceMethodDeclaration by typing separator after first`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        typeText(",")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p2")
+        placeCaretIntoCellWithText("p1")
+        typeText(",")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p3")
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(int p1, int p3, int p2) {
                 <no statement>
               }
             }

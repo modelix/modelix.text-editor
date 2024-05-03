@@ -520,17 +520,6 @@ class ChildCellTemplate(
                     InstantiateNodeCellAction(NonExistingChild(ExistingNode(node), link, index), it)
                 } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
-
-                val separatorText = separatorCell?.getGrammarSymbols()?.filterIsInstance<ConstantCellTemplate>()
-                    ?.firstOrNull()?.text
-                if (separatorText != null) {
-                    actionCell.properties[CellActionProperties.transformBefore] = InsertSubstitutionPlaceholderCompletionAction(
-                        index,
-                        separatorText,
-                        createCellReference(node),
-                    ).asProvider()
-                }
-
                 cell.addChild(actionCell)
             }
         }
@@ -546,6 +535,8 @@ class ChildCellTemplate(
         if (childNodes.isEmpty()) {
             addSubstitutionPlaceholder(0)
         } else {
+            val separatorText = separatorCell?.getGrammarSymbols()?.filterIsInstance<ConstantCellTemplate>()
+                ?.firstOrNull()?.text
             val childCells = childNodes.map { ChildDataReference(it) }
             childCells.forEachIndexed { index, child ->
                 val childCellReference = ChildNodeCellReference(node.reference, link, index)
@@ -564,6 +555,20 @@ class ChildCellTemplate(
                 val wrapper = CellData() // allow setting properties by the parent, because the cell is already frozen
                 wrapper.addChild(child)
                 wrapper.cellReferences += childCellReference
+
+                if (separatorText != null) {
+                    wrapper.properties[CellActionProperties.transformBefore] = InsertSubstitutionPlaceholderCompletionAction(
+                        index,
+                        separatorText,
+                        createCellReference(node),
+                    ).asProvider()
+                    wrapper.properties[CellActionProperties.transformAfter] = InsertSubstitutionPlaceholderCompletionAction(
+                        index + 1,
+                        separatorText,
+                        createCellReference(node),
+                    ).asProvider()
+                }
+
                 cell.addChild(wrapper)
             }
             if (substitutionPlaceholder != null && placeholderIndex == childNodes.size) {
