@@ -153,21 +153,20 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
     }
 
     override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
-        return ForceShowOptionalCellAction(optionalCell).withMatchingText(text)
+        return ForceShowOptionalCellAction(optionalCell)
+            .withCaretPolicy { it?.avoid(createCellReference(node)) }
+            .withMatchingText(text)
     }
 
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) : ICodeCompletionAction {
         override fun getMatchingText(): String = text
         override fun getDescription(): String = concept.getShortName()
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept)
             wrapper.moveChild(wrappingLink, 0, nodeToWrap.getOrCreateNode(null))
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(wrapper)
-                    .avoid(ChildNodeCellReference(wrapper.reference, wrappingLink))
-                    .avoid(createCellReference(wrapper))
-                    .getBestSelection(editor)
-            }
+            return CaretPositionPolicy(wrapper)
+                .avoid(ChildNodeCellReference(wrapper.reference, wrappingLink))
+                .avoid(createCellReference(wrapper))
         }
 
         override fun shadows(shadowed: ICodeCompletionAction): Boolean {
@@ -204,14 +203,11 @@ class InstantiateNodeCompletionAction(
 
     override fun getDescription(): String = description
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
         val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
             location.replaceNode(concept)
         }
-        editor.selectAfterUpdate {
-            CaretPositionPolicy(newNode)
-                .getBestSelection(editor)
-        }
+        return CaretPositionPolicy(newNode)
     }
 
     override fun shadowedBy(shadowing: ICodeCompletionAction): Boolean {
@@ -315,8 +311,9 @@ class OptionalCellTemplate(concept: IConcept) :
 }
 
 class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeCompletionAction {
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
         editor.state.forceShowOptionals[cell] = true
+        return CaretPositionPolicy(cell)
     }
 
     override fun getMatchingText(): String {
@@ -381,13 +378,10 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
             return concept.getShortName()
         }
 
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val node = location.getOrCreateNode(concept)
             node.setPropertyValue(property, value)
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(node))
-                    .getBestSelection(editor)
-            }
+            return CaretPositionPolicy(createCellReference(node))
         }
     }
 
@@ -456,12 +450,10 @@ class ReferenceCellTemplate(
             return concept.getShortName()
         }
 
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val sourceNode = location.getOrCreateNode(concept)
             sourceNode.setReferenceTarget(link, target.getOrCreateNode())
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(sourceNode)).getBestSelection(editor)
-            }
+            return CaretPositionPolicy(createCellReference(sourceNode))
         }
     }
 }

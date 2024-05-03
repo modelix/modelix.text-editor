@@ -177,7 +177,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             }
             if (matchingActions.isNotEmpty()) {
                 if (matchingActions.size == 1 && matchingActions.first().getMatchingText() == typedText) {
-                    matchingActions.first().execute(editor)
+                    matchingActions.first().executeAndUpdateSelection(editor)
                     return
                 }
                 editor.showCodeCompletionMenu(
@@ -222,7 +222,9 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             .applyShadowing()
         val singleAction = matchingActions.singleOrNull()
         if (singleAction != null) {
-            singleAction.execute(editor)
+            editor.runWrite {
+                singleAction.executeAndUpdateSelection(editor)
+            }
             return true
         }
 

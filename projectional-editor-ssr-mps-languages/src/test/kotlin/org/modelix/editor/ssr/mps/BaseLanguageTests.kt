@@ -159,7 +159,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         )
     }
 
-    fun `test adding initializer to LocalVariableDeclaration`() {
+    fun `test showing initializer of LocalVariableDeclaration`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -170,6 +170,24 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             class Class1 {
               public void method1(<no parameter>) {
                 int abc = <no initializer>;
+              }
+            }
+        """,
+        )
+    }
+
+    fun `test adding initializer to LocalVariableDeclaration`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        typeText("=")
+        typeText("10")
+        assertEditorText(
+            """
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc = 10;
               }
             }
         """,
