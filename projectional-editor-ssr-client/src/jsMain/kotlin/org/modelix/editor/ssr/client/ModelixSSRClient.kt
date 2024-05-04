@@ -159,6 +159,11 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
             return changesOnly.takeIf { it.isNotEmpty() }
         }
 
+        fun sendBoundsUpdate() {
+            val update = computeBoundsUpdate() ?: return
+            MessageFromClient(editorId = editorId, boundUpdates = update).send()
+        }
+
         private fun MessageFromClient.withBounds(): MessageFromClient {
             require(boundUpdates == null) { "Already contains bound update data" }
             return copy(boundUpdates = computeBoundsUpdate())
@@ -170,6 +175,7 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
         }
 
         fun applyUpdate(update: DomTreeUpdate) {
+            if (update.elements.isEmpty()) return
             LOG.trace { "($editorId) Updating DOM" }
             // this map allows updating nodes in a different order to resolve references during syncChildren
             pendingUpdates.putAll(
@@ -190,6 +196,8 @@ class ModelixSSRClient(private val httpClient: HttpClient, private val url: Stri
                 }
             }
             possiblyDetachedElements.clear()
+
+            sendBoundsUpdate()
         }
 
         private fun updateNode(data: INodeUpdateData): Node {
