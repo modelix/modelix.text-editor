@@ -361,7 +361,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {
         override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
-            return if (validateValue(location.replacement(concept), parameters.pattern)) {
+            return if (parameters.pattern.isNotBlank() && validateValue(location.replacement(concept), parameters.pattern)) {
                 listOf(WrapPropertyValue(location, parameters.pattern))
             } else {
                 emptyList()
