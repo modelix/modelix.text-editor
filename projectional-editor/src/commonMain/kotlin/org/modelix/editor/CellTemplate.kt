@@ -511,6 +511,13 @@ class ChildCellTemplate(
                 placeholder.cellReferences += ChildNodeCellReference(node.reference, link, index)
             }
             placeholder.properties[CommonCellProperties.tabTarget] = true
+            placeholder.properties[CellActionProperties.delete] = object : ICellAction {
+                override fun execute(editor: EditorComponent) {
+                    context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+                }
+
+                override fun isApplicable(): Boolean = true
+            }
             cell.addChild(placeholder)
         }
         fun addInsertActionCell(index: Int) {

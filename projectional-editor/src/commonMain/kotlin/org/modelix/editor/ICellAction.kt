@@ -41,6 +41,7 @@ object CellActionProperties {
     val transformBefore = CellPropertyKey<ICodeCompletionActionProvider?>("transformBefore", null)
     val transformAfter = CellPropertyKey<ICodeCompletionActionProvider?>("transformAfter", null)
     val insert = CellPropertyKey<ICellAction?>("insert", null)
+    val delete = CellPropertyKey<ICellAction?>("delete", null)
     val replaceText = CellPropertyKey<ITextChangeAction?>("replaceText", null)
 }
 

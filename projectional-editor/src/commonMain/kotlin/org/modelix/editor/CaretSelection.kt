@@ -108,6 +108,13 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     val legalRange = 0 until (layoutable.cell.getSelectableText()?.length ?: 0)
                     if (legalRange.contains(posToDelete)) {
                         replaceText(posToDelete..posToDelete, "", editor)
+                    } else {
+                        val deleteAction = layoutable.cell.ancestors(true)
+                            .mapNotNull { it.data.properties[CellActionProperties.delete] }
+                            .firstOrNull { it.isApplicable() }
+                        if (deleteAction != null) {
+                            deleteAction.execute(editor)
+                        }
                     }
                 } else {
                     replaceText(min(start, end) until max(start, end), "", editor)
@@ -224,6 +231,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         if (singleAction != null) {
             editor.runWrite {
                 singleAction.executeAndUpdateSelection(editor)
+                editor.state.clearTextReplacement(layoutable)
             }
             return true
         }

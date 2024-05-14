@@ -59,6 +59,7 @@ class CodeCompletionMenu(
                 getSelectedEntry()?.let { entry ->
                     editor.runWrite {
                         entry.executeAndUpdateSelection(editor)
+                        editor.state.clearTextReplacement(anchor)
                     }
                 }
                 editor.closeCodeCompletionMenu()

@@ -64,6 +64,10 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertEditorText(expected)
     }
 
+    fun assertCaretPosition(cellTextWithCaret: String) {
+        assertEquals(cellTextWithCaret, editor.getSelection()?.toString())
+    }
+
     fun assertEditorText(expected: String) {
         assertEquals(expected.trimIndent(), editor.getRootCell().layout.toString())
     }
@@ -239,6 +243,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
+        assertCaretPosition("p2|")
     }
 
     fun `test adding second parameter to InstanceMethodDeclaration by typing separator after first`() {
@@ -258,6 +263,102 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertFinalEditorText("""
             class Class1 {
               public void method1(int p1, int p3, int p2) {
+                <no statement>
+              }
+            }
+        """)
+        assertCaretPosition("p3|")
+    }
+
+/*    fun `test adding second parameter to InstanceMethodDeclaration by typing separator before last`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        typeText(",")
+        typeText("string")
+        pressKey(KnownKeys.Tab)
+        typeText("p2")
+        placeCaretIntoCellWithText("string", 0)
+        typeText(",")
+        typeText("long")
+        pressKey(KnownKeys.Tab)
+        typeText("p3")
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(int p1, long p3, int p2) {
+                <no statement>
+              }
+            }
+        """)
+    }*/
+
+    fun `test deleting parameter using BACKSPACE`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        assertEditorText("""
+            class Class1 {
+              public void method1(int p1) {
+                <no statement>
+              }
+            }
+        """)
+        assertCaretPosition("p1|")
+        pressKey(KnownKeys.ArrowLeft)
+        assertCaretPosition("p|1")
+        pressKey(KnownKeys.ArrowLeft)
+        assertCaretPosition("|p1")
+        pressKey(KnownKeys.Backspace)
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                <no statement>
+              }
+            }
+        """)
+    }
+
+    fun `test deleting parameter using DELETE`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        assertEditorText("""
+            class Class1 {
+              public void method1(int p1) {
+                <no statement>
+              }
+            }
+        """)
+        pressKey(KnownKeys.Delete)
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                <no statement>
+              }
+            }
+        """)
+    }
+
+    fun `test deleting insertion placeholder`() {
+        placeCaretIntoCellWithText("<no parameter>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("p1")
+        pressKey(KnownKeys.Enter)
+        assertEditorText("""
+            class Class1 {
+              public void method1(int p1, <choose parameter>) {
+                <no statement>
+              }
+            }
+        """)
+        pressKey(KnownKeys.Backspace)
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(int p1) {
                 <no statement>
               }
             }
