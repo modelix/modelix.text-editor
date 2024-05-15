@@ -175,7 +175,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `test showing initializer of LocalVariableDeclaration`() {
+    fun `test showing initializer of LocalVariableDeclaration using side transformation`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -188,6 +188,68 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
+        assertCaretPosition("|<no initializer>")
+    }
+
+    fun `test showing initializer of LocalVariableDeclaration using TAB`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        pressKey(KnownKeys.Tab)
+        assertEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc = <no initializer>;
+              }
+            }
+        """)
+        assertCaretPosition("|<no initializer>")
+    }
+
+    fun `test previous optional is hidden when TABing to next`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        pressKey(KnownKeys.Enter)
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("def")
+        placeCaretIntoCellWithText("abc")
+
+        assertEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc;
+                int def;
+              }
+            }
+        """)
+
+        pressKey(KnownKeys.Tab)
+        assertEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc = <no initializer>;
+                int def;
+              }
+            }
+        """)
+        assertCaretPosition("|<no initializer>")
+
+        pressKey(KnownKeys.Tab)
+        assertCaretPosition("|def")
+        pressKey(KnownKeys.Tab)
+        assertEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc;
+                int def = <no initializer>;
+              }
+            }
+        """)
+        assertCaretPosition("|<no initializer>")
     }
 
     fun `test adding initializer to LocalVariableDeclaration`() {

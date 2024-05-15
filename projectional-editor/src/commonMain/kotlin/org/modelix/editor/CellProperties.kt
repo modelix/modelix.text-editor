@@ -47,6 +47,7 @@ object CommonCellProperties {
     val tabTarget = CellPropertyKey<Boolean>("tab-target", false) // caret is placed into the cell when navigating via TAB
     val selectable = CellPropertyKey<Boolean>("selectable", false)
     val codeCompletionText = CellPropertyKey<String?>("code-completion-text", null) // empty string hides the entry
+    val isForceShown = CellPropertyKey<Boolean>("force-shown", false)
 }
 
 fun Cell.isTabTarget() = getProperty(CommonCellProperties.tabTarget)

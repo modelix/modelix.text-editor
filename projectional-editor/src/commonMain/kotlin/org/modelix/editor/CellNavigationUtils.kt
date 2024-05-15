@@ -1,5 +1,13 @@
 package org.modelix.editor
 
+fun Cell.nextCells(): Sequence<Cell> {
+    return nextSiblings().flatMap { it.descendantsAndSelf() } + (parent?.let { sequenceOf(it) + it.nextCells() } ?: emptySequence())
+}
+
+fun Cell.previousCells(): Sequence<Cell> {
+    return previousSiblings().flatMap { it.descendantsAndSelf(iterateBackwards = true) } + (parent?.let { sequenceOf(it) + it.previousCells() } ?: emptySequence())
+}
+
 fun Cell.previousLeafs(includeSelf: Boolean = false): Sequence<Cell> {
     return generateSequence(this) { it.previousLeaf() }.drop(if (includeSelf) 0 else 1)
 }
@@ -37,25 +45,31 @@ fun Cell.lastLeaf(): Cell {
 }
 
 fun Cell.previousSibling(): Cell? {
-    val parent = this.parent ?: return null
-    val siblings = parent.getChildren()
-    val index = siblings.indexOf(this)
-    if (index == -1) throw RuntimeException("$this expected to be a child of $parent")
-    val siblingIndex = index - 1
-    return if (siblingIndex >= 0) siblings[siblingIndex] else null
+    return previousSiblings().firstOrNull()
 }
 
 fun Cell.nextSibling(): Cell? {
-    val parent = this.parent ?: return null
-    val siblings = parent.getChildren()
-    val index = siblings.indexOf(this)
-    if (index == -1) throw RuntimeException("$this expected to be a child of $parent")
-    val siblingIndex = index + 1
-    return if (siblingIndex < siblings.size) siblings[siblingIndex] else null
+    return nextSiblings().firstOrNull()
 }
 
-fun Cell.descendants(): Sequence<Cell> = getChildren().asSequence().flatMap { it.descendantsAndSelf() }
-fun Cell.descendantsAndSelf(): Sequence<Cell> = sequenceOf(this) + descendants()
+fun Cell.previousSiblings(): Sequence<Cell> {
+    val parent = this.parent ?: return emptySequence()
+    return parent.getChildren().asReversed().asSequence().dropWhile { it != this }.drop(1)
+}
+
+fun Cell.nextSiblings(): Sequence<Cell> {
+    val parent = this.parent ?: return emptySequence()
+    return parent.getChildren().asSequence().dropWhile { it != this }.drop(1)
+}
+
+fun Cell.descendants(iterateBackwards: Boolean = false): Sequence<Cell> {
+    return getChildren()
+        .let { if (iterateBackwards) it.asReversed() else it }
+        .asSequence()
+        .flatMap { it.descendantsAndSelf(iterateBackwards) }
+}
+
+fun Cell.descendantsAndSelf(iterateBackwards: Boolean = false): Sequence<Cell> = sequenceOf(this) + descendants(iterateBackwards)
 fun Cell.ancestors(includeSelf: Boolean = false) = generateSequence(if (includeSelf) this else this.parent) { it.parent }
 
 fun Cell.commonAncestor(other: Cell): Cell = (ancestors(true) - other.ancestors(true).toSet()).last().parent!!

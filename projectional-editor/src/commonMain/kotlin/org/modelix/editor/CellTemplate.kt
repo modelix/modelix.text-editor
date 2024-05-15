@@ -284,25 +284,27 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 
     override fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
-        val forceShow = context.editorState.forceShowOptionals[createCellReference(node)] == true
+        fun forceShow() = context.editorState.forceShowOptionals[createCellReference(node)] == true
 
         val symbols = getChildren().asSequence().flatMap { it.getGrammarSymbols() }
         val conditionSymbol = symbols.filterIsInstance<IGrammarConditionSymbol>().firstOrNull()
         val transformationSymbol = symbols.firstOrNull()
 
         if (conditionSymbol == null) return emptyList()
-        if (forceShow || conditionSymbol.getSymbolConditionState(node)) {
+        val conditionState = conditionSymbol.getSymbolConditionState(node)
+        if (conditionState || forceShow()) {
+            if (!conditionState) {
+                cell.properties[CommonCellProperties.isForceShown] = true
+            }
             return super.applyChildren(context, node, cell)
         } else {
             if (transformationSymbol == null) return emptyList()
             val symbolTransformationAction = transformationSymbol.getSymbolTransformationAction(node, createCellReference(node))
             if (symbolTransformationAction != null) {
-                val sideTransformCell = CellData()
-                sideTransformCell.properties[CellActionProperties.transformBefore] = symbolTransformationAction.asProvider()
-                return listOf(sideTransformCell)
-            } else {
-                return emptyList()
+                cell.properties[CellActionProperties.transformBefore] = symbolTransformationAction.asProvider()
             }
+            cell.properties[CellActionProperties.show] = ForceShowOptionalCellAction(createCellReference(node))
+            return emptyList()
         }
     }
 
@@ -315,8 +317,8 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 }
 
-class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeCompletionAction {
-    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeCompletionAction, ICellAction {
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy {
         editor.state.forceShowOptionals[cell] = true
         return CaretPositionPolicy(cell)
     }
@@ -327,6 +329,10 @@ class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeComple
 
     override fun getDescription(): String {
         return "Add optional part"
+    }
+
+    override fun isApplicable(): Boolean {
+        return true
     }
 }
 

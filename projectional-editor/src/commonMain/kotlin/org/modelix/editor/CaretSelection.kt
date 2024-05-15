@@ -94,12 +94,23 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 }
             }
             KnownKeys.Tab -> {
-                val target = layoutable
-                    .getSiblingsInText(!event.modifiers.shift)
-                    .filterIsInstance<LayoutableCell>()
-                    .firstOrNull { it.cell.isTabTarget() }
-                if (target != null) {
-                    editor.changeSelection(CaretSelection(target, 0))
+                for (c in if (event.modifiers.shift) layoutable.cell.previousCells() else layoutable.cell.nextCells()) {
+                    if (c.isTabTarget()) {
+                        val l = c.layoutable()
+                        if (l != null) {
+                            editor.changeSelection(CaretSelection(l, 0))
+                            break
+                        }
+                    }
+                    val action = c.getProperty(CellActionProperties.show)
+                    if (action != null) {
+                        // cannot tab into nested optionals because the parent optional will disappear
+                        if (!c.ancestors(true).any { it.getProperty(CommonCellProperties.isForceShown) }) {
+                            editor.state.forceShowOptionals.clear()
+                            action.executeAndUpdateSelection(editor)
+                            break
+                        }
+                    }
                 }
             }
             KnownKeys.Delete, KnownKeys.Backspace -> {
