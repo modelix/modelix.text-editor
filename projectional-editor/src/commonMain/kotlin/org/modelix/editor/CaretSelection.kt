@@ -136,21 +136,26 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 }
             }
             KnownKeys.Enter -> {
-                var previousLeaf: Cell? = layoutable.cell
-                while (previousLeaf != null) {
-                    val nextLeaf = previousLeaf.nextLeaf { it.isVisible() }
-                    val actions = getBordersBetween(previousLeaf.rightBorder(), nextLeaf?.leftBorder())
-                        .filter { it.isLeft }
-                        .mapNotNull { it.cell.getProperty(CellActionProperties.insert) }
-                        .distinct()
-                        .filter { it.isApplicable() }
-                    // TODO resolve conflicts if multiple actions are applicable
-                    val action = actions.firstOrNull()
-                    if (action != null) {
-                        action.executeAndUpdateSelection(editor)
-                        break
+                val actionOnSelectedCell = layoutable.cell.getProperty(CellActionProperties.insert)?.takeIf { it.isApplicable() }
+                if (actionOnSelectedCell != null) {
+                    actionOnSelectedCell.executeAndUpdateSelection(editor)
+                } else {
+                    var previousLeaf: Cell? = layoutable.cell
+                    while (previousLeaf != null) {
+                        val nextLeaf = previousLeaf.nextLeaf { it.isVisible() }
+                        val actions = getBordersBetween(previousLeaf.rightBorder(), nextLeaf?.leftBorder())
+                            .filter { it.isLeft }
+                            .mapNotNull { it.cell.getProperty(CellActionProperties.insert) }
+                            .distinct()
+                            .filter { it.isApplicable() }
+                        // TODO resolve conflicts if multiple actions are applicable
+                        val action = actions.firstOrNull()
+                        if (action != null) {
+                            action.executeAndUpdateSelection(editor)
+                            break
+                        }
+                        previousLeaf = nextLeaf
                     }
-                    previousLeaf = nextLeaf
                 }
             }
             else -> {
