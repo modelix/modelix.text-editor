@@ -154,7 +154,12 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
 
     override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
         return ForceShowOptionalCellAction(optionalCell)
-            .withCaretPolicy { it?.avoid(createCellReference(node)) }
+            .withCaretPolicy {
+                when (it) {
+                    is CaretPositionPolicy -> it.avoid(createCellReference(node))
+                    else -> it
+                }
+            }
             .withMatchingText(text)
     }
 
@@ -512,8 +517,10 @@ class ChildCellTemplate(
             }
             placeholder.properties[CommonCellProperties.tabTarget] = true
             placeholder.properties[CellActionProperties.delete] = object : ICellAction {
-                override fun execute(editor: EditorComponent) {
-                    context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+                override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+                    return SavedCaretPosition.saveAndRun(editor) {
+                        context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+                    }
                 }
 
                 override fun isApplicable(): Boolean = true
@@ -649,26 +656,21 @@ class InsertSubstitutionPlaceholderAction(
 ) : ICellAction {
     override fun isApplicable(): Boolean = true
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy {
         editorState.substitutionPlaceholderPositions[ref] = SubstitutionPlaceholderPosition(index)
         editorState.textReplacements.remove(PlaceholderCellReference(ref))
-        editor.selectAfterUpdate {
-            editor.resolveCell(PlaceholderCellReference(ref))
-                .firstOrNull()?.layoutable()?.let { CaretSelection(it, 0) }
-        }
+        return CaretPositionPolicy(PlaceholderCellReference(ref))
     }
 }
 
 class InstantiateNodeCellAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
     override fun isApplicable(): Boolean = true
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy {
         val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
             location.replaceNode(concept)
         }
-        editor.selectAfterUpdate {
-            CaretPositionPolicy(newNode).getBestSelection(editor)
-        }
+        return CaretPositionPolicy(newNode)
     }
 }
 

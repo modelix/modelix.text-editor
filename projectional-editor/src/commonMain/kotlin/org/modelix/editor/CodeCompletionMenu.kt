@@ -220,12 +220,19 @@ private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Seq
 interface ICodeCompletionAction : IActionOrProvider {
     fun getMatchingText(): String
     fun getDescription(): String
-    fun execute(editor: EditorComponent): CaretPositionPolicy?
+    fun execute(editor: EditorComponent): ICaretPositionPolicy?
     fun shadows(shadowed: ICodeCompletionAction) = false
     fun shadowedBy(shadowing: ICodeCompletionAction) = false
 }
 
 fun ICodeCompletionAction.executeAndUpdateSelection(editor: EditorComponent) {
+    val policy = execute(editor)
+    if (policy != null) {
+        editor.selectAfterUpdate { policy.getBestSelection(editor) }
+    }
+}
+
+fun ICellAction.executeAndUpdateSelection(editor: EditorComponent) {
     val policy = execute(editor)
     if (policy != null) {
         editor.selectAfterUpdate { policy.getBestSelection(editor) }

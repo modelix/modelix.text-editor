@@ -59,13 +59,17 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
     fun assertFinalEditorText(expected: String) {
         assertEditorText(expected)
+
+        // Reset all editor state to ensure the typed text triggered a model transformation.
         editor.state.reset()
         editor.update()
         assertEditorText(expected)
     }
 
     fun assertCaretPosition(cellTextWithCaret: String) {
-        assertEquals(cellTextWithCaret, editor.getSelection()?.toString())
+        val selection = checkNotNull(editor.getSelection()) { "No active selection" }
+        if (selection !is CaretSelection) error("Not a caret selection: $selection")
+        assertEquals(cellTextWithCaret, selection.toString())
     }
 
     fun assertEditorText(expected: String) {
@@ -318,6 +322,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
+        assertCaretPosition("|<no parameter>")
     }
 
     fun `test deleting parameter using DELETE`() {
@@ -340,9 +345,10 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
+        assertCaretPosition("|<no parameter>")
     }
 
-    fun `test deleting insertion placeholder`() {
+    fun `test deleting placeholder`() {
         placeCaretIntoCellWithText("<no parameter>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -363,5 +369,6 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
+        assertCaretPosition("p1|")
     }
 }

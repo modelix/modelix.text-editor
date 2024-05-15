@@ -26,15 +26,15 @@ class CodeCompletionActionProviderWrapper(
 }
 
 class CodeCompletionActionWithPostprocessor(action: ICodeCompletionAction, val after: () -> Unit) : CodeCompletionActionWrapper(action) {
-    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
         val policy = wrappedAction.execute(editor)
         after()
         return policy
     }
 }
 
-class CodeCompletionActionWithCaretPolicy(action: ICodeCompletionAction, val policy: (CaretPositionPolicy?) -> CaretPositionPolicy?) : CodeCompletionActionWrapper(action) {
-    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+class CodeCompletionActionWithCaretPolicy(action: ICodeCompletionAction, val policy: (ICaretPositionPolicy?) -> ICaretPositionPolicy?) : CodeCompletionActionWrapper(action) {
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
         return policy(wrappedAction.execute(editor))
     }
 }
@@ -61,11 +61,11 @@ fun ICodeCompletionAction.withMatchingText(text: String): CodeCompletionActionWi
     return CodeCompletionActionWithMatchingText(this, text)
 }
 
-fun ICodeCompletionAction.withCaretPolicy(policy: (CaretPositionPolicy?) -> CaretPositionPolicy?): CodeCompletionActionWithCaretPolicy {
+fun ICodeCompletionAction.withCaretPolicy(policy: (ICaretPositionPolicy?) -> ICaretPositionPolicy?): CodeCompletionActionWithCaretPolicy {
     return CodeCompletionActionWithCaretPolicy(this, policy)
 }
 
-fun ICodeCompletionActionProvider.withCaretPolicy(policy: (CaretPositionPolicy?) -> CaretPositionPolicy?): CodeCompletionActionProviderWrapper {
+fun ICodeCompletionActionProvider.withCaretPolicy(policy: (ICaretPositionPolicy?) -> ICaretPositionPolicy?): CodeCompletionActionProviderWrapper {
     return CodeCompletionActionProviderWrapper(this) { parameters, it ->
         CodeCompletionActionWithCaretPolicy(it, policy)
     }

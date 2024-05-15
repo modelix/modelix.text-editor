@@ -91,6 +91,7 @@ fun Cell.getSelectableText(): String? {
     return getProperty(CommonCellProperties.textReplacement) ?: (data as? TextCellData)?.text
 }
 fun Cell.getMaxCaretPos(): Int = getSelectableText()?.length ?: 0
+fun LayoutableCell.getMaxCaretPos(): Int = cell.getSelectableText()?.length ?: 0
 
 class ResettableLazy<E>(private val initializer: () -> E) : Lazy<E> {
     private var lazy: Lazy<E> = lazy(initializer)

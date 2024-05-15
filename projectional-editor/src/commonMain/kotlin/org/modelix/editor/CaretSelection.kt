@@ -12,6 +12,10 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         require(end >= 0) { "invalid end: $start" }
     }
 
+    override fun getSelectedCells(): List<Cell> {
+        return listOf(layoutable.cell)
+    }
+
     override fun isValid(): Boolean {
         val editor = getEditor() ?: return false
         val visibleText = editor.getRootCell().layout
@@ -113,7 +117,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                             .mapNotNull { it.data.properties[CellActionProperties.delete] }
                             .firstOrNull { it.isApplicable() }
                         if (deleteAction != null) {
-                            deleteAction.execute(editor)
+                            deleteAction.executeAndUpdateSelection(editor)
                         }
                     }
                 } else {
@@ -132,7 +136,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     // TODO resolve conflicts if multiple actions are applicable
                     val action = actions.firstOrNull()
                     if (action != null) {
-                        action.execute(editor)
+                        action.executeAndUpdateSelection(editor)
                         break
                     }
                     previousLeaf = nextLeaf

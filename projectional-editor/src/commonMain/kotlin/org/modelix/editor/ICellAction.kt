@@ -5,7 +5,7 @@ import org.modelix.model.api.getInstantiatableSubConcepts
 
 interface ICellAction {
     fun isApplicable(): Boolean
-    fun execute(editor: EditorComponent)
+    fun execute(editor: EditorComponent): ICaretPositionPolicy?
 }
 
 interface ITextChangeAction {

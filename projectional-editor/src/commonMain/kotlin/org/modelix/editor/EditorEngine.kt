@@ -145,9 +145,11 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 class DeleteNodeCellAction(val node: INode) : ICellAction {
     override fun isApplicable(): Boolean = true
 
-    override fun execute(editor: EditorComponent) {
-        editor.runWrite {
-            node.remove()
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+        return SavedCaretPosition.saveAndRun(editor) {
+            editor.runWrite {
+                node.remove()
+            }
         }
     }
 }
