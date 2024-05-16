@@ -10,6 +10,7 @@ import org.modelix.model.api.IConcept
 import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.INode
 import org.modelix.model.api.getAllConcepts
+import org.modelix.model.api.remove
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
@@ -110,6 +111,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
             data.properties[CellActionProperties.transformBefore] = SideTransformNode(true, node)
             data.properties[CellActionProperties.transformAfter] = SideTransformNode(false, node)
             data.properties[CommonCellProperties.selectable] = true
+            data.properties[CellActionProperties.delete] = DeleteNodeCellAction(node)
             return data
         } catch (ex: Exception) {
             LOG.error(ex) { "Failed to create cell for $node" }
@@ -137,5 +139,17 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
     companion object {
         private val LOG = mu.KotlinLogging.logger {}
+    }
+}
+
+class DeleteNodeCellAction(val node: INode) : ICellAction {
+    override fun isApplicable(): Boolean = true
+
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+        return SavedCaretPosition.saveAndRun(editor) {
+            editor.runWrite {
+                node.remove()
+            }
+        }
     }
 }

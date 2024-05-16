@@ -7,6 +7,15 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
     constructor(cell: LayoutableCell, pos: Int) : this(cell, pos, pos)
     constructor(cell: LayoutableCell, pos: Int, desiredXPosition: Int?) : this(cell, pos, pos, desiredXPosition)
 
+    init {
+        require(start >= 0) { "invalid start: $start" }
+        require(end >= 0) { "invalid end: $start" }
+    }
+
+    override fun getSelectedCells(): List<Cell> {
+        return listOf(layoutable.cell)
+    }
+
     override fun isValid(): Boolean {
         val editor = getEditor() ?: return false
         val visibleText = editor.getRootCell().layout
@@ -85,12 +94,23 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 }
             }
             KnownKeys.Tab -> {
-                val target = layoutable
-                    .getSiblingsInText(!event.modifiers.shift)
-                    .filterIsInstance<LayoutableCell>()
-                    .firstOrNull { it.cell.isTabTarget() }
-                if (target != null) {
-                    editor.changeSelection(CaretSelection(target, 0))
+                for (c in if (event.modifiers.shift) layoutable.cell.previousCells() else layoutable.cell.nextCells()) {
+                    if (c.isTabTarget()) {
+                        val l = c.layoutable()
+                        if (l != null) {
+                            editor.changeSelection(CaretSelection(l, 0))
+                            break
+                        }
+                    }
+                    val action = c.getProperty(CellActionProperties.show)
+                    if (action != null) {
+                        // cannot tab into nested optionals because the parent optional will disappear
+                        if (!c.ancestors(true).any { it.getProperty(CommonCellProperties.isForceShown) }) {
+                            editor.state.forceShowOptionals.clear()
+                            action.executeAndUpdateSelection(editor)
+                            break
+                        }
+                    }
                 }
             }
             KnownKeys.Delete, KnownKeys.Backspace -> {
@@ -103,27 +123,39 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     val legalRange = 0 until (layoutable.cell.getSelectableText()?.length ?: 0)
                     if (legalRange.contains(posToDelete)) {
                         replaceText(posToDelete..posToDelete, "", editor)
+                    } else {
+                        val deleteAction = layoutable.cell.ancestors(true)
+                            .mapNotNull { it.data.properties[CellActionProperties.delete] }
+                            .firstOrNull { it.isApplicable() }
+                        if (deleteAction != null) {
+                            deleteAction.executeAndUpdateSelection(editor)
+                        }
                     }
                 } else {
                     replaceText(min(start, end) until max(start, end), "", editor)
                 }
             }
             KnownKeys.Enter -> {
-                var previousLeaf: Cell? = layoutable.cell
-                while (previousLeaf != null) {
-                    val nextLeaf = previousLeaf.nextLeaf { it.isVisible() }
-                    val actions = getBordersBetween(previousLeaf.rightBorder(), nextLeaf?.leftBorder())
-                        .filter { it.isLeft }
-                        .mapNotNull { it.cell.getProperty(CellActionProperties.insert) }
-                        .distinct()
-                        .filter { it.isApplicable() }
-                    // TODO resolve conflicts if multiple actions are applicable
-                    val action = actions.firstOrNull()
-                    if (action != null) {
-                        action.execute(editor)
-                        break
+                val actionOnSelectedCell = layoutable.cell.getProperty(CellActionProperties.insert)?.takeIf { it.isApplicable() }
+                if (actionOnSelectedCell != null) {
+                    actionOnSelectedCell.executeAndUpdateSelection(editor)
+                } else {
+                    var previousLeaf: Cell? = layoutable.cell
+                    while (previousLeaf != null) {
+                        val nextLeaf = previousLeaf.nextLeaf { it.isVisible() }
+                        val actions = getBordersBetween(previousLeaf.rightBorder(), nextLeaf?.leftBorder())
+                            .filter { it.isLeft }
+                            .mapNotNull { it.cell.getProperty(CellActionProperties.insert) }
+                            .distinct()
+                            .filter { it.isApplicable() }
+                        // TODO resolve conflicts if multiple actions are applicable
+                        val action = actions.firstOrNull()
+                        if (action != null) {
+                            action.executeAndUpdateSelection(editor)
+                            break
+                        }
+                        previousLeaf = nextLeaf
                     }
-                    previousLeaf = nextLeaf
                 }
             }
             else -> {
@@ -172,7 +204,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             }
             if (matchingActions.isNotEmpty()) {
                 if (matchingActions.size == 1 && matchingActions.first().getMatchingText() == typedText) {
-                    matchingActions.first().execute(editor)
+                    matchingActions.first().executeAndUpdateSelection(editor)
                     return
                 }
                 editor.showCodeCompletionMenu(
@@ -217,7 +249,10 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             .applyShadowing()
         val singleAction = matchingActions.singleOrNull()
         if (singleAction != null) {
-            singleAction.execute(editor)
+            editor.runWrite {
+                singleAction.executeAndUpdateSelection(editor)
+                editor.state.clearTextReplacement(layoutable)
+            }
             return true
         }
 

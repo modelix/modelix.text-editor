@@ -317,6 +317,12 @@ class NotationRootCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
     fun condition(condition: (INode) -> Boolean) {
         (template as NotationRootCellTemplate).condition = condition
     }
+
+    fun hideInCodeCompletion() = completionText("")
+
+    fun completionText(text: String) {
+        template.properties[CommonCellProperties.codeCompletionText] = text
+    }
 }
 
 class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(

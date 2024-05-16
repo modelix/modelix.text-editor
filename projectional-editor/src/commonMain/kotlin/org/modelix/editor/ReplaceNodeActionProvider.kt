@@ -43,12 +43,9 @@ class ChangeReferenceTargetAction(val sourceLocation: INonExistingNode, val link
         return "set reference '" + link.getSimpleName() + "'"
     }
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
         val sourceNode = sourceLocation.getOrCreateNode(null)
         sourceNode.setReferenceTarget(link, targetNode.getOrCreateNode())
-        editor.selectAfterUpdate {
-            CaretPositionPolicy(ReferencedNodeCellReference(sourceNode.reference, link))
-                .getBestSelection(editor)
-        }
+        return CaretPositionPolicy(ReferencedNodeCellReference(sourceNode.reference, link))
     }
 }

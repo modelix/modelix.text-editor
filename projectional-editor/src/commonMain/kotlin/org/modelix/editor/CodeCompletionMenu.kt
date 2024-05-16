@@ -58,7 +58,8 @@ class CodeCompletionMenu(
             KnownKeys.Enter -> {
                 getSelectedEntry()?.let { entry ->
                     editor.runWrite {
-                        entry.execute(editor)
+                        entry.executeAndUpdateSelection(editor)
+                        editor.state.clearTextReplacement(anchor)
                     }
                 }
                 editor.closeCodeCompletionMenu()
@@ -107,7 +108,7 @@ class CodeCompletionMenu(
 
     fun executeIfSingleAction() {
         if (entries.size == 1 && entries.first().getMatchingText() == patternEditor.pattern) {
-            entries.first().execute(editor)
+            entries.first().executeAndUpdateSelection(editor)
             editor.closeCodeCompletionMenu()
         }
     }
@@ -197,6 +198,19 @@ fun ICodeCompletionActionProvider.flattenApplicableActions(parameters: CodeCompl
     return flatten(parameters).toList()
 }
 
+class ActionAsProvider(val action: ICodeCompletionAction) : ICodeCompletionActionProvider {
+    override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
+        return listOf(action)
+    }
+}
+
+fun ICodeCompletionAction.asProvider(): ICodeCompletionActionProvider = ActionAsProvider(this)
+fun IActionOrProvider.asProvider(): ICodeCompletionActionProvider = when (this) {
+    is ICodeCompletionAction -> ActionAsProvider(this)
+    is ICodeCompletionActionProvider -> this
+    else -> error("Unknown type: $this")
+}
+
 private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Sequence<ICodeCompletionAction> = when (this) {
     is ICodeCompletionAction -> sequenceOf(this)
     is ICodeCompletionActionProvider -> getApplicableActions(parameters).asSequence().flatMap { it.flatten(parameters) }
@@ -206,33 +220,24 @@ private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Seq
 interface ICodeCompletionAction : IActionOrProvider {
     fun getMatchingText(): String
     fun getDescription(): String
-    fun execute(editor: EditorComponent)
+    fun execute(editor: EditorComponent): ICaretPositionPolicy?
     fun shadows(shadowed: ICodeCompletionAction) = false
     fun shadowedBy(shadowing: ICodeCompletionAction) = false
 }
 
-class CodeCompletionActionWithPostprocessor(val action: ICodeCompletionAction, val after: () -> Unit) : ICodeCompletionAction by action {
-    override fun execute(editor: EditorComponent) {
-        action.execute(editor)
-        after()
-    }
-}
-class CodeCompletionActionProviderWithPostprocessor(
-    val actionProvider: ICodeCompletionActionProvider,
-    val after: () -> Unit,
-) : ICodeCompletionActionProvider {
-    override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        return actionProvider.getApplicableActions(parameters).map {
-            when (it) {
-                is ICodeCompletionAction -> CodeCompletionActionWithPostprocessor(it, after)
-                is ICodeCompletionActionProvider -> CodeCompletionActionProviderWithPostprocessor(it, after)
-                else -> throw RuntimeException("Unexpected type: " + it::class)
-            }
-        }
+fun ICodeCompletionAction.executeAndUpdateSelection(editor: EditorComponent) {
+    val policy = execute(editor)
+    if (policy != null) {
+        editor.selectAfterUpdate { policy.getBestSelection(editor) }
     }
 }
 
-fun ICodeCompletionActionProvider.after(body: () -> Unit) = CodeCompletionActionProviderWithPostprocessor(this, body)
+fun ICellAction.executeAndUpdateSelection(editor: EditorComponent) {
+    val policy = execute(editor)
+    if (policy != null) {
+        editor.selectAfterUpdate { policy.getBestSelection(editor) }
+    }
+}
 
 class CodeCompletionParameters(val editor: EditorComponent, pattern: String) {
     val pattern: String = pattern

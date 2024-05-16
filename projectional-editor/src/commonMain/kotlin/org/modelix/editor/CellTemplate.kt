@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.constraints.ConstraintsAspect
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IChildLink
@@ -8,7 +9,7 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
-import org.modelix.model.api.isSubConceptOf
+import org.modelix.model.api.remove
 import org.modelix.scopes.ScopeAspect
 import kotlin.jvm.JvmName
 
@@ -39,6 +40,10 @@ abstract class CellTemplate(val concept: IConcept) {
     protected abstract fun createCell(context: CellCreationContext, node: INode): CellData
 
     open fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
+        val completionText = properties[CommonCellProperties.codeCompletionText]
+        if (completionText != null) {
+            return listOf(InstantiateNodeCompletionAction(completionText, concept, location))
+        }
         return children.asSequence().mapNotNull { it.getInstantiationActions(location, parameters) }.firstOrNull()
     }
 
@@ -106,6 +111,13 @@ interface IGrammarSymbol {
     fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
         return emptyList()
     }
+
+    fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider?
+}
+
+interface IGrammarConditionSymbol : IGrammarSymbol {
+    fun getSymbolConditionState(node: INode): Boolean
+    fun setSymbolConditionFalse(node: INode)
 }
 
 class OverrideText(val cell: TextCellData, val delegate: ITextChangeAction?) : ITextChangeAction {
@@ -133,25 +145,33 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
     CellTemplate(concept), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
-        return listOf(InstantiateNodeAction(location))
+        return listOf(InstantiateNodeCompletionAction(text, concept, location))
     }
 
     override fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
         return listOf(SideTransformWrapper(nodeToWrap.toNonExisting(), wrappingLink))
     }
 
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return ForceShowOptionalCellAction(optionalCell)
+            .withCaretPolicy {
+                when (it) {
+                    is CaretPositionPolicy -> it.avoid(createCellReference(node))
+                    else -> it
+                }
+            }
+            .withMatchingText(text)
+    }
+
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) : ICodeCompletionAction {
         override fun getMatchingText(): String = text
         override fun getDescription(): String = concept.getShortName()
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept)
             wrapper.moveChild(wrappingLink, 0, nodeToWrap.getOrCreateNode(null))
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(wrapper)
-                    .avoid(ChildNodeCellReference(wrapper.reference, wrappingLink))
-                    .avoid(createCellReference(wrapper))
-                    .getBestSelection(editor)
-            }
+            return CaretPositionPolicy(wrapper)
+                .avoid(ChildNodeCellReference(wrapper.reference, wrappingLink))
+                .avoid(createCellReference(wrapper))
         }
 
         override fun shadows(shadowed: ICodeCompletionAction): Boolean {
@@ -166,24 +186,52 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
 
         fun getTemplate() = this@ConstantCellTemplate
     }
+}
 
-    inner class InstantiateNodeAction(val location: INonExistingNode) : ICodeCompletionAction {
-        override fun getMatchingText(): String {
-            return text
+class InstantiateNodeCompletionAction(
+    private val matchingText: String,
+    val concept: IConcept,
+    val location: INonExistingNode,
+) : ICodeCompletionAction {
+    private val description = let {
+        fun wrapperText(innerText: String, wrapper: INonExistingNode?): String = if (wrapper != null && wrapper.getNode() == null) {
+            wrapperText("${wrapper.expectedConcept()?.getShortName()}[$innerText]", wrapper.getParent())
+        } else {
+            innerText
         }
+        wrapperText(concept.getShortName(), location.getParent())
+    }
 
-        override fun getDescription(): String {
-            return concept.getShortName()
+    override fun getMatchingText(): String {
+        return matchingText
+    }
+
+    override fun getDescription(): String = description
+
+    override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+        val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
+            location.replaceNode(concept)
         }
+        return CaretPositionPolicy(newNode)
+    }
 
-        override fun execute(editor: EditorComponent) {
-            val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
-                location.replaceNode(concept)
+    override fun shadowedBy(shadowing: ICodeCompletionAction): Boolean {
+        return when (shadowing) {
+            is InstantiateNodeCompletionAction -> {
+                // Avoid showing the same entry twice, once with and once without a wrapper.
+                shadowing.concept == concept && shadowing.location.nodeCreationDepth() < location.nodeCreationDepth()
             }
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(newNode)
-                    .getBestSelection(editor)
+            else -> false
+        }
+    }
+
+    override fun shadows(shadowed: ICodeCompletionAction): Boolean {
+        return when (shadowed) {
+            is InstantiateNodeCompletionAction -> {
+                // Avoid showing the same entry twice, once with and once without a wrapper.
+                shadowed.concept == concept && shadowed.location.nodeCreationDepth() > location.nodeCreationDepth()
             }
+            else -> false
         }
     }
 }
@@ -236,11 +284,26 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 
     override fun applyChildren(context: CellCreationContext, node: INode, cell: CellData): List<CellData> {
-        // TODO support other cell types as condition for the optional
-        val childLinkCell = descendants().filterIsInstance<ChildCellTemplate>().firstOrNull()
-        if (childLinkCell == null || childLinkCell.getChildNodes(node).isNotEmpty()) {
+        fun forceShow() = context.editorState.forceShowOptionals[createCellReference(node)] == true
+
+        val symbols = getChildren().asSequence().flatMap { it.getGrammarSymbols() }
+        val conditionSymbol = symbols.filterIsInstance<IGrammarConditionSymbol>().firstOrNull()
+        val transformationSymbol = symbols.firstOrNull()
+
+        if (conditionSymbol == null) return emptyList()
+        val conditionState = conditionSymbol.getSymbolConditionState(node)
+        if (conditionState || forceShow()) {
+            if (!conditionState) {
+                cell.properties[CommonCellProperties.isForceShown] = true
+            }
             return super.applyChildren(context, node, cell)
         } else {
+            if (transformationSymbol == null) return emptyList()
+            val symbolTransformationAction = transformationSymbol.getSymbolTransformationAction(node, createCellReference(node))
+            if (symbolTransformationAction != null) {
+                cell.properties[CellActionProperties.transformBefore] = symbolTransformationAction.asProvider()
+            }
+            cell.properties[CellActionProperties.show] = ForceShowOptionalCellAction(createCellReference(node))
             return emptyList()
         }
     }
@@ -254,10 +317,29 @@ class OptionalCellTemplate(concept: IConcept) :
     }
 }
 
+class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeCompletionAction, ICellAction {
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy {
+        editor.state.forceShowOptionals[cell] = true
+        return CaretPositionPolicy(cell)
+    }
+
+    override fun getMatchingText(): String {
+        return ""
+    }
+
+    override fun getDescription(): String {
+        return "Add optional part"
+    }
+
+    override fun isApplicable(): Boolean {
+        return true
+    }
+}
+
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
-    CellTemplate(concept), IGrammarSymbol {
+    CellTemplate(concept), IGrammarConditionSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
-    var validator: (String) -> Boolean = { true }
+    var validator: ((String) -> Boolean)? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
@@ -266,13 +348,31 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
         data.cellReferences += PropertyCellReference(property, node.reference)
         return data
     }
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(WrapPropertyValueProvider(location))
     }
 
+    private fun validateValue(node: INonExistingNode, value: String): Boolean {
+        return validator?.invoke(value)
+            ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
+    }
+
+    override fun getSymbolConditionState(node: INode): Boolean {
+        return node.getPropertyValue(property) != null
+    }
+
+    override fun setSymbolConditionFalse(node: INode) {
+        return node.setPropertyValue(property, null)
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return WrapPropertyValueProvider(node.toNonExisting())
+    }
+
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {
         override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
-            return if (validator(parameters.pattern)) {
+            return if (parameters.pattern.isNotBlank() && validateValue(location.replacement(concept), parameters.pattern)) {
                 listOf(WrapPropertyValue(location, parameters.pattern))
             } else {
                 emptyList()
@@ -289,20 +389,17 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
             return concept.getShortName()
         }
 
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val node = location.getOrCreateNode(concept)
             node.setPropertyValue(property, value)
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(node))
-                    .getBestSelection(editor)
-            }
+            return CaretPositionPolicy(createCellReference(node))
         }
     }
 
     inner class ChangePropertyAction(val node: INode) : ITextChangeAction {
         override fun isValid(value: String?): Boolean {
             if (value == null) return true
-            return validator(value)
+            return validateValue(node.toNonExisting(), value)
         }
 
         override fun replaceText(editor: EditorComponent, range: IntRange, replacement: String, newText: String): Boolean {
@@ -334,15 +431,24 @@ class ReferenceCellTemplate(
         return sourceNode.getReferenceTarget(link)
     }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider> {
-        val sourceNode = location.replacement(concept)
-        val scope = ScopeAspect.getScope(sourceNode, link)
-        val targets = scope.getVisibleElements(sourceNode, link)
-        return targets.map { target ->
-            val text = when (target) {
-                is ExistingNode -> presentation(target.getNode()) ?: ""
-                else -> "<create new target node>"
+        return listOf(WrapReferenceTargetProvider(location.replacement(concept)))
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return WrapReferenceTargetProvider(node.toNonExisting())
+    }
+
+    inner class WrapReferenceTargetProvider(val sourceNode: INonExistingNode) : ICodeCompletionActionProvider {
+        override fun getApplicableActions(parameters: CodeCompletionParameters): List<IActionOrProvider> {
+            val scope = ScopeAspect.getScope(sourceNode, link)
+            val targets = scope.getVisibleElements(sourceNode, link)
+            return targets.map { target ->
+                val text = when (target) {
+                    is ExistingNode -> presentation(target.getNode()) ?: ""
+                    else -> "<create new target node>"
+                }
+                WrapReferenceTarget(sourceNode, target, text)
             }
-            WrapReferenceTarget(location, target, text)
         }
     }
 
@@ -355,12 +461,10 @@ class ReferenceCellTemplate(
             return concept.getShortName()
         }
 
-        override fun execute(editor: EditorComponent) {
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
             val sourceNode = location.getOrCreateNode(concept)
             sourceNode.setReferenceTarget(link, target.getOrCreateNode())
-            editor.selectAfterUpdate {
-                CaretPositionPolicy(createCellReference(sourceNode)).getBestSelection(editor)
-            }
+            return CaretPositionPolicy(createCellReference(sourceNode))
         }
     }
 }
@@ -370,17 +474,51 @@ class FlagCellTemplate(
     property: IProperty,
     val text: String,
 ) : PropertyCellTemplate(concept, property), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: INode) = if (node.getPropertyValue(property) == "true") TextCellData(text, "") else CellData()
+    override fun createCell(context: CellCreationContext, node: INode): CellData {
+        if (node.getPropertyValue(property) == "true") return TextCellData(text, "")
+
+        val forceShow = context.editorState.forceShowOptionals[createCellReference(node)] == true
+        return if (forceShow) {
+            TextCellData("", text).also {
+                it.properties[CommonCellProperties.isForceShown] = true
+                it.properties[CellActionProperties.insert] = ChangePropertyCellAction(node.toNonExisting(), property, "true")
+            }
+        } else {
+            CellData().also {
+                it.properties[CellActionProperties.show] = ForceShowOptionalCellAction(createCellReference(node))
+            }
+        }
+    }
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         // TODO
         return listOf()
     }
 }
 
+class ChangePropertyCellAction(
+    val node: INonExistingNode,
+    val property: IProperty,
+    val value: String,
+) : ICellAction {
+    override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+        val node = editor.runWrite {
+            node.getOrCreateNode().also {
+                it.setPropertyValue(property, value)
+            }
+        }
+        return CaretPositionPolicy(PropertyCellReference(property, node.reference))
+    }
+
+    override fun isApplicable(): Boolean {
+        return true
+    }
+}
+
 class ChildCellTemplate(
     concept: IConcept,
     val link: IChildLink,
-) : CellTemplate(concept), IGrammarSymbol {
+) : CellTemplate(concept), IGrammarConditionSymbol {
 
     private var separatorCell: CellTemplate? = null
 
@@ -418,36 +556,51 @@ class ChildCellTemplate(
                 placeholder.cellReferences += ChildNodeCellReference(node.reference, link, index)
             }
             placeholder.properties[CommonCellProperties.tabTarget] = true
+            placeholder.properties[CellActionProperties.delete] = object : ICellAction {
+                override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+                    return SavedCaretPosition.saveAndRun(editor) {
+                        context.editorState.substitutionPlaceholderPositions.remove(createCellReference(node))
+                    }
+                }
+
+                override fun isApplicable(): Boolean = true
+            }
             cell.addChild(placeholder)
         }
         fun addInsertActionCell(index: Int) {
             if (link.isMultiple) {
                 val actionCell = CellData()
                 val action = newLineConcept?.let {
-                    InstantiateNodeAction(NonExistingChild(ExistingNode(node), link, index), it)
+                    InstantiateNodeCellAction(NonExistingChild(ExistingNode(node), link, index), it)
                 } ?: InsertSubstitutionPlaceholderAction(context.editorState, createCellReference(node), index)
                 actionCell.properties[CellActionProperties.insert] = action
                 cell.addChild(actionCell)
             }
         }
+        fun addSeparator(before: CellReference) {
+            separatorCell?.let {
+                cell.addChild(
+                    it.apply(context, node).also {
+                        it.cellReferences += SeparatorCellReference(before)
+                    },
+                )
+            }
+        }
         if (childNodes.isEmpty()) {
             addSubstitutionPlaceholder(0)
         } else {
+            val separatorText = separatorCell?.getGrammarSymbols()?.filterIsInstance<ConstantCellTemplate>()
+                ?.firstOrNull()?.text
             val childCells = childNodes.map { ChildDataReference(it) }
             childCells.forEachIndexed { index, child ->
                 val childCellReference = ChildNodeCellReference(node.reference, link, index)
                 if (index != 0) {
-                    separatorCell?.let {
-                        cell.addChild(
-                            it.apply(context, node).also {
-                                it.cellReferences += SeparatorCellReference(childCellReference)
-                            },
-                        )
-                    }
+                    addSeparator(childCellReference)
                 }
 
                 if (substitutionPlaceholder != null && placeholderIndex == index) {
                     addSubstitutionPlaceholder(placeholderIndex)
+                    addSeparator(PlaceholderCellReference(createCellReference(node)))
                 } else {
                     addInsertActionCell(index)
                 }
@@ -456,9 +609,26 @@ class ChildCellTemplate(
                 val wrapper = CellData() // allow setting properties by the parent, because the cell is already frozen
                 wrapper.addChild(child)
                 wrapper.cellReferences += childCellReference
+
+                if (separatorText != null) {
+                    wrapper.properties[CellActionProperties.transformBefore] = InsertSubstitutionPlaceholderCompletionAction(
+                        index,
+                        separatorText,
+                        createCellReference(node),
+                    ).asProvider()
+                    wrapper.properties[CellActionProperties.transformAfter] = InsertSubstitutionPlaceholderCompletionAction(
+                        index + 1,
+                        separatorText,
+                        createCellReference(node),
+                    ).asProvider()
+                }
+
                 cell.addChild(wrapper)
             }
             if (substitutionPlaceholder != null && placeholderIndex == childNodes.size) {
+                if (childCells.isNotEmpty()) {
+                    addSeparator(PlaceholderCellReference(createCellReference(node)))
+                }
                 addSubstitutionPlaceholder(placeholderIndex)
             } else {
                 addInsertActionCell(childNodes.size)
@@ -484,6 +654,38 @@ class ChildCellTemplate(
         val childNode = NonExistingChild(location.replacement(concept), link)
         return listOf(ReplaceNodeActionProvider(childNode))
     }
+
+    override fun getSymbolConditionState(node: INode): Boolean {
+        return node.getChildren(link).iterator().hasNext()
+    }
+
+    override fun setSymbolConditionFalse(node: INode) {
+        node.getChildren(link).toList().forEach { it.remove() }
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return ReplaceNodeActionProvider(NonExistingChild(node.toNonExisting(), link))
+    }
+
+    inner class InsertSubstitutionPlaceholderCompletionAction(
+        val index: Int,
+        val separatorText: String,
+        val ref: TemplateCellReference,
+    ) : ICodeCompletionAction {
+        override fun getDescription(): String {
+            return "Add new node to ${link.getSimpleName()}"
+        }
+
+        override fun getMatchingText(): String {
+            return separatorText
+        }
+
+        override fun execute(editor: EditorComponent): CaretPositionPolicy? {
+            editor.state.substitutionPlaceholderPositions[ref] = SubstitutionPlaceholderPosition(index)
+            editor.state.textReplacements.remove(PlaceholderCellReference(ref))
+            return CaretPositionPolicy(PlaceholderCellReference(ref))
+        }
+    }
 }
 data class PlaceholderCellReference(val childCellRef: TemplateCellReference) : CellReference()
 
@@ -494,26 +696,21 @@ class InsertSubstitutionPlaceholderAction(
 ) : ICellAction {
     override fun isApplicable(): Boolean = true
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy {
         editorState.substitutionPlaceholderPositions[ref] = SubstitutionPlaceholderPosition(index)
         editorState.textReplacements.remove(PlaceholderCellReference(ref))
-        editor.selectAfterUpdate {
-            editor.resolveCell(PlaceholderCellReference(ref))
-                .firstOrNull()?.layoutable()?.let { CaretSelection(it, 0) }
-        }
+        return CaretPositionPolicy(PlaceholderCellReference(ref))
     }
 }
 
-class InstantiateNodeAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
+class InstantiateNodeCellAction(val location: INonExistingNode, val concept: IConcept) : ICellAction {
     override fun isApplicable(): Boolean = true
 
-    override fun execute(editor: EditorComponent) {
+    override fun execute(editor: EditorComponent): CaretPositionPolicy {
         val newNode = location.getExistingAncestor()!!.getArea().executeWrite {
             location.replaceNode(concept)
         }
-        editor.selectAfterUpdate {
-            CaretPositionPolicy(newNode).getBestSelection(editor)
-        }
+        return CaretPositionPolicy(newNode)
     }
 }
 

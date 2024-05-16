@@ -3,6 +3,10 @@ package org.modelix.editor
 data class CellSelection(val cell: Cell, val directionLeft: Boolean, val previousSelection: Selection?) : Selection() {
     fun getEditor(): EditorComponent? = cell.editorComponent
 
+    override fun getSelectedCells(): List<Cell> {
+        return listOf(cell)
+    }
+
     override fun isValid(): Boolean {
         return getEditor() != null
     }

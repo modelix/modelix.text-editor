@@ -6,7 +6,6 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.NullChildLink
 import org.modelix.model.api.index
 import org.modelix.model.api.isInstanceOf
-import org.modelix.model.api.isSubConceptOf
 import org.modelix.model.api.remove
 
 interface INonExistingNode {
@@ -18,6 +17,11 @@ interface INonExistingNode {
     fun getOrCreateNode(subConcept: IConcept? = null): INode
     fun getNode(): INode?
     fun expectedConcept(): IConcept?
+
+    /**
+     * How many levels of nodes are created by getOrCreateNode().
+     */
+    fun nodeCreationDepth(): Int
 }
 
 fun INonExistingNode.ancestors(includeSelf: Boolean = false): Sequence<INonExistingNode> {
@@ -53,6 +57,8 @@ data class NodeReplacement(val nodeToReplace: INonExistingNode, val replacementC
     override fun getOrCreateNode(subConcept: IConcept?): INode {
         return replaceNode(subConcept)
     }
+
+    override fun nodeCreationDepth(): Int = nodeToReplace.nodeCreationDepth().coerceAtLeast(1)
 
     override fun getNode(): INode? {
         return null
@@ -101,6 +107,8 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
         }
     }
 
+    override fun nodeCreationDepth(): Int = 0
+
     override fun getNode(): INode {
         return node
     }
@@ -131,6 +139,8 @@ data class NonExistingChild(private val parent: INonExistingNode, val link: IChi
         return replaceNode(subConcept)
     }
 
+    override fun nodeCreationDepth(): Int = parent.nodeCreationDepth() + 1
+
     override fun getNode(): INode? {
         return null
     }
@@ -156,6 +166,8 @@ data class NonExistingNode(val concept: IConcept) : INonExistingNode {
     override fun getOrCreateNode(subConcept: IConcept?): INode {
         return replaceNode(subConcept)
     }
+
+    override fun nodeCreationDepth(): Int = 0
 
     override fun getNode(): INode? {
         return null
