@@ -44,9 +44,9 @@ class CellNavigationTest {
                 "11",
                 "112",
                 "111",
-                "root"
+                "root",
             ),
-            rootCell.lastLeaf().previousCells().map { (it.data as TextCellData).text }.toList()
+            rootCell.lastLeaf().previousCells().map { (it.data as TextCellData).text }.toList(),
         )
     }
 
@@ -67,9 +67,9 @@ class CellNavigationTest {
                 "22",
                 "221",
                 "222",
-                "root"
+                "root",
             ),
-            rootCell.firstLeaf().nextCells().map { (it.data as TextCellData).text }.toList()
+            rootCell.firstLeaf().nextCells().map { (it.data as TextCellData).text }.toList(),
         )
     }
 
@@ -80,6 +80,4 @@ class CellNavigationTest {
     private fun Cell.cell(text: String, body: Cell.() -> Unit = {}): Cell {
         return Cell(TextCellData(text)).also { addChild(it) }.also(body)
     }
-
 }
-

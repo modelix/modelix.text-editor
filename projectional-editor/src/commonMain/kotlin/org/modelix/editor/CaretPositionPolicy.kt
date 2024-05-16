@@ -46,12 +46,12 @@ enum class CaretPositionType {
 class SavedCaretPosition(
     val previousLeafs: Set<CellReference>,
     val nextLeafs: Set<CellReference>,
-    val selectedCell: CellReference?
+    val selectedCell: CellReference?,
 ) : ICaretPositionPolicy {
     constructor(selectedCell: Cell) : this(
         selectedCell.previousLeafs(false).mapNotNull { it.data.cellReferences.firstOrNull() }.toSet(),
         selectedCell.nextLeafs(false).mapNotNull { it.data.cellReferences.firstOrNull() }.toSet(),
-        selectedCell.data.cellReferences.firstOrNull()
+        selectedCell.data.cellReferences.firstOrNull(),
     )
 
     override fun getBestSelection(editor: EditorComponent): CaretSelection? {

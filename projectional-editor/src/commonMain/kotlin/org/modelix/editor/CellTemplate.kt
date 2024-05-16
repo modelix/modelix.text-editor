@@ -499,7 +499,7 @@ class FlagCellTemplate(
 class ChangePropertyCellAction(
     val node: INonExistingNode,
     val property: IProperty,
-    val value: String
+    val value: String,
 ) : ICellAction {
     override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
         val node = editor.runWrite {
