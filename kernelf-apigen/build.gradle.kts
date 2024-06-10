@@ -69,7 +69,7 @@ kotlin {
 mpsBuild {
     mpsHome = mpsHomeDir.get().asFile.absolutePath
     javaHome = Jvm.current().javaHome
-    externalModules("org.iets3:opensource:2023.2.7239.7ee8510")
+    externalModules("org.iets3:opensource:2023.2.7374.bc0aabd")
 }
 
 metamodel {
