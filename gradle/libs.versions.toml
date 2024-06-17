@@ -19,6 +19,6 @@ modelix-modelql-untyped = { group = "org.modelix", name = "modelql-untyped", ver
 modelix-modelql-html = { group = "org.modelix", name = "modelql-html", version.ref = "modelixCore" }
 modelix-model-datastructure = { group = "org.modelix", name = "model-datastructure", version.ref = "modelixCore" }
 modelix-mps-model-adapters = { group = "org.modelix.mps", name = "model-adapters", version.ref = "modelixCore" }
-kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "6.0.9" }
+kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "7.0.0" }
 kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.11.0"
 modelix-build-tools-lib = { group = "org.modelix.mps", name = "build-tools-lib", version.ref = "modelixBuildtools" }
