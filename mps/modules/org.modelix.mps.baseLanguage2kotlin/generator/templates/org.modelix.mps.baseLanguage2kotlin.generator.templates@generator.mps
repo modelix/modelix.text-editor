@@ -13,8 +13,8 @@
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" />
     <import index="hcm8" ref="r:72a7bf00-0175-42ca-b99b-fe8519b6a16f(jetbrains.mps.kotlin.structure)" />
     <import index="tp25" ref="r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)" />
-    <import index="b15i" ref="771cf896-ab1b-409b-93b4-48c3bbb6b23f/kotlinJvm:org.modelix.model.api(org.modelix.mps.editor.ssr.stubs/)" />
-    <import index="1g18" ref="771cf896-ab1b-409b-93b4-48c3bbb6b23f/kotlinJvm:org.modelix.model.mpsadapters(org.modelix.mps.editor.ssr.stubs/)" />
+    <import index="b15i" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/kotlinJvm:org.modelix.model.api(org.modelix.mps.editor.common.stubs/)" />
+    <import index="1g18" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/kotlinJvm:org.modelix.model.mpsadapters(org.modelix.mps.editor.common.stubs/)" />
     <import index="tpcn" ref="r:00000000-0000-4000-0000-011c8959028b(jetbrains.mps.lang.structure.behavior)" />
     <import index="2k9e" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.smodel.adapter.structure(MPS.Core/)" />
     <import index="e8bb" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.smodel.adapter.ids(MPS.Core/)" />
@@ -1181,3 +1181,4 @@
     </node>
   </node>
 </model>
+

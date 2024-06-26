@@ -23,10 +23,8 @@ import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.application.install
 import io.ktor.server.engine.ApplicationEngine
-import io.ktor.server.engine.embeddedServer
 import io.ktor.server.html.respondHtml
 import io.ktor.server.http.content.staticResources
-import io.ktor.server.netty.Netty
 import io.ktor.server.routing.get
 import io.ktor.server.routing.routing
 import io.ktor.server.websocket.WebSockets
@@ -140,7 +138,7 @@ class ModelixSSRServerForMPS : Disposable {
             this.ssrServer = ssrServer
             mpsIntegration = EditorIntegrationForMPS(ssrServer.editorEngine)
             mpsIntegration!!.init(getMPSProjects().first().repository)
-            ktorServer = embeddedServer(Netty, port = 43593) {
+            ktorServer = org.modelix.mps.editor.common.embeddedServer(port = 43593, classLoader = this.javaClass.classLoader) {
                 initKtorServer(ssrServer)
             }
             ktorServer!!.start()

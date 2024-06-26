@@ -27,7 +27,7 @@ class CellSelectionView(selection: CellSelection, val editor: EditorComponent) :
                     with(wordSelectionDom.style) {
                         position = "absolute"
                         left = "${wordBounds.x - lineBounds!!.x}px"
-                        top = "${wordBounds.y - lineBounds.y}px"
+                        top = "${wordBounds.y - lineBounds!!.y}px"
                         width = "${wordBounds.width}px"
                         height = "${wordBounds.height}px"
                     }
@@ -39,7 +39,7 @@ class CellSelectionView(selection: CellSelection, val editor: EditorComponent) :
                     with(lineSelectionDom.style) {
                         position = "absolute"
                         left = "${lineBounds.x - selectionBounds!!.x}px"
-                        top = "${lineBounds.y - selectionBounds.y}px"
+                        top = "${lineBounds.y - selectionBounds!!.y}px"
                         width = "${lineBounds.width}px"
                         height = "${lineBounds.height}px"
                     }

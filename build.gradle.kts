@@ -10,6 +10,7 @@ import org.semver.Version
 buildscript {
     dependencies {
         classpath(coreLibs.semver)
+        classpath(libs.modelix.build.tools.lib)
     }
 }
 
@@ -19,6 +20,7 @@ plugins {
     id("com.dorongold.task-tree") version "4.0.0"
     alias(coreLibs.plugins.kotlin.multiplatform) apply false
     alias(coreLibs.plugins.kotlin.serialization) apply false
+    id("org.jetbrains.intellij") version "1.17.4" apply false
 }
 
 group = "org.modelix"
@@ -63,45 +65,45 @@ subprojects {
         mavenCentral()
     }
 
-    publishing {
-        repositories {
-            if (project.hasProperty("artifacts.itemis.cloud.user")) {
-                maven {
-                    name = "itemis"
-                    url = if (version.toString().contains("SNAPSHOT")) {
-                        uri("https://artifacts.itemis.cloud/repository/maven-mps-snapshots/")
-                    } else {
-                        uri("https://artifacts.itemis.cloud/repository/maven-mps-releases/")
-                    }
-                    credentials {
-                        username = project.findProperty("artifacts.itemis.cloud.user").toString()
-                        password = project.findProperty("artifacts.itemis.cloud.pw").toString()
-                    }
-                }
-            }
-        }
-    }
+//    publishing {
+//        repositories {
+//            if (project.hasProperty("artifacts.itemis.cloud.user")) {
+//                maven {
+//                    name = "itemis"
+//                    url = if (version.toString().contains("SNAPSHOT")) {
+//                        uri("https://artifacts.itemis.cloud/repository/maven-mps-snapshots/")
+//                    } else {
+//                        uri("https://artifacts.itemis.cloud/repository/maven-mps-releases/")
+//                    }
+//                    credentials {
+//                        username = project.findProperty("artifacts.itemis.cloud.user").toString()
+//                        password = project.findProperty("artifacts.itemis.cloud.pw").toString()
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 subprojects {
     val sourceFile = rootDir.resolve(".npmrc")
     val targetFile = projectDir.resolve(".npmrc")
-    if (!targetFile.exists() && sourceFile.exists()) {
+    if (!targetFile.exists() && sourceFile.exists() && projectDir.resolve("package.json").exists()) {
         sourceFile.copyTo(targetFile)
     }
 
-    val kotlinApiVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_6
+    val kotlinApiVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_8
     plugins.withType<JavaPlugin> {
         extensions.configure<JavaPluginExtension> {
             toolchain {
-                languageVersion.set(JavaLanguageVersion.of(11))
+                languageVersion.set(JavaLanguageVersion.of(17))
             }
         }
     }
 
     plugins.withType<KotlinPlatformJvmPlugin> {
         extensions.configure<KotlinJvmProjectExtension> {
-            jvmToolchain(11)
+            jvmToolchain(17)
             sourceSets.all {
                 if (!name.lowercase().contains("test")) {
                     languageSettings {
@@ -114,7 +116,7 @@ subprojects {
 
     plugins.withType<KotlinMultiplatformPluginWrapper> {
         extensions.configure<KotlinMultiplatformExtension> {
-            jvmToolchain(11)
+            jvmToolchain(17)
             sourceSets.all {
                 if (!name.lowercase().contains("test")) {
                     languageSettings {

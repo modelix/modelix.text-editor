@@ -1,10 +1,10 @@
 package org.modelix.editor.ssr.mps
 
 import com.intellij.openapi.application.ApplicationManager
+import io.github.oshai.kotlinlogging.KotlinLogging
 import jetbrains.mps.classloading.DeployListener
 import jetbrains.mps.ide.MPSCoreComponents
 import jetbrains.mps.module.ReloadableModule
-import mu.KotlinLogging
 import org.jetbrains.mps.openapi.module.SRepository
 import org.jetbrains.mps.openapi.util.ProgressMonitor
 import org.modelix.aspects.ILanguageAspect

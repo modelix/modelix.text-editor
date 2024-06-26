@@ -8,11 +8,15 @@ plugins {
 }
 
 mpsBuild {
+    dependsOn(":editor-common-mps:buildPlugin")
     dependsOn(":projectional-editor-ssr-mps:buildPlugin")
+    dependsOn(":react-ssr-mps:buildPlugin")
     mpsHome = mpsHomeDir.get().asFile.absolutePath
     javaHome = Jvm.current().javaHome
 
+    search("../editor-common-mps/build/idea-sandbox/plugins/editor-common-mps")
     search("../projectional-editor-ssr-mps/build/idea-sandbox/plugins/projectional-editor-ssr-mps")
+    search("../react-ssr-mps/build/idea-sandbox/plugins/react-ssr-mps")
     search("modules")
     publication("editor-languages") {
         module("org.modelix.mps.webaspect.devkit")
@@ -22,6 +26,12 @@ mpsBuild {
     }
     publication("baseLanguage-notation") {
         module("org.modelix.mps.notation.impl.baseLanguage")
+    }
+    publication("baseLanguageInsideKotlin") {
+        module("org.modelix.mps.baseLanguageInsideKotlin")
+    }
+    publication("react") {
+        module("org.modelix.mps.react")
     }
 }
 

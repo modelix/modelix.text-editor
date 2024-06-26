@@ -2,12 +2,17 @@
 <project version="4">
   <component name="MPSProject">
     <projectModules>
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguage2kotlin/org.modelix.mps.baseLanguage2kotlin.mpl" folder="" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.devkit/org.modelix.mps.webaspect.devkit.devkit" folder="" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.genplan/org.modelix.mps.webaspect.genplan.msd" folder="" />
-      <modulePath path="$PROJECT_DIR$/stubs-template/org.modelix.mps.editor.ssr.stubs/org.modelix.mps.editor.ssr.stubs.msd" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguage2kotlin/org.modelix.mps.baseLanguage2kotlin.mpl" folder="text" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguageInsideKotlin/org.modelix.mps.baseLanguageInsideKotlin.mpl" folder="text" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="text" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="text" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.impl.baseLanguage/org.modelix.mps.react.impl.baseLanguage.msd" folder="react" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react/org.modelix.mps.react.mpl" folder="react" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.spreadsheets.sandbox/org.modelix.mps.spreadsheets.sandbox.msd" folder="spreadsheets" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.spreadsheets/org.modelix.mps.spreadsheets.mpl" folder="spreadsheets" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.devkit/org.modelix.mps.webaspect.devkit.devkit" folder="aspect" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.genplan/org.modelix.mps.webaspect.genplan.msd" folder="aspect" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.webaspect.runtime/org.modelix.mps.webaspect.runtime.msd" folder="aspect" />
     </projectModules>
   </component>
 </project>

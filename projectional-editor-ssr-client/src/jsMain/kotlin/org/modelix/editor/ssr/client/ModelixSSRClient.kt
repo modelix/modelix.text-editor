@@ -16,7 +16,6 @@ import kotlinx.html.dom.append
 import kotlinx.html.dom.create
 import kotlinx.html.id
 import kotlinx.html.js.div
-import launchLogging
 import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.JSMouseEventType
 import org.modelix.editor.convert

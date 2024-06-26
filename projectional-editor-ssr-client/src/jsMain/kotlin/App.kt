@@ -1,4 +1,3 @@
-import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.github.oshai.kotlinlogging.KotlinLoggingConfiguration
 import io.github.oshai.kotlinlogging.Level
@@ -8,9 +7,6 @@ import io.ktor.http.DEFAULT_PORT
 import io.ktor.http.URLBuilder
 import io.ktor.http.URLProtocol
 import kotlinx.browser.document
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import org.modelix.editor.ssr.client.ModelixSSRClient
 import org.modelix.model.api.NodeReference
 import org.w3c.dom.HTMLDivElement
@@ -44,20 +40,5 @@ fun main() {
             val editorDom = client.createEditor(NodeReference(ref), editorElement)
             LOG.trace { "Editor created for $ref" }
         }
-    }
-}
-
-inline fun <R> KLogger.logExceptions(body: () -> R): R {
-    try {
-        return body()
-    } catch (ex: Throwable) {
-        error(ex) { "Uncaught exception" }
-        throw ex
-    }
-}
-
-fun CoroutineScope.launchLogging(body: suspend () -> Unit): Job {
-    return launch {
-        LOG.logExceptions { body() }
     }
 }

@@ -22,6 +22,7 @@ kotlin {
             dependencies {
                 implementation(project(":projectional-editor"))
                 implementation(project(":projectional-editor-ssr-common"))
+                implementation(project(":projectional-editor-ssr-client-lib"))
                 implementation(coreLibs.ktor.client.core)
                 implementation(coreLibs.ktor.client.websockets)
                 implementation(coreLibs.ktor.client.js)

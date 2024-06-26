@@ -31,7 +31,7 @@ import org.modelix.model.withIncrementalComputationSupport
 import kotlin.time.Duration.Companion.seconds
 
 object KernelfAPI {
-    private val LOG = mu.KotlinLogging.logger { }
+    private val LOG = io.github.oshai.kotlinlogging.KotlinLogging.logger { }
     val editorEngine = EditorEngine()
 
     init {
