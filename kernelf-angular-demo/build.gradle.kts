@@ -8,9 +8,10 @@ plugins {
 }
 
 node {
-    version.set("18.3.0")
-    npmVersion.set("8.11.0")
-    download.set(true)
+    version.set("22.2.0")
+    npmVersion.set("10.7.0")
+    val isCIBuild = "true" == project.findProperty("ciBuild")
+    download.set(!isCIBuild)
 }
 
 tasks.named("npm_run_build") {

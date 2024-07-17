@@ -8,7 +8,8 @@ plugins {
 node {
     version.set("22.2.0")
     npmVersion.set("10.7.0")
-    download.set(true)
+    val isCIBuild = "true" == project.findProperty("ciBuild")
+    download.set(!isCIBuild)
 }
 
 tasks.withType(YarnSetupTask::class.java) {
