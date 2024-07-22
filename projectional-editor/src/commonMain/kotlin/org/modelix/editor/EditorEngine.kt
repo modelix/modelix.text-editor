@@ -127,7 +127,9 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
             val conceptReference = superConcept.getReference()
             val allEditors = (editorsForConcept[conceptReference] ?: emptyList()) +
                 conceptEditorRegistries.flatMap { it.getConceptEditors(conceptReference) }
-            allEditors.takeIf { it.isNotEmpty() }
+            allEditors
+                .filter { it.declaredConcept == null || it.applicableToSubConcepts || concept.isExactly(it.declaredConcept) }
+                .takeIf { it.isNotEmpty() }
         }
         return (editors ?: emptyList()) + defaultConceptEditor
     }

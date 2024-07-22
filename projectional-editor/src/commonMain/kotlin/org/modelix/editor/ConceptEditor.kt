@@ -7,7 +7,8 @@ import org.modelix.model.api.IProperty
 
 class ConceptEditor(
     val declaredConcept: IConcept?,
-    val templateBuilder: (subConcept: IConcept) -> NotationRootCellTemplate,
+    val applicableToSubConcepts: Boolean,
+    val templateBuilder: (subConcept: IConcept) -> NotationRootCellTemplate
 ) {
     fun isApplicable(context: CellCreationContext, node: INode): Boolean {
         return apply(node.concept ?: NullConcept).condition?.invoke(node) != false
@@ -31,7 +32,7 @@ class ConceptEditor(
     }
 }
 
-val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
+val defaultConceptEditor = ConceptEditor(null as IConcept?, applicableToSubConcepts = true) { subConcept ->
     NotationRootCellTemplateBuilder(NotationRootCellTemplate(subConcept), subConcept, INodeConverter.Untyped).apply {
         subConcept.getShortName().constant()
         curlyBrackets {
