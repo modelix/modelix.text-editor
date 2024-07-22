@@ -7,14 +7,13 @@ class InterpreterTest {
 
     @Test
     fun addition() {
-        val a = MemoryKey<Int>(MemoryType.LOCAL, "a")
-        val b = MemoryKey<Int>(MemoryType.LOCAL, "b")
         val c = MemoryKey<Int>(MemoryType.GLOBAL, "c")
 
         val entryPoint = ProgramBuilder().buildFunction("main") {
-            addInstruction(LoadConstantInstruction(10, a))
-            addInstruction(LoadConstantInstruction(20, b))
-            addInstruction(AddIntegersInstruction(a, b, c))
+            addInstruction(PushConstantInstruction(10))
+            addInstruction(PushConstantInstruction(20))
+            addInstruction(AddIntegersInstruction())
+            addInstruction(StoreInstruction(c))
         }.getEntryPoint()
 
         val finalState = InterpreterVM(entryPoint).run()
@@ -30,7 +29,10 @@ class InterpreterTest {
         val c = MemoryKey<Int>(MemoryType.GLOBAL, "c")
 
         val entryPoint = ProgramBuilder().buildFunction("main") {
-            addInstruction(AddIntegersInstruction(a, b, c))
+            addInstruction(LoadInstruction(ParameterKey<Int>(1)))
+            addInstruction(LoadInstruction(ParameterKey<Int>(0)))
+            addInstruction(AddIntegersInstruction())
+            addInstruction(StoreInstruction<Int>(c))
         }.getEntryPoint()
 
         val vm = InterpreterVM(entryPoint)
@@ -46,28 +48,24 @@ class InterpreterTest {
     fun functionCall() {
         val entryPoint = ProgramBuilder().run {
             val plusFunction = buildFunction("plus") {
-                val r = NamedLocalVarKey<Int>("result")
-                addInstruction(AddIntegersInstruction(ParameterKey<Int>(0), ParameterKey<Int>(1), r))
-                addInstruction(ReturnInstruction(listOf(r)))
+                addInstruction(LoadInstruction(ParameterKey<Int>(0)))
+                addInstruction(LoadInstruction(ParameterKey<Int>(1)))
+                addInstruction(AddIntegersInstruction())
+                addInstruction(ReturnInstruction())
             }
             val mulFunction = buildFunction("mul") {
-                val r = NamedLocalVarKey<Int>("result")
-                addInstruction(MultiplyIntegersInstruction(ParameterKey<Int>(0), ParameterKey<Int>(1), r))
-                addInstruction(ReturnInstruction(listOf(r)))
+                addInstruction(LoadInstruction(ParameterKey<Int>(0)))
+                addInstruction(LoadInstruction(ParameterKey<Int>(1)))
+                addInstruction(MultiplyIntegersInstruction())
+                addInstruction(ReturnInstruction())
             }
             buildFunction("main") {
-                val a by variable<Int>()
-                val b by variable<Int>()
-                val c by variable<Int>()
-                val product by variable<Int>()
-                val sum by variable<Int>()
-
-                load(7, a)
-                load(13, b)
-                load(31, c)
-                addInstruction(CallInstruction(plusFunction.getEntryPoint(), listOf(a, b), listOf(sum)))
-                addInstruction(CallInstruction(mulFunction.getEntryPoint(), listOf(sum, c), listOf(product)))
-                addInstruction(MoveInstruction<Int>(product, NamedGlobalVarKey<Int>("finalResult")))
+                addInstruction(PushConstantInstruction(31))
+                addInstruction(PushConstantInstruction(13))
+                addInstruction(PushConstantInstruction(7))
+                addInstruction(CallInstruction(plusFunction.getEntryPoint(), 2))
+                addInstruction(CallInstruction(mulFunction.getEntryPoint(), 2))
+                addInstruction(StoreInstruction<Int>(NamedGlobalVarKey<Int>("finalResult")))
             }.getEntryPoint()
         }
 
