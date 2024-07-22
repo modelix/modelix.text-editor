@@ -178,7 +178,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             ?.let { getEditor()?.changeSelection(it) }
     }
 
-    private fun processTypedText(typedText: String, editor: EditorComponent) {
+    fun processTypedText(typedText: String, editor: EditorComponent) {
         val oldText = layoutable.cell.getSelectableText() ?: ""
         val range = min(start, end) until max(start, end)
         val textLength = oldText.length
