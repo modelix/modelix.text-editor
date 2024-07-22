@@ -256,6 +256,7 @@
         <child id="2936055411798374537" name="declarations" index="1XD0Tu" />
       </concept>
       <concept id="2936055411798373333" name="jetbrains.mps.kotlin.structure.NullLiteral" flags="ng" index="1XD0k2" />
+      <concept id="2936055411798373327" name="jetbrains.mps.kotlin.structure.BooleanLiteral" flags="ng" index="1XD0ko" />
       <concept id="2936055411798373223" name="jetbrains.mps.kotlin.structure.PropertyDefaultAssignement" flags="ng" index="1XD0mK">
         <child id="2936055411798373866" name="expression" index="1XD0cX" />
       </concept>
@@ -1698,7 +1699,7 @@
       <node concept="1XD0fu" id="1ixZ$UHlR6j" role="KS$fE">
         <node concept="1XD0a7" id="1ixZ$UHlRcY" role="THmaL">
           <node concept="1NbEtQ" id="1ixZ$UHlTBU" role="1XD07G">
-            <ref role="AarEw" to="dbfy:~EditorAspect.conceptEditor(org/modelix/model/api/IConcept,kotlin/Function1&lt;NotationRootCellTemplateBuilder&lt;org/modelix/model/api/INode,org/modelix/model/api/IConcept&gt;,kotlin/Unit&gt;)" resolve="conceptEditor" />
+            <ref role="AarEw" to="dbfy:~EditorAspect.conceptEditor(org/modelix/model/api/IConcept,kotlin/Boolean,kotlin/Function1&lt;NotationRootCellTemplateBuilder&lt;org/modelix/model/api/INode,org/modelix/model/api/IConcept&gt;,kotlin/Unit&gt;)" resolve="conceptEditor" />
             <node concept="1XD0eI" id="1ixZ$UHlX_H" role="TWiod">
               <node concept="1XD0k2" id="1pzCNySbtjH" role="1XD0ZN">
                 <node concept="5jKBG" id="1pzCNySbtpc" role="lGtFl">
@@ -1710,6 +1711,26 @@
                           <node concept="30H73N" id="1ixZ$UHlXAT" role="2Oq$k0" />
                           <node concept="3TrEf2" id="1ixZ$UHlXAU" role="2OqNvi">
                             <ref role="3Tt5mk" to="f8gn:7dm8yUsMfNE" resolve="concept" />
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node concept="1XD0eI" id="1zXwHaHuDXc" role="TWiod">
+              <node concept="1XD0ko" id="1zXwHaHuEr0" role="1XD0ZN">
+                <node concept="17Uvod" id="1zXwHaHuEre" role="lGtFl">
+                  <property role="2qtEX9" value="value" />
+                  <property role="P4ACc" value="6b3888c1-9802-44d8-8baf-f8e6c33ed689/2936055411798373327/2936055411798374017" />
+                  <node concept="3zFVjK" id="1zXwHaHuErf" role="3zH0cK">
+                    <node concept="3clFbS" id="1zXwHaHuErg" role="2VODD2">
+                      <node concept="3clFbF" id="1zXwHaHvEn8" role="3cqZAp">
+                        <node concept="2OqwBi" id="1zXwHaHvEKY" role="3clFbG">
+                          <node concept="30H73N" id="1zXwHaHvEn7" role="2Oq$k0" />
+                          <node concept="3TrcHB" id="1zXwHaHvGR7" role="2OqNvi">
+                            <ref role="3TsBF5" to="f8gn:1zXwHaHuRnq" resolve="applicableToSubconcepts" />
                           </node>
                         </node>
                       </node>
