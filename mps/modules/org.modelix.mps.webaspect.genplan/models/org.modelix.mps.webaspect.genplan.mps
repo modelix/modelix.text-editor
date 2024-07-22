@@ -40,6 +40,12 @@
           <property role="2V$B1Q" value="org.modelix.mps.notation" />
         </node>
       </node>
+      <node concept="2Qf6Nf" id="54VjPcDeUFN" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="54VjPcDeUFT" role="2Qf6Ng">
+          <property role="2V$B1T" value="67accce2-9676-4728-9e9c-8b15ea30d924" />
+          <property role="2V$B1Q" value="org.modelix.mps.react" />
+        </node>
+      </node>
     </node>
     <node concept="2VgMA2" id="22f9nDgQKqj" role="2VgMA7">
       <property role="1s431M" value="true" />
@@ -47,6 +53,15 @@
         <node concept="2V$Bhx" id="22f9nDgQKqT" role="2Qf6Ng">
           <property role="2V$B1T" value="8f2def56-7502-4f14-994f-472d404e528c" />
           <property role="2V$B1Q" value="org.modelix.mps.baseLanguage2kotlin" />
+        </node>
+      </node>
+    </node>
+    <node concept="2VgMA2" id="1edLqv8OPSq" role="2VgMA7">
+      <property role="1s431M" value="true" />
+      <node concept="2Qf6Nf" id="1edLqv8OPSE" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="1edLqv8OPSI" role="2Qf6Ng">
+          <property role="2V$B1T" value="cc24a92d-c78e-4016-a5d4-902df7135727" />
+          <property role="2V$B1Q" value="org.modelix.mps.baseLanguageInsideKotlin" />
         </node>
       </node>
     </node>
@@ -71,5 +86,27 @@
         </node>
       </node>
     </node>
+    <node concept="2VgMA2" id="1edLqv8PKEM" role="2VgMA7">
+      <property role="1s431M" value="true" />
+      <node concept="2Qf6Nf" id="1edLqv8PKF5" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="1edLqv8PKF9" role="2Qf6Ng">
+          <property role="2V$B1T" value="7866978e-a0f0-4cc7-81bc-4d213d9375e1" />
+          <property role="2V$B1Q" value="jetbrains.mps.lang.smodel" />
+        </node>
+      </node>
+      <node concept="2Qf6Nf" id="1edLqv8PKFb" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="1edLqv8PKFh" role="2Qf6Ng">
+          <property role="2V$B1T" value="f3061a53-9226-4cc5-a443-f952ceaf5816" />
+          <property role="2V$B1Q" value="jetbrains.mps.baseLanguage" />
+        </node>
+      </node>
+      <node concept="2Qf6Nf" id="5zC25uAyVUC" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="5zC25uAyVUK" role="2Qf6Ng">
+          <property role="2V$B1T" value="df345b11-b8c7-4213-ac66-48d2a9b75d88" />
+          <property role="2V$B1Q" value="jetbrains.mps.baseLanguageInternal" />
+        </node>
+      </node>
+    </node>
   </node>
 </model>
+

@@ -53,7 +53,7 @@ kotlin {
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(project(":projectional-editor"))
                 implementation(kotlin("stdlib-common"))
-                implementation(coreLibs.kotlin.logging)
+                implementation(libs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
                 implementation(libs.modelix.light.model.client)
                 implementation(libs.modelix.model.client)
@@ -149,13 +149,13 @@ tasks.named("packJsPackage") {
     dependsOn(fixSourceMaps)
 }
 
-listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare", "jsNodeDevelopmentLibraryPrepare", "jsNodeProductionLibraryPrepare").forEach {
-    tasks.named(it) {
-        // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
-        dependsOn("jsDevelopmentLibraryCompileSync")
-        dependsOn("jsProductionLibraryCompileSync")
-    }
-}
+// listOf("jsBrowserDevelopmentLibraryPrepare", "jsBrowserProductionLibraryPrepare", "jsNodeDevelopmentLibraryPrepare", "jsNodeProductionLibraryPrepare").forEach {
+//    tasks.named(it) {
+//        // because it uses build/js/packages/modelix.text-editor-kernelf-editor/kotlin
+//        dependsOn("jsDevelopmentLibraryCompileSync")
+//        dependsOn("jsProductionLibraryCompileSync")
+//    }
+// }
 
 val productionLibraryByKotlinOutputDirectory = layout.buildDirectory.dir("compileSync/js/main/productionLibrary/kotlin")
 val preparedProductionLibraryOutputDirectory = layout.buildDirectory.dir("npmPublication")

@@ -4,13 +4,14 @@ import com.github.gradle.node.npm.task.NpmTask
 
 plugins {
     base
-    id("com.github.node-gradle.node") version "7.0.2"
+    alias(coreLibs.plugins.node)
 }
 
 node {
-    version.set("18.3.0")
-    npmVersion.set("8.11.0")
-    download.set(true)
+    version.set("22.2.0")
+    npmVersion.set("10.7.0")
+    val isCIBuild = "true" == project.findProperty("ciBuild")
+    download.set(!isCIBuild)
 }
 
 tasks.named("npm_run_build") {

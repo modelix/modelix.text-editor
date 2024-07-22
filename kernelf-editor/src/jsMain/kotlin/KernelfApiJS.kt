@@ -25,7 +25,7 @@ import org.w3c.dom.Node
 
 @JsExport
 object KernelfApiJS {
-    private val LOG = mu.KotlinLogging.logger {}
+    private val LOG = io.github.oshai.kotlinlogging.KotlinLogging.logger {}
     private val generatedHtmlMap = GeneratedHtmlMap()
 
     fun connectToModelServer(json: Array<String>, callback: (INode) -> Unit) {

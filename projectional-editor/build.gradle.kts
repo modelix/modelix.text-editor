@@ -5,7 +5,7 @@ plugins {
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(17)
     jvm()
     js(IR) {
         browser {}
@@ -24,7 +24,7 @@ kotlin {
                 implementation(libs.modelix.model.api)
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("stdlib-common"))
-                implementation(coreLibs.kotlin.logging)
+                implementation(libs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
                 implementation(coreLibs.kotlin.serialization.json)
                 api(coreLibs.modelix.incremental)

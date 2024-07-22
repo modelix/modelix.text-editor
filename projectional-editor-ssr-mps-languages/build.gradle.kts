@@ -1,20 +1,13 @@
 import org.modelix.mpsHomeDir
 import org.modelix.mpsPluginsDir
 
-buildscript {
-    dependencies {
-        classpath(coreLibs.semver)
-        classpath(libs.modelix.build.tools.lib)
-    }
-}
-
 plugins {
     kotlin("jvm")
-    id("org.jetbrains.intellij") version "1.17.4"
+    id("org.jetbrains.intellij")
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -26,7 +19,10 @@ dependencies {
 intellij {
     localPath = mpsHomeDir.map { it.asFile.absolutePath }
     instrumentCode = false
-    plugins = listOf(project(":projectional-editor-ssr-mps")) + listOf(
+    plugins = listOf(
+        project(":projectional-editor-ssr-mps"),
+        project(":editor-common-mps"),
+    ) + listOf(
 //        "Git4Idea",
 //        "Subversion",
 //        "com.intellij.copyright",
@@ -125,7 +121,7 @@ tasks {
         intoChild(pluginName.map { "$it/META-INF" })
             .from(patchPluginXml.flatMap { it.outputFiles })
 
-        listOf("editor-languages", "baseLanguage-notation").forEach { publicationName ->
+        listOf("editor-languages", "baseLanguage-notation", "baseLanguageInsideKotlin", "react").forEach { publicationName ->
             intoChild(pluginName.map { "$it/languages" })
                 .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/$publicationName.zip") }))
                 .eachFile {

@@ -1,0 +1,99 @@
+.table {
+    border-collapse: separate;
+    border-spacing: 0px;
+}
+
+.table, .table input[type="text"] {
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12pt;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+}
+
+.title {
+    padding: 10px;
+    text-align: center;
+}
+.colHeader {
+    background-color: #dcdcdc;
+    border-color: #a6a6a6;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    text-align: center;
+    padding: 3px 6px;
+}
+.table thead tr .colHeader:last-child {
+    border-right: 1px solid #a6a6a6;
+}
+.contentCell {
+    position: relative;
+    border-color: #a6a6a6;
+    border-style: solid;
+    border-width: 1px 0 0 1px;
+    min-width: 3ch;
+}
+
+.contentCell, .contentCell input[type="text"] {
+    padding: 3px 6px;
+}
+
+.contentCell input[type="text"] {
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    right: -2px;
+    bottom: -2px;
+    z-index: 1;
+}
+
+.table tbody tr:last-child .contentCell {
+    border-bottom: 1px solid #a6a6a6;
+}
+.table tbody tr td:last-child {
+    border-right: 1px solid #a6a6a6;
+}
+
+.rowNumberSpacer {
+    width: 10px;
+}
+
+.rowNumber, .columnNumber {
+    color: #6a696e;
+    font-size: 10pt;
+}
+
+.columnNumber {
+    border-style: solid;
+    border-color: #ccc;
+    border-width: 0.5px 0.5px 0.5px 0;
+    text-align: center;
+}
+
+.columnNumbersRow td:nth-child(3) {
+    border-left-width: 0.5px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.columnNumbersRow td:nth-last-child(2) {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.rowNumber {
+    border-color: #ccc;
+    border-style: solid;
+    text-align: center;
+    border-width: 0px 0.5px 0.5px 0.5px;
+}
+
+.table thead tr:nth-child(3) .rowNumber {
+    border-radius: 5px 5px 0 0;
+    border-width: 0.5px 0.5px 0.5px 0.5px;
+}
+
+.table tbody tr:last-child .rowNumber {
+    border-width: 0px 0.5px 0.5px 0.5px;
+    border-radius: 0 0 5px 5px;
+}
+

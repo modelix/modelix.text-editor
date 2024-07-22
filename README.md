@@ -4,6 +4,6 @@
 
 - `./gradlew build`
 
-## Live Demo
+## MPS Plugins Development
 
-The angular project in kernelf-angular-demo is published to https://modelix.github.io/modelix.text-editor/
+Run the `installMpsDevPlugins` task and then open the project in the `mps` folder with MPS.

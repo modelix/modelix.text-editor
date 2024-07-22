@@ -85,5 +85,6 @@ metamodel {
     kotlinDir = generatorOutputDir
     typescriptDir = tsGeneratorOutputDir
     registrationHelperName = "org.modelix.kernelf.KernelfLanguages"
+    conceptPropertiesInterfaceName = "org.modelix.kernelf.IConceptProperties"
     // exportModules("jetbrains.mps.baseLanguage")
 }

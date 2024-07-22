@@ -18,6 +18,7 @@ jobs:
           # also adjust the compatibility version range of the MPS plugin
           - "2023.2"
           - "2023.3"
+#          - "2024.1"
     steps:
       - uses: actions/checkout@v4
 #      - uses: actions/setup-node@v3
@@ -29,6 +30,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.2.0
       - name: Build
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

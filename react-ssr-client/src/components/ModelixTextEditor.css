@@ -1,0 +1,115 @@
+.editor {
+    font-family: monospace;
+    /*border: 1px solid #D1D1D1;*/
+    position: relative;
+}
+
+.modelix-text-editor:focus .line.highlighted {
+    background-color: rgba(128, 217, 38, 0.15);
+}
+
+.modelix-text-editor:focus .line .highlighted-cell {
+    background-color: #DBE5FD;
+}
+
+.editor .relative-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.editor .caret {
+    position: absolute;
+    border-left: 2px solid;
+    width: 3px;
+    height: 20px;
+    display: block;
+}
+
+.editor .caret.own {
+    display: none;
+}
+
+.modelix-text-editor:focus .caret.own {
+    display: block;
+    animation: blinker 1s linear infinite;
+}
+
+.editor .caret.leftend {
+    width: 3px;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+.editor .caret.rightend {
+    width: 3px;
+    background-color: transparent;
+    border-left: none;
+    border-right: 2px solid;
+    border-bottom: 1px solid;
+    border-top: 1px solid;
+}
+
+.editor .selection {
+    border-width: 1px;
+    border-style: solid;
+    position: absolute;
+}
+
+.editor .ccmenu-container {
+    position: absolute;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.editor .ccmenu-container .ccmenu-pattern {
+    background-color: white;
+    border: 1px solid #ccc;
+    display: inline-block;
+}
+
+.editor .ccmenu-container .ccmenu {
+    background-color: white;
+    border: 1px solid black;
+    overflow-y: scroll;
+    max-height: 200px;
+    box-shadow: 5px 5px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+.editor .ccmenu-container .ccmenu .ccSelectedEntry {
+    background-color: #5373af;
+    color: #fff;
+}
+
+.editor .ccmenu-container .ccmenu .matchingText {
+    padding: 0 10px 0 3px;
+    white-space: nowrap;
+}
+
+.editor .ccmenu-container .ccmenu .description {
+    padding: 0 3px 0 10px;
+    white-space: nowrap;
+}
+
+.editor .ccmenu-container .ccmenu th, .editor .ccmenu-container .ccmenu td {
+    border: none;
+    padding: 3px 6px;
+}
+
+@keyframes blinker {
+    from {
+        opacity: 100%;
+    }
+
+    49% {
+        opacity: 100%;
+    }
+
+    50% {
+        opacity: 40%;
+    }
+
+    to {
+        opacity: 40%;
+    }
+}

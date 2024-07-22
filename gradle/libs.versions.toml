@@ -6,8 +6,8 @@ npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
 
 [versions]
-modelixCore = "8.8.0"
-modelixBuildtools="1.5.0"
+modelixCore = "8.15.3"
+modelixBuildtools="1.7.1"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
@@ -19,6 +19,7 @@ modelix-modelql-untyped = { group = "org.modelix", name = "modelql-untyped", ver
 modelix-modelql-html = { group = "org.modelix", name = "modelql-html", version.ref = "modelixCore" }
 modelix-model-datastructure = { group = "org.modelix", name = "model-datastructure", version.ref = "modelixCore" }
 modelix-mps-model-adapters = { group = "org.modelix.mps", name = "model-adapters", version.ref = "modelixCore" }
-kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "7.0.0" }
 kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.11.0"
 modelix-build-tools-lib = { group = "org.modelix.mps", name = "build-tools-lib", version.ref = "modelixBuildtools" }
+kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "7.0.0" }
+slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.13" }
