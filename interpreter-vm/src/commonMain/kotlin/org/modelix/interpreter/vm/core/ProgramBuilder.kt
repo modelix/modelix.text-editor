@@ -49,6 +49,7 @@ class FunctionBuilder {
     }
 
     fun <T> load(value: T, variable: MemoryKey<T>) {
-        addInstruction(LoadConstantInstruction(value, variable))
+        addInstruction(PushConstantInstruction(value))
+        addInstruction(StoreInstruction(variable))
     }
 }

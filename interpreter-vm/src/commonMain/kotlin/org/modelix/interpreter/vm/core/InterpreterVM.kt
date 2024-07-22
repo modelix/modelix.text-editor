@@ -33,11 +33,21 @@ class InterpreterVM(entryPoint: Instruction) {
 data class VMState(
     val nextInstruction: Instruction?,
     val globalMemory: Memory = Memory(),
-    val callStack: CallStack = CallStack().pushFrame(StackFrame(returnTo = null, resultTargetKeys = listOf())),
+    val callStack: CallStack = CallStack().pushFrame(StackFrame(returnTo = null)),
 ) {
     fun <T> readMemory(key: MemoryKey<out T>): T = key.memoryType.getMemory(this).read(key)
     fun <T> writeMemory(key: MemoryKey<in T>, value: T): VMState {
         return key.memoryType.setMemory(this, key.memoryType.getMemory(this).write(key, value))
+    }
+    fun updateCurrentFrame(body: (StackFrame) -> StackFrame): VMState {
+        return replaceCurrentFrame(body(callStack.currentFrame()))
+    }
+    fun replaceCurrentFrame(newFrame: StackFrame): VMState {
+        return copy(callStack = callStack.updateCurrentFrame(newFrame))
+    }
+    fun pushOperand(value: Any?): VMState = updateCurrentFrame { it.pushOperand(value) }
+    fun popOperand(): Pair<Any?, VMState> {
+        return callStack.currentFrame().popOperand().let { (value, newFrame) -> value to replaceCurrentFrame(newFrame) }
     }
 }
 
@@ -91,8 +101,14 @@ data class CallStack(val frames: PersistentList<StackFrame> = persistentListOf()
     fun size() = frames.size
 }
 
-data class StackFrame(val returnTo: Instruction?, val localMemory: Memory = Memory(), val resultTargetKeys: List<MemoryKey<*>>) {
+data class StackFrame(
+    val returnTo: Instruction?,
+    val localMemory: Memory = Memory(),
+    val operandStack: PersistentList<Any?> = persistentListOf(),
+) {
     fun <T> writeLocalMemory(key: MemoryKey<T>, value: T): StackFrame = copy(localMemory = localMemory.write(key, value))
+    fun pushOperand(value: Any?): StackFrame = copy(operandStack = operandStack.add(value))
+    fun popOperand(): Pair<Any?, StackFrame> = operandStack.last() to copy(operandStack = operandStack.removeAt(operandStack.lastIndex))
 }
 
 abstract class Instruction {

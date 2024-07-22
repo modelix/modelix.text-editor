@@ -1,53 +1,77 @@
 package org.modelix.interpreter.vm.core
 
-class CallInstruction(val entryPoint: Instruction, val parameterSourceKey: List<MemoryKey<*>>, val resultTargetKeys: List<MemoryKey<*>>) : Instruction() {
+class CallInstruction(val entryPoint: Instruction, val parameterCount: Int) : Instruction() {
 
     override fun execute(state: VMState): VMState {
-        val newFrame = StackFrame(returnTo = next, resultTargetKeys = resultTargetKeys)
-        var newState = state.copy(callStack = state.callStack.pushFrame(newFrame), nextInstruction = entryPoint)
-        parameterSourceKey.forEachIndexed { index, key ->
-            newState = newState.writeMemory(ParameterKey(index), state.readMemory(key))
+        var newFrame = StackFrame(returnTo = next)
+        var newState = state
+        for (i in 0 until parameterCount) {
+            newState.popOperand().let {
+                newState = it.second
+                newFrame = newFrame.writeLocalMemory(ParameterKey<Any?>(i), it.first)
+            }
         }
+        newState = newState.copy(callStack = newState.callStack.pushFrame(newFrame), nextInstruction = entryPoint)
         return newState
     }
 }
 
-class ReturnInstruction(val returnValues: List<MemoryKey<*>>) : Instruction() {
+class ReturnInstruction() : Instruction() {
     override fun execute(state: VMState): VMState {
         val (newCallStack, currentFrame) = state.callStack.popFrame()
-        check(currentFrame.resultTargetKeys.size == returnValues.size) {
-            "Caller expected ${currentFrame.resultTargetKeys.size} return values, but function returns ${returnValues.size} values"
-        }
-        var newState = state.copy(nextInstruction = currentFrame.returnTo, callStack = newCallStack)
-        returnValues.forEachIndexed { index, key ->
-            newState = newState.writeMemory(currentFrame.resultTargetKeys[index] as MemoryKey<Any?>, state.readMemory(key))
-        }
-        return newState
+        check(currentFrame.operandStack.size == 1) { "Operand stack should contain a single value, but was: " + currentFrame.operandStack }
+        return state
+            .copy(nextInstruction = currentFrame.returnTo, callStack = newCallStack)
+            .pushOperand(currentFrame.operandStack.single())
     }
 }
 
-class LoadConstantInstruction<E>(val value: E, val target: MemoryKey<in E>) : Instruction() {
+class PushConstantInstruction<E>(val value: E) : Instruction() {
     override fun execute(state: VMState): VMState {
-        return state.writeMemory(target, value)
+        return state.pushOperand(value)
     }
 }
 
-abstract class BinaryOperationInstruction<Arg1, Arg2, Result>(val arg1: MemoryKey<out Arg1>, val arg2: MemoryKey<out Arg2>, val result: MemoryKey<in Result>) : Instruction() {
+class StoreInstruction<E>(val target: MemoryKey<in E>) : Instruction() {
+    override fun execute(state: VMState): VMState {
+        return state.popOperand().let { (value, newState) -> newState.writeMemory(target, value as E) }
+    }
+}
+
+class LoadInstruction<E>(val source: MemoryKey<out E>) : Instruction() {
+    override fun execute(state: VMState): VMState {
+        return state.pushOperand(state.readMemory(source))
+    }
+}
+
+abstract class BinaryOperationInstruction<Arg1, Arg2, Result>() : Instruction() {
 
     abstract fun apply(arg1: Arg1, arg2: Arg2): Result
 
     override fun execute(state: VMState): VMState {
-        return state.writeMemory(result, apply(state.readMemory(arg1), state.readMemory(arg2)))
+        var newState: VMState = state
+        var arg1: Arg1
+        var arg2: Arg2
+        newState.popOperand().let {
+            arg2 = it.first as Arg2
+            newState = it.second
+        }
+        newState.popOperand().let {
+            arg1 = it.first as Arg1
+            newState = it.second
+        }
+        newState = newState.pushOperand(apply(arg1, arg2))
+        return newState
     }
 }
 
-class AddIntegersInstruction(arg1: MemoryKey<out Int>, arg2: MemoryKey<out Int>, result: MemoryKey<in Int>) : BinaryOperationInstruction<Int, Int, Int>(arg1, arg2, result) {
+class AddIntegersInstruction() : BinaryOperationInstruction<Int, Int, Int>() {
     override fun apply(arg1: Int, arg2: Int): Int {
         return arg1 + arg2
     }
 }
 
-class MultiplyIntegersInstruction(arg1: MemoryKey<out Int>, arg2: MemoryKey<out Int>, result: MemoryKey<in Int>) : BinaryOperationInstruction<Int, Int, Int>(arg1, arg2, result) {
+class MultiplyIntegersInstruction() : BinaryOperationInstruction<Int, Int, Int>() {
     override fun apply(arg1: Int, arg2: Int): Int {
         return arg1 * arg2
     }
