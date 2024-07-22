@@ -433,4 +433,23 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
         assertCaretPosition("p1|")
     }
+
+    fun `test typing plus expression`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int")
+        pressKey(KnownKeys.Tab)
+        typeText("abc")
+        typeText("=")
+        typeText("10")
+        typeText("+")
+        // pressKey(KnownKeys.Enter)
+        typeText("20")
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int abc = 10 + 20;
+              }
+            }
+        """)
+    }
 }
