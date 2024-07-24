@@ -334,6 +334,14 @@ class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
         (template as PropertyCellTemplate).validator = validator
     }
 
+    fun regex(regex: String) {
+        regex(Regex(regex))
+    }
+
+    fun regex(regex: Regex) {
+        (template as PropertyCellTemplate).regex = regex
+    }
+
     fun readReplace(replacement: (String) -> String) {
         // TODO
     }
