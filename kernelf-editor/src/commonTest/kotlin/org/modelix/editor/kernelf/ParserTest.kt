@@ -48,6 +48,7 @@ class ParserTest {
         val rules = ArrayList<ProductionRule>()
         val allConcepts = KernelfLanguages.languages.flatMap { it.getConcepts() }
         for (concept in allConcepts) {
+            if (concept.isAbstract()) continue
             if (!concept.isSubConceptOf(C_BinaryExpression.untyped()) && !concept.isExactly(C_NumberLiteral.untyped())) continue
             val conceptEditor = editorEngine.resolveConceptEditor(concept).first()
             if (conceptEditor == defaultConceptEditor) continue
