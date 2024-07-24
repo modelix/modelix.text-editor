@@ -340,6 +340,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarConditionSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: ((String) -> Boolean)? = null
+    var regex: Regex? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
@@ -355,6 +356,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     private fun validateValue(node: INonExistingNode, value: String): Boolean {
         return validator?.invoke(value)
+            ?: regex?.matches(value)
             ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
     }
 
