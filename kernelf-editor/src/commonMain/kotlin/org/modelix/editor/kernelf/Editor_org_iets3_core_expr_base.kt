@@ -82,7 +82,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
     binaryExpressionSymbols.implement(language.OptionOrExpression) { "?:" }
     binaryExpressionSymbols.implement(L_org_iets3_core_expr_lambda.FunCompose) { ":o:" }
 
-    editor(language.BinaryExpression) {
+    editor(language.BinaryExpression, applicableToSubConcepts = true) {
         val symbol = binaryExpressionSymbols(concept)
         concept.left.cell()
         symbol.constant()
