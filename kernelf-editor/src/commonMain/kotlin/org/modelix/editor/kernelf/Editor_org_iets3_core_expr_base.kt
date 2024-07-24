@@ -345,7 +345,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         language.OrTag to "||",
         language.PlusTag to "+",
     )
-    editor(language.OperatorTag) {
+    editor(language.OperatorTag, applicableToSubConcepts = true) {
         val symbol = operatorTagSymbols[concept]
             ?: "Unknown operator tag ${concept.untyped().getLongName()}"
         symbol.constant()

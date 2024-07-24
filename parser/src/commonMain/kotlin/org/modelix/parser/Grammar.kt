@@ -29,7 +29,11 @@ class ProductionRule(
      * Smaller numbers will be closer to the root, bigger number closer to the leafs.
      */
     val priority: Int
-)
+) {
+    override fun toString(): String {
+        return outputConcept.getShortName() + " = " + rhs
+    }
+}
 
 data class ChildLinkSymbol(val link: IChildLink) : INonTerminal
 data class ConstantSymbol(val constant: String) : ITerminal

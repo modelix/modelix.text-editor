@@ -143,7 +143,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         language.RoundUpRoundingMode to "round up",
         language.TruncateRoundingMode to "truncate",
     )
-    editor(language.RoundingMode) {
+    editor(language.RoundingMode, applicableToSubConcepts = true) {
         val mode = roundingModes[concept]
             ?: "Unknown rounding mode ${concept.untyped().getLongName()}"
         mode.constant()

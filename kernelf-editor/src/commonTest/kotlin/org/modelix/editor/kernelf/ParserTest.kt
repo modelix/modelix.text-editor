@@ -48,29 +48,34 @@ class ParserTest {
         val rules = ArrayList<ProductionRule>()
         val allConcepts = KernelfLanguages.languages.flatMap { it.getConcepts() }
         for (concept in allConcepts) {
-            if (concept.isAbstract()) continue
-            if (!concept.isSubConceptOf(C_BinaryExpression.untyped()) && !concept.isExactly(C_NumberLiteral.untyped())) continue
-            val conceptEditor = editorEngine.resolveConceptEditor(concept).first()
-            if (conceptEditor == defaultConceptEditor) continue
-            val cellTemplate = conceptEditor.apply(concept)
-            val symbols = cellTemplate.getGrammarSymbols()
-            val converted: List<ISymbol> = symbols.map { symbol ->
-                when (symbol) {
-                    is ConstantCellTemplate -> ConstantSymbol(symbol.text)
-                    is FlagCellTemplate -> OptionalSymbol(ConstantSymbol(symbol.text))
-                    is ChildCellTemplate -> ChildLinkSymbol(symbol.link)
-                    is PropertyCellTemplate -> PropertySymbol(symbol.property, symbol.regex ?: Regex("[a-zA-Z_][a-zA-Z0-9_]*")) // TODO use correct pattern
-                    is ReferenceCellTemplate -> ReferenceLinkSymbol(symbol.link)
-                    // TODO handle optional cells
-                }
-            }.toList()
-            val rhs = if (converted.size == 1) converted.single() else SymbolList(converted)
-            rules += ProductionRule(concept, rhs, Associativity.LEFT, 0)
+            try {
+                if (concept.isAbstract()) continue
+                //if (!concept.isSubConceptOf(C_BinaryExpression.untyped()) && !concept.isExactly(C_NumberLiteral.untyped())) continue
+                val conceptEditor = editorEngine.resolveConceptEditor(concept).first()
+                if (conceptEditor == defaultConceptEditor) continue
+                val cellTemplate = conceptEditor.apply(concept)
+                val symbols = cellTemplate.getGrammarSymbols()
+                val converted: List<ISymbol> = symbols.map { symbol ->
+                    when (symbol) {
+                        is ConstantCellTemplate -> ConstantSymbol(symbol.text)
+                        is FlagCellTemplate -> OptionalSymbol(ConstantSymbol(symbol.text))
+                        is ChildCellTemplate -> ChildLinkSymbol(symbol.link)
+                        is PropertyCellTemplate -> PropertySymbol(symbol.property, symbol.regex ?: throw CannotConvertException()) // TODO use correct pattern
+                        is ReferenceCellTemplate -> ReferenceLinkSymbol(symbol.link)
+                        // TODO handle optional cells
+                    }
+                }.toList()
+                val rhs = if (converted.size == 1) converted.single() else SymbolList(converted)
+                rules += ProductionRule(concept, rhs, Associativity.LEFT, 0)
+            } catch (_: CannotConvertException) {
+                
+            }
         }
         val grammar = Grammar(rules)
         val parser = Parser(grammar)
         val parseTree = parser.parse("10 + 20 * 30 - 40", L_org_iets3_core_expr_base.Expression.untyped())
         println(parseTree)
     }
-
 }
+
+class CannotConvertException : RuntimeException()

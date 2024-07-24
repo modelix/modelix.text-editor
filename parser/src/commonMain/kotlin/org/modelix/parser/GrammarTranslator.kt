@@ -9,7 +9,6 @@ import net.akehurst.language.agl.grammar.grammar.asm.OptionalItemDefault
 import net.akehurst.language.api.grammar.RuleItem
 import org.modelix.model.api.ConceptReference
 import org.modelix.model.api.IConcept
-import org.modelix.model.api.getAllConcepts
 
 class GrammarTranslator() {
     private val conceptIds = UniqueIdentifiers<ConceptReference>()
@@ -20,7 +19,18 @@ class GrammarTranslator() {
 
     fun conceptRuleName(concept: IConcept) = conceptIds.get(concept.getReference().upcast()) { concept.getShortName() }
     fun conceptChoiceName(concept: IConcept) = "CHOICE_" + conceptRuleName(concept)
-    fun conceptReferenceName(concept: IConcept) = if (conceptHierarchy.getDirectSubConcepts(concept).isEmpty()) conceptRuleName(concept) else conceptChoiceName(concept)
+    fun conceptReferenceName(concept: IConcept): String? {
+        return if (conceptHierarchy.getDirectSubConcepts(concept).isEmpty()) {
+            if (!conceptHierarchy.conceptsWithRules.contains(concept)) {
+                // error("No rule for ${concept.getLongName()}")
+                null
+            } else {
+                conceptRuleName(concept)
+            }
+        } else {
+            conceptChoiceName(concept)
+        }
+    }
 
     fun load(grammar: Grammar) {
         gb.skip("WHITESPACE", true).concatenation(gb.terminalPattern("""\s+"""))
@@ -53,7 +63,11 @@ class GrammarTranslator() {
             is ConstantSymbol -> gb.terminalLiteral(symbol.constant)
             is PropertySymbol -> gb.terminalPattern(symbol.pattern.pattern)
             is ReferenceLinkSymbol -> gb.terminalPattern("[a-zA-Z_][a-zA-Z_0-9]*") // TODO handle references with non-standard names
-            is ChildLinkSymbol -> NonTerminalDefault(null, conceptReferenceName(symbol.link.targetConcept))
+            is ChildLinkSymbol -> {
+                val targetConcept = symbol.link.targetConcept
+                conceptReferenceName(targetConcept)?.let { NonTerminalDefault(null, it) }
+                    ?: gb.terminalLiteral("___${targetConcept.getLongName()}___")
+            }
         }
     }
 
@@ -75,7 +89,7 @@ class GrammarTranslator() {
         visited.add(concept)
 
         if (conceptHierarchy.referencedConcepts.contains(concept)) {
-            result.add(conceptReferenceName(concept))
+            conceptReferenceName(concept)?.let { result.add(it) }
         } else {
             if (conceptHierarchy.conceptsWithRules.contains(concept)) {
                 result.add(conceptRuleName(concept))
