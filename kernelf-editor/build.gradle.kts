@@ -59,6 +59,7 @@ kotlin {
                 implementation(libs.modelix.model.client)
                 implementation(libs.kotlin.html)
                 implementation(project(":kernelf-apigen"))
+                implementation(project(":parser"))
             }
             kotlin.srcDir(generatorOutputDir)
         }
@@ -80,6 +81,7 @@ kotlin {
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
+                implementation(coreLibs.logback.classic)
             }
         }
         val jsMain by getting {

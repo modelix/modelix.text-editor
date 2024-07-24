@@ -107,7 +107,7 @@ abstract class CellTemplate(val concept: IConcept) {
     }
 }
 
-interface IGrammarSymbol {
+sealed interface IGrammarSymbol {
     fun createWrapperAction(nodeToWrap: INode, wrappingLink: IChildLink): List<ICodeCompletionAction> {
         return emptyList()
     }
@@ -115,7 +115,7 @@ interface IGrammarSymbol {
     fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider?
 }
 
-interface IGrammarConditionSymbol : IGrammarSymbol {
+sealed interface IGrammarConditionSymbol : IGrammarSymbol {
     fun getSymbolConditionState(node: INode): Boolean
     fun setSymbolConditionFalse(node: INode)
 }
@@ -339,7 +339,9 @@ class ForceShowOptionalCellAction(val cell: TemplateCellReference) : ICodeComple
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarConditionSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
+    @Deprecated("use regular expressions")
     var validator: ((String) -> Boolean)? = null
+    var regex: Regex? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
@@ -355,6 +357,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     private fun validateValue(node: INonExistingNode, value: String): Boolean {
         return validator?.invoke(value)
+            ?: regex?.matches(value)
             ?: ConstraintsAspect.checkPropertyValue(node, property, value).isEmpty()
     }
 

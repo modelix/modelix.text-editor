@@ -70,7 +70,6 @@ class AglSandbox {
                 PreferenceOptionDefault(gb.nonTerminal("DivExpression"), 0, listOf(gb.terminalLiteral("/")), PreferenceOption.Associativity.LEFT),
             )
         ))
-        println(gb.grammar)
 
         val config = Agl.configuration(Agl.configurationDefault()) {
             this.defaultGoalRuleName("Expression")

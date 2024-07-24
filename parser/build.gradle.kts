@@ -20,7 +20,8 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api("net.akehurst.language:agl-processor:4.0.1")
+                api(libs.modelix.model.api)
+                implementation("net.akehurst.language:agl-processor:4.0.1")
             }
         }
         val commonTest by getting {

@@ -395,7 +395,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         }
     }
     editor(language.PrimitiveType) {
-        concept.alias().constant {
+        (concept.alias ?: concept.untyped().getShortName()).constant {
             iets3type()
         }
     }

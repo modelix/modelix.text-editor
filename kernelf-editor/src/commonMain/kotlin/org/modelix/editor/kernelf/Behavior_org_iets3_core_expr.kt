@@ -17,6 +17,3 @@ fun N_ISingleSymbolRef.getSymbolName() = ISingleSymbolRef_getSymbolName(this)
 
 val IRef_target by buildPolymorphicFunction().returns<N_BaseConcept>().forNode(C_IRef).delegate()
 fun N_IRef.target() = IRef_target(this)
-
-val BaseConcept_alias by buildPolymorphicFunction().returns<String>().forConcept<CN_BaseConcept>().delegate()
-fun CN_BaseConcept.alias() = BaseConcept_alias(this)

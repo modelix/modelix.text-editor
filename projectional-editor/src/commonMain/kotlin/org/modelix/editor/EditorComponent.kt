@@ -3,6 +3,7 @@ package org.modelix.editor
 import kotlinx.html.TagConsumer
 import kotlinx.html.div
 import org.modelix.incremental.IncrementalIndex
+import org.modelix.model.api.INode
 import org.modelix.model.area.IArea
 import kotlin.math.abs
 import kotlin.math.min
