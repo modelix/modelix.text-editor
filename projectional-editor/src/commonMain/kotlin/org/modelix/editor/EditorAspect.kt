@@ -2,6 +2,7 @@ package org.modelix.editor
 
 import org.modelix.aspects.ILanguageAspect
 import org.modelix.aspects.ILanguageAspectFactory
+import org.modelix.editor.celltemplate.NotationRootCellTemplate
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.typed

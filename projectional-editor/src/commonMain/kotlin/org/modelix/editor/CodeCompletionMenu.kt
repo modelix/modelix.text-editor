@@ -237,6 +237,7 @@ private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Seq
 
 interface ICodeCompletionAction : IActionOrProvider {
     fun getMatchingText(): String
+    fun getResultingText(): String = getMatchingText()
     fun getDescription(): String
     fun execute(editor: EditorComponent): ICaretPositionPolicy?
     fun shadows(shadowed: ICodeCompletionAction) = false
