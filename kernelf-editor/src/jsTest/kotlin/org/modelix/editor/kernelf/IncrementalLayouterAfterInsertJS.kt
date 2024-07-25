@@ -14,6 +14,7 @@ import org.modelix.editor.JSKeyboardEvent
 import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.JsEditorComponent
 import org.modelix.editor.KnownKeys
+import org.modelix.editor.celltemplate.firstLeaf
 import org.modelix.editor.firstLeaf
 import org.modelix.editor.isVisible
 import org.modelix.editor.layoutable

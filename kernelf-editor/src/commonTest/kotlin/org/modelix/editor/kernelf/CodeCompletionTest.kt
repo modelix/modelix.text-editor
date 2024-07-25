@@ -9,6 +9,8 @@ import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.ICodeCompletionAction
+import org.modelix.editor.celltemplate.descendants
+import org.modelix.editor.celltemplate.firstLeaf
 import org.modelix.editor.commonAncestor
 import org.modelix.editor.descendants
 import org.modelix.editor.firstLeaf
