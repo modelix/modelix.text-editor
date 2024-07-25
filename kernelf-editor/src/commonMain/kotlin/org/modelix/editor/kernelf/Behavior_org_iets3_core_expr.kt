@@ -1,6 +1,5 @@
 package org.modelix.editor.kernelf
 
-import jetbrains.mps.lang.core.CN_BaseConcept
 import jetbrains.mps.lang.core.N_BaseConcept
 import org.iets3.core.expr.base.CN_BinaryExpression
 import org.iets3.core.expr.base.C_IRef

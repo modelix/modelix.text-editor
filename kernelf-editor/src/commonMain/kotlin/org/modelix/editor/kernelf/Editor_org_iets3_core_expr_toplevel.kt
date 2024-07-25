@@ -182,7 +182,9 @@ val Editor_org_iets3_core_expr_toplevel = languageAspects(L_org_iets3_core_expr_
         }
     }
     editor(language.InlineRecordMemberAccess) {
-        concept.name.cell()
+        concept.name.cell {
+            regex("[_a-zA-Z][_a-zA-Z0-9]*")
+        }
     }
     editor(language.InlineRecordType) {
         "record".constant {
