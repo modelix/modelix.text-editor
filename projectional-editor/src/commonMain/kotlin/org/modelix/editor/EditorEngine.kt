@@ -3,6 +3,7 @@ package org.modelix.editor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
+import org.modelix.editor.celltemplate.CellTemplate
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.ITypedNode
