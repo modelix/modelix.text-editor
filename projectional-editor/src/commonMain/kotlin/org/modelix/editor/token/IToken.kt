@@ -84,13 +84,13 @@ fun String.withoutWhiteSpace(): String {
  * elements before delivering any results.
  */
 fun <T, R> Sequence<T>.diagonalFlatMap(body: (T) -> Sequence<R>): Sequence<R> {
-    val input = this
+    val input = this.assertNotInfinite()
     return sequence {
         val mainItr = input.iterator()
         val subIterators = ArrayList<Iterator<R>>()
         while (true) {
             if (mainItr.hasNext()) {
-                subIterators.add(body(mainItr.next()).iterator())
+                subIterators.add(body(mainItr.next()).assertNotInfinite().iterator())
             }
             if (subIterators.isEmpty()) break
             val listItr = subIterators.listIterator()
@@ -103,5 +103,17 @@ fun <T, R> Sequence<T>.diagonalFlatMap(body: (T) -> Sequence<R>): Sequence<R> {
                 }
             }
         }
+    }
+}
+
+fun <T> Sequence<T>.assertNotInfinite(debugInfo: Any? = null): Sequence<T> {
+    var size = 0
+    val creationTrace = Exception()
+    return this.map {
+        size++
+        if (size > 10000) {
+            throw IllegalStateException("Too many elements. $debugInfo", creationTrace)
+        }
+        it
     }
 }

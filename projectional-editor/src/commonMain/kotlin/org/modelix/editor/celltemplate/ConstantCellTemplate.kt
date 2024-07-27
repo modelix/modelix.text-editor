@@ -84,6 +84,8 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
 }
 
 fun findStringInParseTree(input: IParseTreeNode, text: String): Sequence<ParseResult> = sequence {
+    require(text.isNotEmpty())
+
     // exact match of a token
     for (descendantPath in input.descendentsAndSelf()) {
         val descendantNode = descendantPath.node
