@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.modelix.editor.celltemplate.CellTemplate
 import org.modelix.editor.celltemplate.ParseContext
+import org.modelix.editor.celltemplate.recordParseResults
 import org.modelix.editor.token.ConceptParseTreeNode
 import org.modelix.editor.token.IParseTreeNode
 import org.modelix.editor.token.ParseResult
@@ -78,13 +79,13 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
 
     fun parse(input: IParseTreeNode, outputConcept: IConcept, context: ParseContext): Sequence<ParseResult> {
-        check(context.conceptsPath.size < 10) { "Endless recursion? " + context.conceptsPath.map { it.getShortName() } }
+        check(context.depth < 30) { "Endless recursion? $context" }
         return outputConcept.getInstantiatableSubConcepts().asSequence().diagonalFlatMap { c ->
             val cellModel = createCellModel(c)
             cellModel.parse(input, context.withConcept(c, input)).map {
                 it.copy(match = ConceptParseTreeNode(c, UnclassifiedParseTreeNode.unwrap(it.match)))
             }
-        }
+        }.recordParseResults(context, input)
     }
 
     fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {

@@ -62,6 +62,10 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
         return findStringInParseTree(input, text)
     }
 
+    override fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
+        return if (text.isEmpty()) emptySequence() else sequenceOf(this)
+    }
+
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) :
         ICodeCompletionAction {
         override fun getMatchingText(): String = text

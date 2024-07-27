@@ -13,3 +13,7 @@ interface IGrammarSymbol {
 
     fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider?
 }
+
+interface IOptionalSymbol : IGrammarSymbol {
+    fun getChildSymbols(): Sequence<IGrammarSymbol>
+}

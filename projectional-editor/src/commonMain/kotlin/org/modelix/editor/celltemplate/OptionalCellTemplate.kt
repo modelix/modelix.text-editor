@@ -7,12 +7,17 @@ import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.asProvider
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.diagonalFlatMap
+import org.modelix.editor.token.isBlank
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 
 class OptionalCellTemplate(concept: IConcept) :
-    CellTemplate(concept) {
+    CellTemplate(concept), IOptionalSymbol {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData()
     }
@@ -46,7 +51,27 @@ class OptionalCellTemplate(concept: IConcept) :
         return null // skip optional. Don't search in children.
     }
 
-    override fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
-        return emptySequence()
+    override fun getChildSymbols(): Sequence<IGrammarSymbol> {
+        return getChildren().asSequence().flatMap { it.getGrammarSymbols() }
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return null
+    }
+
+    override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        if (input.isBlank()) return sequenceOf(ParseResult(null, input, null)).recordParseResults(context, input)
+
+        val symbols = getChildSymbols().toList()
+        if (symbols.isEmpty()) return emptySequence()
+
+        val symbolTriples = symbols.iterateTriples()
+        return symbolTriples.diagonalFlatMap { symbolTriple ->
+            match(symbolTriple, input, context)
+        }.recordParseResults(context, input)
+    }
+
+    override fun toString(): String {
+        return "?(${getChildSymbols().joinToString(" ")})"
     }
 }

@@ -194,7 +194,7 @@ class ChildCellTemplate(
     }
 
     override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
-        return context.engine.parse(input, link.targetConcept, context)
+        return context.getEngine().parse(input, link.targetConcept, context)
     }
 
     inner class InsertSubstitutionPlaceholderCompletionAction(

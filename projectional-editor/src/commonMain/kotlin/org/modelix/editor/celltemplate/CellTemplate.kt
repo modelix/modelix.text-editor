@@ -19,7 +19,6 @@ import org.modelix.editor.TextCellData
 import org.modelix.editor.token.IParseTreeNode
 import org.modelix.editor.token.ParseResult
 import org.modelix.editor.token.UnclassifiedParseTreeNode
-import org.modelix.editor.token.assertNotInfinite
 import org.modelix.editor.token.diagonalFlatMap
 import org.modelix.editor.token.isBlank
 import org.modelix.metamodel.ITypedNode
@@ -123,20 +122,14 @@ abstract class CellTemplate(val concept: IConcept) {
     }
 
     open fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
-        val symbols = getGrammarSymbols().filter {
-            !(it is ConstantCellTemplate && it.text.isEmpty())
-        }.toList()
+        val symbols = getGrammarSymbols().toList()
         if (symbols.isEmpty()) return emptySequence()
 
         val symbolTriples = symbols.iterateTriples()
         return symbolTriples.diagonalFlatMap { symbolTriple ->
             match(symbolTriple, input, context)
-        }
+        }.recordParseResults(context, input)
     }
-}
-
-data class ParseContext(val engine: EditorEngine, val conceptsPath: List<IConcept> = emptyList(), val inputs: List<IParseTreeNode> = emptyList()) {
-    fun withConcept(c: IConcept, input: IParseTreeNode) = copy(conceptsPath = conceptsPath + c, inputs = inputs + input)
 }
 
 fun match(symbols: SymbolTriple, input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
@@ -159,7 +152,7 @@ fun match(symbols: SymbolTriple, input: IParseTreeNode, context: ParseContext): 
                 )
             }
         }
-    }
+    }.recordMatches(context, input, symbols)
 }
 
 private fun matchNext(inputResult: ParseResult, siblingResult: IParseTreeNode?, symbols: List<IGrammarSymbol>, context: ParseContext, onMatch: (ParseResult) -> ParseResult): Sequence<ParseResult> {
@@ -177,7 +170,7 @@ private fun matchNext(inputResult: ParseResult, siblingResult: IParseTreeNode?, 
 }
 
 fun IGrammarSymbol.parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
-    return (this as CellTemplate).parse(input, context)
+    return (this as CellTemplate).parse(input, context).recordParseResults(context, input)
 }
 
 fun List<IGrammarSymbol>.iterateTriples(): Sequence<SymbolTriple> {
@@ -188,9 +181,10 @@ fun List<IGrammarSymbol>.iterateTriples(): Sequence<SymbolTriple> {
         when (it.value) {
             is ConstantCellTemplate -> 0
             is FlagCellTemplate -> 1
-            is ChildCellTemplate -> 2
-            is ReferenceCellTemplate -> 3
-            is PropertyCellTemplate -> 4
+            is IOptionalSymbol -> 2
+            is ChildCellTemplate -> 3
+            is ReferenceCellTemplate -> 4
+            is PropertyCellTemplate -> 5
             else -> throw UnsupportedOperationException("Unknown symbol type: ${it.value}")
         }
     }.asSequence().map { (index, symbol) ->
@@ -200,11 +194,11 @@ fun List<IGrammarSymbol>.iterateTriples(): Sequence<SymbolTriple> {
             symbols.drop(index + 1)
         )
     }
-    if (symbols.size == 2) {
-        // There are only two option that do the same and just start with a different symbol.
-        // One of them is the preferred one.
-        return triples.take(1)
-    }
+//    if (symbols.size == 2) {
+//        // There are only two option that do the same and just start with a different symbol.
+//        // One of them is the preferred one.
+//        return triples.take(1)
+//    }
 
     val hasConstants = symbols.any { it is ConstantCellTemplate }
     if (hasConstants) {

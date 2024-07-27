@@ -3,6 +3,7 @@ package org.modelix.editor.kernelf
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.celltemplate.ParseContext
+import org.modelix.editor.celltemplate.RootParseContext
 import org.modelix.editor.token.UnclassifiedToken
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
@@ -44,13 +45,13 @@ class ParsingTest {
     @Test fun test14() = runExpressionTest(""""abc" + " """")
     @Test fun test15() = runExpressionTest(""""abc" + """"")
     @Test fun test16() = runExpressionTest("""isSome(10)""")
-    @Test fun test17() = runExpressionTest("""if 10 > 20 then 1.5""")
-    @Test fun test18() = runExpressionTest("""if 10 > 20 then 1.5 else 900""")
+    @Test fun test17() = runExpressionTest("""if 10 > 20 then 15""")
+    @Test fun test18() = runExpressionTest("""if 10 > 20 then 15 else 900""")
 
     private fun runExpressionTest(inputString: String) {
         val input = UnclassifiedToken(inputString)
         val outputConcept = L_org_iets3_core_expr_base.Expression.untyped()
-        val context = ParseContext(engine)
+        val context = RootParseContext(engine)
         fun computeResult() = engine.parse(input, outputConcept, context).toList()
 
         val result = computeResult()
