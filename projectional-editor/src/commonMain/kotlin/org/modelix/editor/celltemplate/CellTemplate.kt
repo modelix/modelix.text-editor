@@ -130,10 +130,7 @@ abstract class CellTemplate(val concept: IConcept) {
 
         val symbolTriples = symbols.iterateTriples()
         return symbolTriples.diagonalFlatMap { symbolTriple ->
-            match(symbolTriple, input, context).map {
-                println("match: $symbolTriple -> $it")
-                it
-            }
+            match(symbolTriple, input, context)
         }
     }
 }

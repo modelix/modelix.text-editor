@@ -5,8 +5,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.modelix.editor.celltemplate.CellTemplate
 import org.modelix.editor.celltemplate.ParseContext
+import org.modelix.editor.token.ConceptParseTreeNode
 import org.modelix.editor.token.IParseTreeNode
 import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.UnclassifiedParseTreeNode
 import org.modelix.editor.token.diagonalFlatMap
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
@@ -79,7 +81,9 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         check(context.conceptsPath.size < 10) { "Endless recursion? " + context.conceptsPath.map { it.getShortName() } }
         return outputConcept.getInstantiatableSubConcepts().asSequence().diagonalFlatMap { c ->
             val cellModel = createCellModel(c)
-            cellModel.parse(input, context.withConcept(c, input))
+            cellModel.parse(input, context.withConcept(c, input)).map {
+                it.copy(match = ConceptParseTreeNode(c, UnclassifiedParseTreeNode.unwrap(it.match)))
+            }
         }
     }
 

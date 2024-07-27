@@ -34,11 +34,15 @@ interface IParseTreeNode {
     val children: List<IParseTreeNode>
 }
 class NodeParseTreeNode(val node: INode, override val children: List<IParseTreeNode>) : IParseTreeNode
-class ConceptParseTreeNode(val concept: IConcept, override val children: List<IParseTreeNode>) : IParseTreeNode
+class ConceptParseTreeNode(val concept: IConcept, override val children: List<IParseTreeNode>) : IParseTreeNode {
+    override fun toString(): String {
+        return "${concept.getShortName()}{${children.joinToString(" ")}}"
+    }
+}
 
 class UnclassifiedParseTreeNode(override val children: List<IParseTreeNode>) : IParseTreeNode {
     override fun toString(): String {
-        return "(" + children.joinToString(", ") + ")"
+        return "(" + children.joinToString(" ") + ")"
     }
 
     companion object {
@@ -106,7 +110,7 @@ fun String.withoutWhiteSpace(): String {
     return this.filterNot(Char::isWhitespace)
 }
 
-val debugMode = true
+val debugMode = false
 /**
  * How do you iterate an infinite number of infinitely long lists?
  * If you image the elements as a two-dimensional grid then by starting in one corner and moving in a diagonal pattern.
