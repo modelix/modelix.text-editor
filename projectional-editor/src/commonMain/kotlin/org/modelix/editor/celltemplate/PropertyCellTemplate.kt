@@ -74,6 +74,12 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
         return sequence {
             val leafs = input.descendentsAndSelf().filter { it.node is LeafToken }.toList()
 
+            if (leafs.isEmpty()) {
+                if (validateValue(NonExistingNode(concept), "")) {
+                    yield(ParseResult(null, PropertyToken("", property, NonExistingNode(concept)), null))
+                }
+            }
+
             if (leafs.size > 1) {
                 // match the whole input
                 val inputText = leafs.joinToString("") { (it.node as LeafToken).text }

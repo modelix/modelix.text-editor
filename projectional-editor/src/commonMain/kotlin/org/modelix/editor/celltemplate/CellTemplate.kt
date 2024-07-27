@@ -170,12 +170,8 @@ private fun matchNext(inputResult: ParseResult, siblingResult: IParseTreeNode?, 
             emptySequence()
         }
     } else {
-        if (siblingResult == null) {
-            emptySequence()
-        } else {
-            symbols.iterateTriples().diagonalFlatMap {
-                match(it, siblingResult, context).map { onMatch(it) }
-            }
+        symbols.iterateTriples().diagonalFlatMap {
+            match(it, siblingResult ?: UnclassifiedParseTreeNode(emptyList()), context).map { onMatch(it) }
         }
     }
 }
