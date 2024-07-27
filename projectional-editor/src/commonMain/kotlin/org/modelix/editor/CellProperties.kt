@@ -1,5 +1,8 @@
 package org.modelix.editor
 
+import org.modelix.editor.token.IToken
+import org.modelix.model.api.INode
+
 class CellProperties : Freezable() {
     private val properties: MutableMap<CellPropertyKey<*>, Any?> = HashMap()
     operator fun <T> get(key: CellPropertyKey<T>): T {
@@ -48,6 +51,8 @@ object CommonCellProperties {
     val selectable = CellPropertyKey<Boolean>("selectable", false)
     val codeCompletionText = CellPropertyKey<String?>("code-completion-text", null) // empty string hides the entry
     val isForceShown = CellPropertyKey<Boolean>("force-shown", false)
+    val token = CellPropertyKey<IToken?>("grammar-token", null)
+    val node = CellPropertyKey<INode?>("node", null) // set on the root cell of a node
 }
 
 fun Cell.isTabTarget() = getProperty(CommonCellProperties.tabTarget)

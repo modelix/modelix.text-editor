@@ -4,6 +4,7 @@ import org.modelix.editor.CaretPositionPolicy
 import org.modelix.editor.CellCreationContext
 import org.modelix.editor.ChildNodeCellReference
 import org.modelix.editor.CodeCompletionParameters
+import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
@@ -13,6 +14,13 @@ import org.modelix.editor.TextCellData
 import org.modelix.editor.ancestors
 import org.modelix.editor.commonAncestor
 import org.modelix.editor.toNonExisting
+import org.modelix.editor.token.ConstantToken
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.LeafToken
+import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.UnclassifiedParseTreeNode
+import org.modelix.editor.token.UnclassifiedToken
+import org.modelix.editor.token.descendentsAndSelf
 import org.modelix.editor.withCaretPolicy
 import org.modelix.editor.withMatchingText
 import org.modelix.model.api.IChildLink
@@ -21,7 +29,11 @@ import org.modelix.model.api.INode
 
 class ConstantCellTemplate(concept: IConcept, val text: String) :
     CellTemplate(concept), IGrammarSymbol {
-    override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
+    override fun createCell(context: CellCreationContext, node: INode): TextCellData {
+        return TextCellData(text, "").also {
+            it.properties[CommonCellProperties.token] = ConstantToken(text)
+        }
+    }
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(InstantiateNodeCompletionAction(text, concept, location))
     }
@@ -39,6 +51,10 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
                 }
             }
             .withMatchingText(text)
+    }
+
+    override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        return findStringInParseTree(input, text)
     }
 
     inner class SideTransformWrapper(val nodeToWrap: INonExistingNode, val wrappingLink: IChildLink) :
@@ -64,5 +80,43 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
         }
 
         fun getTemplate() = this@ConstantCellTemplate
+    }
+}
+
+fun findStringInParseTree(input: IParseTreeNode, text: String): Sequence<ParseResult> = sequence {
+    // exact match of a token
+    for (descendantPath in input.descendentsAndSelf()) {
+        val descendantNode = descendantPath.node
+        if (descendantNode !is LeafToken) continue
+        if (descendantNode.text == text) {
+            yield(descendantPath.split3())
+        }
+    }
+
+    // split tokens that contain the constant
+    for (descendantPath in input.descendentsAndSelf()) {
+        val descendantNode = descendantPath.node
+        if (descendantNode !is LeafToken) continue
+
+        var index = descendantNode.text.indexOf(text)
+        while (index != -1) {
+            val prefix = descendantNode.text.substring(0, index)
+            val suffix = descendantNode.text.substring(index + text.length)
+            val split = descendantPath.split3()
+            yield(
+                ParseResult(
+                    UnclassifiedParseTreeNode.createTree(
+                        split.before,
+                        prefix.takeIf { it.isNotEmpty() }?.let { UnclassifiedToken(it) }
+                    ),
+                    ConstantToken(text),
+                    UnclassifiedParseTreeNode.createTree(
+                        suffix.takeIf { it.isNotEmpty() }?.let { UnclassifiedToken(it) },
+                        split.after
+                    )
+                )
+            )
+            index = descendantNode.text.indexOf(text, index + 1)
+        }
     }
 }

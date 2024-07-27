@@ -9,6 +9,9 @@ import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.TextCellData
 import org.modelix.editor.toNonExisting
+import org.modelix.editor.token.FlagToken
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.ParseResult
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
@@ -19,7 +22,11 @@ class FlagCellTemplate(
     val text: String,
 ) : PropertyCellTemplate(concept, property), IGrammarSymbol {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
-        if (node.getPropertyValue(property) == "true") return TextCellData(text, "")
+        if (node.getPropertyValue(property) == "true") {
+            return TextCellData(text, "").also {
+                it.properties[CommonCellProperties.token] = FlagToken(text, property, node)
+            }
+        }
 
         val forceShow = context.editorState.forceShowOptionals[createCellReference(node)] == true
         return if (forceShow) {
@@ -38,5 +45,9 @@ class FlagCellTemplate(
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         // TODO
         return listOf()
+    }
+
+    override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        return findStringInParseTree(input, text)
     }
 }

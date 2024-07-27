@@ -4,6 +4,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.modelix.editor.celltemplate.CellTemplate
+import org.modelix.editor.celltemplate.ParseContext
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.diagonalFlatMap
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.ITypedNode
@@ -11,6 +15,7 @@ import org.modelix.model.api.IConcept
 import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.INode
 import org.modelix.model.api.getAllConcepts
+import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.model.api.remove
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
@@ -39,6 +44,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
     private val createCellDataIncremental: (EditorState, INode) -> CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
         val cellData = doCreateCellData(editorState, node)
+        cellData.properties[CommonCellProperties.node] = node
         cellData.freeze()
         LOG.trace { "Cell created for $node: $cellData" }
         cellData
@@ -67,6 +73,17 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         val editor: ConceptEditor = resolveConceptEditor(concept).first()
         val template: CellTemplate = editor.apply(concept)
         return template
+    }
+
+    val kernelfConcepts: Set<String> = hashSetOf("NumberLiteral", "PlusExpression")
+    fun parse(input: IParseTreeNode, outputConcept: IConcept, context: ParseContext): Sequence<ParseResult> {
+        check(context.conceptsPath.size < 10) { "Endless recursion? " + context.conceptsPath.map { it.getShortName() } }
+        return outputConcept.getInstantiatableSubConcepts().filter {
+            kernelfConcepts.contains(it.getShortName())
+        }.asSequence().diagonalFlatMap { c ->
+            val cellModel = createCellModel(c)
+            cellModel.parse(input, context.withConcept(c, input))
+        }
     }
 
     fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {

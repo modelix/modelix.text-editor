@@ -13,11 +13,17 @@ import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.ICodeCompletionActionProvider
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.ITextChangeAction
+import org.modelix.editor.NonExistingNode
 import org.modelix.editor.PropertyCellReference
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
 import org.modelix.editor.replacement
 import org.modelix.editor.toNonExisting
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.LeafToken
+import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.PropertyToken
+import org.modelix.editor.token.descendentsAndSelf
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
@@ -29,9 +35,11 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     var regex: Regex? = null
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
-        val data = TextCellData(value ?: "", if (value == null) placeholderText else "")
+        val text = value ?: ""
+        val data = TextCellData(text, if (value == null) placeholderText else "")
         data.properties[CellActionProperties.replaceText] = ChangePropertyAction(node)
         data.properties[CommonCellProperties.tabTarget] = true
+        data.properties[CommonCellProperties.token] = PropertyToken(text, property, node)
         data.cellReferences += PropertyCellReference(property, node.reference)
         return data
     }
@@ -56,6 +64,27 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
         return WrapPropertyValueProvider(node.toNonExisting())
+    }
+
+    override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        return sequence {
+            val leafs = input.descendentsAndSelf().filter { it.node is LeafToken }.toList()
+
+            if (leafs.size > 1) {
+                // match the whole input
+                val inputText = leafs.joinToString("") { (it.node as LeafToken).text }
+                if (validateValue(NonExistingNode(concept), inputText)) {
+                    yield(ParseResult(null, input, null))
+                }
+            }
+
+            // match single token
+            for (leaf in leafs) {
+                if (validateValue(NonExistingNode(concept), (leaf.node as LeafToken).text)) {
+                    yield(leaf.split3())
+                }
+            }
+        }
     }
 
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {

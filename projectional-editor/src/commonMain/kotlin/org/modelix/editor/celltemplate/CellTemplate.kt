@@ -8,6 +8,7 @@ import org.modelix.editor.ChildCellTemplateReference
 import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.ECellLayout
+import org.modelix.editor.EditorEngine
 import org.modelix.editor.EditorState
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICellTemplateReference
@@ -15,6 +16,10 @@ import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.UnclassifiedParseTreeNode
+import org.modelix.editor.token.diagonalFlatMap
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IConcept
@@ -114,7 +119,94 @@ abstract class CellTemplate(val concept: IConcept) {
         }
         cellData.children.filterIsInstance<CellData>().forEach { applyTextReplacement(it, editorState) }
     }
+
+    open fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        val symbols = getGrammarSymbols().toList()
+
+        val hasConstants = symbols.any { it is ConstantCellTemplate }
+        var symbolTriples = symbols.iterateTriples()
+        if (hasConstants) {
+            symbolTriples = symbolTriples.filter { it.second is ConstantCellTemplate }
+        }
+
+        return symbolTriples.diagonalFlatMap {
+            match(it, input, context)
+        }
+    }
 }
+
+data class ParseContext(val engine: EditorEngine, val conceptsPath: List<IConcept> = emptyList(), val inputs: List<IParseTreeNode> = emptyList()) {
+    fun withConcept(c: IConcept, input: IParseTreeNode) = copy(conceptsPath = conceptsPath + c, inputs = inputs + input)
+}
+
+fun match(symbols: SymbolTriple, input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+    return symbols.second.parse(input, context).diagonalFlatMap { centerResult ->
+        val leftAndCenterResults: Sequence<ParseResult> = if (centerResult.before == null) {
+            if (symbols.first.isNotEmpty()) {
+                emptySequence()
+            } else {
+                sequenceOf(centerResult)
+            }
+        } else {
+            symbols.first.iterateTriples().diagonalFlatMap {
+                match(it, centerResult.before, context).map { leftResult ->
+                    check(leftResult.after == null)
+                    ParseResult(
+                        leftResult.before,
+                        UnclassifiedParseTreeNode.createTree(leftResult.match, centerResult.match)!!,
+                        centerResult.after
+                    )
+                }
+            }
+        }
+        leftAndCenterResults.diagonalFlatMap { leftAndCenterResult ->
+            if (leftAndCenterResult.after == null) {
+                if (symbols.third.isNotEmpty()) {
+                    emptySequence()
+                } else {
+                    sequenceOf(leftAndCenterResult)
+                }
+            } else {
+                symbols.third.iterateTriples().diagonalFlatMap {
+                    match(it, leftAndCenterResult.after, context).map { rightResult ->
+                        check(rightResult.before == null)
+                        ParseResult(
+                            leftAndCenterResult.before,
+                            UnclassifiedParseTreeNode.createTree(leftAndCenterResult.match, rightResult.match)!!,
+                            rightResult.after
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+fun IGrammarSymbol.parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+    return (this as CellTemplate).parse(input, context)
+}
+
+fun List<IGrammarSymbol>.iterateTriples(): Sequence<SymbolTriple> {
+    val symbols = this
+    return symbols.withIndex().asSequence().sortedBy {
+        when (it.value) {
+            is ConstantCellTemplate -> 0
+            is FlagCellTemplate -> 1
+            is ChildCellTemplate -> 2
+            is ReferenceCellTemplate -> 3
+            is PropertyCellTemplate -> 4
+            else -> throw UnsupportedOperationException("Unknown symbol type: ${it.value}")
+        }
+    }.map { (index, symbol) ->
+        Triple(
+            symbols.take(index),
+            symbol,
+            symbols.drop(index + 1)
+        )
+    }
+}
+
+typealias SymbolTriple = Triple<List<IGrammarSymbol>, IGrammarSymbol, List<IGrammarSymbol>>
 
 fun CellTemplate.firstLeaf(): CellTemplate = if (getChildren().isEmpty()) this else getChildren().first().firstLeaf()
 fun CellTemplate.descendants(includeSelf: Boolean = false): Sequence<CellTemplate> {

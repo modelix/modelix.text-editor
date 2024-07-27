@@ -30,6 +30,8 @@ import org.modelix.editor.ancestors
 import org.modelix.editor.asProvider
 import org.modelix.editor.replacement
 import org.modelix.editor.toNonExisting
+import org.modelix.editor.token.IParseTreeNode
+import org.modelix.editor.token.ParseResult
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
@@ -185,6 +187,10 @@ class ChildCellTemplate(
 
     override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
         return ReplaceNodeActionProvider(NonExistingChild(node.toNonExisting(), link))
+    }
+
+    override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        return context.engine.parse(input, link.targetConcept, context)
     }
 
     inner class InsertSubstitutionPlaceholderCompletionAction(
