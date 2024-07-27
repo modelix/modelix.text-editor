@@ -34,6 +34,11 @@ class ConstantCellTemplate(concept: IConcept, val text: String) :
             it.properties[CommonCellProperties.token] = ConstantToken(text)
         }
     }
+
+    override fun toString(): String {
+        return "constant[$text]"
+    }
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(InstantiateNodeCompletionAction(text, concept, location))
     }

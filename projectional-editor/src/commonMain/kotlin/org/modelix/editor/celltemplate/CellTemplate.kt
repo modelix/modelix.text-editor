@@ -21,6 +21,7 @@ import org.modelix.editor.token.ParseResult
 import org.modelix.editor.token.UnclassifiedParseTreeNode
 import org.modelix.editor.token.assertNotInfinite
 import org.modelix.editor.token.diagonalFlatMap
+import org.modelix.editor.token.isBlank
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IConcept
@@ -127,14 +128,12 @@ abstract class CellTemplate(val concept: IConcept) {
         }.toList()
         if (symbols.isEmpty()) return emptySequence()
 
-        val hasConstants = symbols.any { it is ConstantCellTemplate }
-        var symbolTriples = symbols.iterateTriples()
-        if (hasConstants) {
-            symbolTriples = symbolTriples.filter { it.second is ConstantCellTemplate }
-        }
-
-        return symbolTriples.diagonalFlatMap {
-            match(it, input, context)
+        val symbolTriples = symbols.iterateTriples()
+        return symbolTriples.diagonalFlatMap { symbolTriple ->
+            match(symbolTriple, input, context).map {
+                println("match: $symbolTriple -> $it")
+                it
+            }
         }
     }
 }
@@ -144,43 +143,41 @@ data class ParseContext(val engine: EditorEngine, val conceptsPath: List<IConcep
 }
 
 fun match(symbols: SymbolTriple, input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
-    return symbols.second.parse(input, context).assertNotInfinite(input to context).diagonalFlatMap { centerResult ->
-        val leftAndCenterResults: Sequence<ParseResult> = if (centerResult.before == null) {
-            if (symbols.first.isNotEmpty()) {
-                emptySequence()
-            } else {
-                sequenceOf(centerResult)
-            }
-        } else {
-            symbols.first.iterateTriples().diagonalFlatMap {
-                match(it, centerResult.before, context).map { leftResult ->
-                    check(leftResult.after == null)
-                    ParseResult(
-                        leftResult.before,
-                        UnclassifiedParseTreeNode.createTree(leftResult.match, centerResult.match)!!,
-                        centerResult.after
-                    )
-                }
-            }
+    return symbols.second.parse(input, context).diagonalFlatMap { centerResult ->
+        val leftAndCenterResults = matchNext(centerResult, centerResult.before, symbols.first, context) { leftResult ->
+            check(leftResult.after.isBlank()) { "Not empty: " + leftResult.after }
+            ParseResult(
+                leftResult.before,
+                UnclassifiedParseTreeNode.createTree(leftResult.match, centerResult.match)!!,
+                centerResult.after
+            )
         }
         leftAndCenterResults.diagonalFlatMap { leftAndCenterResult ->
-            if (leftAndCenterResult.after == null) {
-                if (symbols.third.isNotEmpty()) {
-                    emptySequence()
-                } else {
-                    sequenceOf(leftAndCenterResult)
-                }
-            } else {
-                symbols.third.iterateTriples().diagonalFlatMap {
-                    match(it, leftAndCenterResult.after, context).map { rightResult ->
-                        check(rightResult.before == null)
-                        ParseResult(
-                            leftAndCenterResult.before,
-                            UnclassifiedParseTreeNode.createTree(leftAndCenterResult.match, rightResult.match)!!,
-                            rightResult.after
-                        )
-                    }
-                }
+            matchNext(leftAndCenterResult, leftAndCenterResult.after, symbols.third, context) { rightResult ->
+                check(rightResult.before.isBlank()) { "Not empty: " + rightResult.before }
+                ParseResult(
+                    leftAndCenterResult.before,
+                    UnclassifiedParseTreeNode.createTree(leftAndCenterResult.match, rightResult.match)!!,
+                    rightResult.after
+                )
+            }
+        }
+    }
+}
+
+private fun matchNext(inputResult: ParseResult, siblingResult: IParseTreeNode?, symbols: List<IGrammarSymbol>, context: ParseContext, onMatch: (ParseResult) -> ParseResult): Sequence<ParseResult> {
+    return if (symbols.isEmpty()) {
+        if (siblingResult.isBlank()) {
+            sequenceOf(inputResult)
+        } else {
+            emptySequence()
+        }
+    } else {
+        if (siblingResult == null) {
+            emptySequence()
+        } else {
+            symbols.iterateTriples().diagonalFlatMap {
+                match(it, siblingResult, context).map { onMatch(it) }
             }
         }
     }

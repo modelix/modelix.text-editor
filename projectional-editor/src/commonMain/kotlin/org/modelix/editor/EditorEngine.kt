@@ -75,12 +75,9 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         return template
     }
 
-    val kernelfConcepts: Set<String> = hashSetOf("NumberLiteral", "PlusExpression")
     fun parse(input: IParseTreeNode, outputConcept: IConcept, context: ParseContext): Sequence<ParseResult> {
         check(context.conceptsPath.size < 10) { "Endless recursion? " + context.conceptsPath.map { it.getShortName() } }
-        return outputConcept.getInstantiatableSubConcepts()/*.filter {
-            kernelfConcepts.contains(it.getShortName())
-        }*/.asSequence().diagonalFlatMap { c ->
+        return outputConcept.getInstantiatableSubConcepts().asSequence().diagonalFlatMap { c ->
             val cellModel = createCellModel(c)
             cellModel.parse(input, context.withConcept(c, input))
         }

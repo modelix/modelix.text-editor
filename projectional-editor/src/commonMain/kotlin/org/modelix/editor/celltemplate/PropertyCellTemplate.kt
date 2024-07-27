@@ -44,6 +44,10 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
         return data
     }
 
+    override fun toString(): String {
+        return "property[${property.getSimpleName()}]"
+    }
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(WrapPropertyValueProvider(location))
     }

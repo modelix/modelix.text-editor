@@ -48,6 +48,11 @@ class ReferenceCellTemplate(
         data.properties[CommonCellProperties.token] = ReferenceToken(text, link, node)
         return data
     }
+
+    override fun toString(): String {
+        return "reference[${link.getSimpleName()}]"
+    }
+
     private fun getText(node: INode): String = getTargetNode(node)?.let(presentation) ?: ""
     private fun getTargetNode(sourceNode: INode): INode? {
         return sourceNode.getReferenceTarget(link)

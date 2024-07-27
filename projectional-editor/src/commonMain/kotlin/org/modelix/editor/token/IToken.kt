@@ -12,7 +12,11 @@ sealed class LeafToken(val text: String) : IToken {
     override val children: List<IToken>
         get() = emptyList()
 }
-class UnclassifiedToken(text: String) : LeafToken(text)
+class UnclassifiedToken(text: String) : LeafToken(text) {
+    override fun toString(): String {
+        return text
+    }
+}
 open class PropertyToken(text: String, val property: IProperty, val node: INonExistingNode) : LeafToken(text) {
     override fun toString(): String {
         return "property[${property.getSimpleName()}=$text]"
@@ -58,6 +62,14 @@ class UnclassifiedParseTreeNode(override val children: List<IParseTreeNode>) : I
 
 data class ParseResult(val before: IParseTreeNode?, val match: IParseTreeNode, val after: IParseTreeNode?)
 
+fun IParseTreeNode?.isBlank(): Boolean {
+    return when (this) {
+        null -> true
+        is LeafToken -> this.text.isBlank()
+        else -> this.children.all { it.isBlank() }
+    }
+}
+
 class ParseTreePath(val parent: ParseTreePath?, val node: IParseTreeNode) {
     fun children(): Sequence<ParseTreePath> = node.children.asSequence().map { ParseTreePath(this, it) }
     fun descendants(): Sequence<ParseTreePath> = children().flatMap { it.descendantsAndSelf() }
@@ -94,6 +106,7 @@ fun String.withoutWhiteSpace(): String {
     return this.filterNot(Char::isWhitespace)
 }
 
+val debugMode = true
 /**
  * How do you iterate an infinite number of infinitely long lists?
  * If you image the elements as a two-dimensional grid then by starting in one corner and moving in a diagonal pattern.
@@ -101,6 +114,10 @@ fun String.withoutWhiteSpace(): String {
  * elements before delivering any results.
  */
 fun <T, R> Sequence<T>.diagonalFlatMap(body: (T) -> Sequence<R>): Sequence<R> {
+    if (debugMode) {
+        return toList().flatMap { body(it).toList() }.asSequence()
+    }
+
     val input = this.assertNotInfinite()
     return sequence {
         val mainItr = input.iterator()

@@ -51,6 +51,10 @@ class ChildCellTemplate(
      */
     var newLineConcept: IConcept? = null
 
+    override fun toString(): String {
+        return "child[${link.getSimpleName()}]"
+    }
+
     fun setSeparator(newSeparator: CellTemplate) {
         this.separatorCell = newSeparator
         reference?.let { newSeparator.setReference(SeparatorCellTemplateReference(it)) }
