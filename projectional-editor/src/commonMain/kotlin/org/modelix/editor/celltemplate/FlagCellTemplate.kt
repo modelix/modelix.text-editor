@@ -5,6 +5,7 @@ import org.modelix.editor.CellCreationContext
 import org.modelix.editor.CellData
 import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
+import org.modelix.editor.ExistingNode
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.TextCellData
@@ -24,7 +25,7 @@ class FlagCellTemplate(
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         if (node.getPropertyValue(property) == "true") {
             return TextCellData(text, "").also {
-                it.properties[CommonCellProperties.token] = FlagToken(text, property, node)
+                it.properties[CommonCellProperties.token] = FlagToken(text, property, node.toNonExisting())
             }
         }
 

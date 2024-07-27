@@ -1,5 +1,6 @@
 package org.modelix.editor.token
 
+import org.modelix.editor.INonExistingNode
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
@@ -12,9 +13,17 @@ sealed class LeafToken(val text: String) : IToken {
         get() = emptyList()
 }
 class UnclassifiedToken(text: String) : LeafToken(text)
-open class PropertyToken(text: String, val property: IProperty, val node: INode) : LeafToken(text)
-class ConstantToken(text: String) : LeafToken(text)
-class FlagToken(text: String, property: IProperty, node: INode) : PropertyToken(text, property, node)
+open class PropertyToken(text: String, val property: IProperty, val node: INonExistingNode) : LeafToken(text) {
+    override fun toString(): String {
+        return "property[${property.getSimpleName()}=$text]"
+    }
+}
+class ConstantToken(text: String) : LeafToken(text) {
+    override fun toString(): String {
+        return "constant[$text]"
+    }
+}
+class FlagToken(text: String, property: IProperty, node: INonExistingNode) : PropertyToken(text, property, node)
 class ReferenceToken(text: String, val link: IReferenceLink, val sourceNode: INode) : LeafToken(text)
 
 interface IParseTreeNode {
@@ -24,6 +33,10 @@ class NodeParseTreeNode(val node: INode, override val children: List<IParseTreeN
 class ConceptParseTreeNode(val concept: IConcept, override val children: List<IParseTreeNode>) : IParseTreeNode
 
 class UnclassifiedParseTreeNode(override val children: List<IParseTreeNode>) : IParseTreeNode {
+    override fun toString(): String {
+        return "(" + children.joinToString(", ") + ")"
+    }
+
     companion object {
         fun createTree(vararg nodes: IParseTreeNode?): IParseTreeNode? {
             return createTree(nodes.toList().filterNotNull())

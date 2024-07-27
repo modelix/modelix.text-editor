@@ -39,7 +39,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
         val data = TextCellData(text, if (value == null) placeholderText else "")
         data.properties[CellActionProperties.replaceText] = ChangePropertyAction(node)
         data.properties[CommonCellProperties.tabTarget] = true
-        data.properties[CommonCellProperties.token] = PropertyToken(text, property, node)
+        data.properties[CommonCellProperties.token] = PropertyToken(text, property, node.toNonExisting())
         data.cellReferences += PropertyCellReference(property, node.reference)
         return data
     }
@@ -74,17 +74,27 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
                 // match the whole input
                 val inputText = leafs.joinToString("") { (it.node as LeafToken).text }
                 if (validateValue(NonExistingNode(concept), inputText)) {
-                    yield(ParseResult(null, input, null))
+                    yield(ParseResult(null, input, null).classifyAsProperty(inputText))
                 }
             }
 
             // match single token
             for (leaf in leafs) {
-                if (validateValue(NonExistingNode(concept), (leaf.node as LeafToken).text)) {
-                    yield(leaf.split3())
+                val text = (leaf.node as LeafToken).text
+                if (validateValue(NonExistingNode(concept), text)) {
+                    yield(leaf.split3().classifyAsProperty(text))
+                } else {
+                    val trimmedText = text.trim()
+                    if (trimmedText != text &&  validateValue(NonExistingNode(concept), trimmedText)) {
+                        yield(leaf.split3().classifyAsProperty(trimmedText))
+                    }
                 }
             }
         }
+    }
+
+    private fun ParseResult.classifyAsProperty(text: String): ParseResult {
+        return copy(match = PropertyToken(text, property, NonExistingNode(concept)))
     }
 
     inner class WrapPropertyValueProvider(val location: INonExistingNode) : ICodeCompletionActionProvider {
