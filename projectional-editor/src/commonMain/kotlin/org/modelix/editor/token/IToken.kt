@@ -49,6 +49,10 @@ class UnclassifiedParseTreeNode(override val children: List<IParseTreeNode>) : I
                 else -> UnclassifiedParseTreeNode(nodes)
             }
         }
+
+        fun unwrap(node: IParseTreeNode): List<IParseTreeNode> {
+            return if (node is UnclassifiedParseTreeNode) node.children else listOf(node)
+        }
     }
 }
 

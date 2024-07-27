@@ -21,7 +21,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         concept.value.cell {
             textColor("DarkMagenta")
             regex("""[0-9]+([.][0-9]+)?""")
-            validateValue { it.toDoubleOrNull() != null }
+            //validateValue { it.toDoubleOrNull() != null }
         }
     }
     editor(language.TrueLiteral) {
