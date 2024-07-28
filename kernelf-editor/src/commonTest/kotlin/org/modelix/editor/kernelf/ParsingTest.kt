@@ -47,6 +47,9 @@ class ParsingTest {
     @Test fun test16() = runExpressionTest("""isSome(10)""")
     @Test fun test17() = runExpressionTest("""if 10 > 20 then 15""")
     @Test fun test18() = runExpressionTest("""if 10 > 20 then 15 else 900""")
+    @Test fun test19() = runExpressionTest("""list(10, 20, 30)""")
+    @Test fun test20() = runExpressionTest("""list(10)""")
+    @Test fun test21() = runExpressionTest("""list<number>(10, 20, 30)""")
 
     private fun runExpressionTest(inputString: String) {
         val input = UnclassifiedToken(inputString)
