@@ -21,6 +21,7 @@ import org.modelix.editor.token.ParseResult
 import org.modelix.editor.token.UnclassifiedParseTreeNode
 import org.modelix.editor.token.diagonalFlatMap
 import org.modelix.editor.token.isBlank
+import org.modelix.editor.token.orEmpty
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IConcept
@@ -122,38 +123,32 @@ abstract class CellTemplate(val concept: IConcept) {
     }
 
     open fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
-        val symbols = getGrammarSymbols().toList()
-        if (symbols.isEmpty()) return emptySequence()
-
-        val symbolTriples = symbols.iterateTriples()
-        return symbolTriples.diagonalFlatMap { symbolTriple ->
-            match(symbolTriple, input, context)
-        }.recordParseResults(context, input)
+        return parseSymbolList(getGrammarSymbols().toList(), input, context)
     }
+}
+
+fun parseSymbolList(symbols: List<IGrammarSymbol>, input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+    if (symbols.isEmpty()) return emptySequence()
+
+    val symbolTriples = symbols.iterateTriples()
+    return symbolTriples.diagonalFlatMap { symbolTriple ->
+        match(symbolTriple, input, context)
+    }.recordParseResults(context, input)
 }
 
 fun match(symbols: SymbolTriple, input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
     return symbols.second.parse(input, context).diagonalFlatMap { centerResult ->
         val leftAndCenterResults = matchNext(centerResult, centerResult.before, symbols.first, context) { leftResult ->
             if (leftResult.after.isBlank()) {
-                ParseResult(
-                    leftResult.before,
-                    UnclassifiedParseTreeNode.createTree(leftResult.match, centerResult.match)!!,
-                    centerResult.after
-                )
+                leftResult + centerResult.dropBefore()
             } else {
                 null // additional unconsumed tokens between symbols -> no match
             }
         }
         leftAndCenterResults.diagonalFlatMap { leftAndCenterResult ->
             matchNext(leftAndCenterResult, leftAndCenterResult.after, symbols.third, context) { rightResult ->
-                check(rightResult.before.isBlank()) { "Not empty: " + rightResult.before }
                 if (rightResult.before.isBlank()) {
-                    ParseResult(
-                        leftAndCenterResult.before,
-                        UnclassifiedParseTreeNode.createTree(leftAndCenterResult.match, rightResult.match)!!,
-                        rightResult.after
-                    )
+                    leftAndCenterResult.dropAfter() + rightResult
                 } else {
                     null // additional unconsumed tokens between symbols -> no match
                 }
@@ -167,7 +162,7 @@ private fun matchNext(inputResult: ParseResult, siblingResult: IParseTreeNode?, 
         sequenceOf(inputResult)
     } else {
         symbols.iterateTriples().diagonalFlatMap {
-            match(it, siblingResult ?: UnclassifiedParseTreeNode(emptyList()), context).mapNotNull { onMatch(it) }
+            match(it, siblingResult.orEmpty(), context).mapNotNull { onMatch(it) }
         }
     }
 }

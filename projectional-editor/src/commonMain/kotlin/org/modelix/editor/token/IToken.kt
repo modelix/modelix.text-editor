@@ -64,7 +64,24 @@ class UnclassifiedParseTreeNode(override val children: List<IParseTreeNode>) : I
     }
 }
 
-data class ParseResult(val before: IParseTreeNode?, val match: IParseTreeNode, val after: IParseTreeNode?)
+fun IParseTreeNode?.orEmpty() = this ?: UnclassifiedParseTreeNode(emptyList())
+
+data class ParseResult(val before: IParseTreeNode?, val match: IParseTreeNode, val after: IParseTreeNode?) {
+    fun merge(right: ParseResult): ParseResult {
+        check(this.after.isBlank()) { "Unconsumed tokens: " + this.after }
+        check(right.before.isBlank()) { "Unconsumed tokens: " + this.before }
+        return ParseResult(
+            this.before,
+            UnclassifiedParseTreeNode.createTree(this.match, right.match)!!,
+            right.after
+        )
+    }
+
+    operator fun plus(right: ParseResult): ParseResult = merge(right)
+
+    fun dropBefore() = copy(before = null)
+    fun dropAfter() = copy(after = null)
+}
 
 fun IParseTreeNode?.isBlank(): Boolean {
     return when (this) {

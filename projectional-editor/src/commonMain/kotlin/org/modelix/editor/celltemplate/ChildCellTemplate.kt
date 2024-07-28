@@ -32,6 +32,10 @@ import org.modelix.editor.replacement
 import org.modelix.editor.toNonExisting
 import org.modelix.editor.token.IParseTreeNode
 import org.modelix.editor.token.ParseResult
+import org.modelix.editor.token.UnclassifiedParseTreeNode
+import org.modelix.editor.token.diagonalFlatMap
+import org.modelix.editor.token.isBlank
+import org.modelix.editor.token.orEmpty
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
@@ -194,6 +198,32 @@ class ChildCellTemplate(
     }
 
     override fun parse(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
+        return if (link.isMultiple) {
+            val separatorSymbols = separatorCell?.getGrammarSymbols()?.toList() ?: emptyList()
+            if (separatorSymbols.isNotEmpty()) {
+                parseSublist(input, separatorSymbols, context)
+            } else {
+                TODO("Lists without separator")
+            }
+        } else {
+            parseSingleChild(input, context)
+        }
+    }
+
+    private fun parseSublist(input: IParseTreeNode, separatorSymbols: List<IGrammarSymbol>, context: ParseContext): Sequence<ParseResult> {
+        return parseSymbolList(separatorSymbols, input, context).diagonalFlatMap { separatorMatch ->
+            parseSublist(separatorMatch.before.orEmpty(), separatorSymbols, context)
+                .mapNotNull { if (it.after.isBlank()) it + separatorMatch.dropBefore() else null }
+                .diagonalFlatMap { leftAndSeparator ->
+                    parseSublist(leftAndSeparator.after.orEmpty(), separatorSymbols, context).mapNotNull { right ->
+                        if (right.before.isBlank()) leftAndSeparator.dropAfter() + right else null
+                    }
+                }
+                .recordParseResults(context, input)
+        } + parseSingleChild(input, context)
+    }
+
+    private fun parseSingleChild(input: IParseTreeNode, context: ParseContext): Sequence<ParseResult> {
         return context.getEngine().parse(input, link.targetConcept, context)
     }
 

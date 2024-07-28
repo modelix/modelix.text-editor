@@ -4,6 +4,7 @@ import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.celltemplate.ParseContext
 import org.modelix.editor.celltemplate.RootParseContext
+import org.modelix.editor.token.ParseResult
 import org.modelix.editor.token.UnclassifiedToken
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
@@ -11,6 +12,8 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertTrue
+import kotlin.time.TimeSource
+import kotlin.time.measureTime
 
 class ParsingTest {
 
@@ -50,12 +53,22 @@ class ParsingTest {
     @Test fun test19() = runExpressionTest("""list(10, 20, 30)""")
     @Test fun test20() = runExpressionTest("""list(10)""")
     @Test fun test21() = runExpressionTest("""list<number>(10, 20, 30)""")
+    @Test fun test22() = runExpressionTest("""list(10, 20)""")
 
     private fun runExpressionTest(inputString: String) {
         val input = UnclassifiedToken(inputString)
         val outputConcept = L_org_iets3_core_expr_base.Expression.untyped()
         val context = RootParseContext(engine)
-        fun computeResult() = engine.parse(input, outputConcept, context).toList()
+        fun computeResult(): List<ParseResult> {
+            val start = TimeSource.Monotonic.markNow()
+            var first = true
+            return engine.parse(input, outputConcept, context).onEach {
+                if (first) {
+                    first = false
+                    println("First received after " + start.elapsedNow())
+                }
+            }.toList().also { println("Done after " + start.elapsedNow()) }
+        }
 
         val result = computeResult()
         // println(measureTime { computeResult() })
