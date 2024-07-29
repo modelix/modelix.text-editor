@@ -7,7 +7,7 @@ modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "mo
 
 [versions]
 modelixCore = "8.15.3"
-modelixBuildtools="1.7.1"
+modelixBuildtools="1.7.2"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
