@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath(libs.modelix.model.api)
-        classpath("com.charleskorn.kaml:kaml:0.60.0")
+        classpath("com.charleskorn.kaml:kaml:0.61.0")
     }
 }
 
