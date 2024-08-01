@@ -161,8 +161,12 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             else -> {
                 val typedText = event.typedText
                 if (!typedText.isNullOrEmpty()) {
-                    if (typedText == " " && event.modifiers == Modifiers.CTRL) {
-                        triggerCodeCompletion()
+                    if (typedText == " " && event.modifiers.ctrl) {
+                        if (event.modifiers.shift) {
+                            triggerParserCompletion()
+                        } else {
+                            triggerCodeCompletion()
+                        }
                     } else {
                         processTypedText(typedText, editor)
                     }
@@ -231,6 +235,40 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             anchor = layoutable,
             position = CompletionPosition.CENTER,
             entries = actionProviders,
+            pattern = layoutable.cell.getSelectableText() ?: "",
+            caretPosition = end,
+        )
+    }
+
+    fun triggerParserCompletion() {
+        val editor = checkNotNull(getEditor()) { "Not attached to any editor" }
+        val engine = checkNotNull(editor.engine) { "EditorEngine not available" }
+        val node = layoutable.cell.ancestors(true)
+            .mapNotNull { it.getProperty(CommonCellProperties.node) }.firstOrNull() ?: return
+        // TODO cell should have a provider for parser based completions
+        val context = NodeParseContext(RootParseContext(engine), node)
+        val text = layoutable.cell.getSelectableText() ?: "" // TODO include all cells of the node
+        val parseTrees = context.parse(UnclassifiedToken(text), node.expectedConcept()).let { AmbiguityParseTreeNode.unwrap(it) }
+        //    .filter { it.matchesWholeInput() }
+        val actions = parseTrees.map { it.toString() }.map {
+            object : ICodeCompletionAction {
+                override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+                    TODO("Not yet implemented")
+                }
+
+                override fun getMatchingText(): String {
+                    return it
+                }
+
+                override fun getDescription(): String {
+                    return ""
+                }
+            }
+        }.map { it.asProvider() }.toList()
+        editor.showCodeCompletionMenu(
+            anchor = layoutable,
+            position = CompletionPosition.CENTER,
+            entries = actions,
             pattern = layoutable.cell.getSelectableText() ?: "",
             caretPosition = end,
         )
