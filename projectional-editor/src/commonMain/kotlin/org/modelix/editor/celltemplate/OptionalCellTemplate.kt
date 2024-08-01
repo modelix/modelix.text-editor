@@ -7,6 +7,7 @@ import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.asProvider
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
@@ -52,5 +53,9 @@ class OptionalCellTemplate(concept: IConcept) :
 
     override fun getChildSymbols(): Sequence<IGrammarSymbol> {
         return getChildren().asSequence().flatMap { it.getGrammarSymbols() }
+    }
+
+    override fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider? {
+        return null
     }
 }
