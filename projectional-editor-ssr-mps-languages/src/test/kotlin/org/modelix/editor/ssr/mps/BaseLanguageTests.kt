@@ -452,4 +452,24 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             }
         """)
     }
+
+    private fun runParsingTest(input: String) {
+        placeCaretIntoCellWithText("<no statement>")
+
+        val layoutable = (editor.getSelection() as CaretSelection).layoutable
+        val node = layoutable.cell.ancestors(true)
+            .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
+        val context = NodeParseContext(RootParseContext(editorEngine), node)
+        val parseTrees = context.parse(UnclassifiedToken(input), node.expectedConcept())
+            .let { AmbiguityParseTreeNode.unwrap(it) }
+            .onEach { println(it) }
+        assertTrue(parseTrees.isNotEmpty())
+    }
+
+    fun `test statement parsing 1`() = runParsingTest("int a;")
+    fun `test statement parsing 2`() = runParsingTest("int a = 10 + 20;")
+    fun `test statement parsing 3`() = runParsingTest("return 10;")
+
+    fun `test statement parsing 4`() = runParsingTest("""for (int i = 0; i < 10; i++) { return i; }""")
+    fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello World!");""")
 }

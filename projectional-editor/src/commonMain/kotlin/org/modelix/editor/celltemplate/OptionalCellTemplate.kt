@@ -12,7 +12,7 @@ import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 
 class OptionalCellTemplate(concept: IConcept) :
-    CellTemplate(concept) {
+    CellTemplate(concept), IOptionalSymbol {
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData()
     }
@@ -48,5 +48,9 @@ class OptionalCellTemplate(concept: IConcept) :
 
     override fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
         return emptySequence()
+    }
+
+    override fun getChildSymbols(): Sequence<IGrammarSymbol> {
+        return getChildren().asSequence().flatMap { it.getGrammarSymbols() }
     }
 }

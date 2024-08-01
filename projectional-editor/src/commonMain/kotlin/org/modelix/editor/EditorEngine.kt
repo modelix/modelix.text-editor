@@ -39,6 +39,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
     private val createCellDataIncremental: (EditorState, INode) -> CellData = this.incrementalEngine.incrementalFunction("createCellData") { _, editorState, node ->
         val cellData = doCreateCellData(editorState, node)
+        cellData.properties[CommonCellProperties.node] = node.toNonExisting()
         cellData.freeze()
         LOG.trace { "Cell created for $node: $cellData" }
         cellData
@@ -67,6 +68,10 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
         val editor: ConceptEditor = resolveConceptEditor(concept).first()
         val template: CellTemplate = editor.apply(concept)
         return template
+    }
+
+    fun createCellModelExcludingDefault(concept: IConcept): CellTemplate? {
+        return resolveConceptEditor(concept).minus(defaultConceptEditor).firstOrNull()?.apply(concept)
     }
 
     fun editNode(node: INode, virtualDom: IVirtualDom = IVirtualDom.newInstance()): EditorComponent {
