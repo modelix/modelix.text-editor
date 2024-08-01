@@ -112,6 +112,23 @@
       <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
       <node concept="2OY0tg" id="CUW2QYKUQU" role="3JBHQ1">
         <node concept="2OY0tg" id="CUW2QYMX13" role="2OY0$2">
+          <node concept="1yhmst" id="4fer1Dvb9xR" role="2OY0$2">
+            <node concept="1yiDfa" id="4fer1Dvb9ys" role="1yhmsp">
+              <ref role="1yiDfm" to="tpee:h9B3oxE" resolve="visibility" />
+            </node>
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9wm" role="2OY0$2">
+            <property role="1yh6cl" value="static" />
+            <ref role="1yh6ct" to="tpee:4kvBDYi2RXX" resolve="isStatic" />
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9wO" role="2OY0$2">
+            <property role="1yh6cl" value="abstract" />
+            <ref role="1yh6ct" to="tpee:fDsVARU" resolve="abstractClass" />
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9xl" role="2OY0$2">
+            <property role="1yh6cl" value="final" />
+            <ref role="1yh6ct" to="tpee:hLEXba4" resolve="isFinal" />
+          </node>
           <node concept="3JB3jO" id="63DBII8q9Mk" role="2OY0$2">
             <property role="3JB3xJ" value="class" />
           </node>
@@ -1586,14 +1603,17 @@
         <node concept="3JB3jO" id="4cpiv6ohlhy" role="2OY0$2">
           <property role="3JB3xJ" value="static" />
         </node>
-        <node concept="2OYlUR" id="4cpiv6ohlhM" role="2OY0$2">
-          <ref role="2OYlZd" to="tpee:h7TUv0c" resolve="isFinal" />
+        <node concept="1yh6c9" id="6ZhxYwTcKo$" role="2OY0$2">
+          <property role="1yh6cl" value="final" />
+          <ref role="1yh6ct" to="tpee:h7TUv0c" resolve="isFinal" />
         </node>
-        <node concept="2OYlUR" id="4cpiv6ohli5" role="2OY0$2">
-          <ref role="2OYlZd" to="tpee:5B5vMVk$qSq" resolve="isTransient" />
+        <node concept="1yh6c9" id="6ZhxYwTcKp8" role="2OY0$2">
+          <property role="1yh6cl" value="transient" />
+          <ref role="1yh6ct" to="tpee:5B5vMVk$qSq" resolve="isTransient" />
         </node>
-        <node concept="2OYlUR" id="4cpiv6ohlip" role="2OY0$2">
-          <ref role="2OYlZd" to="tpee:5B5vMVk$r4J" resolve="isVolatile" />
+        <node concept="1yh6c9" id="6ZhxYwTcKpI" role="2OY0$2">
+          <property role="1yh6cl" value="volatile" />
+          <ref role="1yh6ct" to="tpee:5B5vMVk$r4J" resolve="isVolatile" />
         </node>
         <node concept="1yiDfa" id="4cpiv6ohliK" role="2OY0$2">
           <ref role="1yiDfm" to="tpee:4VkOLwjf83e" resolve="type" />
@@ -1633,7 +1653,10 @@
       <ref role="3JBHV4" to="tpee:h3qUExa" resolve="UpperBoundType" />
       <node concept="2OY0tg" id="4cpiv6ohnMV" role="3JBHQ1">
         <node concept="3JB3jO" id="4cpiv6ohnMX" role="2OY0$2">
-          <property role="3JB3xJ" value="? extends" />
+          <property role="3JB3xJ" value="?" />
+        </node>
+        <node concept="3JB3jO" id="6ZhxYwTcL6j" role="2OY0$2">
+          <property role="3JB3xJ" value="extends" />
         </node>
         <node concept="1yiDfa" id="4cpiv6ohnNl" role="2OY0$2">
           <ref role="1yiDfm" to="tpee:h3qUExb" resolve="bound" />
@@ -1644,7 +1667,10 @@
       <ref role="3JBHV4" to="tpee:h3qUtkX" resolve="LowerBoundType" />
       <node concept="2OY0tg" id="4cpiv6ohnNq" role="3JBHQ1">
         <node concept="3JB3jO" id="4cpiv6ohnNr" role="2OY0$2">
-          <property role="3JB3xJ" value="? super" />
+          <property role="3JB3xJ" value="?" />
+        </node>
+        <node concept="3JB3jO" id="6ZhxYwTcL6s" role="2OY0$2">
+          <property role="3JB3xJ" value="super" />
         </node>
         <node concept="1yiDfa" id="4cpiv6ohnNt" role="2OY0$2">
           <ref role="1yiDfm" to="tpee:h3qUv9r" resolve="bound" />

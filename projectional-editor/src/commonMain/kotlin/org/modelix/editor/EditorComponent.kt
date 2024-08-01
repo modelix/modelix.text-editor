@@ -146,6 +146,10 @@ open class EditorComponent(
         update()
     }
 
+    fun getCodeCompletionActions(): List<ICodeCompletionAction> {
+        return codeCompletionMenu?.getEntries() ?: emptyList()
+    }
+
     fun closeCodeCompletionMenu() {
         codeCompletionMenu = null
         update()

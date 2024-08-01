@@ -1,5 +1,8 @@
 package org.modelix.editor
 
+import org.modelix.model.api.INode
+import org.modelix.parser.ConstantSymbol
+import org.modelix.parser.IParseTreeNode
 import kotlin.math.max
 import kotlin.math.min
 
@@ -161,8 +164,12 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             else -> {
                 val typedText = event.typedText
                 if (!typedText.isNullOrEmpty()) {
-                    if (typedText == " " && event.modifiers == Modifiers.CTRL) {
-                        triggerCodeCompletion()
+                    if (typedText == " " && event.modifiers.ctrl) {
+                        if (event.modifiers.shift) {
+                            triggerParserCompletion()
+                        } else {
+                            triggerCodeCompletion()
+                        }
                     } else {
                         processTypedText(typedText, editor)
                     }
@@ -231,6 +238,54 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             anchor = layoutable,
             position = CompletionPosition.CENTER,
             entries = actionProviders,
+            pattern = layoutable.cell.getSelectableText() ?: "",
+            caretPosition = end,
+        )
+    }
+
+    fun triggerParserCompletion() {
+        val editor = checkNotNull(getEditor()) { "Not attached to any editor" }
+        val engine = checkNotNull(editor.engine) { "EditorEngine not available" }
+        val selectedNode = layoutable.cell.ancestors(true)
+            .mapNotNull { it.getProperty(CommonCellProperties.node) }.firstOrNull() ?: return
+        // TODO cell should have a provider for parser based completions
+        val text = layoutable.cell.getSelectableText() ?: "" // TODO include all cells of the node
+        val expectedConcept = selectedNode.expectedConcept() ?: return
+        var parseTrees: List<IParseTreeNode> = engine.parse(text, expectedConcept, false)
+        if (parseTrees.isEmpty()) parseTrees = engine.parse(text + ConstantSymbol.CARET.text, expectedConcept, true)
+        var asts: List<INode> = parseTrees
+            .flatMap { ParseTreeToAstBuilder.buildNodes(engine, it) }
+
+        var previousSize: Int
+        do {
+            previousSize = asts.size
+            asts = asts.flatMap { (it as IPendingNode).flattenFirstAmbiguousNode() }
+        } while (asts.size != previousSize && asts.size < 1000)
+
+            //.map { it.replaceAllAmbiguousWithFirst() as IPendingNode }
+        val actions = asts.map { ast ->
+            object : ICodeCompletionAction {
+                val rendered = engine.createCell(EditorState(), ast)
+                override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
+                    val newNode = editor.runWrite {
+                        (ast as IPendingNode).commit(selectedNode)
+                    }
+                    return CaretPositionPolicy(newNode)
+                }
+
+                override fun getMatchingText(): String {
+                    return rendered.layout.toString()
+                }
+
+                override fun getDescription(): String {
+                    return ""
+                }
+            }
+        }.map { it.asProvider() }.toList()
+        editor.showCodeCompletionMenu(
+            anchor = layoutable,
+            position = CompletionPosition.CENTER,
+            entries = actions,
             pattern = layoutable.cell.getSelectableText() ?: "",
             caretPosition = end,
         )

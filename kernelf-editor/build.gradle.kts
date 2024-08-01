@@ -67,6 +67,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation(project(":kernelf-apigen"))
+                implementation(project(":parser"))
             }
         }
         val jvmMain by getting {

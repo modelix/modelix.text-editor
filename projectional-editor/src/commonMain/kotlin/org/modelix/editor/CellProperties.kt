@@ -48,6 +48,7 @@ object CommonCellProperties {
     val selectable = CellPropertyKey<Boolean>("selectable", false)
     val codeCompletionText = CellPropertyKey<String?>("code-completion-text", null) // empty string hides the entry
     val isForceShown = CellPropertyKey<Boolean>("force-shown", false)
+    val node = CellPropertyKey<INonExistingNode?>("node", null) // set on the root cell of a node
 }
 
 fun Cell.isTabTarget() = getProperty(CommonCellProperties.tabTarget)

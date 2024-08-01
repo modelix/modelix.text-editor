@@ -12,6 +12,7 @@ import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.ICodeCompletionActionProvider
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.ReferenceTargetActionProvider
 import org.modelix.editor.ReferencedNodeCellReference
 import org.modelix.editor.TemplateCellReference
@@ -22,6 +23,9 @@ import org.modelix.editor.toNonExisting
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IReferenceLink
+import org.modelix.parser.ISymbol
+import org.modelix.parser.ReferenceSymbol
+import org.modelix.parser.Token
 import org.modelix.scopes.ScopeAspect
 
 class ReferenceCellTemplate(
@@ -29,6 +33,17 @@ class ReferenceCellTemplate(
     val link: IReferenceLink,
     val presentation: INode.() -> String?,
 ) : CellTemplate(concept), IGrammarSymbol {
+
+    override fun toParserSymbol(): ISymbol {
+        return ReferenceSymbol(link)
+    }
+
+    override fun consumeTokens(builder: IParseTreeToAstBuilder) {
+        val symbol = toParserSymbol()
+        val token = builder.consumeNextToken  { it is Token && it.symbol == symbol } ?: return
+        // TODO builder.currentNode().setReferenceTarget(link, TODO())
+    }
+
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val data = TextCellData(getText(node), "<no ${link.getSimpleName()}>")
         data.cellReferences += ReferencedNodeCellReference(node.reference, link)
