@@ -12,6 +12,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             noSpace()
             concept.value.cell {
                 placeholderText("")
+                validateValue { validateStringLiteral(it) }
             }
             noSpace()
             "\"".constant()
@@ -161,4 +162,63 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
         noSpace()
         concept.tolerance.cell()
     }
+}
+
+fun validateStringLiteral(value: String?): Boolean {
+    if (value == null) return true
+    var isEscapeMode = false
+    var isUnicodeMode = false
+    var isSymbolCodeMode = false
+    var digitNumber = 0
+    var unicodeDigitNumber = 0
+    for (element in value) {
+        val c: Char = element
+        if (isEscapeMode) {
+            if (c == 'u') {
+                isUnicodeMode = true
+            } else if (c.isDigit()) {
+                isSymbolCodeMode = true
+                digitNumber = 1
+            } else if (c != 'n' && c != 't' && c != 'b' && c != 'f' && c != 'r' && c != '"' && c != '\'' && c != '\\') {
+                return false
+            }
+            isEscapeMode = false
+        } else if (c == '\\') {
+            isEscapeMode = true
+        } else if (isSymbolCodeMode) {
+            if (c.isDigit()) {
+                digitNumber++
+            } else {
+                return false
+            }
+            if (digitNumber == 3) {
+                isSymbolCodeMode = false
+                digitNumber = 0
+            }
+        } else if (isUnicodeMode) {
+            if (c.isDigit() || isHexChar(c)) {
+                unicodeDigitNumber++
+            } else {
+                return false
+            }
+            if (unicodeDigitNumber == 4) {
+                isUnicodeMode = false
+                unicodeDigitNumber = 0
+            }
+        } else if (c == '"') {
+            return false
+        }
+    }
+    if (isEscapeMode || isUnicodeMode) {
+        return false
+    }
+    return true
+}
+
+private fun isHexChar(ch: Char): Boolean {
+    if (ch.isDigit()) {
+        return true
+    }
+    val lc = ch.lowercaseChar()
+    return lc in 'a'..'f'
 }
