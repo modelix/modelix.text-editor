@@ -80,6 +80,7 @@ kotlin {
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
+                implementation(coreLibs.logback.classic)
             }
         }
         val jsMain by getting {
