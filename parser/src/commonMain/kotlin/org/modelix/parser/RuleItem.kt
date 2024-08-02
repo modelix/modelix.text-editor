@@ -7,10 +7,13 @@ data class RuleItem(val positionInRule: PositionInRule, val lookaheads: Set<ITer
 
     fun nextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor)
     fun nextNextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor + 1)
-    fun forward() = RuleItem(rule, cursor + 1, lookaheads).takeIf { cursor < rule.symbols.size }
+    fun forward() = if (cursor < rule.symbols.size) RuleItem(rule, cursor + 1, lookaheads) else null
     fun isComplete() = nextSymbol() == null
     fun size() = rule.symbols.size
-    fun withAdditionalLookaheads(additional: Iterable<ITerminalSymbol>) = RuleItem(rule, cursor, lookaheads + additional)
+    fun withAdditionalLookaheads(additional: Collection<ITerminalSymbol>): RuleItem {
+        if (additional.isEmpty()) return this
+        return RuleItem(rule, cursor, lookaheads + additional)
+    }
 
     fun isSameIgnoringLookaheads(other: RuleItem) = other.rule == rule && other.cursor == cursor
 
@@ -30,14 +33,13 @@ data class RuleItem(val positionInRule: PositionInRule, val lookaheads: Set<ITer
 
         other as RuleItem
 
-        if (rule != other.rule) return false
-        if (cursor != other.cursor) return false
+        if (positionInRule != other.positionInRule) return false
         if (lookaheads != other.lookaheads) return false
 
         return true
     }
 
-    private val cachedHashCode = arrayOf(rule, cursor, lookaheads).contentHashCode()
+    private val cachedHashCode = arrayOf(positionInRule, lookaheads).contentHashCode()
     override fun hashCode(): Int = cachedHashCode
 }
 

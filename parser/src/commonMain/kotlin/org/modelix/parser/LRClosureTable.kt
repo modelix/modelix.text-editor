@@ -36,8 +36,13 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
             oldSize = kernel.closure.size
             val newItems = kernel.closure.flatMap { it.newItemsFromSymbolAfterDot(grammar) }
             if (newItems.isEmpty()) break
-            val newClosure = kernel.closure.asSequence().plus(newItems).groupBy { it.positionInRule }
-                .map { RuleItem(it.key, it.value.asSequence().flatMap { it.lookaheads }.toSet()) }.toList()
+            val newClosure = kernel.closure.asSequence().plus(newItems).groupBy { it.positionInRule }.map { group ->
+                if (group.value.size == 1) {
+                    group.value.first()
+                } else {
+                    RuleItem(group.key, group.value.asSequence().flatMap { it.lookaheads }.toSet())
+                }
+            }.toList()
             kernel.closure = newClosure
         }
     }
