@@ -15,7 +15,7 @@ data class RuleItem(val positionInRule: PositionInRule, val lookaheads: Set<ITer
         return RuleItem(rule, cursor, lookaheads + additional)
     }
 
-    fun isSameIgnoringLookaheads(other: RuleItem) = other.rule == rule && other.cursor == cursor
+    fun isSameIgnoringLookaheads(other: RuleItem) = other.positionInRule == positionInRule
 
     override fun toString(): String {
         return rule.head.toString() +
