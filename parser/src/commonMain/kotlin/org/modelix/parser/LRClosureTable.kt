@@ -34,10 +34,45 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
 
         while (kernel.closure.size > oldSize) {
             oldSize = kernel.closure.size
-            val newItems = kernel.closure.flatMap { it.newItemsFromSymbolAfterDot(grammar) }
-            if (newItems.isEmpty()) break
-            val newClosure = kernel.closure.asSequence().plus(newItems).mergeLookaheads()
-            kernel.closure = newClosure
+
+            kernel.closure.values.asSequence()
+                .map {
+                    Triple(
+                        it.nextSymbol() as? INonTerminalSymbol,
+                        it.nextNextSymbol(),
+                        it.lookaheadSet
+                    )
+                }
+                .filter { it.first != null }
+                .groupBy { it.first }
+                .forEach { group ->
+                    val rules = grammar.getRulesOfSubConcepts(group.key!!)
+                    val lookaheads = group.value.asSequence().flatMap { triple ->
+                        val nextNextSymbol = triple.second
+                        var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {
+                            null -> setOf(EmptySymbol)
+                            is ITerminalSymbol -> setOf<ITerminalSymbol>(nextNextSymbol)
+                            is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol)
+                            is OptionalSymbol -> error("Should have been expanded into multiple rules")
+                            GoalSymbol -> TODO()
+                            else -> TODO()
+                        }
+                        if (newLookaheads.contains(EmptySymbol)) {
+                            newLookaheads = newLookaheads - EmptySymbol + triple.third.terminals
+                        }
+                        newLookaheads
+                    }.toSet()
+
+                    for (rule in rules) {
+                        val positionInRule = PositionInRule(0, rule)
+                        val existing = kernel.closure[positionInRule]
+                        kernel.closure[positionInRule] = if (existing == null) {
+                            RuleItem(positionInRule, LookaheadSet(lookaheads).deduplicate())
+                        } else {
+                            RuleItem(existing.positionInRule, (existing.lookaheadSet + lookaheads).deduplicate())
+                        }
+                    }
+                }
         }
     }
 
@@ -45,7 +80,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
         var lookAheadsPropagated = false
         val newKernels = LinkedHashMap<ISymbol, Set<RuleItem>>()
 
-        for (item in kernel.closure) {
+        for (item in kernel.closure.values) {
             val newItem: RuleItem? = item.forward()
             if (newItem != null) {
                 val symbolAfterDot = item.nextSymbol()!!
@@ -69,41 +104,18 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
         return lookAheadsPropagated
     }
 
-    private val ruleItemInstances = ObjectInterning<RuleItem>()
-    private fun RuleItem.deduplicate() = this // ruleItemInstances.deduplicate(this)
-
-    private val ruleItemSetInstances = ObjectInterning<Set<RuleItem>>()
-    private fun Set<RuleItem>.deduplicate() = this // if (size <= 5) ruleItemSetInstances.deduplicate(this) else this
-
     private val lookaheadSetInstances = ObjectInterning<LookaheadSet>()
-    private fun Set<ITerminalSymbol>.toLookaheadSet() = LookaheadSet(this).deduplicateLookahead()
-    private fun LookaheadSet.deduplicateLookahead() = lookaheadSetInstances.deduplicate(this)
+    private fun Set<ITerminalSymbol>.toLookaheadSet() = LookaheadSet(this).deduplicate()
+    private fun LookaheadSet.deduplicate() = lookaheadSetInstances.deduplicate(this)
 
     private fun Sequence<RuleItem>.mergeLookaheads(): Set<RuleItem> {
         return this.groupBy { it.positionInRule }.map { group ->
             if (group.value.size == 1) {
                 group.value.first()
             } else {
-                RuleItem(group.key, group.value.asSequence().flatMap { it.lookaheadSet.terminals }.toSet().toLookaheadSet()).deduplicate()
+                RuleItem(group.key, group.value.asSequence().flatMap { it.lookaheadSet.terminals }.toSet().toLookaheadSet())
             }
-        }.toSet().deduplicate()
-    }
-
-    private fun RuleItem.newItemsFromSymbolAfterDot(grammar: Grammar): List<RuleItem> {
-        val nextConcept = this.nextSymbol() as? INonTerminalSymbol ?: return emptyList()
-        val nextNextSymbol = nextNextSymbol()
-        var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {
-            null -> setOf(EmptySymbol)
-            is ITerminalSymbol -> setOf<ITerminalSymbol>(nextNextSymbol)
-            is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol)
-            is OptionalSymbol -> error("Should have been expanded into multiple rules")
-            GoalSymbol -> TODO()
-            else -> TODO()
-        }
-        if (newLookaheads.contains(EmptySymbol)) {
-            newLookaheads = newLookaheads - EmptySymbol + this.lookaheadSet.terminals
-        }
-        return grammar.getRulesOfSubConcepts(nextConcept).map { RuleItem(it, 0, newLookaheads.toLookaheadSet()).deduplicate() }
+        }.toSet()
     }
 
     inner class KernelsList : Iterable<Kernel> {
@@ -122,7 +134,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
         }
 
         fun newKernel(items: Set<RuleItem>): Kernel {
-            val kernel = Kernel(kernelsList.size, items.deduplicate())
+            val kernel = Kernel(kernelsList.size, items)
             kernelsList.add(kernel)
             kernelsMap[items] = kernel
             return kernel
@@ -136,7 +148,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
     }
 
     class Kernel(val index: Int, var items: Set<RuleItem>) {
-        var closure: Set<RuleItem> = items
+        var closure: MutableMap<PositionInRule, RuleItem> = items.associateBy { it.positionInRule }.toMutableMap()
         val gotos: MutableMap<ISymbol, Int> = LinkedHashMap()
         val keys: MutableSet<ISymbol> = LinkedHashSet()
     }
