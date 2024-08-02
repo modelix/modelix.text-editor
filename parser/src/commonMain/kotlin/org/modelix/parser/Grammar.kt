@@ -1,13 +1,21 @@
 package org.modelix.parser
 
-class Grammar(val originalRules: List<ProductionRule>) {
-    private val rulesWithoutOptionals = originalRules.flatMap { it.expandOptionals() }.toMutableList()
+class Grammar(originalRules: List<ProductionRule> = emptyList()) {
+    private val rules = ArrayList<ProductionRule>()
 
     init {
-        val listSymbols = rulesWithoutOptionals.asSequence().flatMap { it.symbols }.filterIsInstance<ListSymbol>().toSet()
+        originalRules.forEach { addRule(it) }
+    }
+
+    fun addRule(rule: ProductionRule) {
+        val newRules = rule.expandOptionals()
+        check(newRules.all { it.symbols.filterIsInstance<OptionalSymbol>().isEmpty() })
+        rules += newRules
+
+        val listSymbols = newRules.asSequence().flatMap { it.symbols }.filterIsInstance<ListSymbol>().toSet()
         for (listSymbol in listSymbols) {
-            rulesWithoutOptionals += ProductionRule(listSymbol, listSymbol.item)
-            rulesWithoutOptionals += ProductionRule(listSymbol, listSymbol.item, listSymbol.separator, listSymbol)
+            rules += ProductionRule(listSymbol, listSymbol.item)
+            rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
         }
     }
 
@@ -55,7 +63,7 @@ class Grammar(val originalRules: List<ProductionRule>) {
     private val rulesOfSubConceptsCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
     fun getRulesOfSubConcepts(superConcept: INonTerminalSymbol): List<ProductionRule> {
         return rulesOfSubConceptsCache.getOrPut(superConcept) {
-            rulesWithoutOptionals.filter { it.head.isSubtypeOf(superConcept) }
+            rules.filter { it.head.isSubtypeOf(superConcept) }
         }
     }
 }

@@ -21,12 +21,19 @@ import org.modelix.editor.toNonExisting
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
+import org.modelix.parser.ISymbol
+import org.modelix.parser.PropertySymbol
 
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarConditionSymbol {
     var placeholderText: String = "<no ${property.getSimpleName()}>"
     var validator: ((String) -> Boolean)? = null
     var regex: Regex? = null
+
+    override fun toParserSymbol(): ISymbol {
+        return PropertySymbol(regex)
+    }
+
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val value = node.getPropertyValue(property)
         val data = TextCellData(value ?: "", if (value == null) placeholderText else "")

@@ -1,5 +1,6 @@
 package org.modelix.parser
 
+import org.modelix.model.api.IConcept
 import org.modelix.model.data.associateWithNotNull
 
 class LRParser(val table: LRTable) {
@@ -55,7 +56,6 @@ class LRParser(val table: LRTable) {
         }
 
         error("Invalid input: $input")
-        return stack[1].getToken()
     }
 
     private fun chooseActionForTrimmedInput(state: LRState): Pair<LRAction, IToken>? {
@@ -66,8 +66,13 @@ class LRParser(val table: LRTable) {
 
     private fun chooseActionForInput(state: LRState): Pair<LRAction, IToken>? {
         val applicableActions: Map<MutableMap.MutableEntry<ISymbol, MutableSet<LRAction>>, IToken> =
-            state.actions.entries.filter { it.value.isNotEmpty() }.associateWithNotNull { symbol ->
-                matchInput(symbol.key)
+            state.actions.entries.filter { it.value.isNotEmpty() }.associateWithNotNull { action ->
+                val followingState = action.value.asSequence()
+                    .filterIsInstance<ShiftAction>()
+                    .map { it.nextState }
+                    .map { table.states[it] }
+                    .firstOrNull()
+                matchInput(action.key, followingState)
             }
 
         // TODO resolve conflicts based on operator precedence
@@ -76,7 +81,7 @@ class LRParser(val table: LRTable) {
             .firstOrNull()
     }
 
-    private fun matchInput(symbol: ISymbol): IToken? {
+    private fun matchInput(symbol: ISymbol, followingState: LRState?): IToken? {
         return when (symbol) {
             is ConstantSymbol -> {
                 if (unconsumedInput.startsWith(symbol.text)) {
@@ -90,11 +95,23 @@ class LRParser(val table: LRTable) {
                 if (unconsumedInput.isEmpty()) EndOfInputToken else null
             }
             is PropertySymbol -> {
-                val regex = symbol.regex!!
-                val match = regex.matchAt(unconsumedInput, 0)
-                if (match != null) {
-                    check(match.range.first == 0)
-                    PropertyToken(match.value)
+                val regex = symbol.regex
+                if (regex != null) {
+                    val match = regex.matchAt(unconsumedInput, 0)
+                    if (match != null) {
+                        check(match.range.first == 0)
+                        PropertyToken(match.value)
+                    } else {
+                        null
+                    }
+                } else if (followingState != null) {
+                    val followingConstants = followingState.actions.keys.filterIsInstance<ConstantSymbol>().map { it.text }
+                    val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
+                    if (nextConstantPos != null) {
+                        PropertyToken(unconsumedInput.substring(0, nextConstantPos))
+                    } else {
+                        null
+                    }
                 } else {
                     null
                 }
@@ -103,7 +120,6 @@ class LRParser(val table: LRTable) {
             is INonTerminalSymbol -> null
             is OptionalSymbol -> error("Should have been expanded into multiple rules")
             GoalSymbol -> TODO()
-            else -> TODO()
         }
     }
 
@@ -118,4 +134,10 @@ class LRParser(val table: LRTable) {
             return if (isToken()) getToken().toString() else "[" + getState().toString() + "]"
         }
     }
+}
+
+fun Grammar.createParser(startConcept: IConcept): LRParser {
+    val closureTable = LRClosureTable(grammar = this, startConcept = startConcept).also { it.load() }
+    val parsingTable = LRTable().also { it.load(closureTable) }
+    return LRParser(parsingTable)
 }

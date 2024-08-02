@@ -51,7 +51,7 @@ data class NodeSymbol(val concept: IConcept) : INonTerminalSymbol {
 }
 data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
     override fun toString(): String {
-        return "reference[->$targetConcept]"
+        return "reference[->${targetConcept.getShortName()}]"
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
@@ -73,7 +73,7 @@ data class PropertySymbol(val regex: Regex?) : ITerminalSymbol {
 }
 data object EndOfInputSymbol : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
-        TODO("Not yet implemented")
+        return token == EndOfInputToken
     }
 
     override fun toString(): String {
@@ -85,7 +85,7 @@ data object EndOfInputSymbol : ITerminalSymbol {
 
 data object EmptySymbol : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
-        TODO("Not yet implemented")
+        return token == EmptyToken
     }
 
     override fun toString(): String {
@@ -99,12 +99,15 @@ fun List<ISymbol>.expandOptionals(): List<List<ISymbol>> {
     val symbols = this
     val index = symbols.indexOfLast { it is OptionalSymbol }
     if (index == -1) return listOf(this)
-    return (symbols[index] as OptionalSymbol).children.expandOptionals()
-        .map { symbols.take(index) + it + symbols.drop(index + 1) } +
-        listOf(symbols.take(index) + symbols.drop(index + 1))
+
+    val after = symbols.drop(index + 1)
+    return symbols.take(index).expandOptionals().flatMap { before ->
+        (symbols[index] as OptionalSymbol).children
+            .expandOptionals().map { before + it + after } + listOf(before + after)
+    }
 }
 
-data class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
+class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
     constructor(head: ISymbol, vararg symbols: ISymbol) : this(head, symbols.toList())
     fun expandOptionals() = symbols.expandOptionals().map { ProductionRule(head, it) }
 
@@ -121,7 +124,7 @@ data object GoalSymbol : ISymbol {
     override fun matches(token: IParseTreeNode): Boolean = false
 }
 
-data class ListSymbol(val item: ISymbol, val separator: ITerminalSymbol) : INonTerminalSymbol {
+data class ListSymbol(val item: ISymbol, val separator: ITerminalSymbol?) : INonTerminalSymbol {
     override fun toString(): String = "list<$item>"
     override fun isSubtypeOf(superType: ISymbol): Boolean {
         return superType == this

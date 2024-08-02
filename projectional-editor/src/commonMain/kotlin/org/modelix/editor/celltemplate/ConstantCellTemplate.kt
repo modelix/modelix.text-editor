@@ -18,10 +18,15 @@ import org.modelix.editor.withMatchingText
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
+import org.modelix.parser.ConstantSymbol
+import org.modelix.parser.ISymbol
 
-class ConstantCellTemplate(concept: IConcept, val text: String) :
-    CellTemplate(concept), IGrammarSymbol {
+class ConstantCellTemplate(concept: IConcept, val text: String) : CellTemplate(concept), IGrammarSymbol {
+
+    override fun toParserSymbol(): ISymbol = ConstantSymbol(text)
+
     override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
+
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return listOf(InstantiateNodeCompletionAction(text, concept, location))
     }

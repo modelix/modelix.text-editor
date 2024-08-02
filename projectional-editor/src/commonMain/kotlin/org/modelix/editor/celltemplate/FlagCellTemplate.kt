@@ -12,12 +12,18 @@ import org.modelix.editor.toNonExisting
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
+import org.modelix.parser.ConstantSymbol
+import org.modelix.parser.ISymbol
+import org.modelix.parser.OptionalSymbol
 
 class FlagCellTemplate(
     concept: IConcept,
     property: IProperty,
     val text: String,
 ) : PropertyCellTemplate(concept, property), IGrammarSymbol {
+
+    override fun toParserSymbol(): ISymbol = OptionalSymbol(ConstantSymbol(text))
+
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         if (node.getPropertyValue(property) == "true") return TextCellData(text, "")
 

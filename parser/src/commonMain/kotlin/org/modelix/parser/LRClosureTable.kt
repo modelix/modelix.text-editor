@@ -3,15 +3,15 @@ package org.modelix.parser
 import org.modelix.model.api.IConcept
 
 class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
-    val kernels: MutableList<Kernel> = ArrayList()
+    val kernels = KernelsList()
 
     fun load() {
         val goal = ProductionRule(GoalSymbol, listOf(NodeSymbol(startConcept)))
-        kernels.add(Kernel(0, mutableListOf(RuleItem(goal, 0, setOf(EndOfInputSymbol)))))
+        kernels.newKernel(mutableSetOf(RuleItem(goal, 0, setOf(EndOfInputSymbol))))
 
         var i = 0
-        while (i < kernels.size) {
-            val kernel = kernels[i]
+        while (i < kernels.size()) {
+            val kernel = kernels.getByIndex(i)
 
             updateClosure(kernel)
 
@@ -22,56 +22,66 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
             }
         }
 
-        for (kernel in kernels.iterateGrowingList()) {
-            updateClosure(kernel)
+        i = 0
+        while (i < kernels.size()) {
+            updateClosure(kernels.getByIndex(i))
+            i++
         }
     }
 
-    fun updateClosure(kernel: Kernel) {
-        for (item in kernel.closure.iterateGrowingList()) {
+    fun updateClosure(kernel: KernelsList.Kernel) {
+        for (item in kernel.closure.iterateGrowingSet()) {
             for (newItem in item.newItemsFromSymbolAfterDot(grammar)) {
                 newItem.addUniqueTo(kernel.closure)
             }
         }
     }
 
-    fun addGotos(kernel: Kernel): Boolean {
+    fun addGotos(kernel: KernelsList.Kernel): Boolean {
         var lookAheadsPropagated = false
-        val newKernels = LinkedHashMap<ISymbol, MutableList<RuleItem>>()
+        val newKernels = LinkedHashMap<ISymbol, MutableSet<RuleItem>>()
 
         for (item in kernel.closure) {
             val newItem: RuleItem? = item.forward()
             if (newItem != null) {
                 val symbolAfterDot = item.nextSymbol()
                 kernel.keys.add(symbolAfterDot!!)
-                val items = newKernels.getOrPut(symbolAfterDot) { ArrayList() }
+                val items = newKernels.getOrPut(symbolAfterDot) { LinkedHashSet() }
                 newItem.addUniqueTo(items)
             }
         }
 
         for (key in kernel.keys) {
-            val newKernel = Kernel(kernels.size, newKernels[key]!!.toSet().toMutableList())
-            var targetKernelIndex = kernels.indexOfFirst { newKernel.items.toSet() == it.items.toSet() }
-            if (targetKernelIndex < 0) {
-                kernels.add(newKernel)
-                targetKernelIndex = newKernel.index
+            val newItems = newKernels[key]!!.toMutableSet()
+            var targetKernel = kernels.getByItems(newItems)
+            if (targetKernel == null) {
+                val newKernel = kernels.newKernel(newItems)
+                targetKernel = newKernel
             } else {
-                for (item in newKernel.items) {
-                    lookAheadsPropagated = lookAheadsPropagated || item.addUniqueTo(kernels[targetKernelIndex].items)
+                for (item in newItems) {
+                    lookAheadsPropagated = lookAheadsPropagated || item.addUniqueTo(targetKernel.items, { _, item, lookaheads ->
+                        kernels.addLookaheads(targetKernel, item, lookaheads)
+                    })
                 }
             }
-            kernel.gotos[key] = targetKernelIndex
+            kernel.gotos[key] = targetKernel.index
         }
 
         return lookAheadsPropagated
     }
 }
 
-fun RuleItem.addUniqueTo(items: MutableList<RuleItem>): Boolean {
-    for ((index, item) in items.withIndex()) {
+fun RuleItem.addUniqueTo(
+    items: MutableSet<RuleItem>,
+    updateLookaheads: (MutableSet<RuleItem>, RuleItem, Set<ITerminalSymbol>) -> Unit = { items, item, lookaheads ->
+        items.remove(item)
+        items.add(item.withAdditionalLookaheads(this.lookaheads))
+    },
+): Boolean {
+    for (item in items.toList()) {
         if (this.withoutLookaheads() == item.withoutLookaheads()) {
             if (item.lookaheads != this.lookaheads) {
-                items[index] = item.withAdditionalLookaheads(this.lookaheads)
+                updateLookaheads(items, item, this.lookaheads)
                 return true
             } else {
                 return false
@@ -88,7 +98,7 @@ fun RuleItem.newItemsFromSymbolAfterDot(grammar: Grammar): List<RuleItem> {
     var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {
         null -> setOf(EmptySymbol)
         is ITerminalSymbol -> setOf<ITerminalSymbol>(nextNextSymbol)
-        is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextConcept).filterIsInstance<ITerminalSymbol>().toSet()
+        is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol).filterIsInstance<ITerminalSymbol>().toSet()
         is OptionalSymbol -> error("Should have been expanded into multiple rules")
         GoalSymbol -> TODO()
         else -> TODO()
@@ -99,13 +109,42 @@ fun RuleItem.newItemsFromSymbolAfterDot(grammar: Grammar): List<RuleItem> {
     return grammar.getRulesOfSubConcepts(nextConcept).map { RuleItem(it, 0, newLookaheads) }
 }
 
-class Kernel(val index: Int, val items: MutableList<RuleItem>) {
-    val closure: MutableList<RuleItem> = items.toMutableList()
-    val gotos: MutableMap<ISymbol, Int> = LinkedHashMap()
-    val keys: MutableSet<ISymbol> = LinkedHashSet()
+class KernelsList : Iterable<KernelsList.Kernel> {
+    private val kernelsList = ArrayList<Kernel>()
+    private val kernelsMap: MutableMap<Set<RuleItem>, Kernel> = LinkedHashMap()
+
+    override fun iterator(): Iterator<Kernel> = kernelsList.iterator()
+
+    fun addLookaheads(kernel: Kernel, item: RuleItem, additionalLookaheads: Set<ITerminalSymbol>) {
+        if (additionalLookaheads.minus(item.lookaheads).isEmpty()) return
+        kernelsMap.remove(kernel.items)
+        kernel.items.remove(item)
+        kernel.items.add(item.withAdditionalLookaheads(additionalLookaheads))
+        kernelsMap[kernel.items] = kernel
+    }
+
+    fun newKernel(items: MutableSet<RuleItem>): Kernel {
+        val kernel = Kernel(kernelsList.size, items)
+        kernelsList.add(kernel)
+        kernelsMap[items] = kernel
+        return kernel
+    }
+
+    fun size() = kernelsList.size
+
+    fun getByIndex(index: Int) = kernelsList[index]
+
+    fun getByItems(items: Set<RuleItem>) = kernelsMap[items]
+
+    class Kernel(val index: Int, val items: MutableSet<RuleItem>) {
+        val closure: MutableSet<RuleItem> = items.toMutableSet()
+        val gotos: MutableMap<ISymbol, Int> = LinkedHashMap()
+        val keys: MutableSet<ISymbol> = LinkedHashSet()
+    }
 }
 
 fun <T> List<T>.iterateGrowingList(): Iterator<T> = GrowingListIterator<T>(this)
+fun <T> Set<T>.iterateGrowingSet(): Iterator<T> = GrowingSetIterator<T>(this)
 
 class GrowingListIterator<E>(private val list: List<E>) : Iterator<E> {
     private var i = 0
@@ -115,5 +154,16 @@ class GrowingListIterator<E>(private val list: List<E>) : Iterator<E> {
 
     override fun next(): E {
         return list[i++]
+    }
+}
+
+class GrowingSetIterator<E>(private val set: Set<E>) : Iterator<E> {
+    private var i = 0
+    override fun hasNext(): Boolean {
+        return i < set.size
+    }
+
+    override fun next(): E {
+        return set.asSequence().drop(i++).first()
     }
 }
