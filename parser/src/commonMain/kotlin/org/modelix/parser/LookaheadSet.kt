@@ -12,4 +12,14 @@ class LookaheadSet(val terminals: Set<ITerminalSymbol>) {
 
         return terminals == other.terminals
     }
+
+    operator fun plus(additional: LookaheadSet): LookaheadSet {
+        return plus(additional.terminals)
+    }
+
+    operator fun plus(additional: Set<ITerminalSymbol>): LookaheadSet {
+        val newSet = terminals + additional
+        if (newSet.size == terminals.size) return this
+        return LookaheadSet(newSet)
+    }
 }

@@ -14,7 +14,7 @@ class LRTable() {
                 state.actions.getOrPut(key) { LinkedHashSet() }.add(action)
             }
 
-            for (item in kernel.closure) {
+            for (item in kernel.closure.values) {
                 if (item.isComplete()) {
                     for (lookahead in item.lookaheadSet.terminals) {
                         state.actions.getOrPut(lookahead) { LinkedHashSet() }
