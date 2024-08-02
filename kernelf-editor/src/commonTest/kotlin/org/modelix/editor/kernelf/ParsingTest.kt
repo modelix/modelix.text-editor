@@ -77,6 +77,9 @@ class ParsingTest {
 
     @Test fun test24() = runExpressionTest("""[10, 20, 30]""")
 
+    @Test fun test25() = runExpressionTest("""val abc: opt<number> = none""")
+    @Test fun test26() = runExpressionTest("""val abc: (number, string => number) = none""")
+
     @Test fun printExcludedConcepts() {
         runExpressionTest("1")
         excludedConcepts.forEach { println("""L_${it.language!!.getName().replace(".", "_")}.${it.getShortName()}.untyped(),""") }
@@ -397,10 +400,10 @@ class ParsingTest {
 
             val cellModel = engine.createCellModelExcludingDefault(concept) ?: return
 
-            if (!includedConcepts.contains(concept)) {
-                excludedConcepts.add(concept)
-                return
-            }
+//            if (!includedConcepts.contains(concept)) {
+//                excludedConcepts.add(concept)
+//                return
+//            }
 
             val canContainBaseConcept = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>()
                 .any { it.link.targetConcept.getDirectSuperConcepts().isEmpty() }
