@@ -8,7 +8,10 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     }
 
     fun addRule(rule: ProductionRule) {
-        val newRules = rule.expandOptionals()
+        val filteredSymbols = filterSymbols(rule.symbols)
+        if (filteredSymbols.isEmpty()) return
+
+        val newRules = ProductionRule(rule.head, filteredSymbols).expandOptionals()
         check(newRules.all { it.symbols.filterIsInstance<OptionalSymbol>().isEmpty() })
         rules += newRules
 
@@ -16,6 +19,16 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         for (listSymbol in listSymbols) {
             rules += ProductionRule(listSymbol, listSymbol.item)
             rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
+        }
+    }
+
+    private fun filterSymbols(symbols: List<ISymbol>): List<ISymbol> {
+        return symbols.mapNotNull { symbol ->
+            when (symbol) {
+                is ConstantSymbol -> symbol.takeIf { it.text.isNotBlank() }
+                is OptionalSymbol -> OptionalSymbol(filterSymbols(symbol.children))
+                else -> symbol
+            }
         }
     }
 
