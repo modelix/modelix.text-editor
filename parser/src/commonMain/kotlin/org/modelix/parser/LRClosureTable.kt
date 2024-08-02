@@ -7,7 +7,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
 
     fun load() {
         val goal = ProductionRule(GoalSymbol, listOf(NodeSymbol(startConcept)))
-        kernels.newKernel(mutableSetOf(RuleItem(goal, 0, setOf(EndOfInputSymbol))))
+        kernels.newKernel(mutableSetOf(RuleItem(goal, 0, setOf(EndOfInputSymbol).toLookaheadSet())))
 
         var i = 0
         while (i < kernels.size()) {
@@ -70,20 +70,21 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
     }
 
     private val ruleItemInstances = ObjectInterning<RuleItem>()
-    private fun RuleItem.deduplicate() = ruleItemInstances.deduplicate(this)
+    private fun RuleItem.deduplicate() = this // ruleItemInstances.deduplicate(this)
 
     private val ruleItemSetInstances = ObjectInterning<Set<RuleItem>>()
-    private fun Set<RuleItem>.deduplicate() = ruleItemSetInstances.deduplicate(this)
+    private fun Set<RuleItem>.deduplicate() = this // if (size <= 5) ruleItemSetInstances.deduplicate(this) else this
 
-    private val lookaheadSetInstances = ObjectInterning<Set<ITerminalSymbol>>()
-    private fun Set<ITerminalSymbol>.deduplicateLookahead() = lookaheadSetInstances.deduplicate(this)
+    private val lookaheadSetInstances = ObjectInterning<LookaheadSet>()
+    private fun Set<ITerminalSymbol>.toLookaheadSet() = LookaheadSet(this).deduplicateLookahead()
+    private fun LookaheadSet.deduplicateLookahead() = lookaheadSetInstances.deduplicate(this)
 
     private fun Sequence<RuleItem>.mergeLookaheads(): Set<RuleItem> {
         return this.groupBy { it.positionInRule }.map { group ->
             if (group.value.size == 1) {
                 group.value.first()
             } else {
-                RuleItem(group.key, group.value.asSequence().flatMap { it.lookaheads }.toSet().deduplicateLookahead())
+                RuleItem(group.key, group.value.asSequence().flatMap { it.lookaheadSet.terminals }.toSet().toLookaheadSet()).deduplicate()
             }
         }.toSet().deduplicate()
     }
@@ -100,9 +101,9 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
             else -> TODO()
         }
         if (newLookaheads.contains(EmptySymbol)) {
-            newLookaheads = newLookaheads - EmptySymbol + this.lookaheads
+            newLookaheads = newLookaheads - EmptySymbol + this.lookaheadSet.terminals
         }
-        return grammar.getRulesOfSubConcepts(nextConcept).map { RuleItem(it, 0, newLookaheads.deduplicateLookahead()).deduplicate() }
+        return grammar.getRulesOfSubConcepts(nextConcept).map { RuleItem(it, 0, newLookaheads.toLookaheadSet()).deduplicate() }
     }
 
     inner class KernelsList : Iterable<Kernel> {

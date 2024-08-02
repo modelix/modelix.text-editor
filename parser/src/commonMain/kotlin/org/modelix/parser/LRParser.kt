@@ -6,7 +6,7 @@ import org.modelix.model.data.associateWithNotNull
 class LRParser(val table: LRTable) {
     private val stack = ArrayList<StackElement>()
     private var unconsumedInput: String = ""
-    var stepLimit = 1000
+    var stepLimit = 10_000
 
     private fun stateIndex(): Int = stack.reversed().asSequence().filter { it.isState() }.map { it.getState() }.first()
 
