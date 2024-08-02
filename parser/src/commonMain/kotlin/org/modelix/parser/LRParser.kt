@@ -78,6 +78,15 @@ class LRParser(val table: LRTable) {
         // TODO resolve conflicts based on operator precedence
         return applicableActions.entries
             .flatMap { entry -> entry.key.value.map { it to entry.value } }
+            .sortedBy {
+                when (it.second) {
+                    is ConstantToken -> 0
+                    is PropertyToken -> 1
+                    is ReferenceToken -> 2
+                    EndOfInputToken -> 3
+                    EmptyToken -> 4
+                }
+            }
             .firstOrNull()
     }
 
@@ -95,31 +104,37 @@ class LRParser(val table: LRTable) {
                 if (unconsumedInput.isEmpty()) EndOfInputToken else null
             }
             is PropertySymbol -> {
-                val regex = symbol.regex
-                if (regex != null) {
-                    val match = regex.matchAt(unconsumedInput, 0)
-                    if (match != null) {
-                        check(match.range.first == 0)
-                        PropertyToken(match.value)
-                    } else {
-                        null
-                    }
-                } else if (followingState != null) {
-                    val followingConstants = followingState.actions.keys.filterIsInstance<ConstantSymbol>().map { it.text }
-                    val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
-                    if (nextConstantPos != null) {
-                        PropertyToken(unconsumedInput.substring(0, nextConstantPos))
-                    } else {
-                        null
-                    }
-                } else {
-                    null
-                }
+                matchRegex(symbol.regex, followingState) { PropertyToken(it) }
             }
-            is ReferenceSymbol -> TODO()
+            is ReferenceSymbol -> {
+                val regex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
+                matchRegex(regex, followingState) { ReferenceToken(it) }
+            }
             is INonTerminalSymbol -> null
             is OptionalSymbol -> error("Should have been expanded into multiple rules")
             GoalSymbol -> TODO()
+        }
+    }
+
+    private fun matchRegex(regex: Regex?, followingState: LRState?, createToken: (String) -> IToken): IToken? {
+        return if (regex != null) {
+            val match = regex.matchAt(unconsumedInput, 0)
+            if (match != null) {
+                check(match.range.first == 0)
+                createToken(match.value)
+            } else {
+                null
+            }
+        } else if (followingState != null) {
+            val followingConstants = followingState.actions.keys.filterIsInstance<ConstantSymbol>().map { it.text }
+            val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
+            if (nextConstantPos != null) {
+                createToken(unconsumedInput.substring(0, nextConstantPos))
+            } else {
+                null
+            }
+        } else {
+            null
         }
     }
 

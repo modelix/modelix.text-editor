@@ -55,7 +55,7 @@ data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        TODO("Not yet implemented")
+        return token is ReferenceToken
     }
 
     override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
