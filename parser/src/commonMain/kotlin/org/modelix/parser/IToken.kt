@@ -10,6 +10,9 @@ data class ConstantToken(val text: String) : IToken {
 data class PropertyToken(val text: String) : IToken {
     override fun textLength() = text.length
 }
+data class ReferenceToken(val text: String) : IToken {
+    override fun textLength() = text.length
+}
 data object EmptyToken : IToken {
     override fun textLength(): Int = 0
 }
