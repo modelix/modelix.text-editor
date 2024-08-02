@@ -32,17 +32,17 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         }
     }
 
-    private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ISymbol>>()
-    fun getPossibleFirstTerminalSymbols(concept: INonTerminalSymbol): Set<ISymbol> {
+    private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ITerminalSymbol>>()
+    fun getPossibleFirstTerminalSymbols(concept: INonTerminalSymbol): Set<ITerminalSymbol> {
         return possibleFirstTokensCache.getOrPut(concept) {
-            LinkedHashSet<ISymbol>().also { collectPossibleFirstTerminalSymbols(concept, HashSet(), it, HashSet()) }
+            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstTerminalSymbols(concept, HashSet(), it, HashSet()) }
         }
     }
 
     fun collectPossibleFirstTerminalSymbols(
         concept: INonTerminalSymbol,
         visited: MutableSet<INonTerminalSymbol>,
-        firstSymbols: MutableSet<ISymbol>,
+        firstSymbols: MutableSet<ITerminalSymbol>,
         firstRules: MutableSet<ProductionRule>,
     ) {
         if (visited.contains(concept)) return
@@ -51,7 +51,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         fun collectFromSymbolList(symbols: List<ISymbol>) {
             for (firstSymbol in symbols) {
                 when (firstSymbol) {
-                    is ConstantSymbol, is PropertySymbol, is ReferenceSymbol, is EndOfInputSymbol -> {
+                    is ITerminalSymbol -> {
                         firstSymbols.add(firstSymbol)
                         break
                     }
@@ -60,8 +60,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
                         break
                     }
                     is OptionalSymbol -> error("Should have been expanded into multiple rules")
-                    EmptySymbol -> TODO()
-                    GoalSymbol -> TODO()
+                    GoalSymbol -> error("Not expected to be part of the grammar")
                     is ListSymbol -> TODO()
                 }
             }

@@ -95,7 +95,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
         var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {
             null -> setOf(EmptySymbol)
             is ITerminalSymbol -> setOf<ITerminalSymbol>(nextNextSymbol)
-            is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol).filterIsInstance<ITerminalSymbol>().toSet()
+            is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol)
             is OptionalSymbol -> error("Should have been expanded into multiple rules")
             GoalSymbol -> TODO()
             else -> TODO()
