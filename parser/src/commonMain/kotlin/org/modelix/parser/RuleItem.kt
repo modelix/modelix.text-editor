@@ -1,9 +1,6 @@
 package org.modelix.parser
 
 data class RuleItem(val rule: ProductionRule, val cursor: Int, val lookaheads: Set<ITerminalSymbol>) {
-    init {
-        require(rule.symbols.none { it is OptionalSymbol })
-    }
     fun nextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor)
     fun nextNextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor + 1)
     fun forward() = RuleItem(rule, cursor + 1, lookaheads).takeIf { cursor < rule.symbols.size }
@@ -20,4 +17,20 @@ data class RuleItem(val rule: ProductionRule, val cursor: Int, val lookaheads: S
             " /" +
             lookaheads.joinToString("/")
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as RuleItem
+
+        if (rule != other.rule) return false
+        if (cursor != other.cursor) return false
+        if (lookaheads != other.lookaheads) return false
+
+        return true
+    }
+
+    private val cachedHashCode = arrayOf(rule, cursor, lookaheads).contentHashCode()
+    override fun hashCode(): Int = cachedHashCode
 }

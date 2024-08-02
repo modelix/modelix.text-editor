@@ -22,6 +22,8 @@ import org.modelix.editor.toNonExisting
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IReferenceLink
+import org.modelix.parser.ISymbol
+import org.modelix.parser.ReferenceSymbol
 import org.modelix.scopes.ScopeAspect
 
 class ReferenceCellTemplate(
@@ -29,6 +31,11 @@ class ReferenceCellTemplate(
     val link: IReferenceLink,
     val presentation: INode.() -> String?,
 ) : CellTemplate(concept), IGrammarSymbol {
+
+    override fun toParserSymbol(): ISymbol {
+        return ReferenceSymbol(link.targetConcept)
+    }
+
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         val data = TextCellData(getText(node), "<no ${link.getSimpleName()}>")
         data.cellReferences += ReferencedNodeCellReference(node.reference, link)

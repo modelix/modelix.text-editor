@@ -11,9 +11,15 @@ import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.asProvider
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
+import org.modelix.parser.ISymbol
+import org.modelix.parser.OptionalSymbol
 
-class OptionalCellTemplate(concept: IConcept) :
-    CellTemplate(concept), IOptionalSymbol {
+class OptionalCellTemplate(concept: IConcept) : CellTemplate(concept), IOptionalSymbol {
+
+    override fun toParserSymbol(): ISymbol {
+        return OptionalSymbol(getChildSymbols().map { it.toParserSymbol() }.toList())
+    }
+
     override fun createCell(context: CellCreationContext, node: INode): CellData {
         return CellData()
     }
@@ -45,10 +51,6 @@ class OptionalCellTemplate(concept: IConcept) :
 
     override fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         return null // skip optional. Don't search in children.
-    }
-
-    override fun getGrammarSymbols(): Sequence<IGrammarSymbol> {
-        return emptySequence()
     }
 
     override fun getChildSymbols(): Sequence<IGrammarSymbol> {
