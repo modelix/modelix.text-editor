@@ -6,8 +6,10 @@ data class RuleItem(val rule: ProductionRule, val cursor: Int, val lookaheads: S
     fun forward() = RuleItem(rule, cursor + 1, lookaheads).takeIf { cursor < rule.symbols.size }
     fun isComplete() = nextSymbol() == null
     fun size() = rule.symbols.size
-    fun withoutLookaheads() = RuleItem(rule, cursor, emptySet())
     fun withAdditionalLookaheads(additional: Iterable<ITerminalSymbol>) = RuleItem(rule, cursor, lookaheads + additional)
+
+    fun isSameIgnoringLookaheads(other: RuleItem) = other.rule == rule && other.cursor == cursor
+
     override fun toString(): String {
         return rule.head.toString() +
             " -> " +

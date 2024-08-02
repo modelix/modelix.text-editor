@@ -79,7 +79,7 @@ fun RuleItem.addUniqueTo(
     },
 ): Boolean {
     for (item in items.toList()) {
-        if (this.withoutLookaheads() == item.withoutLookaheads()) {
+        if (this.isSameIgnoringLookaheads(item)) {
             if (item.lookaheads != this.lookaheads) {
                 updateLookaheads(items, item, this.lookaheads)
                 return true
