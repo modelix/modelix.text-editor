@@ -1,8 +1,28 @@
 package org.modelix.editor.kernelf
 
+import de.slisson.mps.richtext.L_de_slisson_mps_richtext
+import jetbrains.mps.lang.test.L_jetbrains_mps_lang_test
+import org.iets3.core.expr.adt.L_org_iets3_core_expr_adt
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.collections.L_org_iets3_core_expr_collections
+import org.iets3.core.expr.data.L_org_iets3_core_expr_data
+import org.iets3.core.expr.dataflow.L_org_iets3_core_expr_dataflow
+import org.iets3.core.expr.datetime.L_org_iets3_core_expr_datetime
+import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
+import org.iets3.core.expr.math.L_org_iets3_core_expr_math
+import org.iets3.core.expr.messages.L_org_iets3_core_expr_messages
+import org.iets3.core.expr.mutable.L_org_iets3_core_expr_mutable
+import org.iets3.core.expr.path.L_org_iets3_core_expr_path
+import org.iets3.core.expr.process.L_org_iets3_core_expr_process
+import org.iets3.core.expr.repl.L_org_iets3_core_expr_repl
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
+import org.iets3.core.expr.simpleTypes.tests.L_org_iets3_core_expr_simpleTypes_tests
+import org.iets3.core.expr.statemachines.L_org_iets3_core_expr_statemachines
+import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
+import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
+import org.iets3.core.expr.typetags.L_org_iets3_core_expr_typetags
+import org.iets3.core.expr.typetags.lib.L_org_iets3_core_expr_typetags_lib
+import org.iets3.core.expr.util.L_org_iets3_core_expr_util
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.celltemplate.ChildCellTemplate
 import org.modelix.editor.celltemplate.leafSymbols
@@ -11,6 +31,7 @@ import org.modelix.kernelf.KernelfLanguages
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.parser.Grammar
+import org.modelix.parser.LRParser
 import org.modelix.parser.NodeSymbol
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParser
@@ -21,21 +42,6 @@ import kotlin.test.Test
 import kotlin.time.measureTime
 
 class ParsingTest {
-
-    lateinit var engine: EditorEngine
-
-    @BeforeTest
-    fun beforeTest() {
-        KernelfLanguages.registerAll()
-
-        engine = EditorEngine(IncrementalEngine())
-        KernelfEditor.register(engine)
-    }
-
-    @AfterTest
-    fun afterTest() {
-        KernelfLanguages.languages.forEach { it.unregister() }
-    }
 
     @Test fun test() = runExpressionTest("1+2")
 
@@ -87,65 +93,340 @@ class ParsingTest {
 
     @Test fun test24() = runExpressionTest("""[10, 20, 30]""")
 
+    @Test fun printExcludedConcepts() {
+        runExpressionTest("1")
+        excludedConcepts.forEach { println("""L_${it.language!!.getName().replace(".", "_")}.${it.getShortName()}.untyped(),""") }
+    }
+
     private fun runExpressionTest(inputString: String) {
-        val startConcept = L_org_iets3_core_expr_base.Expression.untyped()
-        val grammar = Grammar()
-        loadRulesFromSubconcepts(grammar, startConcept, HashSet())
-        val parser = grammar.createParser(startConcept)
         val parseTree = parser.parse(inputString)
         println(measureTime { parser.parse(inputString) })
         println(parseTree)
     }
 
-    private val includedConcepts = setOf<IConcept>(
-        L_org_iets3_core_expr_base.Expression.untyped(),
-        L_org_iets3_core_expr_base.PlusExpression.untyped(),
-        L_org_iets3_core_expr_base.MinusExpression.untyped(),
-        L_org_iets3_core_expr_base.MulExpression.untyped(),
-        L_org_iets3_core_expr_base.DivExpression.untyped(),
-        L_org_iets3_core_expr_base.ParensExpression.untyped(),
-        L_org_iets3_core_expr_base.UnaryMinusExpression.untyped(),
-        L_org_iets3_core_expr_base.IsSomeExpression.untyped(),
-        L_org_iets3_core_expr_base.IfExpression.untyped(),
-        L_org_iets3_core_expr_base.IfElseSection.untyped(),
-        L_org_iets3_core_expr_base.GreaterExpression.untyped(),
-        L_org_iets3_core_expr_base.GreaterEqualsExpression.untyped(),
-        L_org_iets3_core_expr_base.LessExpression.untyped(),
-        L_org_iets3_core_expr_base.LessEqualsExpression.untyped(),
-        L_org_iets3_core_expr_collections.ListLiteral.untyped(),
-        L_org_iets3_core_expr_collections.ElementTypeConstraintSingle.untyped(),
-        L_org_iets3_core_expr_base.TupleValue.untyped(),
-        L_org_iets3_core_expr_simpleTypes.NumberLiteral.untyped(),
-        L_org_iets3_core_expr_simpleTypes.TrueLiteral.untyped(),
-        L_org_iets3_core_expr_simpleTypes.FalseLiteral.untyped(),
-        L_org_iets3_core_expr_simpleTypes.StringLiteral.untyped(),
-        L_org_iets3_core_expr_simpleTypes.NumberType.untyped(),
-    )
 
-    private fun loadRulesFromSubconcepts(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>) {
-        if (visited.contains(concept)) return
-        for (subConcept in concept.getInstantiatableSubConcepts()) {
-            loadRules(grammar, subConcept, visited)
+    companion object {
+        var parser: LRParser
+
+        private val includedConcepts = setOf<IConcept>(
+            L_org_iets3_core_expr_base.Expression.untyped(),
+            L_org_iets3_core_expr_base.PlusExpression.untyped(),
+            L_org_iets3_core_expr_base.MinusExpression.untyped(),
+            L_org_iets3_core_expr_base.MulExpression.untyped(),
+            L_org_iets3_core_expr_base.DivExpression.untyped(),
+            L_org_iets3_core_expr_base.ParensExpression.untyped(),
+            L_org_iets3_core_expr_base.UnaryMinusExpression.untyped(),
+            L_org_iets3_core_expr_base.IsSomeExpression.untyped(),
+            L_org_iets3_core_expr_base.IfExpression.untyped(),
+            L_org_iets3_core_expr_base.IfElseSection.untyped(),
+            L_org_iets3_core_expr_base.GreaterExpression.untyped(),
+            L_org_iets3_core_expr_base.GreaterEqualsExpression.untyped(),
+            L_org_iets3_core_expr_base.LessExpression.untyped(),
+            L_org_iets3_core_expr_base.LessEqualsExpression.untyped(),
+            L_org_iets3_core_expr_collections.ListLiteral.untyped(),
+            L_org_iets3_core_expr_collections.ElementTypeConstraintSingle.untyped(),
+            L_org_iets3_core_expr_base.TupleValue.untyped(),
+            L_org_iets3_core_expr_simpleTypes.NumberLiteral.untyped(),
+            L_org_iets3_core_expr_simpleTypes.TrueLiteral.untyped(),
+            L_org_iets3_core_expr_simpleTypes.FalseLiteral.untyped(),
+            L_org_iets3_core_expr_simpleTypes.StringLiteral.untyped(),
+            L_org_iets3_core_expr_simpleTypes.NumberType.untyped(),
+
+            L_org_iets3_core_expr_repl.CellConstraintIt.untyped(),
+            L_org_iets3_core_expr_lambda.ShortLambdaExpression.untyped(),
+            L_org_iets3_core_expr_simpleTypes.BoundsExpression.untyped(),
+            L_org_iets3_core_expr_toplevel.RecordMemberRefInConstraint.untyped(),
+            L_org_iets3_core_expr_base.TupleAccessExpr.untyped(),
+            L_org_iets3_core_expr_base.InlineMessage.untyped(),
+            L_org_iets3_core_expr_toplevel.ConstantRef.untyped(),
+            L_org_iets3_core_expr_lambda.ValValueInContractExpr.untyped(),
+            L_org_iets3_core_expr_lambda.FunResExpr.untyped(),
+            L_org_iets3_core_expr_toplevel.OldValueExpr.untyped(),
+            L_org_iets3_core_expr_base.FailExpr.untyped(),
+            L_org_iets3_core_expr_collections.KeyValuePair.untyped(),
+            L_org_iets3_core_expr_lambda.FunctionStyleExecOp.untyped(),
+            L_org_iets3_core_expr_toplevel.FunctionCall.untyped(),
+            L_org_iets3_core_expr_lambda.LocalVarDeclExpr.untyped(),
+            L_org_iets3_core_expr_toplevel.EnumLiteralRef.untyped(),
+            L_org_iets3_core_expr_base.EmptyValue.untyped(),
+            L_org_iets3_core_expr_base.CheckTypeConstraintsExpr.untyped(),
+            L_org_iets3_core_expr_base.AttemptType.untyped(),
+            L_org_iets3_core_expr_base.ValidityType.untyped(),
+            L_org_iets3_core_expr_base.MessageValueType.untyped(),
+            L_org_iets3_core_expr_base.TryExpression.untyped(),
+            L_org_iets3_core_expr_repl.SheetEmbedExpr.untyped(),
+            L_org_iets3_core_expr_collections.IndexExpr.untyped(),
+            L_org_iets3_core_expr_toplevel.AllLitList.untyped(),
+            L_org_iets3_core_expr_base.RevealerThis.untyped(),
+            L_org_iets3_core_expr_tests.NoneExpr.untyped(),
+            L_org_iets3_core_expr_base.EmptyExpression.untyped(),
+
+            L_org_iets3_core_expr_lambda.ValRef.untyped(),
+            L_org_iets3_core_expr_simpleTypes.LimitExpression.untyped(),
+            L_org_iets3_core_expr_repl.MakeListExpr.untyped(),
+            L_org_iets3_core_expr_repl.MakeRecordExpr.untyped(),
+            L_org_iets3_core_expr_repl.QuoteExpr.untyped(),
+            L_org_iets3_core_expr_repl.LabelExpression.untyped(),
+            L_org_iets3_core_expr_lambda.ShortLambdaItExpression.untyped(),
+            L_org_iets3_core_expr_simpleTypes.StringInterpolationExpr.untyped(),
+            L_org_iets3_core_expr_base.ErrorExpression.untyped(),
+            L_org_iets3_core_expr_base.ColonCast.untyped(),
+            L_org_iets3_core_expr_collections.SetLiteral.untyped(),
+            L_org_iets3_core_expr_base.SuccessValueExpr.untyped(),
+            L_org_iets3_core_expr_collections.MapLiteral.untyped(),
+            L_org_iets3_core_expr_tests.EvalAnythingExpr.untyped(),
+            L_org_iets3_core_expr_toplevel.TypedefContractValExpr.untyped(),
+            L_org_iets3_core_expr_base.AlternativesExpression.untyped(),
+            L_org_iets3_core_expr_repl.CellArgRef.untyped(),
+            L_org_iets3_core_expr_lambda.LambdaArgRef.untyped(),
+            L_org_iets3_core_expr_base.SpecificErrorType.untyped(),
+            L_org_iets3_core_expr_base.NoneType.untyped(),
+            L_org_iets3_core_expr_base.JoinType.untyped(),
+            L_org_iets3_core_expr_simpleTypes.StringType.untyped(),
+            L_org_iets3_core_expr_simpleTypes.NumberRangeSpec.untyped(),
+            L_org_iets3_core_expr_simpleTypes.NumberPrecSpec.untyped(),
+            L_org_iets3_core_expr_toplevel.InlineRecordType.untyped(),
+            L_org_iets3_core_expr_base.VoidType.untyped(),
+            L_org_iets3_core_expr_toplevel.EnumType.untyped(),
+            L_org_iets3_core_expr_toplevel.TypedefType.untyped(),
+            L_org_iets3_core_expr_base.ReferenceType.untyped(),
+            L_org_iets3_core_expr_collections.CollectionType.untyped(),
+            L_org_iets3_core_expr_collections.ListType.untyped(),
+            L_org_iets3_core_expr_collections.SetType.untyped(),
+            L_org_iets3_core_expr_base.GenericErrorType.untyped(),
+            L_org_iets3_core_expr_base.OptionType.untyped(),
+            L_org_iets3_core_expr_repl.SheetType.untyped(),
+            L_org_iets3_core_expr_toplevel.GroupType.untyped(),
+            L_org_iets3_core_expr_base.TupleType.untyped(),
+            L_org_iets3_core_expr_base.SomeValExpr.untyped(),
+            L_org_iets3_core_expr_toplevel.QualifierRef.untyped(),
+            L_org_iets3_core_expr_lambda.FunctionType.untyped(),
+            L_org_iets3_core_expr_toplevel.RecordType.untyped(),
+            L_org_iets3_core_expr_collections.MapType.untyped(),
+            L_org_iets3_core_expr_base.ErrorLiteral.untyped(),
+            L_org_iets3_core_expr_toplevel.RecordMember.untyped(),
+            L_org_iets3_core_expr_toplevel.EmptyMember.untyped(),
+            L_org_iets3_core_expr_base.EmptyType.untyped(),
+            L_org_iets3_core_expr_base.SuccessType.untyped(),
+            L_org_iets3_core_expr_base.ProgramLocationType.untyped(),
+            L_org_iets3_core_expr_collections.CollectionSizeSpec.untyped(),
+            L_org_iets3_core_expr_base.Contract.untyped(),
+            L_org_iets3_core_expr_lambda.LambdaExpression.untyped(),
+            L_org_iets3_core_expr_base.OperatorGroup.untyped(),
+            L_org_iets3_core_expr_base.TracerExpression.untyped(),
+            L_org_iets3_core_expr_base.ThisExpression.untyped(),
+            L_de_slisson_mps_richtext.Text.untyped(),
+            L_org_iets3_core_expr_base.CastExpression.untyped(),
+            L_org_iets3_core_expr_repl.ReplEntryRefByName.untyped(),
+            L_org_iets3_core_expr_lambda.ArgRef.untyped(),
+            L_org_iets3_core_expr_toplevel.FunRef.untyped(),
+            L_org_iets3_core_expr_repl.CoordCellRef.untyped(),
+            L_org_iets3_core_expr_repl.NamedCellRef.untyped(),
+            L_org_iets3_core_expr_base.NoneLiteral.untyped(),
+
+            L_org_iets3_core_expr_lambda.LambdaArg.untyped(),
+            L_org_iets3_core_expr_base.ImplicitValidityValExpr.untyped(),
+            L_org_iets3_core_expr_simpleTypes.ConvertPrecisionNumberExpression.untyped(),
+            L_org_iets3_core_expr_base.Invariant.untyped(),
+            L_org_iets3_core_expr_base.PlainConstraint.untyped(),
+            L_org_iets3_core_expr_base.Postcondition.untyped(),
+            L_org_iets3_core_expr_base.Precondition.untyped(),
+            L_org_iets3_core_expr_lambda.LocalVarRef.untyped(),
+            L_org_iets3_core_expr_toplevel.RecordLiteral.untyped(),
+            L_org_iets3_core_expr_base.ModExpression.untyped(),
+            L_org_iets3_core_expr_base.EqualsExpression.untyped(),
+            L_org_iets3_core_expr_base.NonStrictEqualsExpression.untyped(),
+            L_org_iets3_core_expr_base.NotEqualsExpression.untyped(),
+            L_org_iets3_core_expr_mutable.AssignmentExpr_old.untyped(),
+            L_org_iets3_core_expr_base.AssignmentExpr.untyped(),
+            L_org_iets3_core_expr_base.OptionOrExpression.untyped(),
+            L_org_iets3_core_expr_lambda.FunCompose.untyped(),
+            L_org_iets3_core_expr_base.LogicalIffExpression.untyped(),
+            L_org_iets3_core_expr_base.LogicalImpliesExpression.untyped(),
+            L_org_iets3_core_expr_base.LogicalOrExpression.untyped(),
+            L_org_iets3_core_expr_base.LogicalAndExpression.untyped(),
+            L_org_iets3_core_expr_repl.NamedSheetFinder.untyped(),
+            L_org_iets3_core_expr_repl.UpwardsSheetFinder.untyped(),
+            L_org_iets3_core_expr_lambda.CapturedValue.untyped(),
+            L_org_iets3_core_expr_toplevel.ProjectIt.untyped(),
+            L_org_iets3_core_expr_collections.ElementTypeConstraintMap.untyped(),
+
+//            L_org_iets3_core_expr_base.OrTag.untyped(),
+//            L_org_iets3_core_expr_base.AndTag.untyped(),
+//            L_org_iets3_core_expr_base.MulTag.untyped(),
+//            L_org_iets3_core_expr_base.PlusTag.untyped(),
+//            L_de_slisson_mps_richtext.Word.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.InterpolExprWord.untyped(),
+//            L_org_iets3_core_expr_base.DotExpression.untyped(),
+//            L_org_iets3_core_expr_base.LogicalNotExpression.untyped(),
+//            L_org_iets3_core_expr_collections.BracketOp.untyped(),
+//            L_org_iets3_core_expr_base.BangOp.untyped(),
+//            L_org_iets3_core_expr_base.AltOption.untyped(),
+//            L_org_iets3_core_expr_lambda.BlockExpression.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.ToleranceExpr.untyped(),
+//            L_org_iets3_core_expr_base.DefaultValueExpression.untyped(),
+//            L_org_iets3_core_expr_tests.NamedAssertRef.untyped(),
+//            L_org_iets3_core_expr_lambda.AssertExpr.untyped(),
+//            L_org_iets3_core_expr_tests.ForceCastExpr.untyped(),
+//            L_org_iets3_core_expr_toplevel.OldMemberRef.untyped(),
+//            L_org_iets3_core_expr_lambda.ValExpression.untyped(),
+//            L_org_iets3_core_expr_tests.InputValue.untyped(),
+//            L_org_iets3_core_expr_toplevel.RecordTypeAdapter.untyped(),
+//            L_org_iets3_core_expr_base.MakeRefTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumIsInSelector.untyped(),
+//            L_org_iets3_core_expr_tests.TestCoverageAssQuery.untyped(),
+//            L_org_iets3_core_expr_tests.StructuralCoverageAssQuery.untyped(),
+//            L_org_iets3_core_expr_tests.InterpreterValueStat.untyped(),
+//            L_org_iets3_core_expr_base.AlwaysValue.untyped(),
+//            L_org_iets3_core_expr_base.NeverValue.untyped(),
+//            L_org_iets3_core_expr_base.ConvenientValueCond.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumLiteral.untyped(),
+//            L_org_iets3_core_expr_base.TryErrorClause.untyped(),
+//            L_org_iets3_core_expr_base.OneOfTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.InlineRecordMemberAccess.untyped(),
+//            L_org_iets3_core_expr_tests.OptExpression.untyped(),
+//            L_org_iets3_core_expr_base.SuccessExpression.untyped(),
+//            L_org_iets3_core_expr_tests.MuteEffect.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.RoundUpRoundingMode.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.RoundDownRoundingMode.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.TruncateRoundingMode.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.RoundHalfUpRoundingMode.untyped(),
+//            L_org_iets3_core_expr_collections.AsSingletonList.untyped(),
+//            L_org_iets3_core_expr_collections.ListInsertOp.untyped(),
+//            L_org_iets3_core_expr_toplevel.RecordChangeTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.GroupMembersTarget.untyped(),
+//            L_org_iets3_core_expr_lambda.FunctionArgument.untyped(),
+//            L_org_iets3_core_expr_tests.IgnoredConcept.untyped(),
+//            L_org_iets3_core_expr_toplevel.Typedef.untyped(),
+//            L_org_iets3_core_expr_toplevel.RecordDeclaration.untyped(),
+//            L_org_iets3_core_expr_collections.MapValuesOp.untyped(),
+//            L_org_iets3_core_expr_toplevel.ReferenceableFlag.untyped(),
+//            L_org_iets3_core_expr_tests.ConstraintFailedTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.VectorTestItem.untyped(),
+//            L_org_iets3_core_expr_repl.SheetTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.InvalidValueTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.EmptyTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.AssertOptionTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.AssertTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.ReportTestItem.untyped(),
+//            L_org_iets3_core_expr_tests.AssertThatTestItem.untyped(),
+//            L_org_iets3_core_expr_collections.ListPickOp.untyped(),
+//            L_org_iets3_core_expr_tests.FunctionSubjectAdapter.untyped(),
+//            L_org_iets3_core_expr_collections.MaxOp.untyped(),
+//            L_org_iets3_core_expr_collections.SimpleSortOp.untyped(),
+//            L_org_iets3_core_expr_collections.MinOp.untyped(),
+//            L_org_iets3_core_expr_base.OkTarget.untyped(),
+//            L_org_iets3_core_expr_lambda.ExecOp.untyped(),
+//            L_org_iets3_core_expr_tests.InterpreterCoverageAssResult.untyped(),
+//            L_org_iets3_core_expr_tests.StructuralCoverageAssResult.untyped(),
+//            L_org_iets3_core_expr_collections.MapKeysOp.untyped(),
+//            L_org_iets3_core_expr_lambda.BindOp.untyped(),
+//            L_org_iets3_core_expr_tests.InterpreterValueSummary.untyped(),
+//            L_org_iets3_core_expr_tests.StructuralCoverageAssSummary.untyped(),
+//            L_org_iets3_core_expr_tests.ModelsCoverageAssSummary.untyped(),
+//            L_org_iets3_core_expr_tests.InterpreterCoverageAssSummary.untyped(),
+//            L_org_iets3_core_expr_base.TrySuccessClause.untyped(),
+//            L_org_iets3_core_expr_base.ConvenientBoolean.untyped(),
+//            L_org_iets3_core_expr_tests.OutputValue.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumIsTarget.untyped(),
+//            L_org_iets3_core_expr_tests.ValidOutcome.untyped(),
+//            L_org_iets3_core_expr_tests.InvalidInputOutcome.untyped(),
+//            L_org_iets3_core_expr_base.ErrorTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumIndexOp.untyped(),
+//            L_org_iets3_core_expr_repl.CellLabel.untyped(),
+//            L_org_iets3_core_expr_tests.MutationEngine.untyped(),
+//            L_org_iets3_core_expr_toplevel.GroupKeyTarget.untyped(),
+//            L_org_iets3_core_expr_repl.CellConstraint.untyped(),
+//            L_org_iets3_core_expr_tests.MatcherForAnyType.untyped(),
+//            L_org_iets3_core_expr_tests.MatcherType.untyped(),
+//            L_org_iets3_core_expr_tests.MatcherForAnyRecordType.untyped(),
+//            L_org_iets3_core_expr_collections.UpToTarget.untyped(),
+//            L_org_iets3_core_expr_tests.MutationLog.untyped(),
+//            L_org_iets3_core_expr_base.HasValueOp.untyped(),
+//            L_org_iets3_core_expr_toplevel.SectionMarker.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumValueAccessor.untyped(),
+//            L_org_iets3_core_expr_toplevel.ProjectOp.untyped(),
+//            L_org_iets3_core_expr_tests.TestCase.untyped(),
+//            L_jetbrains_mps_lang_test.TestInfo.untyped(),
+//            L_org_iets3_core_expr_tests.TestSuite.untyped(),
+//            L_org_iets3_core_expr_base.RangeTarget.untyped(),
+//            L_org_iets3_core_expr_path.PathElement.untyped(),
+//            L_org_iets3_core_expr_tests.LanguageRef.untyped(),
+//            L_org_iets3_core_expr_toplevel.NewValueSetter.untyped(),
+//            L_org_iets3_core_expr_toplevel.FieldSetter.untyped(),
+//            L_org_iets3_core_expr_toplevel.Constant.untyped(),
+//            L_org_iets3_core_expr_toplevel.Library.untyped(),
+//            L_org_iets3_core_expr_tests.MeasureCoverageFor.untyped(),
+//            L_org_iets3_core_expr_base.DeRefTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.Function.untyped(),
+//            L_org_iets3_core_expr_repl.CellArg.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.StringLengthTarget.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.StringStartsWithTarget.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.StringContainsTarget.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.StringEndsWithTarget.untyped(),
+//            L_org_iets3_core_expr_simpleTypes.StringToIntTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.EmptyToplevelContent.untyped(),
+//            L_org_iets3_core_expr_tests.EqualsTestOp.untyped(),
+//            L_org_iets3_core_expr_tests.RealEqualsTestOp.untyped(),
+//            L_org_iets3_core_expr_collections.MapSizeOp.untyped(),
+//            L_org_iets3_core_expr_simpleTypes_tests.RandomVectorProducer.untyped(),
+//            L_org_iets3_core_expr_tests.EmptyProducer.untyped(),
+//            L_org_iets3_core_expr_simpleTypes_tests.EqClassProducer.untyped(),
+//            L_org_iets3_core_expr_toplevel.EnumIsInTarget.untyped(),
+//            L_org_iets3_core_expr_toplevel.ExtensionFunctionCall.untyped(),
+//            L_org_iets3_core_expr_tests.AndMatcher.untyped(),
+//            L_org_iets3_core_expr_tests.ContainsString.untyped(),
+//            L_org_iets3_core_expr_tests.IsInvalid.untyped(),
+//            L_org_iets3_core_expr_tests.IsValidRecord.untyped(),
+//            L_org_iets3_core_expr_tests.AllNodesFilter.untyped(),
+//            L_org_iets3_core_expr_tests.AllExpressionsFilter.untyped(),
+//            L_org_iets3_core_expr_toplevel.ProjectMember.untyped(),
+        )
+        private val excludedConcepts = mutableSetOf<IConcept>()
+
+        init {
+            KernelfLanguages.registerAll()
+
+            val engine = EditorEngine(IncrementalEngine())
+            KernelfEditor.register(engine)
+
+            val startConcept = L_org_iets3_core_expr_base.Expression.untyped()
+            val grammar = Grammar()
+            loadRulesFromSubconcepts(grammar, startConcept, HashSet(), engine)
+            parser = grammar.createParser(startConcept)
+
+            KernelfLanguages.languages.forEach { it.unregister() }
         }
-        visited.add(concept)
-    }
 
-    private fun loadRules(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>) {
-        if (visited.contains(concept)) return
-        visited.add(concept)
-
-        if (!includedConcepts.contains(concept)) return
-
-        val cellModel = engine.createCellModelExcludingDefault(concept) ?: return
-        val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
-        if (symbols.isNotEmpty()) {
-            val rule = ProductionRule(NodeSymbol(concept), symbols)
-            grammar.addRule(rule)
+        private fun loadRulesFromSubconcepts(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
+            if (visited.contains(concept)) return
+            for (subConcept in concept.getInstantiatableSubConcepts()) {
+                loadRules(grammar, subConcept, visited, engine)
+            }
+            visited.add(concept)
         }
 
-        val childConcepts = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>().map { it.link.targetConcept }
-        for (childConcept in childConcepts) {
-            loadRulesFromSubconcepts(grammar, childConcept, visited)
+        private fun loadRules(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
+            if (visited.contains(concept)) return
+            visited.add(concept)
+
+            val cellModel = engine.createCellModelExcludingDefault(concept) ?: return
+
+            if (!includedConcepts.contains(concept)) {
+                excludedConcepts.add(concept)
+                return
+            }
+
+            val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
+            if (symbols.isNotEmpty()) {
+                val rule = ProductionRule(NodeSymbol(concept), symbols)
+                grammar.addRule(rule)
+            }
+
+            val childConcepts = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>().map { it.link.targetConcept }
+            for (childConcept in childConcepts) {
+                loadRulesFromSubconcepts(grammar, childConcept, visited, engine)
+            }
         }
     }
 }
