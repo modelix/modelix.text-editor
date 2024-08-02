@@ -17,7 +17,8 @@ class LRTable() {
             for (item in kernel.closure) {
                 if (item.isComplete()) {
                     for (lookahead in item.lookaheads) {
-                        state.actions.getOrPut(lookahead) { LinkedHashSet() }.add(ReduceAction(item.rule))
+                        state.actions.getOrPut(lookahead) { LinkedHashSet() }
+                            .add(if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
                     }
                 }
             }

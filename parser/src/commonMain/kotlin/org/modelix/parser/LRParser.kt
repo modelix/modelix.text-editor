@@ -38,7 +38,7 @@ class LRParser(val table: LRTable) {
                 is GotoAction -> {
                     stack.add(StackElement(action.nextState))
                 }
-                AcceptAction -> TODO()
+                AcceptAction -> return stack[1].getToken()
             }
 
             state = table.states[stateIndex()]
@@ -54,6 +54,7 @@ class LRParser(val table: LRTable) {
             step++
         }
 
+        error("Invalid input: $input")
         return stack[1].getToken()
     }
 
