@@ -30,10 +30,15 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
     }
 
     fun updateClosure(kernel: KernelsList.Kernel) {
-        for (item in kernel.closure.iterateGrowingSet()) {
-            for (newItem in item.newItemsFromSymbolAfterDot(grammar)) {
-                newItem.addUniqueTo(kernel.closure)
-            }
+        var oldSize: Int = -1
+
+        while (kernel.closure.size > oldSize) {
+            oldSize = kernel.closure.size
+            val newItems = kernel.closure.flatMap { it.newItemsFromSymbolAfterDot(grammar) }
+            if (newItems.isEmpty()) break
+            val newClosure = kernel.closure.asSequence().plus(newItems).groupBy { it.positionInRule }
+                .map { RuleItem(it.key, it.value.asSequence().flatMap { it.lookaheads }.toSet()) }.toList()
+            kernel.closure = newClosure
         }
     }
 
@@ -137,7 +142,7 @@ class KernelsList : Iterable<KernelsList.Kernel> {
     fun getByItems(items: Set<RuleItem>) = kernelsMap[items]
 
     class Kernel(val index: Int, val items: MutableSet<RuleItem>) {
-        val closure: MutableSet<RuleItem> = items.toMutableSet()
+        var closure: List<RuleItem> = items.toList()
         val gotos: MutableMap<ISymbol, Int> = LinkedHashMap()
         val keys: MutableSet<ISymbol> = LinkedHashSet()
     }

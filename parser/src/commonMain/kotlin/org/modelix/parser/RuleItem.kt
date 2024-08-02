@@ -1,6 +1,10 @@
 package org.modelix.parser
 
-data class RuleItem(val rule: ProductionRule, val cursor: Int, val lookaheads: Set<ITerminalSymbol>) {
+data class RuleItem(val positionInRule: PositionInRule, val lookaheads: Set<ITerminalSymbol>) {
+    constructor(rule: ProductionRule, cursor: Int, lookaheads: Set<ITerminalSymbol>) : this(PositionInRule(cursor, rule), lookaheads)
+    val rule: ProductionRule get() = positionInRule.rule
+    val cursor: Int get() = positionInRule.position
+
     fun nextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor)
     fun nextNextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor + 1)
     fun forward() = RuleItem(rule, cursor + 1, lookaheads).takeIf { cursor < rule.symbols.size }
@@ -36,3 +40,5 @@ data class RuleItem(val rule: ProductionRule, val cursor: Int, val lookaheads: S
     private val cachedHashCode = arrayOf(rule, cursor, lookaheads).contentHashCode()
     override fun hashCode(): Int = cachedHashCode
 }
+
+data class PositionInRule(val position: Int, val rule: ProductionRule)
