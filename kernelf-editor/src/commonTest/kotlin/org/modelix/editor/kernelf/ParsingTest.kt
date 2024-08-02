@@ -1,28 +1,14 @@
 package org.modelix.editor.kernelf
 
-import de.slisson.mps.richtext.L_de_slisson_mps_richtext
-import jetbrains.mps.lang.test.L_jetbrains_mps_lang_test
-import org.iets3.core.expr.adt.L_org_iets3_core_expr_adt
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
 import org.iets3.core.expr.collections.L_org_iets3_core_expr_collections
-import org.iets3.core.expr.data.L_org_iets3_core_expr_data
-import org.iets3.core.expr.dataflow.L_org_iets3_core_expr_dataflow
-import org.iets3.core.expr.datetime.L_org_iets3_core_expr_datetime
 import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.iets3.core.expr.math.L_org_iets3_core_expr_math
-import org.iets3.core.expr.messages.L_org_iets3_core_expr_messages
-import org.iets3.core.expr.mutable.L_org_iets3_core_expr_mutable
 import org.iets3.core.expr.path.L_org_iets3_core_expr_path
-import org.iets3.core.expr.process.L_org_iets3_core_expr_process
 import org.iets3.core.expr.repl.L_org_iets3_core_expr_repl
 import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
 import org.iets3.core.expr.simpleTypes.tests.L_org_iets3_core_expr_simpleTypes_tests
-import org.iets3.core.expr.statemachines.L_org_iets3_core_expr_statemachines
 import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
-import org.iets3.core.expr.typetags.L_org_iets3_core_expr_typetags
-import org.iets3.core.expr.typetags.lib.L_org_iets3_core_expr_typetags_lib
-import org.iets3.core.expr.util.L_org_iets3_core_expr_util
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.celltemplate.ChildCellTemplate
 import org.modelix.editor.celltemplate.leafSymbols
@@ -35,8 +21,6 @@ import org.modelix.parser.LRParser
 import org.modelix.parser.NodeSymbol
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParser
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.time.measureTime
@@ -300,7 +284,7 @@ class ParsingTest {
 
             L_org_iets3_core_expr_tests.EmptyTestItem.untyped(),
             L_org_iets3_core_expr_tests.EqualsTestOp.untyped(),
-//            L_org_iets3_core_expr_tests.EvalAnythingExpr.untyped(),
+            L_org_iets3_core_expr_tests.EvalAnythingExpr.untyped(),
 
             L_org_iets3_core_expr_tests.ForceCastExpr.untyped(),
             L_org_iets3_core_expr_tests.FunctionSubjectAdapter.untyped(),
@@ -415,6 +399,13 @@ class ParsingTest {
 
             if (!includedConcepts.contains(concept)) {
                 excludedConcepts.add(concept)
+                return
+            }
+
+            val canContainBaseConcept = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>()
+                .any { it.link.targetConcept.getDirectSuperConcepts().isEmpty() }
+            if (canContainBaseConcept) {
+                // The parsing table will be too big
                 return
             }
 
