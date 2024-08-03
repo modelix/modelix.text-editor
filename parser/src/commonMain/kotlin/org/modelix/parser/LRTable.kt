@@ -6,7 +6,7 @@ class LRTable() {
     fun getDistanceToAccept(action: LRAction, pathLength: Int = 0): Int {
         return when (action) {
             AcceptAction -> 0
-            is GotoAction -> getDistanceToAccept(states[action.nextState], pathLength + 1)
+            is GotoAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
             is ReduceAction -> -action.rule.symbols.size
             is ShiftAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
         }

@@ -90,7 +90,7 @@ class LRParser(val table: LRTable) {
                         is OptionalSymbol -> error("Should have been expanded into multiple rules")
                         GoalSymbol -> error("Not expected on the right hand side of a rule")
                     }
-                    val action = candidate.value.first()
+                    val action = candidate.value.minBy { table.getDistanceToAccept(it) }
                     when (action) {
                         AcceptAction -> {
                             if (lastStackElement.isState()) {

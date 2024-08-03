@@ -27,70 +27,74 @@ import kotlin.time.measureTime
 
 class ParsingTest {
 
-    @Test fun test() = runExpressionTest("1+2")
+    @Test fun test() = runParsingTest("1+2")
 
-    @Test fun test2() = runExpressionTest("1 + 2")
+    @Test fun test2() = runParsingTest("1 + 2")
 
-    @Test fun test3() = runExpressionTest("11 + 22")
+    @Test fun test3() = runParsingTest("11 + 22")
 
-    @Test fun test4() = runExpressionTest("11 + 22 * 33")
+    @Test fun test4() = runParsingTest("11 + 22 * 33")
 
-    @Test fun test5() = runExpressionTest("(11 + 22) * 33")
+    @Test fun test5() = runParsingTest("(11 + 22) * 33")
 
-    @Test fun test6() = runExpressionTest("(11+22)*33")
+    @Test fun test6() = runParsingTest("(11+22)*33")
 
-    @Test fun test7() = runExpressionTest("( 11+22 )*33")
+    @Test fun test7() = runParsingTest("( 11+22 )*33")
 
-    @Test fun test8() = runExpressionTest("(11+22)*-33")
+    @Test fun test8() = runParsingTest("(11+22)*-33")
 
-    @Test fun test9() = runExpressionTest("(11 + 22) * -33")
+    @Test fun test9() = runParsingTest("(11 + 22) * -33")
 
-    @Test fun test10() = runExpressionTest("(11 + 22) *- 33")
+    @Test fun test10() = runParsingTest("(11 + 22) *- 33")
 
-    @Test fun test11() = runExpressionTest("123.456 + true")
+    @Test fun test11() = runParsingTest("123.456 + true")
 
-    @Test fun test12() = runExpressionTest(""""abc" + "def"""")
+    @Test fun test12() = runParsingTest(""""abc" + "def"""")
 
     @Ignore
     @Test
-    fun test13() = runExpressionTest(""""abc\" + \"def"""")
+    fun test13() = runParsingTest(""""abc\" + \"def"""")
 
-    @Test fun test14() = runExpressionTest(""""abc" + " """")
+    @Test fun test14() = runParsingTest(""""abc" + " """")
 
-    @Test fun test15() = runExpressionTest(""""abc" + """"")
+    @Test fun test15() = runParsingTest(""""abc" + """"")
 
-    @Test fun test16() = runExpressionTest("""isSome(10)""")
+    @Test fun test16() = runParsingTest("""isSome(10)""")
 
-    @Test fun test17() = runExpressionTest("""if 10 > 20 then 15""")
+    @Test fun test17() = runParsingTest("""if 10 > 20 then 15""")
 
-    @Test fun test18() = runExpressionTest("""if 10 > 20 then 15 else 900""")
+    @Test fun test18() = runParsingTest("""if 10 > 20 then 15 else 900""")
 
-    @Test fun test19() = runExpressionTest("""list(10, 20, 30)""")
+    @Test fun test19() = runParsingTest("""list(10, 20, 30)""")
 
-    @Test fun test20() = runExpressionTest("""list(10)""")
+    @Test fun test20() = runParsingTest("""list(10)""")
 
-    @Test fun test21() = runExpressionTest("""list<number>(10, 20, 30)""")
+    @Test fun test21() = runParsingTest("""list<number>(10, 20, 30)""")
 
-    @Test fun test22() = runExpressionTest("""list(10, 20)""")
+    @Test fun test22() = runParsingTest("""list(10, 20)""")
 
-    @Test fun test23() = runExpressionTest("""[10, 20]""")
+    @Test fun test23() = runParsingTest("""[10, 20]""")
 
-    @Test fun test24() = runExpressionTest("""[10, 20, 30]""")
+    @Test fun test24() = runParsingTest("""[10, 20, 30]""")
 
-    @Test fun test25() = runExpressionTest("""val abc: opt<number> = none""")
-    @Test fun test26() = runExpressionTest("""val abc: (number, string => number) = none""")
+    @Test fun test25() = runParsingTest("""val abc: opt<number> = none""")
+    @Test fun test26() = runParsingTest("""val abc: (number, string => number) = none""")
 
 
-    @Test fun completion1() = runExpressionTest("""1 + """, complete = true)
-    @Test fun completion2() = runExpressionTest("""if """, complete = true)
-    @Test fun completion3() = runExpressionTest("""list(10,""", complete = true)
+    @Test fun completion1() = runCompletionTest("""1 + """)
+    @Test fun completion2() = runCompletionTest("""if """)
+    @Test fun completion3() = runCompletionTest("""list(10,""")
+    @Test fun completion4() = runCompletionTest("""val abc:""")
+    @Test fun completion5() = runCompletionTest("""if 10 >""")
 
     @Test fun printExcludedConcepts() {
-        runExpressionTest("1")
+        runParsingTest("1")
         excludedConcepts.forEach { println("""L_${it.language!!.getName().replace(".", "_")}.${it.getShortName()}.untyped(),""") }
     }
 
-    private fun runExpressionTest(inputString: String, complete: Boolean = false) {
+    private fun runCompletionTest(inputString: String,) = runTest(inputString, true)
+    private fun runParsingTest(inputString: String) = runTest(inputString, false)
+    private fun runTest(inputString: String, complete: Boolean = false) {
         val parseTree = parser.parse(inputString, complete)
         println(measureTime { parser.parse(inputString, complete) })
         println(parseTree)
