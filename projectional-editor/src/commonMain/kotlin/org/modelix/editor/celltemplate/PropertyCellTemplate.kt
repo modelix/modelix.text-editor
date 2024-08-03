@@ -31,7 +31,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     var regex: Regex? = null
 
     override fun toParserSymbol(): ISymbol {
-        return PropertySymbol(regex)
+        return PropertySymbol(regex ?: Regex("[_a-zA-Z][_a-zA-Z0-9]*"))
     }
 
     override fun createCell(context: CellCreationContext, node: INode): CellData {

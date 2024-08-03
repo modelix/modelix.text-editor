@@ -26,3 +26,4 @@ fun Sequence<IGrammarSymbol>.leafSymbols(): Sequence<IGrammarSymbol> {
         if (it is IOptionalSymbol) it.getChildSymbols() else sequenceOf(it)
     }
 }
+
