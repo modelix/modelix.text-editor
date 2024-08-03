@@ -104,9 +104,7 @@ class LRParser(val table: LRTable) {
                             nextAction = action
                         }
                         is ReduceAction -> {
-                            if (lastStackElement.isState()) {
-                                stack.add(StackElement(completionToken))
-                            }
+                            lookahead = completionToken as IToken // it were a non-terminal, it would be a GotoAction
                             nextAction = action
                         }
                         is ShiftAction -> {
