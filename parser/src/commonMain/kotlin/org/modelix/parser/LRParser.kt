@@ -120,7 +120,7 @@ class LRParser(val table: LRTable) {
             step++
         }
 
-        error("Invalid input: $input")
+        error("Invalid input: $input\nCurrent stack: $stack")
     }
 
     private fun chooseActionForTrimmedInput(state: LRState): Pair<LRAction, IToken>? {
@@ -217,7 +217,10 @@ class LRParser(val table: LRTable) {
 }
 
 fun Grammar.createParser(startConcept: IConcept): LRParser {
+    return LRParser(createParseTable(startConcept))
+}
+
+fun Grammar.createParseTable(startConcept: IConcept): LRTable {
     val closureTable = LRClosureTable(grammar = this, startConcept = startConcept).also { it.load() }
-    val parsingTable = LRTable().also { it.load(closureTable) }
-    return LRParser(parsingTable)
+    return LRTable().also { it.load(closureTable) }
 }

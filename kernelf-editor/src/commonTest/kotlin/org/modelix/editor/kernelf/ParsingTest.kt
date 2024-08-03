@@ -86,6 +86,7 @@ class ParsingTest {
     @Test fun completion3() = runCompletionTest("""list(10,""")
     @Test fun completion4() = runCompletionTest("""val abc:""")
     @Test fun completion5() = runCompletionTest("""if 10 >""")
+    @Test fun completion6() = runCompletionTest("""if {""")
 
     @Test fun printExcludedConcepts() {
         runParsingTest("1")

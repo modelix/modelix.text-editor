@@ -2,6 +2,7 @@ package org.modelix.editor.ssr.mps
 
 import org.modelix.editor.CaretSelection
 import org.modelix.editor.CodeCompletionParameters
+import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.ICodeCompletionAction
@@ -10,7 +11,9 @@ import org.modelix.editor.JSKeyboardEvent
 import org.modelix.editor.JSKeyboardEventType
 import org.modelix.editor.KnownKeys
 import org.modelix.editor.NodeCellReference
+import org.modelix.editor.ancestors
 import org.modelix.editor.applyShadowing
+import org.modelix.editor.celltemplate.ParserForEditor
 import org.modelix.editor.descendantsAndSelf
 import org.modelix.editor.flattenApplicableActions
 import org.modelix.editor.getMaxCaretPos
@@ -459,11 +462,10 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         val layoutable = (editor.getSelection() as CaretSelection).layoutable
         val node = layoutable.cell.ancestors(true)
             .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
-        val context = NodeParseContext(RootParseContext(editorEngine), node)
-        val parseTrees = context.parse(UnclassifiedToken(input), node.expectedConcept())
-            .let { AmbiguityParseTreeNode.unwrap(it) }
-            .onEach { println(it) }
-        assertTrue(parseTrees.isNotEmpty())
+
+        val parser = ParserForEditor(editorEngine).getParser(node.expectedConcept()!!)
+        val parseTree = parser.parse(input)
+        println(parseTree)
     }
 
     fun `test statement parsing 1`() = runParsingTest("int a;")
