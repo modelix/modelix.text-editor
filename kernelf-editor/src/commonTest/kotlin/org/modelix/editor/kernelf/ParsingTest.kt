@@ -80,14 +80,19 @@ class ParsingTest {
     @Test fun test25() = runExpressionTest("""val abc: opt<number> = none""")
     @Test fun test26() = runExpressionTest("""val abc: (number, string => number) = none""")
 
+
+    @Test fun completion1() = runExpressionTest("""1 + """, complete = true)
+    @Test fun completion2() = runExpressionTest("""if """, complete = true)
+    @Test fun completion3() = runExpressionTest("""list(10,""", complete = true)
+
     @Test fun printExcludedConcepts() {
         runExpressionTest("1")
         excludedConcepts.forEach { println("""L_${it.language!!.getName().replace(".", "_")}.${it.getShortName()}.untyped(),""") }
     }
 
-    private fun runExpressionTest(inputString: String) {
-        val parseTree = parser.parse(inputString)
-        println(measureTime { parser.parse(inputString) })
+    private fun runExpressionTest(inputString: String, complete: Boolean = false) {
+        val parseTree = parser.parse(inputString, complete)
+        println(measureTime { parser.parse(inputString, complete) })
         println(parseTree)
     }
 

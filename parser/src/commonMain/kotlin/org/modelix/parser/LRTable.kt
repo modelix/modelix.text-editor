@@ -3,6 +3,26 @@ package org.modelix.parser
 class LRTable() {
     val states: MutableList<LRState> = ArrayList()
 
+    fun getDistanceToAccept(action: LRAction, pathLength: Int = 0): Int {
+        return when (action) {
+            AcceptAction -> 0
+            is GotoAction -> getDistanceToAccept(states[action.nextState], pathLength + 1)
+            is ReduceAction -> -action.rule.symbols.size
+            is ShiftAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
+        }
+    }
+
+    fun getDistanceToAccept(state: LRState, pathLength: Int): Int {
+        if (state.distanceToAccept == -1) {
+            if (pathLength > 100) return Int.MAX_VALUE / 2
+            state.distanceToAccept = Int.MAX_VALUE / 2 // also avoid endless recursion
+
+            state.distanceToAccept = state.actions.asSequence()
+                .flatMap { it.value }.minOf { getDistanceToAccept(it, pathLength + 1) }
+        }
+        return state.distanceToAccept
+    }
+
     fun load(closureTable: LRClosureTable) {
         for (kernel in closureTable.kernels) {
             val state = LRState()
@@ -27,6 +47,7 @@ class LRTable() {
 }
 
 class LRState {
+    var distanceToAccept: Int = -1
     val actions: MutableMap<ISymbol, MutableSet<LRAction>> = HashMap()
 }
 

@@ -116,6 +116,13 @@ class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
     }
 
     fun isGoal() = head == GoalSymbol
+
+    override fun equals(other: Any?): Boolean {
+        return super.equals(other)
+    }
+
+    private val _hashCode = arrayOf(head, symbols).contentHashCode()
+    override fun hashCode(): Int = _hashCode
 }
 
 data object GoalSymbol : ISymbol {

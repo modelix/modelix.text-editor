@@ -2,6 +2,7 @@ package org.modelix.parser
 
 class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     private val rules = ArrayList<ProductionRule>()
+    private val existingLists = HashSet<ListSymbol>()
 
     init {
         originalRules.forEach { addRule(it) }
@@ -17,9 +18,15 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
 
         val listSymbols = newRules.asSequence().flatMap { it.symbols }.filterIsInstance<ListSymbol>().toSet()
         for (listSymbol in listSymbols) {
-            rules += ProductionRule(listSymbol, listSymbol.item)
-            rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
+            addListRules(listSymbol)
         }
+    }
+
+    private fun addListRules(listSymbol: ListSymbol) {
+        if (existingLists.contains(listSymbol)) return
+        existingLists.add(listSymbol)
+        rules += ProductionRule(listSymbol, listSymbol.item)
+        rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
     }
 
     private fun filterSymbols(symbols: List<ISymbol>): List<ISymbol> {
