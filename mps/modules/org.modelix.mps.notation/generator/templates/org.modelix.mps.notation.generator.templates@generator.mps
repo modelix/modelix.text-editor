@@ -35,9 +35,9 @@
     <import index="18ew" ref="6ed54515-acc8-4d1e-a16c-9fd6cfe951ea/java:jetbrains.mps.util(MPS.Core/)" />
     <import index="j33e" ref="r:4b957436-4ade-4da9-bdbc-7588a2d8af7d(org.modelix.mps.baseLanguageInsideKotlin.structure)" />
     <import index="qjbp" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/kotlinJvm:org.modelix.model.mpsadapters.tomps(org.modelix.mps.editor.common.stubs/)" />
-    <import index="wsib" ref="r:d1d5cd51-6710-43f8-bd5b-f958da6e1ca2(org.modelix.mps.notation.behavior)" implicit="true" />
-    <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
+    <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" />
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" implicit="true" />
+    <import index="wsib" ref="r:d1d5cd51-6710-43f8-bd5b-f958da6e1ca2(org.modelix.mps.notation.behavior)" implicit="true" />
     <import index="1xrd" ref="b50d89c0-0fb9-4105-b652-222148c26a9b/kotlin:kotlin.collections(jetbrains.mps.kotlin.stdlib/)" implicit="true" />
     <import index="tpcu" ref="r:00000000-0000-4000-0000-011c89590282(jetbrains.mps.lang.core.behavior)" implicit="true" />
   </imports>
@@ -61,6 +61,7 @@
       <concept id="1070534058343" name="jetbrains.mps.baseLanguage.structure.NullLiteral" flags="nn" index="10Nm6u" />
       <concept id="1068498886292" name="jetbrains.mps.baseLanguage.structure.ParameterDeclaration" flags="ir" index="37vLTG" />
       <concept id="1225271177708" name="jetbrains.mps.baseLanguage.structure.StringType" flags="in" index="17QB3L" />
+      <concept id="1225271283259" name="jetbrains.mps.baseLanguage.structure.NPEEqualsExpression" flags="nn" index="17R0WA" />
       <concept id="1225271408483" name="jetbrains.mps.baseLanguage.structure.IsNotEmptyOperation" flags="nn" index="17RvpY" />
       <concept id="4972933694980447171" name="jetbrains.mps.baseLanguage.structure.BaseVariableDeclaration" flags="ng" index="19Szcq">
         <child id="5680397130376446158" name="type" index="1tU5fm" />
@@ -282,6 +283,12 @@
         <reference id="3181756179480675489" name="link" index="rZ_F2" />
       </concept>
     </language>
+    <language id="446c26eb-2b7b-4bf0-9b35-f83fa582753e" name="jetbrains.mps.lang.modelapi">
+      <concept id="4733039728785194814" name="jetbrains.mps.lang.modelapi.structure.NamedNodeReference" flags="ng" index="ZC_QK">
+        <reference id="7256306938026143658" name="target" index="2aWVGs" />
+        <child id="7256306938026143676" name="child" index="2aWVGa" />
+      </concept>
+    </language>
     <language id="cc24a92d-c78e-4016-a5d4-902df7135727" name="org.modelix.mps.baseLanguageInsideKotlin">
       <concept id="1408999582856241433" name="org.modelix.mps.baseLanguageInsideKotlin.structure.BaseLanguageFunctionInKotlin" flags="ng" index="3rn2iY">
         <child id="1408999582856241658" name="baseLanguageReturnType" index="3rn2ht" />
@@ -303,7 +310,11 @@
       <concept id="1138411891628" name="jetbrains.mps.lang.smodel.structure.SNodeOperation" flags="nn" index="eCIE_">
         <child id="1144104376918" name="parameter" index="1xVPHs" />
       </concept>
+      <concept id="5045161044515397667" name="jetbrains.mps.lang.smodel.structure.Node_PointerOperation" flags="ng" index="iZEcu" />
       <concept id="1179409122411" name="jetbrains.mps.lang.smodel.structure.Node_ConceptMethodCall" flags="nn" index="2qgKlT" />
+      <concept id="7400021826774799413" name="jetbrains.mps.lang.smodel.structure.NodePointerExpression" flags="ng" index="2tJFMh">
+        <child id="7400021826774799510" name="ref" index="2tJFKM" />
+      </concept>
       <concept id="4693937538533521280" name="jetbrains.mps.lang.smodel.structure.OfConceptOperation" flags="ng" index="v3k3i">
         <child id="4693937538533538124" name="requestedConcept" index="v3oSu" />
       </concept>
@@ -555,6 +566,189 @@
         <node concept="1XD0a7" id="CUW2QYNT33" role="gfFT$">
           <node concept="1NbEtQ" id="CUW2QYNUUM" role="1XD07G">
             <ref role="AarEw" to="dbfy:~CellTemplateBuilder#org/modelix/model/api/IProperty.cell(kotlin/Function1&lt;PropertyCellTemplateBuilder&lt;0,1&gt;,kotlin/Unit&gt;)" resolve="cell" />
+            <node concept="1XD0eI" id="814F5MppoU" role="TWiod">
+              <node concept="1XD0f0" id="814F5MppoT" role="1XD0ZN">
+                <node concept="1NbEFs" id="814F5MppEj" role="THmaL">
+                  <ref role="AarEw" to="dbfy:~PropertyCellTemplateBuilder.regex(kotlin/String)" resolve="regex" />
+                  <node concept="1XD0eI" id="814F5MppEk" role="TWiod">
+                    <node concept="1XD08G" id="814F5MppVi" role="1XD0ZN">
+                      <node concept="Df6$J" id="3wSPuR_fEr3" role="Df6Hu">
+                        <node concept="21VMdE" id="3wSPuR_fEr2" role="Df7GE">
+                          <property role="21VMdD" value="true|false" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="1W57fq" id="814F5MppEt" role="lGtFl">
+                    <node concept="3IZrLx" id="814F5MppEu" role="3IZSJc">
+                      <node concept="3clFbS" id="814F5MppEv" role="2VODD2">
+                        <node concept="3clFbF" id="3wSPuR_iPRO" role="3cqZAp">
+                          <node concept="2OqwBi" id="3wSPuR_iTiP" role="3clFbG">
+                            <node concept="2OqwBi" id="3wSPuR_iRyq" role="2Oq$k0">
+                              <node concept="2OqwBi" id="3wSPuR_iQjl" role="2Oq$k0">
+                                <node concept="30H73N" id="3wSPuR_iPRN" role="2Oq$k0" />
+                                <node concept="3TrEf2" id="3wSPuR_iQKn" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="f8gn:CUW2QYKUZw" resolve="property" />
+                                </node>
+                              </node>
+                              <node concept="3TrEf2" id="3wSPuR_iSez" role="2OqNvi">
+                                <ref role="3Tt5mk" to="tpce:fKAX2Z_" resolve="dataType" />
+                              </node>
+                            </node>
+                            <node concept="2qgKlT" id="3wSPuR_iTHX" role="2OqNvi">
+                              <ref role="37wK5l" to="tpcn:hKtGpIQ" resolve="isSimpleBoolean" />
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="1NbEFs" id="3wSPuR_iUNA" role="THmaL">
+                  <ref role="AarEw" to="dbfy:~PropertyCellTemplateBuilder.regex(kotlin/String)" resolve="regex" />
+                  <node concept="1XD0eI" id="3wSPuR_iUNB" role="TWiod">
+                    <node concept="1XD08G" id="3wSPuR_iUNC" role="1XD0ZN">
+                      <node concept="Df6$J" id="3wSPuR_iUND" role="Df6Hu">
+                        <node concept="21VMdE" id="3wSPuR_iUNE" role="Df7GE">
+                          <property role="21VMdD" value="-?[0-9]{1,10}" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="1W57fq" id="3wSPuR_iUNF" role="lGtFl">
+                    <node concept="3IZrLx" id="3wSPuR_iUNG" role="3IZSJc">
+                      <node concept="3clFbS" id="3wSPuR_iUNH" role="2VODD2">
+                        <node concept="3clFbF" id="3wSPuR_iUNI" role="3cqZAp">
+                          <node concept="2OqwBi" id="3wSPuR_iUNJ" role="3clFbG">
+                            <node concept="2OqwBi" id="3wSPuR_iUNK" role="2Oq$k0">
+                              <node concept="2OqwBi" id="3wSPuR_iUNL" role="2Oq$k0">
+                                <node concept="30H73N" id="3wSPuR_iUNM" role="2Oq$k0" />
+                                <node concept="3TrEf2" id="3wSPuR_iUNN" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="f8gn:CUW2QYKUZw" resolve="property" />
+                                </node>
+                              </node>
+                              <node concept="3TrEf2" id="3wSPuR_iUNO" role="2OqNvi">
+                                <ref role="3Tt5mk" to="tpce:fKAX2Z_" resolve="dataType" />
+                              </node>
+                            </node>
+                            <node concept="2qgKlT" id="3wSPuR_iUNP" role="2OqNvi">
+                              <ref role="37wK5l" to="tpcn:hKtGkcn" resolve="isSimpleInteger" />
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="1NbEFs" id="6QRYI6sOjmg" role="THmaL">
+                  <ref role="AarEw" to="dbfy:~PropertyCellTemplateBuilder.regex(kotlin/String)" resolve="regex" />
+                  <node concept="1XD0eI" id="6QRYI6sOjmh" role="TWiod">
+                    <node concept="1XD08G" id="6QRYI6sOjmi" role="1XD0ZN">
+                      <node concept="Df6$J" id="6QRYI6sOjmj" role="Df6Hu">
+                        <node concept="21VMdE" id="6QRYI6sOjmk" role="Df7GE">
+                          <node concept="17Uvod" id="6QRYI6sOk$p" role="lGtFl">
+                            <property role="2qtEX9" value="content" />
+                            <property role="P4ACc" value="6b3888c1-9802-44d8-8baf-f8e6c33ed689/1243006380188575965/1243006380188575966" />
+                            <node concept="3zFVjK" id="6QRYI6sOk$q" role="3zH0cK">
+                              <node concept="3clFbS" id="6QRYI6sOk$r" role="2VODD2">
+                                <node concept="3clFbF" id="6QRYI6sOkOz" role="3cqZAp">
+                                  <node concept="2OqwBi" id="6QRYI6sOn54" role="3clFbG">
+                                    <node concept="1PxgMI" id="6QRYI6sOmRE" role="2Oq$k0">
+                                      <node concept="chp4Y" id="6QRYI6sOmSU" role="3oSUPX">
+                                        <ref role="cht4Q" to="tpce:fKAz7CR" resolve="ConstrainedDataTypeDeclaration" />
+                                      </node>
+                                      <node concept="2OqwBi" id="6QRYI6sOlNw" role="1m5AlR">
+                                        <node concept="2OqwBi" id="6QRYI6sOlht" role="2Oq$k0">
+                                          <node concept="30H73N" id="6QRYI6sOkOy" role="2Oq$k0" />
+                                          <node concept="3TrEf2" id="6QRYI6sOluA" role="2OqNvi">
+                                            <ref role="3Tt5mk" to="f8gn:CUW2QYKUZw" resolve="property" />
+                                          </node>
+                                        </node>
+                                        <node concept="3TrEf2" id="6QRYI6sOmdq" role="2OqNvi">
+                                          <ref role="3Tt5mk" to="tpce:fKAX2Z_" resolve="dataType" />
+                                        </node>
+                                      </node>
+                                    </node>
+                                    <node concept="3TrcHB" id="6QRYI6sOnlk" role="2OqNvi">
+                                      <ref role="3TsBF5" to="tpce:fKFLfW2" resolve="constraint" />
+                                    </node>
+                                  </node>
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="1W57fq" id="6QRYI6sOjml" role="lGtFl">
+                    <node concept="3IZrLx" id="6QRYI6sOjmm" role="3IZSJc">
+                      <node concept="3clFbS" id="6QRYI6sOjmn" role="2VODD2">
+                        <node concept="3clFbF" id="6QRYI6sOjmo" role="3cqZAp">
+                          <node concept="2OqwBi" id="6QRYI6sOjmp" role="3clFbG">
+                            <node concept="2OqwBi" id="6QRYI6sOjmq" role="2Oq$k0">
+                              <node concept="2OqwBi" id="6QRYI6sOjmr" role="2Oq$k0">
+                                <node concept="30H73N" id="6QRYI6sOjms" role="2Oq$k0" />
+                                <node concept="3TrEf2" id="6QRYI6sOjmt" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="f8gn:CUW2QYKUZw" resolve="property" />
+                                </node>
+                              </node>
+                              <node concept="3TrEf2" id="6QRYI6sOjmu" role="2OqNvi">
+                                <ref role="3Tt5mk" to="tpce:fKAX2Z_" resolve="dataType" />
+                              </node>
+                            </node>
+                            <node concept="1mIQ4w" id="6QRYI6sOkrO" role="2OqNvi">
+                              <node concept="chp4Y" id="6QRYI6sOkss" role="cj9EA">
+                                <ref role="cht4Q" to="tpce:fKAz7CR" resolve="ConstrainedDataTypeDeclaration" />
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="1NbEFs" id="6QRYI6sOLuS" role="THmaL">
+                  <ref role="AarEw" to="dbfy:~PropertyCellTemplateBuilder.regex(kotlin/String)" resolve="regex" />
+                  <node concept="1XD0eI" id="6QRYI6sOLuT" role="TWiod">
+                    <node concept="1XD08G" id="6QRYI6sOLuU" role="1XD0ZN">
+                      <node concept="Df6$J" id="6QRYI6sOLuV" role="Df6Hu">
+                        <node concept="21VMdE" id="6QRYI6sOLuW" role="Df7GE">
+                          <property role="21VMdD" value="[a-zA-Z$[_]][a-zA-Z0-9$[_]]*" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="1W57fq" id="6QRYI6sOLva" role="lGtFl">
+                    <node concept="3IZrLx" id="6QRYI6sOLvb" role="3IZSJc">
+                      <node concept="3clFbS" id="6QRYI6sOLvc" role="2VODD2">
+                        <node concept="3clFbF" id="6QRYI6sOLvd" role="3cqZAp">
+                          <node concept="17R0WA" id="6QRYI6sQsZW" role="3clFbG">
+                            <node concept="2OqwBi" id="6QRYI6sQAQA" role="3uHU7B">
+                              <node concept="2OqwBi" id="6QRYI6sOLvg" role="2Oq$k0">
+                                <node concept="30H73N" id="6QRYI6sOLvh" role="2Oq$k0" />
+                                <node concept="3TrEf2" id="6QRYI6sOLvi" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="f8gn:CUW2QYKUZw" resolve="property" />
+                                </node>
+                              </node>
+                              <node concept="iZEcu" id="6QRYI6sQCu8" role="2OqNvi" />
+                            </node>
+                            <node concept="2tJFMh" id="6QRYI6sQvGr" role="3uHU7w">
+                              <node concept="ZC_QK" id="6QRYI6sQwj9" role="2tJFKM">
+                                <ref role="2aWVGs" to="tpck:h0TrEE$" resolve="INamedConcept" />
+                                <node concept="ZC_QK" id="6QRYI6sQypD" role="2aWVGa">
+                                  <ref role="2aWVGs" to="tpck:h0TrG11" resolve="name" />
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
           </node>
           <node concept="1NbEFs" id="CUW2QYO8M8" role="21Pmik">
             <ref role="AarEw" to="1g18:~MPSProperty.new(jetbrains/mps/smodel/adapter/structure/property/SPropertyAdapter)" resolve="MPSProperty" />
