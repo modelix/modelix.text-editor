@@ -30,3 +30,26 @@ class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>
         }
     }
 }
+
+class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode {
+    override fun toString(): String {
+        return "completed[$symbol]"
+    }
+}
+
+class ParseForestNode(val trees: List<IParseTreeNode>) : IParseTreeNode {
+
+    override fun toString(): String {
+        return "forest {\n${trees.joinToString("\n").prependIndent()}\n}"
+    }
+
+    companion object {
+        fun create(trees: List<IParseTreeNode>): IParseTreeNode? {
+            return when (trees.size) {
+                0 -> null
+                1 -> trees.first()
+                else -> ParseForestNode(trees)
+            }
+        }
+    }
+}

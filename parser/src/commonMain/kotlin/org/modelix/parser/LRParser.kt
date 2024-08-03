@@ -8,31 +8,38 @@ class LRParser(val table: LRTable) {
     private var unconsumedInput: String = ""
     var stepLimit = 10_000
 
-    private fun stateIndex(): Int = stack.reversed().asSequence().filter { it.isState() }.map { it.getState() }.first()
+    private fun stateIndex(): Int = stack.last { it.isState() }.getState()
 
-    fun parse(input: String): IParseTreeNode {
+    fun parse(input: String, complete: Boolean = false): IParseTreeNode {
         unconsumedInput = input
         stack.clear()
         stack.add(StackElement(0))
         var state = table.states[stateIndex()]
-        var actionAndToken: Pair<LRAction, IParseTreeNode>? = chooseActionForTrimmedInput(state)
+        var nextAction: LRAction? = null
         var step = 2
-        main@ while (step < stepLimit && actionAndToken != null && (actionAndToken.first as? ReduceAction)?.rule?.isGoal() != true) {
-            val action = actionAndToken.first
-            when (action) {
+        var tokenToShift: IToken? = null
+        var lookahead: IToken? = null
+        chooseActionForTrimmedInput(state)?.let { nextAction = it.first; tokenToShift = it.second }
+        main@ while (step < stepLimit) {
+            when (val action = nextAction) {
+                null -> break
                 is ShiftAction -> {
-                    val token = actionAndToken.second
-                    // check(!tokenAlreadyConsumed && token is IToken) { "Can't shift token that was read from stack" }
-                    check(token is IToken) { "Not a terminal: $token" }
-                    unconsumedInput = unconsumedInput.substring(token.textLength())
-                    stack.add(StackElement(token))
+                    val token = checkNotNull(tokenToShift) { "No token provided for shift action" }
+                    if (lookahead != null) {
+                        check(lookahead == token)
+                        stack.add(StackElement(token = lookahead))
+                        lookahead = null
+                    } else {
+                        unconsumedInput = unconsumedInput.substring(token.textLength())
+                        stack.add(StackElement(token))
+                    }
                     stack.add(StackElement(action.nextState))
                 }
                 is ReduceAction -> {
                     val rule = action.rule
                     if (rule.isGoal()) break@main
                     val removeCount = rule.symbols.size * 2
-                    val removedTokens = stack.takeLast(removeCount).filter { it.isToken() }.map { it.getToken() }
+                    val removedTokens = stack.takeLast(removeCount).filter { it.isNode() }.map { it.getToken() }
                     repeat(removeCount) { stack.removeLast() }
                     stack.add(StackElement(ParseTreeNode(rule, removedTokens)))
                 }
@@ -44,12 +51,72 @@ class LRParser(val table: LRTable) {
 
             state = table.states[stateIndex()]
             val lastStackElement = stack.last()
-            if (lastStackElement.isToken()) {
+            if (lastStackElement.isNode()) {
+                // choose action by element on the stack
                 val token = lastStackElement.getToken()
                 val actions: MutableSet<LRAction>? = state.actions.entries.firstOrNull { it.key.matches(token) }?.value
-                actionAndToken = actions?.firstOrNull()?.let { it to token }
+                nextAction = actions?.firstOrNull()
             } else {
-                actionAndToken = chooseActionForTrimmedInput(state)
+                // choose action by pending input
+                val actionAndToken = chooseActionForTrimmedInput(state)
+                nextAction = actionAndToken?.first
+                tokenToShift = actionAndToken?.second
+            }
+
+            // completion
+            if (nextAction == null && complete) {
+                val candidates = state.actions.entries.sortedBy {
+                    when (it.key) {
+                        EndOfInputSymbol -> 0
+                        EmptySymbol -> 1
+                        is NodeSymbol -> 2
+                        is ListSymbol -> 3
+                        is ConstantSymbol -> 4
+                        is PropertySymbol -> 5
+                        is ReferenceSymbol -> 6
+                        GoalSymbol -> error("Not expected on the right hand side of a rule")
+                        is OptionalSymbol -> error("Should have been expanded into multiple rules")
+                    }
+                }.sortedBy { it.value.minOf { table.getDistanceToAccept(it) } }
+                for (candidate in candidates) {
+                    val completionToken = when (val symbol = candidate.key) {
+                        EmptySymbol -> EmptyToken
+                        EndOfInputSymbol -> EndOfInputToken
+                        is NodeSymbol -> CompletedNode(symbol)
+                        is ConstantSymbol -> ConstantToken(symbol.text)
+                        is PropertySymbol -> PropertyToken("")
+                        is ReferenceSymbol -> ReferenceToken("")
+                        is ListSymbol -> CompletedNode(symbol)
+                        is OptionalSymbol -> error("Should have been expanded into multiple rules")
+                        GoalSymbol -> error("Not expected on the right hand side of a rule")
+                    }
+                    val action = candidate.value.first()
+                    when (action) {
+                        AcceptAction -> {
+                            if (lastStackElement.isState()) {
+                                stack.add(StackElement(completionToken))
+                            }
+                        }
+                        is GotoAction -> {
+                            if (lastStackElement.isState()) {
+                                stack.add(StackElement(completionToken))
+                            }
+                            nextAction = action
+                        }
+                        is ReduceAction -> {
+                            if (lastStackElement.isState()) {
+                                stack.add(StackElement(completionToken))
+                            }
+                            nextAction = action
+                        }
+                        is ShiftAction -> {
+                            lookahead = completionToken as IToken
+                            nextAction = action
+                            tokenToShift = completionToken
+                        }
+                    }
+                    break
+                }
             }
 
             step++
@@ -138,15 +205,15 @@ class LRParser(val table: LRTable) {
         }
     }
 
-    private class StackElement private constructor(private val token: IParseTreeNode? = null, private val state: Int? = null) {
+    private class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) {
         constructor(token: IParseTreeNode) : this(token, null)
         constructor(state: Int) : this(null, state)
-        fun isToken() = token != null
+        fun isNode() = node != null
         fun isState() = state != null
-        fun getToken() = checkNotNull(token) { "Not a token" }
+        fun getToken() = checkNotNull(node) { "Not a token" }
         fun getState() = checkNotNull(state) { "Not a state" }
         override fun toString(): String {
-            return if (isToken()) getToken().toString() else "[" + getState().toString() + "]"
+            return if (isNode()) getToken().toString() else "[" + getState().toString() + "]"
         }
     }
 }
