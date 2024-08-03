@@ -143,6 +143,7 @@ class LRParser(val table: LRTable) {
         // TODO resolve conflicts based on operator precedence
         return applicableActions.entries
             .flatMap { entry -> entry.key.value.map { it to entry.value } }
+            .sortedByDescending { it.second.textLength() }
             .sortedBy {
                 when (it.second) {
                     is ConstantToken -> 0
@@ -199,7 +200,8 @@ class LRParser(val table: LRTable) {
                 null
             }
         } else {
-            null
+            val firstSpace = unconsumedInput.indexOf(" ")
+            if (firstSpace < 1) null else createToken(unconsumedInput.substring(0, firstSpace))
         }
     }
 
