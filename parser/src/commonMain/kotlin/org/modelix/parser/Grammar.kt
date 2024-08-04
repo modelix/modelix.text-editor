@@ -1,8 +1,9 @@
 package org.modelix.parser
 
 class Grammar(originalRules: List<ProductionRule> = emptyList()) {
-    private val rules = ArrayList<ProductionRule>()
+    private val rules = LinkedHashSet<ProductionRule>()
     private val existingLists = HashSet<ListSymbol>()
+    private val existingOptionals = HashSet<OptionalSymbol>()
 
     init {
         originalRules.forEach { addRule(it) }
@@ -12,14 +13,15 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         val filteredSymbols = filterSymbols(rule.symbols)
         if (filteredSymbols.isEmpty()) return
 
-        val newRules = ProductionRule(rule.head, filteredSymbols).expandOptionals()
-        check(newRules.all { it.symbols.filterIsInstance<OptionalSymbol>().isEmpty() })
-        rules += newRules
+        val newRule = ProductionRule(rule.head, filteredSymbols)
+        rules += newRule
 
-        val listSymbols = newRules.asSequence().flatMap { it.symbols }.filterIsInstance<ListSymbol>().toSet()
-        for (listSymbol in listSymbols) {
-            addListRules(listSymbol)
-        }
+        loadRulesFromSymbols(newRule.symbols)
+    }
+
+    private fun loadRulesFromSymbols(symbols: List<ISymbol>) {
+        symbols.filterIsInstance<ListSymbol>().forEach { addListRules(it) }
+        symbols.filterIsInstance<OptionalSymbol>().forEach { addOptionalRules(it) }
     }
 
     private fun addListRules(listSymbol: ListSymbol) {
@@ -27,6 +29,14 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         existingLists.add(listSymbol)
         rules += ProductionRule(listSymbol, listSymbol.item)
         rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
+    }
+
+    private fun addOptionalRules(optionalSymbol: OptionalSymbol) {
+        if (existingOptionals.contains(optionalSymbol)) return
+        existingOptionals.add(optionalSymbol)
+        rules += ProductionRule(optionalSymbol, optionalSymbol.children)
+        rules += ProductionRule(optionalSymbol, EmptySymbol)
+        loadRulesFromSymbols(optionalSymbol.children)
     }
 
     private fun filterSymbols(symbols: List<ISymbol>): List<ISymbol> {

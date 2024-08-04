@@ -54,7 +54,7 @@ class LRParser(val table: LRTable) {
             if (lastStackElement.isNode()) {
                 // choose action by element on the stack
                 val token = lastStackElement.getToken()
-                val actions: MutableSet<LRAction>? = state.actions.entries.firstOrNull { it.key.matches(token) }?.value
+                val actions: Array<out LRAction>? = state.getSymbolsAndActions().firstOrNull { it.first.matches(token) }?.second
                 nextAction = actions?.firstOrNull()
             } else {
                 // choose action by pending input
@@ -65,8 +65,8 @@ class LRParser(val table: LRTable) {
 
             // completion
             if (nextAction == null && complete) {
-                val candidates = state.actions.entries.sortedBy {
-                    when (it.key) {
+                val candidates = state.getSymbolsAndActions().sortedBy {
+                    when (it.first) {
                         EndOfInputSymbol -> 0
                         EmptySymbol -> 1
                         is NodeSymbol -> 2
@@ -77,9 +77,9 @@ class LRParser(val table: LRTable) {
                         GoalSymbol -> error("Not expected on the right hand side of a rule")
                         is OptionalSymbol -> error("Should have been expanded into multiple rules")
                     }
-                }.sortedBy { it.value.minOf { table.getDistanceToAccept(it) } }
+                }.sortedBy { it.second.minOf { table.getDistanceToAccept(it) } }
                 for (candidate in candidates) {
-                    val completionToken = when (val symbol = candidate.key) {
+                    val completionToken = when (val symbol = candidate.first) {
                         EmptySymbol -> EmptyToken
                         EndOfInputSymbol -> EndOfInputToken
                         is NodeSymbol -> CompletedNode(symbol)
@@ -90,7 +90,7 @@ class LRParser(val table: LRTable) {
                         is OptionalSymbol -> error("Should have been expanded into multiple rules")
                         GoalSymbol -> error("Not expected on the right hand side of a rule")
                     }
-                    val action = candidate.value.minBy { table.getDistanceToAccept(it) }
+                    val action = candidate.second.minBy { table.getDistanceToAccept(it) }
                     when (action) {
                         AcceptAction -> {
                             if (lastStackElement.isState()) {
@@ -124,25 +124,25 @@ class LRParser(val table: LRTable) {
     }
 
     private fun chooseActionForTrimmedInput(state: LRState): Pair<LRAction, IToken>? {
-        chooseActionForInput(state)?.let { return it }
+        chooseActionForInput(state)?.takeIf { it.second !is EmptyToken }?.let { return it }
         unconsumedInput = unconsumedInput.trimStart()
         return chooseActionForInput(state)
     }
 
     private fun chooseActionForInput(state: LRState): Pair<LRAction, IToken>? {
-        val applicableActions: Map<MutableMap.MutableEntry<ISymbol, MutableSet<LRAction>>, IToken> =
-            state.actions.entries.filter { it.value.isNotEmpty() }.associateWithNotNull { action ->
-                val followingState = action.value.asSequence()
+        val applicableActions: Map<Pair<ISymbol, Array<out LRAction>>, IToken> =
+            state.getSymbolsAndActions().associateWithNotNull { action ->
+                val followingState = action.second.asSequence()
                     .filterIsInstance<ShiftAction>()
                     .map { it.nextState }
                     .map { table.states[it] }
                     .firstOrNull()
-                matchInput(action.key, followingState)
+                matchInput(action.first, followingState)
             }
 
         // TODO resolve conflicts based on operator precedence
         return applicableActions.entries
-            .flatMap { entry -> entry.key.value.map { it to entry.value } }
+            .flatMap { entry -> entry.key.second.map { it to entry.value } }
             .sortedByDescending { it.second.textLength() }
             .sortedBy {
                 when (it.second) {
@@ -192,7 +192,7 @@ class LRParser(val table: LRTable) {
                 null
             }
         } else if (followingState != null) {
-            val followingConstants = followingState.actions.keys.filterIsInstance<ConstantSymbol>().map { it.text }
+            val followingConstants = followingState.getSymbols().filterIsInstance<ConstantSymbol>().map { it.text }
             val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
             if (nextConstantPos != null) {
                 createToken(unconsumedInput.substring(0, nextConstantPos))
@@ -225,4 +225,8 @@ fun Grammar.createParser(startConcept: IConcept): LRParser {
 fun Grammar.createParseTable(startConcept: IConcept): LRTable {
     val closureTable = LRClosureTable(grammar = this, startConcept = startConcept).also { it.load() }
     return LRTable().also { it.load(closureTable) }
+}
+
+inline fun <K, V : Any> Sequence<K>.associateWithNotNull(valueSelector: (K) -> V?): Map<K, V> {
+    return associateWith { valueSelector(it) }.filterValues { it != null } as Map<K, V>
 }

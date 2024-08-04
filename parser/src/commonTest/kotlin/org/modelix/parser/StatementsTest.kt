@@ -13,6 +13,7 @@ class StatementsTest {
             LocalVariableDeclaration {
                 IntegerType { ConstantToken(text=int) }
                 PropertyToken(text=a)
+                optional(constant[=] Expression) { EmptyToken }
             }
             ConstantToken(text=;)
         }
@@ -26,11 +27,13 @@ class StatementsTest {
             LocalVariableDeclaration {
                 IntegerType { ConstantToken(text=int) }
                 PropertyToken(text=a)
-                ConstantToken(text==)
-                PlusExpression {
-                    IntegerLiteral { PropertyToken(text=10) }
-                    ConstantToken(text=+)
-                    IntegerLiteral { PropertyToken(text=20) }
+                optional(constant[=] Expression) {
+                    ConstantToken(text==)
+                    PlusExpression {
+                        IntegerLiteral { PropertyToken(text=10) }
+                        ConstantToken(text=+)
+                        IntegerLiteral { PropertyToken(text=20) }
+                    }
                 }
             }
             ConstantToken(text=;)
