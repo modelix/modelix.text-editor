@@ -1,5 +1,7 @@
 package org.modelix.parser
 
+import kotlin.math.min
+
 class LRTable() {
     val states: MutableList<LRState> = ArrayList()
 
@@ -16,8 +18,10 @@ class LRTable() {
         if (state.distanceToAccept == -1) {
             if (pathLength > 100) return Int.MAX_VALUE / 2
             state.distanceToAccept = Int.MAX_VALUE / 2 // also avoid endless recursion
-
-            state.distanceToAccept = state.getAllActions().minOf { getDistanceToAccept(it, pathLength + 1) }
+            state.visitActions {
+                state.distanceToAccept = min(state.distanceToAccept, getDistanceToAccept(it, pathLength + 1))
+            }
+//            state.distanceToAccept = state.getAllActions().minOf { getDistanceToAccept(it, pathLength + 1) }
         }
         return state.distanceToAccept
     }
@@ -46,6 +50,10 @@ class LRTable() {
 
 class LRState {
     var distanceToAccept: Int = -1
+
+    /**
+     * Optimized for low memory consumption
+     */
     private var actions: Map<ISymbol, Any>? = null
 
     fun addAction(symbol: ISymbol, action: LRAction) {
@@ -87,6 +95,28 @@ class LRState {
 
     fun getAllActions(): Sequence<LRAction> {
         return actions?.values?.asSequence()?.flatMap { valueToSequence(it) } ?: emptySequence()
+    }
+
+    /**
+     * Better performance than building a sequence.
+     */
+    fun visitActions(visitor: (LRAction) -> Unit) {
+        if (actions == null) return
+        if (actions is SingleEntryMap) visitActionsInArray((actions as SingleEntryMap).value, visitor)
+    }
+
+    private fun visitActionsInArray(value: Any, visitor: (LRAction) -> Unit) {
+        when (value) {
+            null -> {}
+            is LRAction -> {
+                visitor(value)
+            }
+            else -> {
+                for (action in (value as Array<LRAction>)) {
+                    visitor(action)
+                }
+            }
+        }
     }
 
     fun getSymbols(): Sequence<ISymbol> = actions?.keys?.asSequence() ?: emptySequence()
