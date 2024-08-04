@@ -47,7 +47,7 @@ object TestGrammar {
 
     fun getGrammar() = Grammar(rules)
 
-    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
+    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
         val closureTable = LRClosureTable(TestGrammar.getGrammar(), startConcept)
         closureTable.load()
         val parsingTable = LRTable()

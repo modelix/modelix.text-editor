@@ -26,7 +26,7 @@ class ParserForEditor(val engine: EditorEngine){
         }
     }
 
-    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
+    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
         return LRParser(getParseTable(startConcept), disambiguator)
     }
 

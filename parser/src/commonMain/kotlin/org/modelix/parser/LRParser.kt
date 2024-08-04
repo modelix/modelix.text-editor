@@ -2,14 +2,55 @@ package org.modelix.parser
 
 import org.modelix.model.api.IConcept
 
-class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
+interface IParser {
+    fun parse(input: String, complete: Boolean): IParseTreeNode
+    fun parse(input: String): IParseTreeNode = parse(input, complete = false)
+    fun parseCompleting(input: String): IParseTreeNode = parse(input, complete = true)
+    fun tryParse(input: String, complete: Boolean): IParseTreeNode?
+    fun parseForest(input: String) : Sequence<IParseTreeNode> = parseForest(input, false)
+    fun parseForest(input: String, complete: Boolean) : Sequence<IParseTreeNode>
+}
+
+class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambiguator) : IParser {
     private val stack = ArrayList<StackElement>()
     private var unconsumedInput: String = ""
     var stepLimit = 10_000
+    private var disambiguator = defaultDisambiguator
 
     private fun stateIndex(): Int = stack.last { it.isState() }.getState()
 
-    fun parse(input: String, complete: Boolean = false): IParseTreeNode {
+    override fun parse(input: String, complete: Boolean): IParseTreeNode {
+        return tryParse(input, complete) ?: error("Invalid input: $input\nCurrent stack: $stack")
+    }
+
+    override fun tryParse(input: String, complete: Boolean): IParseTreeNode? {
+        return if (complete) {
+            doParse(input, complete)
+        } else {
+            parseForest(input, complete, 100, 1).firstOrNull()
+        }
+    }
+
+    override fun parseForest(input: String, complete: Boolean): Sequence<IParseTreeNode> {
+        return parseForest(input, complete, 100, 100)
+    }
+
+    private fun parseForest(input: String, complete: Boolean, maxIterations: Int, maxSize: Int): Sequence<IParseTreeNode> {
+        val iteratingDisambiguator = IteratingDisambiguator()
+        disambiguator = defaultDisambiguator.withLastDisambiguator(iteratingDisambiguator)
+        try {
+            val parseTrees = ArrayList<IParseTreeNode>()
+            var i = maxIterations
+            do {
+                doParse(input, complete)?.let { parseTrees.add(it) }
+            } while (i-- > 0 && parseTrees.size < maxSize && iteratingDisambiguator.next())
+            return parseTrees.asSequence()
+        } finally {
+            disambiguator = defaultDisambiguator
+        }
+    }
+
+    private fun doParse(input: String, complete: Boolean): IParseTreeNode? {
         unconsumedInput = input
         stack.clear()
         stack.add(StackElement(0))
@@ -81,7 +122,7 @@ class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
                     .flatMap { symbolAndActions -> symbolAndActions.second.map { symbolAndActions.first to it } }
                     .sortedBy { table.getDistanceToAccept(it.second) }
                     .toList()
-                val candidate = candidates[disambiguator.chooseActionIndex(candidates.map { it.second })]
+                val candidate = candidates.first()
                 val completionToken = when (val symbol = candidate.first) {
                     EmptySymbol -> EmptyToken
                     EndOfInputSymbol -> EndOfInputToken
@@ -119,7 +160,7 @@ class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
             step++
         }
 
-        error("Invalid input: $input\nCurrent stack: $stack")
+        return null
     }
 
     private fun chooseActionForTrimmedInput(state: LRState): Pair<LRAction, IToken>? {
@@ -153,7 +194,7 @@ class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
                 }
             }
             .takeIf { it.isNotEmpty() }
-            ?.let { it[disambiguator.chooseActionIndex(it.map { it.first })] }
+            ?.let { it[disambiguator.chooseActionIndexIfNecessary(it.map { it.first })] }
     }
 
     private fun matchInput(symbol: ISymbol, followingStates: List<LRState>): IToken? {
@@ -218,7 +259,7 @@ class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
     }
 }
 
-fun Grammar.createParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
+fun Grammar.createParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
     return LRParser(createParseTable(startConcept), disambiguator)
 }
 

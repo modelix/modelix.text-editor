@@ -433,9 +433,9 @@ class ExpressionsTest {
 
     fun runTest(input: String, expected: String) {
         val parser = TestGrammar.getParser(TestGrammar.expression)
-        val parseTree = parser.parse(input)
-        println(measureTime { parser.parse(input) })
-        println(parseTree)
-        assertEquals(expected, parseTree.toString())
+        val parseTrees = parser.parseForest(input)
+        //println(measureTime { parser.parse(input) })
+        println(parseTrees.joinToString("\n---\n"))
+        assertEquals(expected, parseTrees.joinToString("\n---\n"))
     }
 }
