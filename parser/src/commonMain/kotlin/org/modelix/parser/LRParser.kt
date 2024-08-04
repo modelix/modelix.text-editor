@@ -12,12 +12,13 @@ interface IParser {
 }
 
 class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambiguator) : IParser {
-    private val stack = ArrayList<StackElement>()
+    private val gss = GraphStructuredStack<StackElement>()
+    private val stack = gss.newStack()
     private var unconsumedInput: String = ""
     var stepLimit = 10_000
     private var disambiguator = defaultDisambiguator
 
-    private fun stateIndex(): Int = stack.last { it.isState() }.getState()
+    private fun stateIndex(): Int = stack.first { it.isState() }.getState()
 
     override fun parse(input: String, complete: Boolean): IParseTreeNode {
         return tryParse(input, complete) ?: error("Invalid input: $input\nCurrent stack: $stack")
@@ -53,7 +54,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private fun doParse(input: String, complete: Boolean): IParseTreeNode? {
         unconsumedInput = input
         stack.clear()
-        stack.add(StackElement(0))
+        stack.push(StackElement(0))
         var state = table.states[stateIndex()]
         var nextAction: LRAction? = null
         var step = 2
@@ -68,31 +69,33 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     if (token !is EmptyToken) {
                         if (lookahead != null) {
                             check(lookahead == token) { "Next token is $lookahead, but expected $token" }
-                            stack.add(StackElement(token = lookahead))
+                            stack.push(StackElement(token = lookahead))
                             lookahead = null
                         } else {
                             unconsumedInput = unconsumedInput.substring(token.textLength())
-                            stack.add(StackElement(token))
+                            stack.push(StackElement(token))
                         }
                     }
-                    stack.add(StackElement(action.nextState))
+                    stack.push(StackElement(action.nextState))
                 }
                 is ReduceAction -> {
                     val rule = action.rule
                     if (rule.isGoal()) break@main
                     val removeCount = rule.symbols.size * 2
-                    val removedTokens = stack.takeLast(removeCount).filter { it.isNode() }.map { it.getToken() }
-                    repeat(removeCount) { stack.removeLast() }
-                    stack.add(StackElement(ParseTreeNode(rule, removedTokens)))
+                    val removedTokens = ArrayList<IParseTreeNode>()
+                    repeat(removeCount) {
+                        stack.pop().takeIf { it.isNode() }?.getToken()?.let { removedTokens.add(it) }
+                    }
+                    stack.push(StackElement(ParseTreeNode(rule, removedTokens.reversed())))
                 }
                 is GotoAction -> {
-                    stack.add(StackElement(action.nextState))
+                    stack.push(StackElement(action.nextState))
                 }
-                AcceptAction -> return stack[1].getToken()
+                AcceptAction -> return stack.toList().asReversed()[1].getToken()
             }
 
             state = table.states[stateIndex()]
-            val lastStackElement = stack.last()
+            val lastStackElement = stack.peek()
             if (lastStackElement.isNode()) {
                 // choose action by element on the stack
                 val token = lastStackElement.getToken()
@@ -138,12 +141,12 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 when (action) {
                     AcceptAction -> {
                         if (lastStackElement.isState()) {
-                            stack.add(StackElement(completionToken))
+                            stack.push(StackElement(completionToken))
                         }
                     }
                     is GotoAction -> {
                         if (lastStackElement.isState()) {
-                            stack.add(StackElement(completionToken))
+                            stack.push(StackElement(completionToken))
                         }
                         nextAction = action
                     }
