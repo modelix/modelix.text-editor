@@ -77,8 +77,16 @@ class LRState {
         }
     }
 
+    private fun valueToSequence(value: Any?): Sequence<LRAction> {
+        return when (value) {
+            null -> emptySequence()
+            is LRAction -> sequenceOf(value)
+            else -> (value as Array<LRAction>).asSequence()
+        }
+    }
+
     fun getAllActions(): Sequence<LRAction> {
-        return actions?.values?.asSequence()?.flatMap { valueToArray(it).asSequence() } ?: emptySequence()
+        return actions?.values?.asSequence()?.flatMap { valueToSequence(it) } ?: emptySequence()
     }
 
     fun getSymbols(): Sequence<ISymbol> = actions?.keys?.asSequence() ?: emptySequence()
@@ -94,15 +102,15 @@ data class ReduceAction(val rule: ProductionRule) : LRAction()
 data class GotoAction(val nextState: Int) : LRAction()
 data object AcceptAction : LRAction()
 
-private class SingleEntryMap<K, V>(val key: K, val value: V): Map<K, V> {
-    override val entries: MutableSet<MutableMap.MutableEntry<K, V>>
-        get() = mutableMapOf(key to value).entries
-    override val keys: MutableSet<K>
-        get() = mutableSetOf(key)
+private class SingleEntryMap<K, V>(override val key: K, override val value: V) : Map<K, V>, Map.Entry<K, V> {
+    override val entries: Set<Map.Entry<K, V>>
+        get() = SingleEntrySet(this)
+    override val keys: Set<K>
+        get() = SingleEntrySet(key)
     override val size: Int
         get() = 1
-    override val values: MutableCollection<V>
-        get() = mutableMapOf(key to value).values
+    override val values: Collection<V>
+        get() = listOf(value)
 
     override fun containsKey(key: K): Boolean = this.key == key
 
@@ -111,4 +119,25 @@ private class SingleEntryMap<K, V>(val key: K, val value: V): Map<K, V> {
     override fun get(key: K): V? = if (key == this.key) value else null
 
     override fun isEmpty(): Boolean = false
+}
+
+private class SingleEntrySet<E>(val value: E) : Set<E> {
+    override fun contains(element: E): Boolean {
+        return element == value
+    }
+
+    override val size: Int
+        get() = 1
+
+    override fun containsAll(elements: Collection<E>): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun isEmpty(): Boolean {
+        return false
+    }
+
+    override fun iterator(): Iterator<E> {
+        return listOf(value).iterator()
+    }
 }

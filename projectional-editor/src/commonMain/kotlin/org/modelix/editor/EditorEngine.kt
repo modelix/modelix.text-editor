@@ -4,6 +4,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import org.modelix.editor.celltemplate.CellTemplate
+import org.modelix.editor.celltemplate.ParserForEditor
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.incremental.incrementalFunction
 import org.modelix.metamodel.ITypedNode
@@ -12,6 +13,7 @@ import org.modelix.model.api.IConceptReference
 import org.modelix.model.api.INode
 import org.modelix.model.api.getAllConcepts
 import org.modelix.model.api.remove
+import org.modelix.parser.IParseTreeNode
 
 class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
 
@@ -20,6 +22,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     private val editorsForConcept: MutableMap<IConceptReference, MutableList<ConceptEditor>> = LinkedHashMap()
     private val conceptEditorRegistries = ArrayList<IConceptEditorRegistry>()
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
+    private val parser = ParserForEditor(this)
 
     init {
         if (incrementalEngine == null) {
@@ -138,6 +141,10 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
                 .takeIf { it.isNotEmpty() }
         }
         return (editors ?: emptyList()) + defaultConceptEditor
+    }
+
+    fun parse(input: String, outputConcept: IConcept, complete: Boolean): List<IParseTreeNode> {
+        return parser.getParser(startConcept = outputConcept).parseForest(input, complete).toList()
     }
 
     fun dispose() {
