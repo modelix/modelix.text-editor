@@ -10,7 +10,7 @@ sealed interface ISymbol {
 sealed interface ITerminalSymbol : ISymbol
 sealed interface INonTerminalSymbol : ISymbol
 
-data class OptionalSymbol(val children: List<ISymbol>) : ISymbol {
+data class OptionalSymbol(val children: List<ISymbol>) : INonTerminalSymbol {
     constructor(vararg symbol: ISymbol) : this(symbol.toList())
 
     override fun leafSymbols(): Sequence<ISymbol> {
@@ -18,11 +18,15 @@ data class OptionalSymbol(val children: List<ISymbol>) : ISymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        error("Should have been expanded into multiple rules")
+        return token is ParseTreeNode && token.rule.head.isSubtypeOf(this)
     }
 
     override fun isSubtypeOf(superType: ISymbol): Boolean {
-        error("Should have been expanded into multiple rules")
+        return this == superType
+    }
+
+    override fun toString(): String {
+        return "optional(${children.joinToString(" ")})"
     }
 }
 data class ConstantSymbol(val text: String) : ITerminalSymbol {
@@ -116,13 +120,6 @@ class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
     }
 
     fun isGoal() = head == GoalSymbol
-
-    override fun equals(other: Any?): Boolean {
-        return super.equals(other)
-    }
-
-    private val _hashCode = arrayOf(head, symbols).contentHashCode()
-    override fun hashCode(): Int = _hashCode
 }
 
 data object GoalSymbol : ISymbol {

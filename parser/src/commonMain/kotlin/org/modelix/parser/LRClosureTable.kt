@@ -120,7 +120,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
 
     inner class KernelsList : Iterable<Kernel> {
         private val kernelsList = ArrayList<Kernel>()
-        private val kernelsMap: MutableMap<Set<RuleItem>, Kernel> = LinkedHashMap()
+        private val kernelsMap: MutableMap<Set<RuleItem>, Kernel> = HashMap()
 
         override fun iterator(): Iterator<Kernel> = kernelsList.iterator()
 
@@ -149,8 +149,8 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
 
     class Kernel(val index: Int, var items: Set<RuleItem>) {
         var closure: MutableMap<PositionInRule, RuleItem> = items.associateBy { it.positionInRule }.toMutableMap()
-        val gotos: MutableMap<ISymbol, Int> = LinkedHashMap()
-        val keys: MutableSet<ISymbol> = LinkedHashSet()
+        val gotos: MutableMap<ISymbol, Int> = HashMap()
+        val keys: MutableSet<ISymbol> = HashSet()
     }
 }
 
