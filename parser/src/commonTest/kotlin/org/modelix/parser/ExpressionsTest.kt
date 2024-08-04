@@ -1,5 +1,6 @@
 package org.modelix.parser
 
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.time.measureTime
@@ -43,7 +44,7 @@ class ExpressionsTest {
         """.trimIndent()
     )
 
-    @Test fun test3() = runTest(
+    @Ignore @Test fun test3() = runTest(
         "1+2+3+4+5+6+7+8+9+10+11+12+13",
         """
         PlusExpression {

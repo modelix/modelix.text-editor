@@ -4,7 +4,7 @@ interface IDisambiguator {
     fun chooseActionIndex(actions: List<LRAction>): Int
     fun withLastDisambiguator(newLast: IDisambiguator): IDisambiguator
     companion object {
-        fun default() = PreferReduceDisambiguator(ChooseFirstDisambiguator())
+        fun default() = ChooseFirstDisambiguator() // PreferReduceDisambiguator(ChooseFirstDisambiguator())
     }
 }
 
@@ -16,7 +16,7 @@ fun IDisambiguator.chooseAction(actions: List<LRAction>): LRAction {
     return if (actions.size == 1) actions[0] else actions[chooseActionIndex(actions)]
 }
 
-class IteratingDisambiguator : IDisambiguator {
+class DepthFirstSearchDisambiguator : IDisambiguator {
     private val nextIndices = mutableListOf<Int>()
     private val isDone = mutableListOf<Boolean>()
     private var currentDepth = 0
@@ -43,6 +43,53 @@ class IteratingDisambiguator : IDisambiguator {
     }
 
     override fun withLastDisambiguator(newLast: IDisambiguator): IDisambiguator = newLast
+}
+
+class BreadthFirstSearchDisambiguator : IDisambiguator {
+    private val root = SearchTree()
+    private var currentPath = mutableListOf(root)
+    override fun chooseActionIndex(actions: List<LRAction>): Int {
+        return currentPath.last().chooseActionIndex(actions)
+    }
+    fun next(): Boolean {
+        currentPath.reversed().forEach { it.updateDoneState() }
+        currentPath.clear()
+        currentPath.add(root)
+        return !root.isDone
+    }
+
+    override fun withLastDisambiguator(newLast: IDisambiguator): IDisambiguator = newLast
+
+    private inner class SearchTree {
+        val subtrees = ArrayList<SearchTree>()
+        var isDone: Boolean = false
+        var lastIndex = -1
+        var nextIndex = 0
+
+        fun chooseActionIndex(actions: List<LRAction>): Int {
+            while (subtrees.size < actions.size) subtrees.add(SearchTree())
+            for (i in actions.indices.reversed()) {
+                if (subtrees.getOrNull(nextIndex)?.isDone == true) {
+                    check(i != 0) { "Shouldn't be called when already done" }
+                    nextIndex = (nextIndex + 1) % actions.size
+                }
+            }
+
+            val result = nextIndex
+            lastIndex = result
+            check(result <= actions.lastIndex) {
+                println("aaa")
+            }
+            nextIndex = (nextIndex + 1) % actions.size
+
+            currentPath.add(subtrees[result])
+            return result
+        }
+
+        fun updateDoneState() {
+            isDone = !subtrees.any { !it.isDone }
+        }
+    }
 }
 
 class ChooseFirstDisambiguator : IDisambiguator {
