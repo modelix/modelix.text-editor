@@ -65,13 +65,15 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 null -> break
                 is ShiftAction -> {
                     val token = checkNotNull(tokenToShift) { "No token provided for shift action" }
-                    if (lookahead != null) {
-                        check(lookahead == token)
-                        stack.add(StackElement(token = lookahead))
-                        lookahead = null
-                    } else {
-                        unconsumedInput = unconsumedInput.substring(token.textLength())
-                        stack.add(StackElement(token))
+                    if (token !is EmptyToken) {
+                        if (lookahead != null) {
+                            check(lookahead == token) { "Next token is $lookahead, but expected $token" }
+                            stack.add(StackElement(token = lookahead))
+                            lookahead = null
+                        } else {
+                            unconsumedInput = unconsumedInput.substring(token.textLength())
+                            stack.add(StackElement(token))
+                        }
                     }
                     stack.add(StackElement(action.nextState))
                 }
@@ -146,7 +148,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                         nextAction = action
                     }
                     is ReduceAction -> {
-                        lookahead = completionToken as IToken // it were a non-terminal, it would be a GotoAction
+                        lookahead = completionToken as IToken // if it were a non-terminal, it would be a GotoAction
                         nextAction = action
                     }
                     is ShiftAction -> {
