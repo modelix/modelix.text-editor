@@ -47,12 +47,12 @@ object TestGrammar {
 
     fun getGrammar() = Grammar(rules)
 
-    fun getParser(startConcept: IConcept): LRParser {
+    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
         val closureTable = LRClosureTable(TestGrammar.getGrammar(), startConcept)
         closureTable.load()
         val parsingTable = LRTable()
         parsingTable.load(closureTable)
-        return LRParser(parsingTable)
+        return LRParser(parsingTable, disambiguator)
     }
 
     fun addRule(concept: IConcept, vararg symbols: ISymbol) {

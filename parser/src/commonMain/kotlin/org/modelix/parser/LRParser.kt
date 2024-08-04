@@ -1,9 +1,8 @@
 package org.modelix.parser
 
 import org.modelix.model.api.IConcept
-import org.modelix.model.data.associateWithNotNull
 
-class LRParser(val table: LRTable) {
+class LRParser(val table: LRTable, val disambiguator: IDisambiguator) {
     private val stack = ArrayList<StackElement>()
     private var unconsumedInput: String = ""
     var stepLimit = 10_000
@@ -55,7 +54,7 @@ class LRParser(val table: LRTable) {
                 // choose action by element on the stack
                 val token = lastStackElement.getToken()
                 val actions: Array<out LRAction>? = state.getSymbolsAndActions().firstOrNull { it.first.matches(token) }?.second
-                nextAction = actions?.firstOrNull()
+                nextAction = actions?.let { disambiguator.chooseAction(it.toList()) }
             } else {
                 // choose action by pending input
                 val actionAndToken = chooseActionForTrimmedInput(state)
@@ -65,55 +64,55 @@ class LRParser(val table: LRTable) {
 
             // completion
             if (nextAction == null && complete) {
-                val candidates = state.getSymbolsAndActions().sortedBy {
-                    when (it.first) {
-                        EndOfInputSymbol -> 0
-                        EmptySymbol -> 1
-                        is NodeSymbol -> 2
-                        is ListSymbol -> 3
-                        is ConstantSymbol -> 4
-                        is PropertySymbol -> 5
-                        is ReferenceSymbol -> 6
-                        GoalSymbol -> error("Not expected on the right hand side of a rule")
-                        is OptionalSymbol -> error("Should have been expanded into multiple rules")
-                    }
-                }.sortedBy { it.second.minOf { table.getDistanceToAccept(it) } }
-                for (candidate in candidates) {
-                    val completionToken = when (val symbol = candidate.first) {
-                        EmptySymbol -> EmptyToken
-                        EndOfInputSymbol -> EndOfInputToken
-                        is NodeSymbol -> CompletedNode(symbol)
-                        is ConstantSymbol -> ConstantToken(symbol.text)
-                        is PropertySymbol -> PropertyToken("")
-                        is ReferenceSymbol -> ReferenceToken("")
-                        is ListSymbol -> CompletedNode(symbol)
-                        is OptionalSymbol -> error("Should have been expanded into multiple rules")
-                        GoalSymbol -> error("Not expected on the right hand side of a rule")
-                    }
-                    val action = candidate.second.minBy { table.getDistanceToAccept(it) }
-                    when (action) {
-                        AcceptAction -> {
-                            if (lastStackElement.isState()) {
-                                stack.add(StackElement(completionToken))
-                            }
-                        }
-                        is GotoAction -> {
-                            if (lastStackElement.isState()) {
-                                stack.add(StackElement(completionToken))
-                            }
-                            nextAction = action
-                        }
-                        is ReduceAction -> {
-                            lookahead = completionToken as IToken // it were a non-terminal, it would be a GotoAction
-                            nextAction = action
-                        }
-                        is ShiftAction -> {
-                            lookahead = completionToken as IToken
-                            nextAction = action
-                            tokenToShift = completionToken
+                val candidates = state.getSymbolsAndActions()
+                    .sortedBy {
+                        when (it.first) {
+                            EndOfInputSymbol -> 0
+                            EmptySymbol -> 1
+                            is NodeSymbol -> 2
+                            is ListSymbol -> 3
+                            is ConstantSymbol -> 4
+                            is PropertySymbol -> 5
+                            is ReferenceSymbol -> 6
+                            is OptionalSymbol -> 7
+                            GoalSymbol -> error("Not expected on the right hand side of a rule")
                         }
                     }
-                    break
+                    .flatMap { symbolAndActions -> symbolAndActions.second.map { symbolAndActions.first to it } }
+                    .sortedBy { table.getDistanceToAccept(it.second) }
+                    .toList()
+                val candidate = candidates[disambiguator.chooseActionIndex(candidates.map { it.second })]
+                val completionToken = when (val symbol = candidate.first) {
+                    EmptySymbol -> EmptyToken
+                    EndOfInputSymbol -> EndOfInputToken
+                    is ConstantSymbol -> ConstantToken(symbol.text)
+                    is PropertySymbol -> PropertyToken("")
+                    is ReferenceSymbol -> ReferenceToken("")
+                    is INonTerminalSymbol -> CompletedNode(symbol)
+                    GoalSymbol -> error("Not expected on the right hand side of a rule")
+                }
+                val action = candidate.second
+                when (action) {
+                    AcceptAction -> {
+                        if (lastStackElement.isState()) {
+                            stack.add(StackElement(completionToken))
+                        }
+                    }
+                    is GotoAction -> {
+                        if (lastStackElement.isState()) {
+                            stack.add(StackElement(completionToken))
+                        }
+                        nextAction = action
+                    }
+                    is ReduceAction -> {
+                        lookahead = completionToken as IToken // it were a non-terminal, it would be a GotoAction
+                        nextAction = action
+                    }
+                    is ShiftAction -> {
+                        lookahead = completionToken as IToken
+                        nextAction = action
+                        tokenToShift = completionToken
+                    }
                 }
             }
 
@@ -132,12 +131,12 @@ class LRParser(val table: LRTable) {
     private fun chooseActionForInput(state: LRState): Pair<LRAction, IToken>? {
         val applicableActions: Map<Pair<ISymbol, Array<out LRAction>>, IToken> =
             state.getSymbolsAndActions().associateWithNotNull { action ->
-                val followingState = action.second.asSequence()
+                val followingStates = action.second.asSequence()
                     .filterIsInstance<ShiftAction>()
                     .map { it.nextState }
                     .map { table.states[it] }
-                    .firstOrNull()
-                matchInput(action.first, followingState)
+                    .toList()
+                matchInput(action.first, followingStates)
             }
 
         // TODO resolve conflicts based on operator precedence
@@ -153,10 +152,11 @@ class LRParser(val table: LRTable) {
                     EmptyToken -> 4
                 }
             }
-            .firstOrNull()
+            .takeIf { it.isNotEmpty() }
+            ?.let { it[disambiguator.chooseActionIndex(it.map { it.first })] }
     }
 
-    private fun matchInput(symbol: ISymbol, followingState: LRState?): IToken? {
+    private fun matchInput(symbol: ISymbol, followingStates: List<LRState>): IToken? {
         return when (symbol) {
             is ConstantSymbol -> {
                 if (unconsumedInput.startsWith(symbol.text)) {
@@ -170,11 +170,11 @@ class LRParser(val table: LRTable) {
                 if (unconsumedInput.isEmpty()) EndOfInputToken else null
             }
             is PropertySymbol -> {
-                matchRegex(symbol.regex, followingState) { PropertyToken(it) }
+                matchRegex(symbol.regex, followingStates) { PropertyToken(it) }
             }
             is ReferenceSymbol -> {
                 val regex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
-                matchRegex(regex, followingState) { ReferenceToken(it) }
+                matchRegex(regex, followingStates) { ReferenceToken(it) }
             }
             is INonTerminalSymbol -> null
             is OptionalSymbol -> error("Should have been expanded into multiple rules")
@@ -182,7 +182,7 @@ class LRParser(val table: LRTable) {
         }
     }
 
-    private fun matchRegex(regex: Regex?, followingState: LRState?, createToken: (String) -> IToken): IToken? {
+    private fun matchRegex(regex: Regex?, followingStates: List<LRState>, createToken: (String) -> IToken): IToken? {
         return if (regex != null) {
             val match = regex.matchAt(unconsumedInput, 0)
             if (match != null) {
@@ -191,8 +191,8 @@ class LRParser(val table: LRTable) {
             } else {
                 null
             }
-        } else if (followingState != null) {
-            val followingConstants = followingState.getSymbols().filterIsInstance<ConstantSymbol>().map { it.text }
+        } else if (followingStates.isNotEmpty()) {
+            val followingConstants = followingStates.asSequence().flatMap { it.getSymbols() }.filterIsInstance<ConstantSymbol>().map { it.text }
             val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
             if (nextConstantPos != null) {
                 createToken(unconsumedInput.substring(0, nextConstantPos))
@@ -218,8 +218,8 @@ class LRParser(val table: LRTable) {
     }
 }
 
-fun Grammar.createParser(startConcept: IConcept): LRParser {
-    return LRParser(createParseTable(startConcept))
+fun Grammar.createParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
+    return LRParser(createParseTable(startConcept), disambiguator)
 }
 
 fun Grammar.createParseTable(startConcept: IConcept): LRTable {
