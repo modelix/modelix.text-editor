@@ -32,11 +32,11 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     }
 
     override fun parseForest(input: String, complete: Boolean): Sequence<IParseTreeNode> {
-        return parseForest(input, complete, 100, 100)
+        return parseForest(input, complete, 100, 1)
     }
 
     private fun parseForest(input: String, complete: Boolean, maxIterations: Int, maxSize: Int): Sequence<IParseTreeNode> {
-        val iteratingDisambiguator = IteratingDisambiguator()
+        val iteratingDisambiguator = BreadthFirstSearchDisambiguator()
         disambiguator = defaultDisambiguator.withLastDisambiguator(iteratingDisambiguator)
         try {
             val parseTrees = ArrayList<IParseTreeNode>()

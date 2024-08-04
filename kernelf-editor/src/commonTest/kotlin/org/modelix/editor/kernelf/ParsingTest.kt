@@ -94,7 +94,7 @@ class ParsingTest {
         excludedConcepts.forEach { println("""L_${it.language!!.getName().replace(".", "_")}.${it.getShortName()}.untyped(),""") }
     }
 
-    private fun runCompletionTest(inputString: String,) = runTest(inputString, true)
+    private fun runCompletionTest(inputString: String) = runTest(inputString, true)
     private fun runParsingTest(inputString: String) = runTest(inputString, false)
     private fun runTest(inputString: String, complete: Boolean = false) {
 
