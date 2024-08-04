@@ -17,6 +17,7 @@ import org.modelix.kernelf.KernelfLanguages
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.parser.Grammar
+import org.modelix.parser.IParseTreeNode
 import org.modelix.parser.LRParser
 import org.modelix.parser.NodeSymbol
 import org.modelix.parser.ProductionRule
@@ -96,9 +97,13 @@ class ParsingTest {
     private fun runCompletionTest(inputString: String,) = runTest(inputString, true)
     private fun runParsingTest(inputString: String) = runTest(inputString, false)
     private fun runTest(inputString: String, complete: Boolean = false) {
-        val parseTree = parser.parse(inputString, complete)
-        println(measureTime { parser.parse(inputString, complete) })
-        println(parseTree)
+
+        val parseTrees: List<IParseTreeNode>
+        val time = measureTime {
+            parseTrees = parser.parseForest(inputString, complete).toList()
+        }
+        println(time)
+        println(parseTrees.joinToString("\n---\n"))
     }
 
 
