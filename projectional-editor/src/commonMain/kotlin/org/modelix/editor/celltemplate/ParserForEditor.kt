@@ -4,7 +4,9 @@ import org.modelix.editor.EditorEngine
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.model.api.runSynchronized
+import org.modelix.parser.ChooseFirstDisambiguator
 import org.modelix.parser.Grammar
+import org.modelix.parser.IDisambiguator
 import org.modelix.parser.LRParser
 import org.modelix.parser.LRTable
 import org.modelix.parser.NodeSymbol
@@ -24,7 +26,9 @@ class ParserForEditor(val engine: EditorEngine){
         }
     }
 
-    fun getParser(startConcept: IConcept) = LRParser(getParseTable(startConcept))
+    fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = ChooseFirstDisambiguator()): LRParser {
+        return LRParser(getParseTable(startConcept), disambiguator)
+    }
 
     private fun loadRulesFromSubconcepts(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
         if (visited.contains(concept)) return
