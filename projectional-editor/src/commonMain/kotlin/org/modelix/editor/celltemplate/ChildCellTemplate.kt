@@ -37,7 +37,8 @@ import org.modelix.model.api.remove
 import org.modelix.parser.ISymbol
 import org.modelix.parser.ITerminalSymbol
 import org.modelix.parser.ListSymbol
-import org.modelix.parser.NodeSymbol
+import org.modelix.parser.ExactConceptSymbol
+import org.modelix.parser.SubConceptsSymbol
 
 class ChildCellTemplate(
     concept: IConcept,
@@ -57,9 +58,9 @@ class ChildCellTemplate(
         return if (link.isMultiple) {
             val separatorSymbols = (separatorCell?.getGrammarSymbols()?.toList() ?: emptyList())
                 .map { it.toParserSymbol() }.filterIsInstance<ITerminalSymbol>()
-            ListSymbol(NodeSymbol(link.targetConcept), separatorSymbols.firstOrNull())
+            ListSymbol(SubConceptsSymbol(link.targetConcept), separatorSymbols.firstOrNull())
         } else {
-            NodeSymbol(link.targetConcept)
+            SubConceptsSymbol(link.targetConcept)
         }
     }
 

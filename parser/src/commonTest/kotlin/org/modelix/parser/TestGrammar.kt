@@ -24,21 +24,21 @@ object TestGrammar {
 
     init {
         addRule(integerLiteral, PropertySymbol(Regex("[0-9]+")))
-        addRule(plusExpression, NodeSymbol(expression), ConstantSymbol("+"), NodeSymbol(expression))
-        addRule(mulExpression, NodeSymbol(expression), ConstantSymbol("*"), NodeSymbol(expression))
-        addRule(parensExpression, ConstantSymbol("("), NodeSymbol(expression), ConstantSymbol(")"))
-        addRule(listLiteral, ConstantSymbol("list"), ConstantSymbol("["), ListSymbol(NodeSymbol(expression), ConstantSymbol(",")), ConstantSymbol("]"))
+        addRule(plusExpression, SubConceptsSymbol(expression), ConstantSymbol("+"), SubConceptsSymbol(expression))
+        addRule(mulExpression, SubConceptsSymbol(expression), ConstantSymbol("*"), SubConceptsSymbol(expression))
+        addRule(parensExpression, ConstantSymbol("("), SubConceptsSymbol(expression), ConstantSymbol(")"))
+        addRule(listLiteral, ConstantSymbol("list"), ConstantSymbol("["), ListSymbol(SubConceptsSymbol(expression), ConstantSymbol(",")), ConstantSymbol("]"))
         addRule(stringLiteral, ConstantSymbol("\""), PropertySymbol(Regex("""[^"]*""")), ConstantSymbol("\""))
-        addRule(ternaryExpression, NodeSymbol(expression), ConstantSymbol("?"), NodeSymbol(expression), ConstantSymbol(":"), NodeSymbol(expression))
+        addRule(ternaryExpression, SubConceptsSymbol(expression), ConstantSymbol("?"), SubConceptsSymbol(expression), ConstantSymbol(":"), SubConceptsSymbol(expression))
 
-        addRule(localVariableDeclarationStatement, NodeSymbol(localVariableDeclaration), ConstantSymbol(";"))
+        addRule(localVariableDeclarationStatement, SubConceptsSymbol(localVariableDeclaration), ConstantSymbol(";"))
         addRule(
             localVariableDeclaration,
-            NodeSymbol(type),
+            SubConceptsSymbol(type),
             PropertySymbol(Regex("[_a-zA-Z][_a-zA-Z0-9]*")),
             OptionalSymbol(
                 ConstantSymbol("="),
-                NodeSymbol(expression)
+                SubConceptsSymbol(expression)
             )
         )
 
@@ -48,7 +48,8 @@ object TestGrammar {
     fun getGrammar() = Grammar(rules)
 
     fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
-        val closureTable = LRClosureTable(TestGrammar.getGrammar(), startConcept)
+        val grammar = TestGrammar.getGrammar()
+        val closureTable = LRClosureTable(grammar, startConcept)
         closureTable.load()
         val parsingTable = LRTable()
         parsingTable.load(closureTable)
@@ -56,6 +57,6 @@ object TestGrammar {
     }
 
     fun addRule(concept: IConcept, vararg symbols: ISymbol) {
-        rules.add(ProductionRule(NodeSymbol(concept), symbols.toList()))
+        rules.add(ProductionRule(ExactConceptSymbol(concept), symbols.toList()))
     }
 }

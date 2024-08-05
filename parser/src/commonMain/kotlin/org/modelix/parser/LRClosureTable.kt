@@ -6,7 +6,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
     val kernels = KernelsList()
 
     fun load() {
-        val goal = ProductionRule(GoalSymbol, listOf(NodeSymbol(startConcept)))
+        val goal = ProductionRule(GoalSymbol, listOf(SubConceptsSymbol(startConcept)))
         kernels.newKernel(mutableSetOf(RuleItem(goal, 0, setOf(EndOfInputSymbol).toLookaheadSet())))
 
         var i = 0
@@ -46,7 +46,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
                 .filter { it.first != null }
                 .groupBy { it.first }
                 .forEach { group ->
-                    val rules = grammar.getRulesOfSubConcepts(group.key!!)
+                    val rules = grammar.getRulesForNonTerminal(group.key!!)
                     val lookaheads = group.value.asSequence().flatMap { triple ->
                         val nextNextSymbol = triple.second
                         var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {

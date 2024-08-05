@@ -19,7 +19,7 @@ import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.parser.Grammar
 import org.modelix.parser.IParseTreeNode
 import org.modelix.parser.LRParser
-import org.modelix.parser.NodeSymbol
+import org.modelix.parser.ExactConceptSymbol
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParser
 import kotlin.test.Ignore
@@ -429,7 +429,7 @@ class ParsingTest {
 
             val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
             if (symbols.isNotEmpty()) {
-                val rule = ProductionRule(NodeSymbol(concept), symbols)
+                val rule = ProductionRule(ExactConceptSymbol(concept), symbols)
                 grammar.addRule(rule)
             }
 

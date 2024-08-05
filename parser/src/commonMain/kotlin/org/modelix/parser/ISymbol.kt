@@ -5,7 +5,6 @@ import org.modelix.model.api.IConcept
 sealed interface ISymbol {
     fun leafSymbols(): Sequence<ISymbol> = sequenceOf(this)
     fun matches(token: IParseTreeNode): Boolean
-    fun isSubtypeOf(superType: ISymbol): Boolean
 }
 sealed interface ITerminalSymbol : ISymbol
 sealed interface INonTerminalSymbol : ISymbol
@@ -18,11 +17,7 @@ data class OptionalSymbol(val children: List<ISymbol>) : INonTerminalSymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ParseTreeNode && token.rule.head.isSubtypeOf(this)
-    }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean {
-        return this == superType
+        return token is ParseTreeNode && token.rule.head == this
     }
 
     override fun toString(): String {
@@ -37,20 +32,23 @@ data class ConstantSymbol(val text: String) : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token is ConstantToken && token.text == text
     }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
 }
-data class NodeSymbol(val concept: IConcept) : INonTerminalSymbol {
+data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
     override fun toString(): String {
         return concept.getShortName()
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ParseTreeNode && token.rule.head.isSubtypeOf(this)
+        return token is ParseTreeNode && token.rule.head == this
+    }
+}
+data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
+    override fun toString(): String {
+        return concept.getShortName()+"+"
     }
 
-    override fun isSubtypeOf(superType: ISymbol): Boolean {
-        return superType is NodeSymbol && concept.isSubConceptOf(superType.concept)
+    override fun matches(token: IParseTreeNode): Boolean {
+        return token is ParseTreeNode && token.rule.head == this
     }
 }
 data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
@@ -61,8 +59,6 @@ data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token is ReferenceToken
     }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
 }
 data class PropertySymbol(val regex: Regex?) : ITerminalSymbol {
     override fun toString(): String {
@@ -72,8 +68,6 @@ data class PropertySymbol(val regex: Regex?) : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token is PropertyToken && regex?.matches(token.text) != false
     }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
 }
 data object EndOfInputSymbol : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
@@ -83,8 +77,6 @@ data object EndOfInputSymbol : ITerminalSymbol {
     override fun toString(): String {
         return "$"
     }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
 }
 
 data object EmptySymbol : ITerminalSymbol {
@@ -95,8 +87,6 @@ data object EmptySymbol : ITerminalSymbol {
     override fun toString(): String {
         return "ε"
     }
-
-    override fun isSubtypeOf(superType: ISymbol): Boolean = superType == this
 }
 
 fun List<ISymbol>.expandOptionals(): List<List<ISymbol>> {
@@ -124,15 +114,11 @@ class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
 
 data object GoalSymbol : ISymbol {
     override fun toString(): String = "goal"
-    override fun isSubtypeOf(superType: ISymbol) = superType == this
     override fun matches(token: IParseTreeNode): Boolean = false
 }
 
 data class ListSymbol(val item: ISymbol, val separator: ITerminalSymbol?) : INonTerminalSymbol {
     override fun toString(): String = "list<$item>"
-    override fun isSubtypeOf(superType: ISymbol): Boolean {
-        return superType == this
-    }
     override fun matches(token: IParseTreeNode): Boolean {
         return token is ParseTreeNode && token.rule.head == this
     }

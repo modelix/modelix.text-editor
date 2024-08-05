@@ -1,15 +1,19 @@
 package org.modelix.parser
 
+import org.modelix.model.api.IConcept
+
 class Grammar(originalRules: List<ProductionRule> = emptyList()) {
-    private val rules = LinkedHashSet<ProductionRule>()
+    private val rules = ArrayList<ProductionRule>()
     private val existingLists = HashSet<ListSymbol>()
     private val existingOptionals = HashSet<OptionalSymbol>()
+    private val loadedSubConceptRules = HashSet<IConcept>()
 
     init {
         originalRules.forEach { addRule(it) }
     }
 
     fun addRule(rule: ProductionRule) {
+        require(rule.head !is SubConceptsSymbol) { "${rule.head} is only allowed on the right hand side of a rule. Invalid rule: $rule" }
         val filteredSymbols = filterSymbols(rule.symbols)
         if (filteredSymbols.isEmpty()) return
 
@@ -17,6 +21,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         rules += newRule
 
         loadRulesFromSymbols(newRule.symbols)
+        (rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
     }
 
     private fun loadRulesFromSymbols(symbols: List<ISymbol>) {
@@ -29,6 +34,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         existingLists.add(listSymbol)
         rules += ProductionRule(listSymbol, listSymbol.item)
         rules += ProductionRule(listSymbol, listOfNotNull(listSymbol.item, listSymbol.separator, listSymbol))
+        loadRulesFromSymbols(listOfNotNull(listSymbol.item, listSymbol.separator))
     }
 
     private fun addOptionalRules(optionalSymbol: OptionalSymbol) {
@@ -37,6 +43,16 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         rules += ProductionRule(optionalSymbol, optionalSymbol.children)
         rules += ProductionRule(optionalSymbol, EmptySymbol)
         loadRulesFromSymbols(optionalSymbol.children)
+    }
+
+    private fun loadSubConceptRules(subConcept: IConcept) {
+        if (loadedSubConceptRules.contains(subConcept)) return
+        loadedSubConceptRules.add(subConcept)
+        rules += ProductionRule(SubConceptsSymbol(subConcept), ExactConceptSymbol(subConcept))
+        for (superConcept in subConcept.getDirectSuperConcepts()) {
+            rules += ProductionRule(SubConceptsSymbol(superConcept), SubConceptsSymbol(subConcept))
+            loadSubConceptRules(superConcept)
+        }
     }
 
     private fun filterSymbols(symbols: List<ISymbol>): List<ISymbol> {
@@ -50,20 +66,20 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     }
 
     private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ITerminalSymbol>>()
-    fun getPossibleFirstTerminalSymbols(concept: INonTerminalSymbol): Set<ITerminalSymbol> {
-        return possibleFirstTokensCache.getOrPut(concept) {
-            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstTerminalSymbols(concept, HashSet(), it, HashSet()) }
+    fun getPossibleFirstTerminalSymbols(nonTerminal: INonTerminalSymbol): Set<ITerminalSymbol> {
+        return possibleFirstTokensCache.getOrPut(nonTerminal) {
+            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstTerminalSymbols(nonTerminal, HashSet(), it, HashSet()) }
         }
     }
 
     fun collectPossibleFirstTerminalSymbols(
-        concept: INonTerminalSymbol,
+        nonTerminal: INonTerminalSymbol,
         visited: MutableSet<INonTerminalSymbol>,
         firstSymbols: MutableSet<ITerminalSymbol>,
         firstRules: MutableSet<ProductionRule>,
     ) {
-        if (visited.contains(concept)) return
-        visited.add(concept)
+        if (visited.contains(nonTerminal)) return
+        visited.add(nonTerminal)
 
         fun collectFromSymbolList(symbols: List<ISymbol>) {
             for (firstSymbol in symbols) {
@@ -83,16 +99,16 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
             }
         }
 
-        for (rule in getRulesOfSubConcepts(concept)) {
+        for (rule in getRulesForNonTerminal(nonTerminal)) {
             firstRules.add(rule)
             collectFromSymbolList(rule.symbols)
         }
     }
 
-    private val rulesOfSubConceptsCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
-    fun getRulesOfSubConcepts(superConcept: INonTerminalSymbol): List<ProductionRule> {
-        return rulesOfSubConceptsCache.getOrPut(superConcept) {
-            rules.filter { it.head.isSubtypeOf(superConcept) }
+    private val getRulesForNonTerminalCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
+    fun getRulesForNonTerminal(nonTerminal: INonTerminalSymbol): List<ProductionRule> {
+        return getRulesForNonTerminalCache.getOrPut(nonTerminal) {
+            rules.filter { it.head == nonTerminal }
         }
     }
 }

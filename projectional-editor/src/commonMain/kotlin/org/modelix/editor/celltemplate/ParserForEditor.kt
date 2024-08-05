@@ -4,12 +4,11 @@ import org.modelix.editor.EditorEngine
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.model.api.runSynchronized
-import org.modelix.parser.ChooseFirstDisambiguator
 import org.modelix.parser.Grammar
 import org.modelix.parser.IDisambiguator
 import org.modelix.parser.LRParser
 import org.modelix.parser.LRTable
-import org.modelix.parser.NodeSymbol
+import org.modelix.parser.ExactConceptSymbol
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParseTable
 
@@ -53,7 +52,7 @@ class ParserForEditor(val engine: EditorEngine){
 
         val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
         if (symbols.isNotEmpty()) {
-            val rule = ProductionRule(NodeSymbol(concept), symbols)
+            val rule = ProductionRule(ExactConceptSymbol(concept), symbols)
             grammar.addRule(rule)
         }
 

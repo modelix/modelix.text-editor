@@ -45,10 +45,12 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         var lookaheadTokens = scanner.next().toList()
         forks = forks.flatMap { it.forksForNextActions(lookaheadTokens) }
 
+        fun List<Fork>.applyActions() = flatMap { it.applyAction(lookaheadTokens) }.filterAccepted().merge()
+
         while (step++ < stepLimit) {
             // shift all forks
             check(forks.all { it.readyToShift() })
-            forks = forks.flatMap { it.applyAction(lookaheadTokens) }.filterAccepted()
+            forks = forks.applyActions()
             if (forks.isEmpty()) break
 
             // scan next token
@@ -63,13 +65,29 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 if (notReadyToShift.isEmpty()) break
                 forks = readyToShift +
                         notReadyToShift
-                            .flatMap { it.applyAction(lookaheadTokens) }
-                            .filterAccepted()
+                            .applyActions()
                             .flatMap { it.forksForNextActions(lookaheadTokens) }
             }
             if (forks.isEmpty()) break
+            forks = forks.merge()
         }
         return acceptedForks.flatMap { it.output!! }
+    }
+
+    private fun List<Fork>.merge() = mergeForks(this)
+
+    private fun mergeForks(forks: List<Fork>): List<Fork> {
+        return forks.filter { !it.stack.peek().isState() } +
+                forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }.map { group ->
+            if (group.value.size == 1) return@map group.value.first()
+
+            val topOfStack = group.value.first().stack.peek()
+            val mergedStack = group.value
+                .flatMap { it.stack.pop().also { check(it.first == topOfStack) }.second }
+                .push(topOfStack)
+
+            Fork(mergedStack, group.key.second)
+        }
     }
 
     private inner class Fork(val stack: IGSStack<StackElement>, val actionToApply: LRAction?) {
@@ -148,7 +166,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         }
     }
 
-    private class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) {
+    private data class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) {
         constructor(token: IParseTreeNode) : this(token, null)
         constructor(state: Int) : this(null, state)
         fun isNode() = node != null
