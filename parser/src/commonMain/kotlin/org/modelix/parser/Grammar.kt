@@ -1,6 +1,7 @@
 package org.modelix.parser
 
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.getAllConcepts
 
 class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     private val rules = ArrayList<ProductionRule>()
@@ -21,7 +22,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         rules += newRule
 
         loadRulesFromSymbols(newRule.symbols)
-        //(rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
+        (rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
     }
 
     private fun loadRulesFromSymbols(symbols: List<ISymbol>) {
@@ -48,10 +49,9 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     private fun loadSubConceptRules(subConcept: IConcept) {
         if (loadedSubConceptRules.contains(subConcept)) return
         loadedSubConceptRules.add(subConcept)
-        rules += ProductionRule(SubConceptsSymbol(subConcept), ExactConceptSymbol(subConcept))
-        for (superConcept in subConcept.getDirectSuperConcepts()) {
-            rules += ProductionRule(SubConceptsSymbol(superConcept), SubConceptsSymbol(subConcept))
-            loadSubConceptRules(superConcept)
+
+        for (superConcept in subConcept.getAllConcepts()) {
+            rules += ProductionRule(SubConceptsSymbol(superConcept), ExactConceptSymbol(subConcept))
         }
     }
 
@@ -109,7 +109,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     fun getRulesForNonTerminal(nonTerminal: INonTerminalSymbol): List<ProductionRule> {
         return getRulesForNonTerminalCache.getOrPut(nonTerminal) {
             rules.filter {
-                it.head == nonTerminal || nonTerminal is SubConceptsSymbol && it.head is ExactConceptSymbol && it.head.concept.isSubConceptOf(nonTerminal.concept)
+                it.head == nonTerminal
             }
         }
     }

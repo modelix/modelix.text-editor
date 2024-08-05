@@ -39,7 +39,7 @@ data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ParseTreeNode && token.rule.head == this
+        return token is INonTerminalToken && token.getNonTerminalSymbol() == this
     }
 }
 data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
@@ -48,7 +48,7 @@ data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ParseTreeNode && when (val head = token.rule.head) {
+        return token is INonTerminalToken && when (val head = token.getNonTerminalSymbol()) {
             is ExactConceptSymbol -> head.concept.isSubConceptOf(concept)
             is SubConceptsSymbol -> head.concept.isSubConceptOf(concept)
             else -> false
@@ -105,8 +105,8 @@ fun List<ISymbol>.expandOptionals(): List<List<ISymbol>> {
     }
 }
 
-class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
-    constructor(head: ISymbol, vararg symbols: ISymbol) : this(head, symbols.toList())
+class ProductionRule(val head: INonTerminalSymbol, val symbols: List<ISymbol>) {
+    constructor(head: INonTerminalSymbol, vararg symbols: ISymbol) : this(head, symbols.toList())
     fun expandOptionals() = symbols.expandOptionals().map { ProductionRule(head, it) }
 
     override fun toString(): String {
@@ -116,7 +116,7 @@ class ProductionRule(val head: ISymbol, val symbols: List<ISymbol>) {
     fun isGoal() = head == GoalSymbol
 }
 
-data object GoalSymbol : ISymbol {
+data object GoalSymbol : INonTerminalSymbol {
     override fun toString(): String = "goal"
     override fun matches(token: IParseTreeNode): Boolean = false
 }
@@ -124,6 +124,6 @@ data object GoalSymbol : ISymbol {
 data class ListSymbol(val item: ISymbol, val separator: ITerminalSymbol?) : INonTerminalSymbol {
     override fun toString(): String = "list<$item>"
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ParseTreeNode && token.rule.head == this
+        return token is INonTerminalToken && token.getNonTerminalSymbol() == this
     }
 }

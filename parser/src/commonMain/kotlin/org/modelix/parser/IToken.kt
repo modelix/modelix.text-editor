@@ -24,7 +24,10 @@ data object EndOfInputToken : IToken {
 }
 
 interface IParseTreeNode
-class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>) : IParseTreeNode {
+interface INonTerminalToken {
+    fun getNonTerminalSymbol(): INonTerminalSymbol
+}
+class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>) : IParseTreeNode, INonTerminalToken {
     override fun toString(): String {
         if (children.size > 1) {
             return "${rule.head} {\n${children.joinToString("\n").prependIndent()}\n}"
@@ -32,11 +35,19 @@ class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>
             return "${rule.head} { ${children.joinToString(" ")} }"
         }
     }
+
+    override fun getNonTerminalSymbol(): INonTerminalSymbol {
+        return rule.head
+    }
 }
 
-class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode {
+class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTerminalToken {
     override fun toString(): String {
         return "completed[$symbol]"
+    }
+
+    override fun getNonTerminalSymbol(): INonTerminalSymbol {
+        return symbol
     }
 }
 
