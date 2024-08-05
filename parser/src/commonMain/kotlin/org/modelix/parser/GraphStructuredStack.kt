@@ -32,16 +32,22 @@ class RegularGSSNode<E : IGSSElement>(private val element: E, private val previo
 
     override fun tryMerge(other: IGSStack<E>): IGSStack<E>? {
         if (other == this) return this
-        if (other is RegularGSSNode) {
-            val mergedEl = (element.merge(other.element) ?: return null) as E
-            val mergedPrev = other.previous.tryMerge(previous)
-            return if (mergedPrev == null) {
-                MergeGSSNode<E>(mergedEl, listOf(previous, other.previous))
+        return if (other is RegularGSSNode) {
+            if (element == other.element) {
+                val mergedPrev = other.previous.tryMerge(previous)
+                if (mergedPrev == null) {
+                    MergeGSSNode<E>(element, listOf(previous, other.previous))
+                } else {
+                    RegularGSSNode(element, mergedPrev)
+                }
+            } else if (previous == other.previous) {
+                val mergedEl = (element.merge(other.element) ?: return null) as E
+                RegularGSSNode(mergedEl, previous)
             } else {
-                RegularGSSNode(mergedEl, mergedPrev)
+                null
             }
         } else {
-            return null
+            null
         }
     }
 
@@ -71,15 +77,9 @@ class MergeGSSNode<E : IGSSElement>(private val element: E, private val previous
 
     override fun tryMerge(other: IGSStack<E>): IGSStack<E>? {
         if (other == this) return this
-        if (other is MergeGSSNode) {
-            val mergedEl = (element.merge(other.element) ?: return null) as E
-            return MergeGSSNode<E>(mergedEl, previous + other.previous)
-        } else if (other is RegularGSSNode) {
-            val mergedEl = (element.merge(other.peek()) ?: return null) as E
-            return MergeGSSNode<E>(mergedEl, previous + other.pop().second)
-        } else {
-            return null
-        }
+        if (other is MergeGSSNode && element == other.element) return MergeGSSNode<E>(element, previous + other.previous)
+        if (other is RegularGSSNode && element == other.peek()) return MergeGSSNode<E>(element, previous + other.pop().second)
+        return null
     }
 
     override fun toString(): String {
