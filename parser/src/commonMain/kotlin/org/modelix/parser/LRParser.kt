@@ -12,242 +12,139 @@ interface IParser {
 }
 
 class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambiguator) : IParser {
-    private val gss = GraphStructuredStack<StackElement>()
-    private val stack = gss.newStack()
-    private var unconsumedInput: String = ""
     var stepLimit = 10_000
     private var disambiguator = defaultDisambiguator
 
-    private fun stateIndex(): Int = stack.first { it.isState() }.getState()
-
     override fun parse(input: String, complete: Boolean): IParseTreeNode {
-        return tryParse(input, complete) ?: error("Invalid input: $input\nCurrent stack: $stack")
+        return tryParse(input, complete) ?: error("Invalid input: $input\nCurrent stack: ???")
     }
 
     override fun tryParse(input: String, complete: Boolean): IParseTreeNode? {
-        return if (complete) {
-            doParse(input, complete)
-        } else {
-            parseForest(input, complete, 100, 1).firstOrNull()
-        }
+        return doParse(input, complete).firstOrNull()
     }
 
     override fun parseForest(input: String, complete: Boolean): Sequence<IParseTreeNode> {
-        return parseForest(input, complete, 100, 1)
+        return doParse(input, complete).asSequence()
     }
 
-    private fun parseForest(input: String, complete: Boolean, maxIterations: Int, maxSize: Int): Sequence<IParseTreeNode> {
-        val iteratingDisambiguator = BreadthFirstSearchDisambiguator()
-        disambiguator = defaultDisambiguator.withLastDisambiguator(iteratingDisambiguator)
-        try {
-            val parseTrees = ArrayList<IParseTreeNode>()
-            var i = maxIterations
-            do {
-                doParse(input, complete)?.let { parseTrees.add(it) }
-            } while (i-- > 0 && parseTrees.size < maxSize && iteratingDisambiguator.next())
-            return parseTrees.asSequence()
-        } finally {
-            disambiguator = defaultDisambiguator
+    private fun doParse(input: String, complete: Boolean): List<IParseTreeNode> {
+        val acceptedForks = ArrayList<Fork>()
+
+        fun List<Fork>.filterAccepted() = filter {
+            if (it.accepted) acceptedForks.add(it)
+            !it.accepted
         }
+
+        val scanner = Scanner(input)
+        val initialStack: IGSStack<StackElement> = EmptyGSS<StackElement>().push(StackElement(0))
+        var step: Int = 2
+        var forks: List<Fork> = listOf(Fork(initialStack, null))
+
+        // scan first token
+        forks.forEach { it.loadNextTerminals(scanner) }
+        var lookaheadTokens = scanner.next().toList()
+        forks = forks.flatMap { it.forksForNextActions(lookaheadTokens) }
+
+        while (step++ < stepLimit) {
+            // shift all forks
+            check(forks.all { it.readyToShift() })
+            forks = forks.flatMap { it.applyAction(lookaheadTokens) }.filterAccepted()
+            if (forks.isEmpty()) break
+
+            // scan next token
+            forks.forEach { it.loadNextTerminals(scanner) }
+            lookaheadTokens = scanner.next().toList()
+            forks = forks.flatMap { it.forksForNextActions(lookaheadTokens) }
+
+            // run reductions
+            while (step++ < stepLimit) {
+                val readyToShift = forks.filter { it.readyToShift() }
+                val notReadyToShift = forks.filter { !it.readyToShift() }
+                if (notReadyToShift.isEmpty()) break
+                forks = readyToShift +
+                        notReadyToShift
+                            .flatMap { it.applyAction(lookaheadTokens) }
+                            .filterAccepted()
+                            .flatMap { it.forksForNextActions(lookaheadTokens) }
+            }
+            if (forks.isEmpty()) break
+        }
+        return acceptedForks.flatMap { it.output!! }
     }
 
-    private fun doParse(input: String, complete: Boolean): IParseTreeNode? {
-        unconsumedInput = input
-        stack.clear()
-        stack.push(StackElement(0))
-        var state = table.states[stateIndex()]
-        var nextAction: LRAction? = null
-        var step = 2
-        var tokenToShift: IToken? = null
-        var lookahead: IToken? = null
-        chooseActionForTrimmedInput(state)?.let { nextAction = it.first; tokenToShift = it.second }
-        main@ while (step < stepLimit) {
-            when (val action = nextAction) {
-                null -> break
+    private inner class Fork(val stack: IGSStack<StackElement>, val actionToApply: LRAction?) {
+        var accepted: Boolean = false
+        var output: List<IParseTreeNode>? = null
+
+        fun stateIndex(): Int = (stack.peek().takeIf { it.isState() } ?: stack.elementAt(1)).getState()
+        fun state() = table.states[stateIndex()]
+
+        fun readyToShift() = actionToApply is ShiftAction
+
+        fun forksForNextActions(lookaheadTokens: List<IToken>): List<Fork> {
+            check(!accepted) { "Already accepted" }
+
+            if (actionToApply != null) return listOf(this)
+
+            val lastStackElement = stack.peek()
+            if (lastStackElement.isNode()) {
+                val tokenOnStack = lastStackElement.getToken()
+                val actions: Array<out LRAction>? =
+                    state().getSymbolsAndActions().firstOrNull { it.first.matches(tokenOnStack) }?.second
+                return actions?.map { Fork(stack, it) } ?: emptyList()
+            } else {
+                val applicableActions = state().getSymbolsAndActions().filter {
+                    val symbol = it.first
+                    lookaheadTokens.any { symbol.matches(it) }
+                }.flatMap { it.second.asSequence() }.toList()
+                return applicableActions.map { Fork(stack, it) }
+            }
+        }
+
+        fun loadNextTerminals(scanner: Scanner) {
+            check(!accepted) { "Already accepted" }
+            state().getSymbols().filterIsInstance<ITerminalSymbol>().forEach { scanner.addPossibleNextTerminal(it) }
+        }
+
+        fun applyAction(tokensForShift: List<IToken>): List<Fork> {
+            check(!accepted) { "Already accepted" }
+            return when (val action = actionToApply) {
+                null -> error("No action applicable. Fork should have been discarded.")
+                is SkipAction -> listOf(Fork(stack, null))
                 is ShiftAction -> {
-                    val token = checkNotNull(tokenToShift) { "No token provided for shift action" }
-                    if (token !is EmptyToken) {
-                        if (lookahead != null) {
-                            check(lookahead == token) { "Next token is $lookahead, but expected $token" }
-                            stack.push(StackElement(token = lookahead))
-                            lookahead = null
-                        } else {
-                            unconsumedInput = unconsumedInput.substring(token.textLength())
-                            stack.push(StackElement(token))
-                        }
+                    var newStack = stack
+                    val matchingTokens = tokensForShift.filter { action.symbol.matches(it) }
+                    val matchingToken = when (matchingTokens.size) {
+                        0 -> error("None of the tokens matches ${action.symbol}: $tokensForShift")
+                        1 -> matchingTokens.single()
+                        else -> error("Multiple of the tokens matches ${action.symbol}: $matchingTokens")
                     }
-                    stack.push(StackElement(action.nextState))
+                    if (matchingToken !is EmptyToken) {
+                        newStack = newStack.push(StackElement(matchingToken))
+                    }
+                    newStack = newStack.push(StackElement(action.nextState))
+                    listOf(Fork(newStack, null))
                 }
                 is ReduceAction -> {
                     val rule = action.rule
-                    if (rule.isGoal()) break@main
+                    if (rule.isGoal()) error("Should be an AcceptAction")
                     val removeCount = rule.symbols.size * 2
-                    val removedTokens = ArrayList<IParseTreeNode>()
-                    repeat(removeCount) {
-                        stack.pop().takeIf { it.isNode() }?.getToken()?.let { removedTokens.add(it) }
+
+                    return stack.pop(removeCount).map { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
+                        val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
+                        val newStack = popped.second.push(StackElement(ParseTreeNode(rule, removedTokens.reversed())))
+                        Fork(newStack, null)
                     }
-                    stack.push(StackElement(ParseTreeNode(rule, removedTokens.reversed())))
                 }
                 is GotoAction -> {
-                    stack.push(StackElement(action.nextState))
+                    listOf(Fork(stack.push(StackElement(action.nextState)), null))
                 }
-                AcceptAction -> return stack.toList().asReversed()[1].getToken()
-            }
-
-            state = table.states[stateIndex()]
-            val lastStackElement = stack.peek()
-            if (lastStackElement.isNode()) {
-                // choose action by element on the stack
-                val token = lastStackElement.getToken()
-                val actions: Array<out LRAction>? = state.getSymbolsAndActions().firstOrNull { it.first.matches(token) }?.second
-                nextAction = actions?.let { disambiguator.chooseAction(it.toList()) }
-            } else {
-                // choose action by pending input
-                val actionAndToken = chooseActionForTrimmedInput(state)
-                nextAction = actionAndToken?.first
-                tokenToShift = actionAndToken?.second
-            }
-
-            // completion
-            if (nextAction == null && complete) {
-                val candidates = state.getSymbolsAndActions()
-                    .sortedBy {
-                        when (it.first) {
-                            EndOfInputSymbol -> 0
-                            EmptySymbol -> 1
-                            is NodeSymbol -> 2
-                            is ListSymbol -> 3
-                            is ConstantSymbol -> 4
-                            is PropertySymbol -> 5
-                            is ReferenceSymbol -> 6
-                            is OptionalSymbol -> 7
-                            GoalSymbol -> error("Not expected on the right hand side of a rule")
-                        }
-                    }
-                    .flatMap { symbolAndActions -> symbolAndActions.second.map { symbolAndActions.first to it } }
-                    .sortedBy { table.getDistanceToAccept(it.second) }
-                    .toList()
-                val candidate = candidates.first()
-                val completionToken = when (val symbol = candidate.first) {
-                    EmptySymbol -> EmptyToken
-                    EndOfInputSymbol -> EndOfInputToken
-                    is ConstantSymbol -> ConstantToken(symbol.text)
-                    is PropertySymbol -> PropertyToken("")
-                    is ReferenceSymbol -> ReferenceToken("")
-                    is INonTerminalSymbol -> CompletedNode(symbol)
-                    GoalSymbol -> error("Not expected on the right hand side of a rule")
-                }
-                val action = candidate.second
-                when (action) {
-                    AcceptAction -> {
-                        if (lastStackElement.isState()) {
-                            stack.push(StackElement(completionToken))
-                        }
-                    }
-                    is GotoAction -> {
-                        if (lastStackElement.isState()) {
-                            stack.push(StackElement(completionToken))
-                        }
-                        nextAction = action
-                    }
-                    is ReduceAction -> {
-                        lookahead = completionToken as IToken // if it were a non-terminal, it would be a GotoAction
-                        nextAction = action
-                    }
-                    is ShiftAction -> {
-                        lookahead = completionToken as IToken
-                        nextAction = action
-                        tokenToShift = completionToken
-                    }
+                AcceptAction -> {
+                    output = (if (stack.peek().isState()) stack.pop().second else listOf(stack)).map { it.peek().getToken() }
+                    accepted = true
+                    listOf(this)
                 }
             }
-
-            step++
-        }
-
-        return null
-    }
-
-    private fun chooseActionForTrimmedInput(state: LRState): Pair<LRAction, IToken>? {
-        chooseActionForInput(state)?.takeIf { it.second !is EmptyToken }?.let { return it }
-        unconsumedInput = unconsumedInput.trimStart()
-        return chooseActionForInput(state)
-    }
-
-    private fun chooseActionForInput(state: LRState): Pair<LRAction, IToken>? {
-        val applicableActions: Map<Pair<ISymbol, Array<out LRAction>>, IToken> =
-            state.getSymbolsAndActions().associateWithNotNull { action ->
-                val followingStates = action.second.asSequence()
-                    .filterIsInstance<ShiftAction>()
-                    .map { it.nextState }
-                    .map { table.states[it] }
-                    .toList()
-                matchInput(action.first, followingStates)
-            }
-
-        // TODO resolve conflicts based on operator precedence
-        return applicableActions.entries
-            .flatMap { entry -> entry.key.second.map { it to entry.value } }
-            .sortedByDescending { it.second.textLength() }
-            .sortedBy {
-                when (it.second) {
-                    is ConstantToken -> 0
-                    is PropertyToken -> 1
-                    is ReferenceToken -> 2
-                    EndOfInputToken -> 3
-                    EmptyToken -> 4
-                }
-            }
-            .takeIf { it.isNotEmpty() }
-            ?.let { it[disambiguator.chooseActionIndexIfNecessary(it.map { it.first })] }
-    }
-
-    private fun matchInput(symbol: ISymbol, followingStates: List<LRState>): IToken? {
-        return when (symbol) {
-            is ConstantSymbol -> {
-                if (unconsumedInput.startsWith(symbol.text)) {
-                    ConstantToken(symbol.text)
-                } else {
-                    null
-                }
-            }
-            EmptySymbol -> EmptyToken
-            EndOfInputSymbol -> {
-                if (unconsumedInput.isEmpty()) EndOfInputToken else null
-            }
-            is PropertySymbol -> {
-                matchRegex(symbol.regex, followingStates) { PropertyToken(it) }
-            }
-            is ReferenceSymbol -> {
-                val regex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
-                matchRegex(regex, followingStates) { ReferenceToken(it) }
-            }
-            is INonTerminalSymbol -> null
-            is OptionalSymbol -> error("Should have been expanded into multiple rules")
-            GoalSymbol -> TODO()
-        }
-    }
-
-    private fun matchRegex(regex: Regex?, followingStates: List<LRState>, createToken: (String) -> IToken): IToken? {
-        return if (regex != null) {
-            val match = regex.matchAt(unconsumedInput, 0)
-            if (match != null) {
-                check(match.range.first == 0)
-                createToken(match.value)
-            } else {
-                null
-            }
-        } else if (followingStates.isNotEmpty()) {
-            val followingConstants = followingStates.asSequence().flatMap { it.getSymbols() }.filterIsInstance<ConstantSymbol>().map { it.text }
-            val nextConstantPos = followingConstants.map { unconsumedInput.indexOf(it) }.filter { it != -1 }.minOrNull()
-            if (nextConstantPos != null) {
-                createToken(unconsumedInput.substring(0, nextConstantPos))
-            } else {
-                null
-            }
-        } else {
-            val firstSpace = unconsumedInput.indexOf(" ")
-            if (firstSpace < 1) null else createToken(unconsumedInput.substring(0, firstSpace))
         }
     }
 

@@ -1,65 +1,59 @@
 package org.modelix.parser
 
-class GraphStructuredStack<E> {
-    fun newStack(): IStack<E> {
-        return Stack(null, 0)
-    }
+class EmptyGSS<E> : IGSStack<E> {
+    override fun peek(): E = throw NoSuchElementException("Empty stack")
+    override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
+    override fun pop(): Pair<E, List<IGSStack<E>>> = throw NoSuchElementException("Empty stack")
+    override fun pop(n: Int): List<Pair<List<E>, IGSStack<E>>> = throw NoSuchElementException("Empty stack")
+    override fun elementAt(n: Int): E = throw NoSuchElementException("Empty stack")
+}
 
-    private inner class Stack(private var head: GSSNode<E>?, var height: Int) : IStack<E> {
-        override fun pop(): E {
-            val n = checkNotNull(head) { "Empty stack" }
-            head = n.previous
-            height--
-            return n.element
-        }
-
-        override fun push(element: E) {
-            head = GSSNode(head, element)
-            height--
-        }
-
-        override fun peek(): E {
-            return checkNotNull(head) { "Empty stack" }.element
-        }
-
-        override fun copy(): IStack<E> {
-            return Stack(head, height)
-        }
-
-        override fun clear() {
-            head = null
-        }
-
-        override fun toString(): String {
-            return toList().asReversed().joinToString(" | ")
-        }
-
-        override fun iterator(): Iterator<E> {
-            return object : Iterator<E> {
-                private var current = head
-                override fun hasNext(): Boolean {
-                    return current != null
-                }
-
-                override fun next(): E {
-                    val result = current!!
-                    current = result.previous
-                    return result.element
-                }
+class RegularGSSNode<E>(private val element: E, private val previous: IGSStack<E>) : IGSStack<E> {
+    override fun peek(): E = element
+    override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
+    override fun pop(): Pair<E, List<IGSStack<E>>> = element to listOf(previous)
+    override fun pop(n: Int): List<Pair<List<E>, IGSStack<E>>> {
+        return when (n) {
+            0 -> listOf(emptyList<E>() to this)
+            1 -> listOf(listOf(element) to previous)
+            else -> previous.pop(n - 1).map { popped: Pair<List<E>, IGSStack<E>> ->
+                listOf(element) + popped.first to popped.second
             }
         }
     }
 
-    private class GSSNode<E>(val previous: GSSNode<E>?, val element: E) {
-
+    override fun elementAt(n: Int): E {
+        return if (n == 0) element else previous.elementAt(n - 1)
     }
 }
 
-interface IStack<E> : Iterable<E> {
-    fun push(element: E)
-    fun pop(): E
+class MergeGSSNode<E>(private val element: E, private val previous: List<IGSStack<E>>) : IGSStack<E> {
+    override fun peek(): E = element
+    override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
+    override fun pop(): Pair<E, List<IGSStack<E>>> = element to previous
+    override fun pop(n: Int): List<Pair<List<E>, IGSStack<E>>> {
+        return when (n) {
+            0 -> listOf(emptyList<E>() to this)
+            1 -> previous.map { listOf(element) to it }
+            else -> previous.flatMap { prev ->
+                prev.pop(n - 1).map { popped: Pair<List<E>, IGSStack<E>> ->
+                    listOf(element) + popped.first to popped.second
+                }
+            }
+        }
+    }
+    override fun elementAt(n: Int): E {
+        return if (n == 0) element else error("Stack is merged and has multiple values")
+    }
+}
+
+fun <T> Iterable<IGSStack<T>>.push(element: T): IGSStack<T> = MergeGSSNode(element, toList())
+
+interface IGSStack<E> {
+    fun push(element: E): IGSStack<E>
+    fun pop(): Pair<E, List<IGSStack<E>>>
+    fun pop(n: Int): List<Pair<List<E>, IGSStack<E>>>
     fun peek(): E
-    fun copy(): IStack<E>
-    fun clear()
+    fun elementAt(n: Int): E
 }
 

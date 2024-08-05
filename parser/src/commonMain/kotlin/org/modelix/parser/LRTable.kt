@@ -11,6 +11,7 @@ class LRTable() {
             is GotoAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
             is ReduceAction -> -action.rule.symbols.size
             is ShiftAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
+            is SkipAction -> error("Not expected to appear in the parse table")
         }
     }
 
@@ -33,7 +34,11 @@ class LRTable() {
 
             for (key in kernel.keys) {
                 val nextStateIndex = kernel.gotos[key]!!
-                val action = if (key is INonTerminalSymbol) GotoAction(nextStateIndex) else ShiftAction(nextStateIndex)
+                val action = if (key is INonTerminalSymbol) {
+                    GotoAction(nextStateIndex)
+                } else {
+                    ShiftAction(nextStateIndex, key as ITerminalSymbol)
+                }
                 state.addAction(key, action)
             }
 
@@ -127,9 +132,10 @@ class LRState {
 }
 
 sealed class LRAction
-data class ShiftAction(val nextState: Int) : LRAction()
+data class ShiftAction(val nextState: Int, val symbol: ITerminalSymbol) : LRAction()
 data class ReduceAction(val rule: ProductionRule) : LRAction()
 data class GotoAction(val nextState: Int) : LRAction()
+data object SkipAction : LRAction()
 data object AcceptAction : LRAction()
 
 private class SingleEntryMap<K, V>(override val key: K, override val value: V) : Map<K, V>, Map.Entry<K, V> {

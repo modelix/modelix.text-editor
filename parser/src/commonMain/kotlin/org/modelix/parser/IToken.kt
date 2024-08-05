@@ -4,6 +4,9 @@ sealed interface IToken : IParseTreeNode {
     fun textLength(): Int
 }
 
+data class WhitespaceToken(val text: String) : IToken {
+    override fun textLength() = text.length
+}
 data class ConstantToken(val text: String) : IToken {
     override fun textLength() = text.length
 }
