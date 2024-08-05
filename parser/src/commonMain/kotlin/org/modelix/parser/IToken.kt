@@ -24,7 +24,7 @@ data object EndOfInputToken : IToken {
 }
 
 interface IParseTreeNode
-interface INonTerminalToken {
+interface INonTerminalToken : IParseTreeNode {
     fun getNonTerminalSymbol(): INonTerminalSymbol
 }
 class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>) : IParseTreeNode, INonTerminalToken {
@@ -51,18 +51,28 @@ class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTermin
     }
 }
 
-class ParseForestNode(val trees: List<IParseTreeNode>) : IParseTreeNode {
+class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
 
     override fun toString(): String {
-        return "forest {\n${trees.joinToString("\n").prependIndent()}\n}"
+        return "forest {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
+    }
+
+    override fun getNonTerminalSymbol(): INonTerminalSymbol {
+        return symbol
     }
 
     companion object {
-        fun create(trees: List<IParseTreeNode>): IParseTreeNode? {
+        fun create(trees: List<INonTerminalToken>): INonTerminalToken? {
             return when (trees.size) {
                 0 -> null
                 1 -> trees.first()
-                else -> ParseForestNode(trees)
+                else -> {
+                    val symbol = trees.first().getNonTerminalSymbol()
+                    check(trees.asSequence().drop(1).all { it.getNonTerminalSymbol() == symbol }) {
+                        "Cannot merge trees for different non-terminal symbols: $trees"
+                    }
+                    ParseForestNode(symbol, trees)
+                }
             }
         }
     }

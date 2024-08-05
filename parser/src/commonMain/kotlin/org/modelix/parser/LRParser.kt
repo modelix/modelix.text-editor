@@ -81,10 +81,11 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }.map { group ->
             if (group.value.size == 1) return@map group.value.first()
 
-            val topOfStack = group.value.first().stack.peek()
             val mergedStack = group.value
-                .flatMap { it.stack.pop().also { check(it.first == topOfStack) }.second }
-                .push(topOfStack)
+                .map { it.stack }
+                .reduce { acc, it ->
+                    checkNotNull(acc.tryMerge(it)) { "Merge failed" }
+                }
 
             Fork(mergedStack, group.key.second)
         }
@@ -166,7 +167,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         }
     }
 
-    private data class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) {
+    private data class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) : IGSSElement {
         constructor(token: IParseTreeNode) : this(token, null)
         constructor(state: Int) : this(null, state)
         fun isNode() = node != null
@@ -175,6 +176,19 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         fun getState() = checkNotNull(state) { "Not a state" }
         override fun toString(): String {
             return if (isNode()) getToken().toString() else "[" + getState().toString() + "]"
+        }
+        override fun merge(other: IGSSElement): IGSSElement? {
+            check(other is StackElement)
+            if (this == other) return this
+            if (isState() != other.isState()) return null
+            if (isState()) return if (getState() == other.getState()) this else null
+
+            val t1 = getToken()
+            val t2 = other.getToken()
+            if (t1 !is INonTerminalToken) return null
+            if (t2 !is INonTerminalToken) return null
+            if (t1.getNonTerminalSymbol() != t2.getNonTerminalSymbol()) return null
+            return StackElement(ParseForestNode.create(listOf(t1, t2)))
         }
     }
 }

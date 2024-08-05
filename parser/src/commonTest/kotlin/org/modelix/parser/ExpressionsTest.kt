@@ -59,6 +59,31 @@ class ExpressionsTest {
         """.trimIndent()
     )
 
+    @Test fun plus4() = runTest(
+        "1+2+3+4",
+        """
+        Expression+ { PlusExpression {
+            Expression+ { PlusExpression {
+                Expression+ { IntegerLiteral { PropertyToken(text=1) } }
+                ConstantToken(text=+)
+                Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+            } }
+            ConstantToken(text=+)
+            Expression+ { IntegerLiteral { PropertyToken(text=3) } }
+        } }
+        ---
+        Expression+ { PlusExpression {
+            Expression+ { IntegerLiteral { PropertyToken(text=1) } }
+            ConstantToken(text=+)
+            Expression+ { PlusExpression {
+                Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+                ConstantToken(text=+)
+                Expression+ { IntegerLiteral { PropertyToken(text=3) } }
+            } }
+        } }
+        """.trimIndent()
+    )
+
     @Test fun test3() = runTest(
         "1+2+3+4+5+6+7+8+9+10+11+12+13",
         """
