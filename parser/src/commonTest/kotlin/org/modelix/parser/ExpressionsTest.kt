@@ -1,9 +1,7 @@
 package org.modelix.parser
 
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertEquals
-import kotlin.time.measureTime
 
 class ExpressionsTest {
 

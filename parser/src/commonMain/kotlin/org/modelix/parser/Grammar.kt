@@ -21,7 +21,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         rules += newRule
 
         loadRulesFromSymbols(newRule.symbols)
-        (rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
+        //(rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
     }
 
     private fun loadRulesFromSymbols(symbols: List<ISymbol>) {
@@ -108,7 +108,9 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     private val getRulesForNonTerminalCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
     fun getRulesForNonTerminal(nonTerminal: INonTerminalSymbol): List<ProductionRule> {
         return getRulesForNonTerminalCache.getOrPut(nonTerminal) {
-            rules.filter { it.head == nonTerminal }
+            rules.filter {
+                it.head == nonTerminal || nonTerminal is SubConceptsSymbol && it.head is ExactConceptSymbol && it.head.concept.isSubConceptOf(nonTerminal.concept)
+            }
         }
     }
 }

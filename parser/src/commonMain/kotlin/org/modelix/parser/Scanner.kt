@@ -9,10 +9,29 @@ class Scanner(
     private val whitespaceRegex = Regex("\\s+")
     private val expectedNextTerminals: MutableSet<ITerminalSymbol> = HashSet()
 
+    override fun toString(): String {
+        val x = 5
+        val before = input.substring(maxOf(0, position - x), position)
+        val after = input.substring(position, minOf(input.length, position + x))
+        return "${before}^${after}"
+    }
+
     fun next(): List<IToken> {
+        var nextTokens: List<IToken> = matchNextTokens()
+        if (nextTokens.size == 1 && nextTokens.first() is WhitespaceToken) {
+            position += nextTokens.first().textLength()
+            nextTokens = matchNextTokens()
+        }
+        expectedNextTerminals.clear()
+        check(nextTokens.isNotEmpty()) { "None of the terminals matches the input" }
+        position += nextTokens.first().textLength()
+        return nextTokens
+    }
+
+    private fun matchNextTokens(): List<IToken> {
         if (isAtEnd()) return listOf(EndOfInputToken)
         check(expectedNextTerminals.isNotEmpty()) { "Possible terminal symbols unknown" }
-        val nextTokens: List<IToken> = expectedNextTerminals.asSequence()
+        return expectedNextTerminals.asSequence()
             .map { matchInput(it) }
             .plus(matchRegex(whitespaceRegex) { WhitespaceToken(it) })
             .filterNotNull()
@@ -21,10 +40,6 @@ class Scanner(
             ?.value
             ?.distinct()
             ?: emptyList()
-        expectedNextTerminals.clear()
-        check(nextTokens.isNotEmpty()) { "None of the terminals matches the input" }
-        position += nextTokens.first().textLength()
-        return nextTokens
     }
 
     fun isAtEnd() = !hasMore()
