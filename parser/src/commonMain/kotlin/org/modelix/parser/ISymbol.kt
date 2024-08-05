@@ -48,11 +48,7 @@ data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is INonTerminalToken && when (val head = token.getNonTerminalSymbol()) {
-            is ExactConceptSymbol -> head.concept.isSubConceptOf(concept)
-            is SubConceptsSymbol -> head.concept.isSubConceptOf(concept)
-            else -> false
-        }
+        return token is INonTerminalToken && token.getNonTerminalSymbol() == this
     }
 }
 data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {

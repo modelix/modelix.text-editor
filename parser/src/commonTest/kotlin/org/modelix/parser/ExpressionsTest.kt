@@ -5,40 +5,57 @@ import kotlin.test.assertEquals
 
 class ExpressionsTest {
 
+    @Test fun test0() = runTest(
+        "1",
+        """
+        Expression+ { IntegerLiteral { PropertyToken(text=1) } }
+        """.trimIndent()
+    )
+
     @Test fun test1() = runTest(
         "1+2",
         """
-        PlusExpression {
-            IntegerLiteral { PropertyToken(text=1) }
+        Expression+ { PlusExpression {
+            Expression+ { IntegerLiteral { PropertyToken(text=1) } }
             ConstantToken(text=+)
-            IntegerLiteral { PropertyToken(text=2) }
-        }
+            Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+        } }
         """.trimIndent()
     )
 
     @Test fun testWithSpaces1() = runTest(
         "1 + 2",
         """
-        PlusExpression {
-            IntegerLiteral { PropertyToken(text=1) }
+        Expression+ { PlusExpression {
+            Expression+ { IntegerLiteral { PropertyToken(text=1) } }
             ConstantToken(text=+)
-            IntegerLiteral { PropertyToken(text=2) }
-        }
+            Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+        } }
         """.trimIndent()
     )
 
     @Test fun test2() = runTest(
         "1+2+3",
         """
-        PlusExpression {
-            IntegerLiteral { PropertyToken(text=1) }
-            ConstantToken(text=+)
-            PlusExpression {
-                IntegerLiteral { PropertyToken(text=2) }
+        Expression+ { PlusExpression {
+            Expression+ { PlusExpression {
+                Expression+ { IntegerLiteral { PropertyToken(text=1) } }
                 ConstantToken(text=+)
-                IntegerLiteral { PropertyToken(text=3) }
-            }
-        }
+                Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+            } }
+            ConstantToken(text=+)
+            Expression+ { IntegerLiteral { PropertyToken(text=3) } }
+        } }
+        ---
+        Expression+ { PlusExpression {
+            Expression+ { IntegerLiteral { PropertyToken(text=1) } }
+            ConstantToken(text=+)
+            Expression+ { PlusExpression {
+                Expression+ { IntegerLiteral { PropertyToken(text=2) } }
+                ConstantToken(text=+)
+                Expression+ { IntegerLiteral { PropertyToken(text=3) } }
+            } }
+        } }
         """.trimIndent()
     )
 

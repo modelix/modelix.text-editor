@@ -68,11 +68,18 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
     private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ITerminalSymbol>>()
     fun getPossibleFirstTerminalSymbols(nonTerminal: INonTerminalSymbol): Set<ITerminalSymbol> {
         return possibleFirstTokensCache.getOrPut(nonTerminal) {
-            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstTerminalSymbols(nonTerminal, HashSet(), it, HashSet()) }
+            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstSymbols(nonTerminal, HashSet(), it, HashSet()) }
         }
     }
 
-    fun collectPossibleFirstTerminalSymbols(
+    private val possibleFirstRulesCache = HashMap<INonTerminalSymbol, Set<ProductionRule>>()
+    fun getPossibleFirstRules(nonTerminal: INonTerminalSymbol): Set<ProductionRule> {
+        return possibleFirstRulesCache.getOrPut(nonTerminal) {
+            LinkedHashSet<ProductionRule>().also { collectPossibleFirstSymbols(nonTerminal, HashSet(), HashSet(), it) }
+        }
+    }
+
+    fun collectPossibleFirstSymbols(
         nonTerminal: INonTerminalSymbol,
         visited: MutableSet<INonTerminalSymbol>,
         firstSymbols: MutableSet<ITerminalSymbol>,
@@ -89,7 +96,7 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
                         break
                     }
                     is INonTerminalSymbol -> {
-                        collectPossibleFirstTerminalSymbols(firstSymbol, visited, firstSymbols, firstRules)
+                        collectPossibleFirstSymbols(firstSymbol, visited, firstSymbols, firstRules)
                         break
                     }
                     is OptionalSymbol -> error("Should have been expanded into multiple rules")

@@ -45,7 +45,7 @@ class LRTable() {
             for (item in kernel.closure.values) {
                 if (item.isComplete()) {
                     for (lookahead in item.lookaheadSet.terminals) {
-                        state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule, item.rule.head as INonTerminalSymbol))
+                        state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
                     }
                 }
             }
@@ -133,7 +133,7 @@ class LRState {
 
 sealed class LRAction
 data class ShiftAction(val nextState: Int, val symbol: ITerminalSymbol) : LRAction()
-data class ReduceAction(val rule: ProductionRule, val requestedSymbol: INonTerminalSymbol) : LRAction()
+data class ReduceAction(val rule: ProductionRule) : LRAction()
 data class GotoAction(val nextState: Int) : LRAction()
 data object SkipAction : LRAction()
 data object AcceptAction : LRAction()

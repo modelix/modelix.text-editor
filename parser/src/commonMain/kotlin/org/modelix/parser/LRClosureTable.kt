@@ -46,14 +46,14 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
                 .filter { it.first != null }
                 .groupBy { it.first }
                 .forEach { group ->
-                    val rules = grammar.getRulesForNonTerminal(group.key!!)
+                    val rules = grammar.getPossibleFirstRules(group.key!!)
                     val lookaheads = group.value.asSequence().flatMap { triple ->
                         val nextNextSymbol = triple.second
                         var newLookaheads: Set<ITerminalSymbol> = when (nextNextSymbol) {
                             null -> setOf(EmptySymbol)
                             is ITerminalSymbol -> setOf<ITerminalSymbol>(nextNextSymbol)
                             is INonTerminalSymbol -> grammar.getPossibleFirstTerminalSymbols(nextNextSymbol)
-                            is OptionalSymbol -> error("Should have been expanded into multiple rules")
+                            is OptionalSymbol -> TODO()
                             GoalSymbol -> TODO()
                             else -> TODO()
                         }
