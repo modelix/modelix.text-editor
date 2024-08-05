@@ -31,23 +31,31 @@ class RegularGSSNode<E : IGSSElement>(private val element: E, private val previo
     }
 
     override fun tryMerge(other: IGSStack<E>): IGSStack<E>? {
-        if (other == this) return this
-        return if (other is RegularGSSNode) {
-            if (element == other.element) {
-                val mergedPrev = other.previous.tryMerge(previous)
-                if (mergedPrev == null) {
-                    MergeGSSNode<E>(element, listOf(previous, other.previous))
+        return when (other) {
+            this -> this
+            is RegularGSSNode -> {
+                if (element == other.element) {
+                    val mergedPrev = other.previous.tryMerge(previous)
+                    if (mergedPrev == null) {
+                        MergeGSSNode<E>(element, listOf(previous, other.previous))
+                    } else {
+                        RegularGSSNode(element, mergedPrev)
+                    }
+                } else if (previous == other.previous) {
+                    val mergedEl = (element.merge(other.element) ?: return null) as E
+                    RegularGSSNode(mergedEl, previous)
                 } else {
-                    RegularGSSNode(element, mergedPrev)
+                    null
                 }
-            } else if (previous == other.previous) {
-                val mergedEl = (element.merge(other.element) ?: return null) as E
-                RegularGSSNode(mergedEl, previous)
-            } else {
-                null
             }
-        } else {
-            null
+            is MergeGSSNode -> {
+                if (element == other.peek()) {
+                    MergeGSSNode<E>(element, listOf(previous) + other.pop().second)
+                } else {
+                    null
+                }
+            }
+            else -> null
         }
     }
 

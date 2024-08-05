@@ -77,6 +77,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private fun List<Fork>.merge() = mergeForks(this)
 
     private fun mergeForks(forks: List<Fork>): List<Fork> {
+        check(forks.size <= 100) { "Too many forks" }
         return forks.filter { !it.stack.peek().isState() } +
                 forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }.map { group ->
             if (group.value.size == 1) return@map group.value.first()
