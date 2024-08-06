@@ -83,7 +83,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private fun List<Fork>.merge() = mergeForks(this)
 
     private fun mergeForks(forks: List<Fork>): List<Fork> {
-        check(forks.size <= 100) { "Too many forks" }
+
 
         val mergedForks = forks.filter { !it.stack.peek().isState() } +
                 forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }
@@ -99,6 +99,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                         Fork(mergedStack, group.key.second)
                     }
         if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
+        check(mergedForks.size <= 100) { "Too many forks" }
         return mergedForks
     }
 
@@ -149,10 +150,8 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                         1 -> matchingTokens.single()
                         else -> error("Multiple of the tokens matches ${action.symbol}: $matchingTokens")
                     }
-                    if (matchingToken !is EmptyToken) {
-                        newStack = newStack.push(StackElement(matchingToken))
-                    }
-                    newStack = newStack.push(StackElement(action.nextState))
+                    newStack = newStack.pushNode(matchingToken)
+                    newStack = newStack.pushState(action.nextState)
                     listOf(Fork(newStack, null))
                 }
                 is ReduceAction -> {
@@ -162,12 +161,12 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
 
                     return stack.pop(removeCount).map { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
                         val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
-                        val newStack = popped.second.push(StackElement(ParseTreeNode(rule, removedTokens.reversed())))
+                        val newStack = popped.second.pushNode(ParseTreeNode(rule, removedTokens.reversed()))
                         Fork(newStack, null)
                     }
                 }
                 is GotoAction -> {
-                    listOf(Fork(stack.push(StackElement(action.nextState)), null))
+                    listOf(Fork(stack.pushState(action.nextState), null))
                 }
                 AcceptAction -> {
                     output = (if (stack.peek().isState()) stack.pop().second else listOf(stack)).map { it.peek().getToken() }
@@ -176,6 +175,16 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 }
             }
         }
+    }
+
+    private fun IGSStack<StackElement>.pushNode(node: IParseTreeNode): IGSStack<StackElement> {
+        check(this.peek().isState()) { "Should be a state: $this" }
+        return push(StackElement(node))
+    }
+
+    private fun IGSStack<StackElement>.pushState(state: Int): IGSStack<StackElement> {
+        check(this.peek().isNode()) { "Should be a node: $this" }
+        return push(StackElement(state))
     }
 
     private data class StackElement private constructor(private val node: IParseTreeNode? = null, private val state: Int? = null) : IGSSElement {

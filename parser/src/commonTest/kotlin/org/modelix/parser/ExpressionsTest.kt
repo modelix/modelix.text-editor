@@ -5,14 +5,14 @@ import kotlin.test.assertEquals
 
 class ExpressionsTest {
 
-    @Test fun test0() = runTest(
+    @Test fun integerLiteral() = runTest(
         "1",
         """
         Expression+ { IntegerLiteral { PropertyToken(text=1) } }
         """.trimIndent()
     )
 
-    @Test fun test1() = runTest(
+    @Test fun plus2() = runTest(
         "1+2",
         """
         Expression+ { PlusExpression {
@@ -23,7 +23,7 @@ class ExpressionsTest {
         """.trimIndent()
     )
 
-    @Test fun testWithSpaces1() = runTest(
+    @Test fun plus2withSpaces() = runTest(
         "1 + 2",
         """
         Expression+ { PlusExpression {
@@ -34,7 +34,7 @@ class ExpressionsTest {
         """.trimIndent()
     )
 
-    @Test fun test2() = runTest(
+    @Test fun plus3() = runTest(
         "1+2+3",
         """
         Expression+ { PlusExpression {
@@ -348,7 +348,7 @@ class ExpressionsTest {
     )
 
     @Test fun testTernary() = runTest(
-        "1*2 ? 3+4 : 5+6",
+        "1 * 2 ? 3 + 4 + 5 : 6 + 7",
         """
         MulExpression {
             IntegerLiteral { PropertyToken(text=1) }

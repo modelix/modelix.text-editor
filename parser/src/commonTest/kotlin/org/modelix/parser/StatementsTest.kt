@@ -9,35 +9,35 @@ class StatementsTest {
     @Test fun localVarDeclWithoutInitializer() = runTest(
         "int a;",
         """
-        LocalVariableDeclarationStatement {
-            LocalVariableDeclaration {
-                IntegerType { ConstantToken(text=int) }
+        Statement+ { LocalVariableDeclarationStatement {
+            LocalVariableDeclaration+ { LocalVariableDeclaration {
+                Type+ { IntegerType { ConstantToken(text=int) } }
                 PropertyToken(text=a)
-                optional(constant[=] Expression) { EmptyToken }
-            }
+                optional(constant[=] Expression+) { EmptyToken }
+            } }
             ConstantToken(text=;)
-        }
+        } }
         """.trimIndent()
     )
 
     @Test fun localVarDeclWithInitializer() = runTest(
         "int a = 10 + 20;",
         """
-        LocalVariableDeclarationStatement {
-            LocalVariableDeclaration {
-                IntegerType { ConstantToken(text=int) }
+        Statement+ { LocalVariableDeclarationStatement {
+            LocalVariableDeclaration+ { LocalVariableDeclaration {
+                Type+ { IntegerType { ConstantToken(text=int) } }
                 PropertyToken(text=a)
-                optional(constant[=] Expression) {
+                optional(constant[=] Expression+) {
                     ConstantToken(text==)
-                    PlusExpression {
-                        IntegerLiteral { PropertyToken(text=10) }
+                    Expression+ { PlusExpression {
+                        Expression+ { IntegerLiteral { PropertyToken(text=10) } }
                         ConstantToken(text=+)
-                        IntegerLiteral { PropertyToken(text=20) }
-                    }
+                        Expression+ { IntegerLiteral { PropertyToken(text=20) } }
+                    } }
                 }
-            }
+            } }
             ConstantToken(text=;)
-        }
+        } }
         """.trimIndent()
     )
 
