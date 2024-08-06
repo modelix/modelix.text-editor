@@ -1,6 +1,9 @@
 package org.modelix.parser
 
-class LookaheadSet(val terminals: Set<ITerminalSymbol>) {
+class LookaheadSet private constructor(
+    val terminals: Set<ITerminalSymbol>,
+    val interning: MutableMap<Set<ITerminalSymbol>, LookaheadSet>
+) {
     private val _hashCode = terminals.hashCode()
     override fun hashCode(): Int = _hashCode
 
@@ -18,8 +21,17 @@ class LookaheadSet(val terminals: Set<ITerminalSymbol>) {
     }
 
     operator fun plus(additional: Set<ITerminalSymbol>): LookaheadSet {
-        val newSet = terminals + additional
-        if (newSet.size == terminals.size) return this
-        return LookaheadSet(newSet)
+        if (this.terminals == additional) return this
+        if (additional.isEmpty()) return this
+        if (this.terminals.isEmpty()) return interning.getOrPut(additional) { LookaheadSet(additional, interning) }
+        val combined = terminals + additional
+        return interning.getOrPut(combined) { LookaheadSet(combined, interning) }
+    }
+
+    companion object {
+        fun empty(objectInterning: MutableMap<Set<ITerminalSymbol>, LookaheadSet>): LookaheadSet {
+            val set = emptySet<ITerminalSymbol>()
+            return objectInterning.getOrPut(set) { LookaheadSet(set, objectInterning) }
+        }
     }
 }
