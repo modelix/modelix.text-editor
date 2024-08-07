@@ -1,6 +1,9 @@
 package org.modelix.parser
 
+import kotlin.math.min
+
 class EmptyGSS<E : IGSSElement> : IGSStack<E> {
+    override val containsMerges: Boolean get() = false
     override fun peek(): E = throw NoSuchElementException("Empty stack")
     override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
     override fun pop(): Pair<E, List<IGSStack<E>>> = throw NoSuchElementException("Empty stack")
@@ -10,9 +13,12 @@ class EmptyGSS<E : IGSSElement> : IGSStack<E> {
     override fun tryMerge(other: IGSStack<E>): IGSStack<E>? {
         return if (other is EmptyGSS) this else null
     }
+    override fun withoutMerges(): List<IGSStack<E>> = listOf(this)
+    override fun getSize(): IntRange = 0..0
 }
 
 class RegularGSSNode<E : IGSSElement>(private val element: E, private val previous: IGSStack<E>) : IGSStack<E> {
+    override val containsMerges: Boolean = previous.containsMerges
     override fun peek(): E = element
     override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
     override fun pop(): Pair<E, List<IGSStack<E>>> = element to listOf(previous)
@@ -59,12 +65,19 @@ class RegularGSSNode<E : IGSSElement>(private val element: E, private val previo
         }
     }
 
+    override fun withoutMerges(): List<IGSStack<E>> {
+        return if (containsMerges) previous.withoutMerges().map { RegularGSSNode(element, it) } else listOf(this)
+    }
+
+    override fun getSize(): IntRange = previous.getSize().let { (it.first + 1)..(it.last + 1) }
+
     override fun toString(): String {
         return "$previous | $element"
     }
 }
 
 class MergeGSSNode<E : IGSSElement>(private val element: E, private val previous: List<IGSStack<E>>) : IGSStack<E> {
+    override val containsMerges: Boolean get() = true
     override fun peek(): E = element
     override fun push(element: E): IGSStack<E> = RegularGSSNode(element, this)
     override fun pop(): Pair<E, List<IGSStack<E>>> = element to previous
@@ -90,6 +103,16 @@ class MergeGSSNode<E : IGSSElement>(private val element: E, private val previous
         return null
     }
 
+    override fun withoutMerges(): List<IGSStack<E>> {
+        return previous.flatMap { it.withoutMerges() }.map { RegularGSSNode(element, it) }
+    }
+
+    override fun getSize(): IntRange {
+        return previous.map { it.getSize() }
+            .reduce { acc, it -> min(acc.first, it.first)..min(acc.last, it.last) }
+            .let { (it.first + 1)..(it.last + 1) }
+    }
+
     override fun toString(): String {
         return "merge/${previous.size} | $element"
     }
@@ -106,7 +129,17 @@ interface IGSStack<E : IGSSElement> {
     fun pop(n: Int): List<Pair<List<E>, IGSStack<E>>>
     fun peek(): E
     fun elementAt(n: Int): E
+    fun getSize(): IntRange
+
+    val containsMerges: Boolean
     fun tryMerge(other: IGSStack<E>): IGSStack<E>?
+    fun withoutMerges(): List<IGSStack<E>>
+}
+
+fun <T : IGSSElement> IGSStack<T>.toLists(): List<List<T>> {
+    if (this is EmptyGSS) return listOf(emptyList())
+    val popped = pop()
+    return popped.second.flatMap { it.toLists() }.map { it + popped.first }
 }
 
 interface IGSSElement {

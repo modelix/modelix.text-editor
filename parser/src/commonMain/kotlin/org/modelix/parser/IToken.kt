@@ -54,11 +54,18 @@ class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTermin
 class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
 
     override fun toString(): String {
-        return "forest {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
+        return "forest:$symbol {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
     }
 
     override fun getNonTerminalSymbol(): INonTerminalSymbol {
         return symbol
+    }
+
+    fun flatten(): ParseForestNode {
+        val newChildren = trees.flatMap {
+            if (it is ParseForestNode && it.symbol == symbol) it.trees else listOf(it)
+        }
+        return if (newChildren.size == trees.size) this else ParseForestNode(symbol, newChildren)
     }
 
     companion object {
@@ -71,7 +78,7 @@ class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTermin
                     check(trees.asSequence().drop(1).all { it.getNonTerminalSymbol() == symbol }) {
                         "Cannot merge trees for different non-terminal symbols: $trees"
                     }
-                    ParseForestNode(symbol, trees)
+                    ParseForestNode(symbol, trees).flatten()
                 }
             }
         }

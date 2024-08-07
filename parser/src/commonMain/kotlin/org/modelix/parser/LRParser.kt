@@ -83,8 +83,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private fun List<Fork>.merge() = mergeForks(this)
 
     private fun mergeForks(forks: List<Fork>): List<Fork> {
-
-
+        if (forks.size < 2) return forks
         val mergedForks = forks.filter { !it.stack.peek().isState() } +
                 forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }
                     .map { group ->
@@ -92,6 +91,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
 
                         val mergedStack = group.value
                             .map { it.stack }
+                            .flatMap { it.withoutMerges() }
                             .reduce { acc, it ->
                                 checkNotNull(acc.tryMerge(it)) { "Merge failed" }
                             }

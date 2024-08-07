@@ -457,6 +457,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     }
 
     private fun runParsingTest(input: String) {
+        println("Running test ...")
         placeCaretIntoCellWithText("<no statement>")
 
         val layoutable = (editor.getSelection() as CaretSelection).layoutable
