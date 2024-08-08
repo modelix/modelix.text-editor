@@ -58,7 +58,7 @@ class Grammar {
         if (existingOptionals.contains(optionalSymbol)) return
         existingOptionals.add(optionalSymbol)
         rules += ProductionRule(optionalSymbol, optionalSymbol.children)
-        rules += ProductionRule(optionalSymbol, EmptySymbol)
+        rules += ProductionRule(optionalSymbol, emptyList())
         loadRulesFromSymbols(optionalSymbol.children)
     }
 

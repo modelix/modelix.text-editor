@@ -63,12 +63,11 @@ class LRClosureTable(val grammar: Grammar) {
         val newKernels = LinkedHashMap<ISymbol, Set<RuleItem>>()
 
         for (item in kernel.closure.values) {
-            val newItem: RuleItem? = item.forward()
-            if (newItem != null) {
-                val symbolAfterDot = item.nextSymbol()!!
-                kernel.keys.add(symbolAfterDot)
-                newKernels[symbolAfterDot] = (newKernels[symbolAfterDot]?.asSequence() ?: emptySequence()).plus(newItem).toSet()
-            }
+            if (item.isComplete()) continue
+            val newItem = item.forward() ?: continue
+            val symbolAfterDot = item.nextSymbol()!!
+            kernel.keys.add(symbolAfterDot)
+            newKernels[symbolAfterDot] = (newKernels[symbolAfterDot]?.asSequence() ?: emptySequence()).plus(newItem).toSet()
         }
 
         for (key in kernel.keys) {

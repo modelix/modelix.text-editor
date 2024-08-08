@@ -7,7 +7,10 @@ data class RuleItem(val positionInRule: PositionInRule) {
 
     fun nextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor)
     fun nextNextSymbol(): ISymbol? = rule.symbols.getOrNull(cursor + 1)
-    fun forward() = if (cursor < rule.symbols.size) RuleItem(rule, cursor + 1) else null
+    fun forward(): RuleItem? {
+        check(!isComplete())
+        return if (cursor < rule.symbols.size) RuleItem(rule, cursor + 1) else null
+    }
     fun isComplete() = nextSymbol() == null
     fun size() = rule.symbols.size
 

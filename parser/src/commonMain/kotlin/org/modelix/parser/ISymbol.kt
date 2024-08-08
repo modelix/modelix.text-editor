@@ -105,19 +105,19 @@ class ProductionRule(val head: INonTerminalSymbol, val symbols: List<ISymbol>) {
     constructor(head: INonTerminalSymbol, vararg symbols: ISymbol) : this(head, symbols.toList())
 
     init {
-        require(symbols.isNotEmpty()) { "Use EmptySymbol instead of an empty list" }
-        require(!(symbols.size != 1 && symbols.contains(EmptySymbol))) {
-            "EmptySymbol is not allowed together with other symbols"
+        require(!symbols.contains(EmptySymbol)) {
+            "Symbol list should be empty instead"
         }
     }
 
     fun expandOptionals() = symbols.expandOptionals().map { ProductionRule(head, it) }
 
     override fun toString(): String {
-        return "$head -> ${symbols.joinToString(" ")}"
+        return "$head -> ${symbols.ifEmpty { listOf(EmptySymbol) }.joinToString(" ")}"
     }
 
     fun isGoal() = head == GoalSymbol
+    fun isEmpty() = symbols.isEmpty()
 }
 
 data object GoalSymbol : INonTerminalSymbol {

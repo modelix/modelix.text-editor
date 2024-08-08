@@ -112,6 +112,10 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
 
         fun readyToShift() = actionToApply is ShiftAction
 
+        override fun toString(): String {
+            return "$stack || $actionToApply"
+        }
+
         fun forksForNextActions(lookaheadTokens: List<IToken>): List<Fork> {
             check(!accepted) { "Already accepted" }
 
@@ -126,7 +130,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
             } else {
                 val applicableActions = state().getSymbolsAndActions().filter {
                     val symbol = it.first
-                    lookaheadTokens.any { symbol.matches(it) }
+                    symbol == EmptySymbol || lookaheadTokens.any { symbol.matches(it) }
                 }.flatMap { it.second.asSequence() }.toSet()
                 // TODO filter out reductions that don't match the actual content on the stack
                 return applicableActions.map { Fork(stack, it) }
