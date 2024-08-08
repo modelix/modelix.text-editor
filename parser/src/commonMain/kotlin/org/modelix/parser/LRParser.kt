@@ -127,7 +127,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 val applicableActions = state().getSymbolsAndActions().filter {
                     val symbol = it.first
                     lookaheadTokens.any { symbol.matches(it) }
-                }.flatMap { it.second.asSequence() }.toList()
+                }.flatMap { it.second.asSequence() }.toSet()
                 // TODO filter out reductions that don't match the actual content on the stack
                 return applicableActions.map { Fork(stack, it) }
             }

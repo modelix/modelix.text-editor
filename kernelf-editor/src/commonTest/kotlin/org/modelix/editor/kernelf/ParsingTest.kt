@@ -52,15 +52,15 @@ class ParsingTest {
 
     @Test fun test11() = runParsingTest("123.456 + true")
 
-    @Test fun test12() = runParsingTest(""""abc" + "def"""")
+    @Test fun string4() = runParsingTest(""""abc" + "def"""")
 
     @Ignore
     @Test
-    fun test13() = runParsingTest(""""abc\" + \"def"""")
+    fun string3() = runParsingTest(""""abc\" + \"def"""")
 
-    @Test fun test14() = runParsingTest(""""abc" + " """")
+    @Test fun string1() = runParsingTest(""""abc" + " """")
 
-    @Test fun test15() = runParsingTest(""""abc" + """"")
+    @Test fun string2() = runParsingTest(""""abc" + """"")
 
     @Test fun test16() = runParsingTest("""isSome(10)""")
 
@@ -69,6 +69,8 @@ class ParsingTest {
     @Test fun if2() = runParsingTest("""if 10 > 20 then 15""")
 
     @Test fun if3() = runParsingTest("""if 10 > 20 then 15 else 900""")
+
+    @Test fun if4() = runParsingTest("""if 10 > 20 then 15 + 20 + 25 else 900 * 800""")
 
     @Test fun list3() = runParsingTest("""list(10, 20, 30)""")
 
