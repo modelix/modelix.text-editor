@@ -54,9 +54,7 @@ class ParsingTest {
 
     @Test fun string4() = runParsingTest(""""abc" + "def"""")
 
-    @Ignore
-    @Test
-    fun string3() = runParsingTest(""""abc\" + \"def"""")
+    @Test fun string3() = runParsingTest(""""abc\" + \"def"""")
 
     @Test fun string1() = runParsingTest(""""abc" + " """")
 

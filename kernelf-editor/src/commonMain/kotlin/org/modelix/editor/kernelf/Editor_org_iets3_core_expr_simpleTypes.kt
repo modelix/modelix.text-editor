@@ -12,6 +12,7 @@ val Editor_org_iets3_core_expr_simpleTypes = languageAspects(L_org_iets3_core_ex
             noSpace()
             concept.value.cell {
                 placeholderText("")
+                regex(Regex("""([^"\\]|\\.)*"""))
                 validateValue { validateStringLiteral(it) }
             }
             noSpace()
