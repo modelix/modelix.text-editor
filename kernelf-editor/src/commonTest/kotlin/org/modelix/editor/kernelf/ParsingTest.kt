@@ -25,6 +25,7 @@ import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParser
 import kotlin.test.Ignore
 import kotlin.test.Test
+import kotlin.test.assertTrue
 import kotlin.time.measureTime
 
 class ParsingTest {
@@ -63,21 +64,23 @@ class ParsingTest {
 
     @Test fun test16() = runParsingTest("""isSome(10)""")
 
-    @Test fun test17() = runParsingTest("""if 10 > 20 then 15""")
+    @Test fun if1() = runParsingTest("""if true then 15""")
 
-    @Test fun test18() = runParsingTest("""if 10 > 20 then 15 else 900""")
+    @Test fun if2() = runParsingTest("""if 10 > 20 then 15""")
 
-    @Test fun test19() = runParsingTest("""list(10, 20, 30)""")
+    @Test fun if3() = runParsingTest("""if 10 > 20 then 15 else 900""")
 
-    @Test fun test20() = runParsingTest("""list(10)""")
+    @Test fun list3() = runParsingTest("""list(10, 20, 30)""")
 
-    @Test fun test21() = runParsingTest("""list<number>(10, 20, 30)""")
+    @Test fun list1() = runParsingTest("""list(10)""")
 
-    @Test fun test22() = runParsingTest("""list(10, 20)""")
+    @Test fun listWithType3() = runParsingTest("""list<number>(10, 20, 30)""")
 
-    @Test fun test23() = runParsingTest("""[10, 20]""")
+    @Test fun list2() = runParsingTest("""list(10, 20)""")
 
-    @Test fun test24() = runParsingTest("""[10, 20, 30]""")
+    @Test fun tuple2() = runParsingTest("""[10, 20]""")
+
+    @Test fun tuple3() = runParsingTest("""[10, 20, 30]""")
 
     @Test fun test25() = runParsingTest("""val abc: opt<number> = none""")
     @Test fun test26() = runParsingTest("""val abc: (number, string => number) = none""")
@@ -104,6 +107,7 @@ class ParsingTest {
             parseTrees = parser.parseForest(inputString, complete).toList()
         }
         println(time)
+        assertTrue(parseTrees.isNotEmpty())
         println(parseTrees.joinToString("\n---\n"))
     }
 

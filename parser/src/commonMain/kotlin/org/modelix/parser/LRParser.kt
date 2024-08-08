@@ -38,6 +38,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         }
 
         val scanner = Scanner(input)
+        scanner.addKnownConstants(table.knownConstants)
         val initialStack: IGSStack<StackElement> = EmptyGSS<StackElement>().push(StackElement(0))
         var step: Int = 2
         var forks: List<Fork> = listOf(Fork(initialStack, null))
@@ -91,7 +92,6 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
 
                         val mergedStack = group.value
                             .map { it.stack }
-                            .flatMap { it.withoutMerges() }
                             .reduce { acc, it ->
                                 checkNotNull(acc.tryMerge(it)) { "Merge failed" }
                             }
@@ -99,7 +99,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                         Fork(mergedStack, group.key.second)
                     }
         if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
-        check(mergedForks.size <= 100) { "Too many forks" }
+        check(mergedForks.size <= 1000) { "Too many forks" }
         return mergedForks
     }
 
@@ -128,6 +128,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     val symbol = it.first
                     lookaheadTokens.any { symbol.matches(it) }
                 }.flatMap { it.second.asSequence() }.toList()
+                // TODO filter out reductions that don't match the actual content on the stack
                 return applicableActions.map { Fork(stack, it) }
             }
         }
@@ -155,6 +156,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     listOf(Fork(newStack, null))
                 }
                 is ReduceAction -> {
+                    // TODO check if the stack content actually matches the rule symbols
                     val rule = action.rule
                     if (rule.isGoal()) error("Should be an AcceptAction")
                     val removeCount = rule.symbols.size * 2

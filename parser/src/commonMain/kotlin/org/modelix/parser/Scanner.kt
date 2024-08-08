@@ -94,7 +94,7 @@ class Scanner(
             val nextConstants = findNextConstants()
             val nextConstantPos = nextConstants.firstOrNull()?.second
             if (nextConstantPos != null && nextConstantPos > position) {
-                createToken(input.substring(position, position + nextConstantPos))
+                createToken(input.substring(position, nextConstantPos))
             } else {
                 null
             }

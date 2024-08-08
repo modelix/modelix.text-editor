@@ -10,11 +10,13 @@ class Grammar {
     private val existingOptionals = HashSet<OptionalSymbol>()
     private val loadedSubConceptRules = HashSet<IConcept>()
     private val follows: Map<INonTerminalSymbol, Set<ITerminalSymbol>>
+    val knownConstants: Set<String>
 
     constructor(startConcept: IConcept, rawRules: List<ProductionRule>) {
         addGoal(startConcept)
         rawRules.forEach { addRule(it) }
         follows = computeFollows()
+        knownConstants = rules.asSequence().flatMap { it.symbols }.filterIsInstance<ConstantSymbol>().map { it.text }.toSet()
     }
 
     fun getGoalRule() = getRulesForNonTerminal(GoalSymbol).single()

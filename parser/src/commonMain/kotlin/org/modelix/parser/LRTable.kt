@@ -4,6 +4,7 @@ import kotlin.math.min
 
 class LRTable() {
     val states: MutableList<LRState> = ArrayList()
+    var knownConstants: Set<String> = emptySet()
 
     fun getDistanceToAccept(action: LRAction, pathLength: Int = 0): Int {
         return when (action) {
@@ -28,6 +29,7 @@ class LRTable() {
     }
 
     fun load(closureTable: LRClosureTable) {
+        knownConstants = closureTable.grammar.knownConstants
         for (kernel in closureTable.kernels) {
             val state = LRState()
             states.add(state)
