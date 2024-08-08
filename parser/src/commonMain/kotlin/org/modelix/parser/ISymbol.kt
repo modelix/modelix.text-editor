@@ -103,6 +103,14 @@ fun List<ISymbol>.expandOptionals(): List<List<ISymbol>> {
 
 class ProductionRule(val head: INonTerminalSymbol, val symbols: List<ISymbol>) {
     constructor(head: INonTerminalSymbol, vararg symbols: ISymbol) : this(head, symbols.toList())
+
+    init {
+        require(symbols.isNotEmpty()) { "Use EmptySymbol instead of an empty list" }
+        require(!(symbols.size != 1 && symbols.contains(EmptySymbol))) {
+            "EmptySymbol is not allowed together with other symbols"
+        }
+    }
+
     fun expandOptionals() = symbols.expandOptionals().map { ProductionRule(head, it) }
 
     override fun toString(): String {

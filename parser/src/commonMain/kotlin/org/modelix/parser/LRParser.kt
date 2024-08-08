@@ -169,7 +169,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     listOf(Fork(stack.pushState(action.nextState), null))
                 }
                 AcceptAction -> {
-                    output = (if (stack.peek().isState()) stack.pop().second else listOf(stack)).map { it.peek().getToken() }
+                    output = stack.withoutMerges().map { it.elementAt(it.getSize().first - 2).getToken() }
                     accepted = true
                     listOf(this)
                 }
@@ -213,12 +213,12 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     }
 }
 
-fun Grammar.createParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
-    return LRParser(createParseTable(startConcept), disambiguator)
+fun Grammar.createParser(disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
+    return LRParser(createParseTable(), disambiguator)
 }
 
-fun Grammar.createParseTable(startConcept: IConcept): LRTable {
-    val closureTable = LRClosureTable(grammar = this, startConcept = startConcept).also { it.load() }
+fun Grammar.createParseTable(): LRTable {
+    val closureTable = LRClosureTable(grammar = this).also { it.load() }
     return LRTable().also { it.load(closureTable) }
 }
 

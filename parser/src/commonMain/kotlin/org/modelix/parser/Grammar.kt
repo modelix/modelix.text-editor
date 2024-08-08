@@ -2,18 +2,32 @@ package org.modelix.parser
 
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getAllConcepts
+import kotlin.collections.plusAssign
 
-class Grammar(originalRules: List<ProductionRule> = emptyList()) {
+class Grammar {
     private val rules = ArrayList<ProductionRule>()
     private val existingLists = HashSet<ListSymbol>()
     private val existingOptionals = HashSet<OptionalSymbol>()
     private val loadedSubConceptRules = HashSet<IConcept>()
+    private val follows: Map<INonTerminalSymbol, Set<ITerminalSymbol>>
 
-    init {
-        originalRules.forEach { addRule(it) }
+    constructor(startConcept: IConcept, rawRules: List<ProductionRule>) {
+        addGoal(startConcept)
+        rawRules.forEach { addRule(it) }
+        follows = computeFollows()
     }
 
-    fun addRule(rule: ProductionRule) {
+    fun getGoalRule() = getRulesForNonTerminal(GoalSymbol).single()
+
+    private fun addGoal(startConcept: IConcept) {
+        addGoal(SubConceptsSymbol(startConcept))
+    }
+
+    private fun addGoal(goal: INonTerminalSymbol) {
+        addRule(ProductionRule(GoalSymbol, listOf(goal, EndOfInputSymbol)))
+    }
+
+    private fun addRule(rule: ProductionRule) {
         require(rule.head !is SubConceptsSymbol) { "${rule.head} is only allowed on the right hand side of a rule. Invalid rule: $rule" }
         val filteredSymbols = filterSymbols(rule.symbols)
         if (filteredSymbols.isEmpty()) return
@@ -65,10 +79,15 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         }
     }
 
+    fun getPossibleFollowingTerminals(nonTerminal: INonTerminalSymbol): Set<ITerminalSymbol> = follows[nonTerminal] ?: emptySet()
+
     private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ITerminalSymbol>>()
     fun getPossibleFirstTerminalSymbols(nonTerminal: INonTerminalSymbol): Set<ITerminalSymbol> {
         return possibleFirstTokensCache.getOrPut(nonTerminal) {
-            LinkedHashSet<ITerminalSymbol>().also { collectPossibleFirstSymbols(nonTerminal, HashSet(), it, HashSet()) }
+            LinkedHashSet<ISymbol>()
+                .also { collectPossibleFirstSymbols(nonTerminal, HashSet(), it, HashSet()) }
+                .filterIsInstance<ITerminalSymbol>()
+                .toSet()
         }
     }
 
@@ -79,10 +98,78 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         }
     }
 
+
+    private fun computeFollows(): Map<INonTerminalSymbol, Set<ITerminalSymbol>> {
+        val result = HashMap<INonTerminalSymbol, MutableSet<ITerminalSymbol>>()
+        var notDone: Boolean
+
+        do {
+            notDone = false
+
+            for (rule in rules) {
+                for ((index, symbol) in rule.symbols.withIndex()) {
+                    if (symbol !is INonTerminalSymbol) continue
+
+                    val symbolFollows = result.getOrPut(symbol) { HashSet<ITerminalSymbol>() }
+                    val afterSymbolFirsts = getSequenceFirsts(rule.symbols.drop(index + 1))
+
+                    for (first in afterSymbolFirsts) {
+                        if (first == EmptySymbol) {
+                            val nonTerminalFollows: MutableSet<ITerminalSymbol>? = result[rule.head]
+                            if (nonTerminalFollows != null) {
+                                val oldSize = symbolFollows.size
+                                symbolFollows.addAll(nonTerminalFollows)
+                                val anyElementsAdded = symbolFollows.size != oldSize
+                                notDone = notDone || anyElementsAdded
+                            }
+                        } else {
+                            if (!symbolFollows.contains(first)) {
+                                symbolFollows.add(first)
+                                notDone = true
+                            }
+                        }
+                    }
+                }
+            }
+
+        } while (notDone)
+
+        return result
+    }
+
+    private fun getSequenceFirsts(symbols: List<ISymbol>): Set<ITerminalSymbol> {
+        val result = HashSet<ITerminalSymbol>()
+        var epsilonInSymbolFirsts = true
+        for (symbol in symbols) {
+            epsilonInSymbolFirsts = false
+            when (symbol) {
+                is ITerminalSymbol -> {
+                    result.add(symbol)
+                    break
+                }
+                is INonTerminalSymbol -> {
+                    val firsts = getPossibleFirstTerminalSymbols(symbol)
+                    epsilonInSymbolFirsts = epsilonInSymbolFirsts || firsts.contains(EmptySymbol)
+                    result += firsts
+
+                    epsilonInSymbolFirsts = epsilonInSymbolFirsts || firsts.isEmpty()
+
+                    if (!epsilonInSymbolFirsts) break
+                }
+            }
+        }
+
+        if (epsilonInSymbolFirsts) {
+            result += EmptySymbol
+        }
+
+        return result
+    }
+
     fun collectPossibleFirstSymbols(
         nonTerminal: INonTerminalSymbol,
         visited: MutableSet<INonTerminalSymbol>,
-        firstSymbols: MutableSet<ITerminalSymbol>,
+        firstSymbols: MutableSet<ISymbol>,
         firstRules: MutableSet<ProductionRule>,
     ) {
         if (visited.contains(nonTerminal)) return
@@ -93,17 +180,17 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
                 when (firstSymbol) {
                     is ITerminalSymbol -> {
                         firstSymbols.add(firstSymbol)
-                        break
+                        return
                     }
                     is INonTerminalSymbol -> {
-                        collectPossibleFirstSymbols(firstSymbol, visited, firstSymbols, firstRules)
-                        break
+                        val newSymbols = LinkedHashSet<ISymbol>()
+                        collectPossibleFirstSymbols(firstSymbol, visited, newSymbols, firstRules)
+                        firstSymbols += newSymbols - EmptySymbol
+                        if (!newSymbols.contains(EmptySymbol)) return
                     }
-                    is OptionalSymbol -> error("Should have been expanded into multiple rules")
-                    GoalSymbol -> error("Not expected to be part of the grammar")
-                    is ListSymbol -> TODO()
                 }
             }
+            firstSymbols += EmptySymbol
         }
 
         for (rule in getRulesForNonTerminal(nonTerminal)) {
@@ -117,6 +204,16 @@ class Grammar(originalRules: List<ProductionRule> = emptyList()) {
         return getRulesForNonTerminalCache.getOrPut(nonTerminal) {
             rules.filter {
                 it.head == nonTerminal
+            }
+        }
+    }
+
+
+    private val getRulesContainingNonTerminalCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
+    fun getRulesContainingNonTerminal(nonTerminal: INonTerminalSymbol): List<ProductionRule> {
+        return getRulesContainingNonTerminalCache.getOrPut(nonTerminal) {
+            rules.filter {
+                it.symbols.any { it == nonTerminal }
             }
         }
     }

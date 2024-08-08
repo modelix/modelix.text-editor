@@ -18,9 +18,9 @@ class ParserForEditor(val engine: EditorEngine){
     private fun getParseTable(startConcept: IConcept): LRTable {
         return runSynchronized(parseTables) {
             parseTables.getOrPut(startConcept) {
-                val grammar = Grammar()
-                loadRulesFromSubconcepts(grammar, startConcept, HashSet(), engine)
-                grammar.createParseTable(startConcept)
+                val rules = ArrayList<ProductionRule>()
+                loadRulesFromSubconcepts(rules, startConcept, HashSet(), engine)
+                Grammar(startConcept, rules).createParseTable()
             }
         }
     }
@@ -29,15 +29,15 @@ class ParserForEditor(val engine: EditorEngine){
         return LRParser(getParseTable(startConcept), disambiguator)
     }
 
-    private fun loadRulesFromSubconcepts(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
+    private fun loadRulesFromSubconcepts(rules: MutableList<ProductionRule>, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
         if (visited.contains(concept)) return
         for (subConcept in concept.getInstantiatableSubConcepts()) {
-            loadRules(grammar, subConcept, visited, engine)
+            loadRules(rules, subConcept, visited, engine)
         }
         visited.add(concept)
     }
 
-    private fun loadRules(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
+    private fun loadRules(rules: MutableList<ProductionRule>, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
         if (visited.contains(concept)) return
         visited.add(concept)
 
@@ -53,12 +53,12 @@ class ParserForEditor(val engine: EditorEngine){
         val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
         if (symbols.isNotEmpty()) {
             val rule = ProductionRule(ExactConceptSymbol(concept), symbols)
-            grammar.addRule(rule)
+            rules.add(rule)
         }
 
         val childConcepts = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>().map { it.link.targetConcept }
         for (childConcept in childConcepts) {
-            loadRulesFromSubconcepts(grammar, childConcept, visited, engine)
+            loadRulesFromSubconcepts(rules, childConcept, visited, engine)
         }
     }
 }

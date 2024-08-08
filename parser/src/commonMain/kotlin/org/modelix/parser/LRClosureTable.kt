@@ -2,12 +2,11 @@ package org.modelix.parser
 
 import org.modelix.model.api.IConcept
 
-class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
+class LRClosureTable(val grammar: Grammar) {
     val kernels = KernelsList()
 
     fun load() {
-        val goal = ProductionRule(GoalSymbol, listOf(SubConceptsSymbol(startConcept)))
-        kernels.newKernel(mutableSetOf(RuleItem(goal, 0, setOf(EndOfInputSymbol).toLookaheadSet())))
+        kernels.newKernel(mutableSetOf(RuleItem(grammar.getGoalRule(), 0)))
 
         var i = 0
         while (i < kernels.size()) {
@@ -37,41 +36,22 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
 
             kernel.closure.values.asSequence()
                 .map {
-                    Triple(
+                    Pair(
                         it.nextSymbol() as? INonTerminalSymbol,
                         it.nextNextSymbol(),
-                        it.lookaheadSet
                     )
                 }
                 .filter { it.first != null }
                 .groupBy { it.first }
                 .forEach { group ->
                     val rules = grammar.getPossibleFirstRules(group.key!!)
-                    val lookaheads = HashSet<ITerminalSymbol>()
-                    group.value.asSequence().forEach { triple ->
-                        val nextNextSymbol = triple.second
-                        when (nextNextSymbol) {
-                            null -> lookaheads += EmptySymbol
-                            is ITerminalSymbol -> lookaheads += nextNextSymbol
-                            is INonTerminalSymbol -> lookaheads += grammar.getPossibleFirstTerminalSymbols(nextNextSymbol)
-                            is OptionalSymbol -> TODO()
-                            GoalSymbol -> TODO()
-                            else -> TODO()
-                        }
-                        if (lookaheads.contains(EmptySymbol)) {
-                            lookaheads -= EmptySymbol
-                            lookaheads += triple.third.terminals
-                        }
-                    }
-
-                    val newLookaheadSet = emptyLookaheadSet + lookaheads
                     for (rule in rules) {
                         val positionInRule = PositionInRule(0, rule)
                         val existing = kernel.closure[positionInRule]
                         kernel.closure[positionInRule] = if (existing == null) {
-                            RuleItem(positionInRule, newLookaheadSet)
+                            RuleItem(positionInRule)
                         } else {
-                            RuleItem(existing.positionInRule, (existing.lookaheadSet + newLookaheadSet))
+                            RuleItem(existing.positionInRule)
                         }
                     }
                 }
@@ -87,7 +67,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
             if (newItem != null) {
                 val symbolAfterDot = item.nextSymbol()!!
                 kernel.keys.add(symbolAfterDot)
-                newKernels[symbolAfterDot] = (newKernels[symbolAfterDot]?.asSequence() ?: emptySequence()).plus(newItem).mergeLookaheads()
+                newKernels[symbolAfterDot] = (newKernels[symbolAfterDot]?.asSequence() ?: emptySequence()).plus(newItem).toSet()
             }
         }
 
@@ -110,20 +90,6 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
     private val emptyLookaheadSet = LookaheadSet.empty(lookaheadSetInstances)
     private fun Set<ITerminalSymbol>.toLookaheadSet() = emptyLookaheadSet + this
 
-    private fun Sequence<RuleItem>.mergeLookaheads(): Set<RuleItem> {
-        return this.groupBy { it.positionInRule }.map { group ->
-            if (group.value.size == 1) {
-                group.value.first()
-            } else {
-                var mergedLookahead: LookaheadSet? = null
-                for (ruleItem in group.value) {
-                    mergedLookahead = if (mergedLookahead == null) ruleItem.lookaheadSet else mergedLookahead + ruleItem.lookaheadSet
-                }
-                RuleItem(group.key, mergedLookahead!!)
-            }
-        }.toSet()
-    }
-
     inner class KernelsList : Iterable<Kernel> {
         private val kernelsList = ArrayList<Kernel>()
         private val kernelsMap: MutableMap<Set<RuleItem>, Kernel> = HashMap()
@@ -131,7 +97,7 @@ class LRClosureTable(val grammar: Grammar, val startConcept: IConcept) {
         override fun iterator(): Iterator<Kernel> = kernelsList.iterator()
 
         fun mergeLookaheads(kernel: Kernel, newItems: Sequence<RuleItem>): Boolean {
-            val merged = kernel.items.asSequence().plus(newItems).mergeLookaheads()
+            val merged = kernel.items + newItems
             if (merged == kernel.items) return false
             kernelsMap.remove(kernel.items)
             kernel.items = merged

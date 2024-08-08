@@ -11,6 +11,7 @@ import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
 import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.celltemplate.ChildCellTemplate
+import org.modelix.editor.celltemplate.ParserForEditor
 import org.modelix.editor.celltemplate.leafSymbols
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
@@ -394,49 +395,9 @@ class ParsingTest {
             KernelfEditor.register(engine)
 
             val startConcept = L_org_iets3_core_expr_base.Expression.untyped()
-            val grammar = Grammar()
-            loadRulesFromSubconcepts(grammar, startConcept, HashSet(), engine)
-            parser = grammar.createParser(startConcept)
+            parser = ParserForEditor(engine).getParser(startConcept)
 
             KernelfLanguages.languages.forEach { it.unregister() }
-        }
-
-        private fun loadRulesFromSubconcepts(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
-            if (visited.contains(concept)) return
-            for (subConcept in concept.getInstantiatableSubConcepts()) {
-                loadRules(grammar, subConcept, visited, engine)
-            }
-            visited.add(concept)
-        }
-
-        private fun loadRules(grammar: Grammar, concept: IConcept, visited: MutableSet<IConcept>, engine: EditorEngine) {
-            if (visited.contains(concept)) return
-            visited.add(concept)
-
-            val cellModel = engine.createCellModelExcludingDefault(concept) ?: return
-
-//            if (!includedConcepts.contains(concept)) {
-//                excludedConcepts.add(concept)
-//                return
-//            }
-
-            val canContainBaseConcept = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>()
-                .any { it.link.targetConcept.getDirectSuperConcepts().isEmpty() }
-            if (canContainBaseConcept) {
-                // The parsing table will be too big
-                return
-            }
-
-            val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
-            if (symbols.isNotEmpty()) {
-                val rule = ProductionRule(ExactConceptSymbol(concept), symbols)
-                grammar.addRule(rule)
-            }
-
-            val childConcepts = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>().map { it.link.targetConcept }
-            for (childConcept in childConcepts) {
-                loadRulesFromSubconcepts(grammar, childConcept, visited, engine)
-            }
         }
     }
 }

@@ -45,11 +45,9 @@ object TestGrammar {
         addRule(integerType, ConstantSymbol("int"))
     }
 
-    fun getGrammar() = Grammar(rules)
-
     fun getParser(startConcept: IConcept, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {
-        val grammar = TestGrammar.getGrammar()
-        val closureTable = LRClosureTable(grammar, startConcept)
+        val grammar = Grammar(startConcept, rules)
+        val closureTable = LRClosureTable(grammar)
         closureTable.load()
         val parsingTable = LRTable()
         parsingTable.load(closureTable)

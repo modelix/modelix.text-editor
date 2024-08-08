@@ -44,8 +44,12 @@ class LRTable() {
 
             for (item in kernel.closure.values) {
                 if (item.isComplete()) {
-                    for (lookahead in item.lookaheadSet.terminals) {
-                        state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
+                    if (item.rule.isGoal()) {
+                        state.addAction(EndOfInputSymbol, AcceptAction)
+                    } else {
+                        for (lookahead in closureTable.grammar.getPossibleFollowingTerminals(item.rule.head)) {
+                            state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
+                        }
                     }
                 }
             }
