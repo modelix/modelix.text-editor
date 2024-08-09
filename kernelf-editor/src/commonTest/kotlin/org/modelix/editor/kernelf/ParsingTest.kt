@@ -82,8 +82,8 @@ class ParsingTest {
 
     @Test fun tuple3() = runParsingTest("""[10, 20, 30]""")
 
-    @Test fun test25() = runParsingTest("""val abc: opt<number> = none""")
-    @Test fun test26() = runParsingTest("""val abc: (number, string => number) = none""")
+    @Test fun test25() = runParsingTest("""val abc: opt<number> = none + 10""")
+    @Test fun test26() = runParsingTest("""val abc: (number, string => number) = 10""")
 
 
     @Test fun completion1() = runCompletionTest("""1 + """)
