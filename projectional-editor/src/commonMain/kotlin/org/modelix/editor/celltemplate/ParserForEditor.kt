@@ -70,13 +70,6 @@ class ParserForEditor(val engine: EditorEngine){
 
         val cellModel = engine.createCellModelExcludingDefault(concept) ?: return
 
-        val canContainBaseConcept = cellModel.getGrammarSymbols().leafSymbols().filterIsInstance<ChildCellTemplate>()
-            .any { it.link.targetConcept.getDirectSuperConcepts().isEmpty() }
-        if (canContainBaseConcept) {
-            // The parsing table will be too big
-            return
-        }
-
         val symbols = cellModel.getGrammarSymbols().map { it.toParserSymbol() }.toList()
         if (symbols.isNotEmpty()) {
             val rule = ProductionRule(ExactConceptSymbol(concept), symbols)
