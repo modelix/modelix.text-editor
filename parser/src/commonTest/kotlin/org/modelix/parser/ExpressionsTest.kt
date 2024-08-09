@@ -495,7 +495,8 @@ class ExpressionsTest {
         val parser = TestGrammar.getParser(TestGrammar.expression)
         val parseTrees = parser.parseForest(input)
         //println(measureTime { parser.parse(input) })
-        println(parseTrees.joinToString("\n---\n"))
+
+        println(SPPF(parseTrees.toList()).toString())
         assertEquals(expected, parseTrees.joinToString("\n---\n"))
     }
 }

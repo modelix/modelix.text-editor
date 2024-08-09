@@ -98,7 +98,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                             emptySet() // group.value.map { it.reducesSinceLastShift }.reduce { a, b -> a + b }
                         )
                     }
-        if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
+        // if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
         check(mergedForks.size <= 1000) { "Too many forks" }
         return mergedForks
     }

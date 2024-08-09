@@ -27,6 +27,7 @@ interface IParseTreeNode
 interface INonTerminalToken : IParseTreeNode {
     fun getNonTerminalSymbol(): INonTerminalSymbol
 }
+
 class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>) : IParseTreeNode, INonTerminalToken {
     override fun toString(): String {
         if (children.size > 1) {
@@ -52,7 +53,6 @@ class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTermin
 }
 
 class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
-
     override fun toString(): String {
         return "forest:$symbol {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
     }
@@ -81,6 +81,65 @@ class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTermin
                     ParseForestNode(symbol, trees).flatten()
                 }
             }
+        }
+    }
+}
+
+class SPPF(val roots: List<IParseTreeNode>) {
+
+    private var sequence = 0
+    private val nonSharedNodes = LinkedHashSet<IParseTreeNode>()
+    private val sharedNodes = LinkedHashMap<IParseTreeNode, Int>()
+
+    init {
+        roots.forEach { load(it) }
+    }
+
+    private fun load(node: IParseTreeNode) {
+        if (sharedNodes.contains(node)) return
+        if (node is INonTerminalToken && nonSharedNodes.contains(node)) {
+            nonSharedNodes.remove(node)
+            sharedNodes.put(node, sequence++)
+            return
+        } else {
+            nonSharedNodes.add(node)
+        }
+        when (node) {
+            is ParseForestNode -> node.trees.forEach { load(it) }
+            is ParseTreeNode -> node.children.forEach { load(it) }
+            else -> {}
+        }
+    }
+
+    override fun toString(): String {
+        return (roots.map { toString(it) } + sharedNodes.map { toString(it.key, false).prependIndent("${it.value}: ") }).joinToString("\n------\n")
+    }
+
+    private fun toString(node: IParseTreeNode, allowRef: Boolean = true): String {
+        if (allowRef) {
+            sharedNodes[node]?.let {
+                val fullString = toString(node, false)
+                var firstLine = fullString.substringBefore('\n')
+                if (firstLine.length != fullString.length) firstLine += " ..."
+                return "@$it $firstLine"
+            }
+        }
+        return when (node) {
+            is ParseForestNode -> {
+                with(node) {
+                    "forest:$symbol {\n${trees.map { toString(it) }.joinToString("\n---\n").prependIndent()}\n}"
+                }
+            }
+            is ParseTreeNode -> {
+                with(node) {
+                    if (children.size > 1) {
+                        "${rule.head} {\n${children.map { toString(it) }.joinToString("\n").prependIndent()}\n}"
+                    } else {
+                        "${rule.head} { ${children.map { toString(it) }.joinToString(" ")} }"
+                    }
+                }
+            }
+            else -> node.toString()
         }
     }
 }
