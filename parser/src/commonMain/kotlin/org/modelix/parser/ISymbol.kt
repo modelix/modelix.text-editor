@@ -60,9 +60,13 @@ data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
         return token is ReferenceToken
     }
 }
-data class PropertySymbol(val regex: Regex?) : ITerminalSymbol {
+data class PropertySymbol(val pattern: String?) : ITerminalSymbol {
+    constructor(regex: Regex?) : this(regex?.pattern)
+
+    val regex: Regex? get() = pattern?.let { Regex(it) }
+
     override fun toString(): String {
-        return "property[$regex]"
+        return "property/$regex/"
     }
 
     override fun matches(token: IParseTreeNode): Boolean {

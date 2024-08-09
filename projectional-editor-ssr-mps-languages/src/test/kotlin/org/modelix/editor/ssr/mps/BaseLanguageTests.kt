@@ -464,7 +464,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         val node = layoutable.cell.ancestors(true)
             .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
 
-        val parser = ParserForEditor(editorEngine).getParser(node.expectedConcept()!!)
+        val parser = ParserForEditor(editorEngine).getParser(node.expectedConcept()!!, forCodeCompletion = false)
         val parseTree = parser.parse(input)
         println(parseTree)
     }

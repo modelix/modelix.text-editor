@@ -32,6 +32,7 @@ class LRTable() {
         knownConstants = closureTable.grammar.knownConstants
         for (kernel in closureTable.kernels) {
             val state = LRState()
+            state.kernel = kernel
             states.add(state)
 
             for (key in kernel.keys) {
@@ -60,6 +61,7 @@ class LRTable() {
 }
 
 class LRState {
+    var kernel: LRClosureTable.Kernel? = null
     var distanceToAccept: Int = -1
 
     /**
@@ -79,7 +81,8 @@ class LRState {
             } else {
                 newMap = oldMap as MutableMap<ISymbol, Any>
             }
-            newMap[symbol] = (getActions(symbol) as Array<LRAction>) + action
+            val newActions: Array<LRAction> = (getActions(symbol) as Array<LRAction>) + action
+            newMap[symbol] = if (newActions.size == 1) newActions[0] else newActions
             actions = newMap
         }
     }

@@ -41,7 +41,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         scanner.addKnownConstants(table.knownConstants)
         val initialStack: IGSStack<StackElement> = EmptyGSS<StackElement>().push(StackElement(0))
         var step: Int = 2
-        var forks: List<Fork> = listOf(Fork(initialStack, null))
+        var forks: List<Fork> = listOf(Fork(initialStack, null, emptySet()))
 
         // scan first token
         forks.forEach { it.loadNextTerminals(scanner) }
@@ -51,18 +51,6 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
         fun List<Fork>.applyActions() = flatMap { it.applyAction(lookaheadTokens) }.filterAccepted().merge()
 
         while (step++ < stepLimit) {
-            // shift all forks
-            check(forks.all { it.readyToShift() })
-            forks = forks.applyActions()
-            if (forks.isEmpty()) {
-                break
-            }
-
-            // scan next token
-            forks.forEach { it.loadNextTerminals(scanner) }
-            lookaheadTokens = scanner.next().toList()
-            forks = forks.flatMap { it.forksForNextActions(lookaheadTokens) }
-
             // run reductions
             while (step++ < stepLimit) {
                 val readyToShift = forks.filter { it.readyToShift() }
@@ -73,10 +61,18 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                             .applyActions()
                             .flatMap { it.forksForNextActions(lookaheadTokens) }
             }
-            if (forks.isEmpty()) {
-                break
-            }
+            if (forks.isEmpty()) break
             forks = forks.merge()
+
+            // shift all forks
+            check(forks.all { it.readyToShift() })
+            forks = forks.applyActions()
+            if (forks.isEmpty()) break
+
+            // scan next token
+            forks.forEach { it.loadNextTerminals(scanner) }
+            lookaheadTokens = scanner.next().toList()
+            forks = forks.flatMap { it.forksForNextActions(lookaheadTokens) }
         }
         return acceptedForks.flatMap { it.output!! }
     }
@@ -96,14 +92,22 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                                 checkNotNull(acc.tryMerge(it)) { "Merge failed" }
                             }
 
-                        Fork(mergedStack, group.key.second)
+                        Fork(
+                            mergedStack,
+                            group.key.second,
+                            emptySet() // group.value.map { it.reducesSinceLastShift }.reduce { a, b -> a + b }
+                        )
                     }
         if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
         check(mergedForks.size <= 1000) { "Too many forks" }
         return mergedForks
     }
 
-    private inner class Fork(val stack: IGSStack<StackElement>, val actionToApply: LRAction?) {
+    private inner class Fork(
+        val stack: IGSStack<StackElement>,
+        val actionToApply: LRAction?,
+        val reducesSinceLastShift: Set<INonTerminalSymbol>
+    ) {
         var accepted: Boolean = false
         var output: List<IParseTreeNode>? = null
 
@@ -126,14 +130,14 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 val tokenOnStack = lastStackElement.getToken()
                 val actions: Array<out LRAction>? =
                     state().getSymbolsAndActions().firstOrNull { it.first.matches(tokenOnStack) }?.second
-                return actions?.map { Fork(stack, it) } ?: emptyList()
+                return actions?.map { Fork(stack, it, reducesSinceLastShift) } ?: emptyList()
             } else {
                 val applicableActions = state().getSymbolsAndActions().filter {
                     val symbol = it.first
                     symbol == EmptySymbol || lookaheadTokens.any { symbol.matches(it) }
                 }.flatMap { it.second.asSequence() }.toSet()
                 // TODO filter out reductions that don't match the actual content on the stack
-                return applicableActions.map { Fork(stack, it) }
+                return applicableActions.map { Fork(stack, it, reducesSinceLastShift) }
             }
         }
 
@@ -146,7 +150,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
             check(!accepted) { "Already accepted" }
             return when (val action = actionToApply) {
                 null -> error("No action applicable. Fork should have been discarded.")
-                is SkipAction -> listOf(Fork(stack, null))
+                is SkipAction -> listOf(Fork(stack, null, reducesSinceLastShift))
                 is ShiftAction -> {
                     var newStack = stack
                     val matchingTokens = tokensForShift.filter { action.symbol.matches(it) }
@@ -157,22 +161,27 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     }
                     newStack = newStack.pushNode(matchingToken)
                     newStack = newStack.pushState(action.nextState)
-                    listOf(Fork(newStack, null))
+                    listOf(Fork(newStack, null, emptySet()))
                 }
                 is ReduceAction -> {
                     // TODO check if the stack content actually matches the rule symbols
                     val rule = action.rule
                     if (rule.isGoal()) error("Should be an AcceptAction")
+                    if (reducesSinceLastShift.contains(rule.head)) {
+                        // Endless recursion
+                        return emptyList()
+                    }
+
                     val removeCount = rule.symbols.size * 2
 
                     return stack.pop(removeCount).map { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
                         val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
                         val newStack = popped.second.pushNode(ParseTreeNode(rule, removedTokens.reversed()))
-                        Fork(newStack, null)
+                        Fork(newStack, null, reducesSinceLastShift + rule.head)
                     }
                 }
                 is GotoAction -> {
-                    listOf(Fork(stack.pushState(action.nextState), null))
+                    listOf(Fork(stack.pushState(action.nextState), null, reducesSinceLastShift))
                 }
                 AcceptAction -> {
                     output = stack.withoutMerges().map { it.elementAt(it.getSize().first - 2).getToken() }

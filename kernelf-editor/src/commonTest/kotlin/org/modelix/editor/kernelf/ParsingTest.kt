@@ -92,6 +92,7 @@ class ParsingTest {
     @Test fun completion4() = runCompletionTest("""val abc:""")
     @Test fun completion5() = runCompletionTest("""if 10 >""")
     @Test fun completion6() = runCompletionTest("""if {""")
+    @Test fun completion7() = runCompletionTest("""list(*10)""")
 
     private fun runCompletionTest(inputString: String) = runTest(inputString, true)
     private fun runParsingTest(inputString: String) = runTest(inputString, false)
@@ -103,7 +104,7 @@ class ParsingTest {
         KernelfEditor.register(engine)
 
         val startConcept = L_org_iets3_core_expr_base.Expression.untyped()
-        val parser = ParserForEditor(engine).getParser(startConcept)
+        val parser = ParserForEditor(engine).getParser(startConcept, forCodeCompletion = complete)
 
         KernelfLanguages.languages.forEach { it.unregister() }
 

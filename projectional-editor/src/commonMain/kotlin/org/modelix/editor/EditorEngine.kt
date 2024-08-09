@@ -144,7 +144,7 @@ class EditorEngine(incrementalEngine: IncrementalEngine? = null) {
     }
 
     fun parse(input: String, outputConcept: IConcept, complete: Boolean): List<IParseTreeNode> {
-        return parser.getParser(startConcept = outputConcept).parseForest(input, complete).toList()
+        return parser.getParser(startConcept = outputConcept, forCodeCompletion = complete).parseForest(input, complete).toList()
     }
 
     fun dispose() {
