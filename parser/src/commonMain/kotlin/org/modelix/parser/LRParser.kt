@@ -177,10 +177,10 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                         val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
 
                         if (removedTokens.size == 1) {
-                            val symbolToReduce: ParseTreeNode? = removedTokens.single() as? ParseTreeNode
+                            val symbolToReduce: INonTerminalToken? = removedTokens.single() as? ParseTreeNode
                             val wrappers = generateSequence(symbolToReduce) {
-                                it.children.singleOrNull() as? ParseTreeNode
-                            }.map { it.rule.head }
+                                (it as? ParseTreeNode)?.children?.singleOrNull() as? INonTerminalToken
+                            }.map { it.getNonTerminalSymbol() }
                             val isUnnecessaryWrapper = wrappers.contains(rule.head)
                             // if, after applying a series of wrappers, we end up with the same non-terminal that we
                             // already had on the stack, it means we could have just taken that one without wrapping it
