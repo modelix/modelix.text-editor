@@ -472,6 +472,25 @@ class ExpressionsTest {
         """.trimIndent()
     )
 
+    @Test fun testStringLiteral5() = runTest(
+        """"Hello World!" + "Hello World!"""",
+        """
+        PlusExpression {
+            StringLiteral {
+                ConstantToken(text=")
+                PropertyToken(text= abc )
+                ConstantToken(text=")
+            }
+            ConstantToken(text=+)
+            StringLiteral {
+                ConstantToken(text=")
+                PropertyToken(text= def )
+                ConstantToken(text=")
+            }
+        }
+        """.trimIndent()
+    )
+
     fun runTest(input: String, expected: String) {
         val parser = TestGrammar.getParser(TestGrammar.expression)
         val parseTrees = parser.parseForest(input)

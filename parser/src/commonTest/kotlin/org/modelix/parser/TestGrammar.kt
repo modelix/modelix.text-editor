@@ -28,7 +28,7 @@ object TestGrammar {
         addRule(mulExpression, SubConceptsSymbol(expression), ConstantSymbol("*"), SubConceptsSymbol(expression))
         addRule(parensExpression, ConstantSymbol("("), SubConceptsSymbol(expression), ConstantSymbol(")"))
         addRule(listLiteral, ConstantSymbol("list"), ConstantSymbol("["), ListSymbol(SubConceptsSymbol(expression), ConstantSymbol(",")), ConstantSymbol("]"))
-        addRule(stringLiteral, ConstantSymbol("\""), PropertySymbol(Regex("""[^"]*""")), ConstantSymbol("\""))
+        addRule(stringLiteral, ConstantSymbol("\""), PropertySymbol(Regex("""([^"\\]|\\.)*""")), ConstantSymbol("\""))
         addRule(ternaryExpression, SubConceptsSymbol(expression), ConstantSymbol("?"), SubConceptsSymbol(expression), ConstantSymbol(":"), SubConceptsSymbol(expression))
 
         addRule(localVariableDeclarationStatement, SubConceptsSymbol(localVariableDeclaration), ConstantSymbol(";"))

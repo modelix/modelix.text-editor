@@ -106,7 +106,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private inner class Fork(
         val stack: IGSStack<StackElement>,
         val actionToApply: LRAction?,
-        val reducesSinceLastShift: Set<INonTerminalSymbol>
+        val reducesSinceLastShift: Set<Pair<INonTerminalSymbol, IntRange>>
     ) {
         var accepted: Boolean = false
         var output: List<IParseTreeNode>? = null
@@ -167,7 +167,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     // TODO check if the stack content actually matches the rule symbols
                     val rule = action.rule
                     if (rule.isGoal()) error("Should be an AcceptAction")
-                    if (reducesSinceLastShift.contains(rule.head)) {
+                    if (reducesSinceLastShift.contains(rule.head to stack.getSize())) {
                         // Endless recursion
                         return emptyList()
                     }
@@ -177,7 +177,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     return stack.pop(removeCount).map { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
                         val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
                         val newStack = popped.second.pushNode(ParseTreeNode(rule, removedTokens.reversed()))
-                        Fork(newStack, null, reducesSinceLastShift + rule.head)
+                        Fork(newStack, null, reducesSinceLastShift + (rule.head to stack.getSize()))
                     }
                 }
                 is GotoAction -> {

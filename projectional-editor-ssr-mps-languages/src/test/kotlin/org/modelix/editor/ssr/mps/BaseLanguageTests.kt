@@ -473,6 +473,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     fun `test statement parsing 2`() = runParsingTest("int a = 10 + 20;")
     fun `test statement parsing 3`() = runParsingTest("return 10;")
 
-    fun `test statement parsing 4`() = runParsingTest("""for (int i = 0; i < 10; i++) { return i; }""")
-    fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello World!");""")
+    fun `test statement parsing 4`() = runParsingTest("""for ( int i = 0 ; i < 10 ; i++ ) { return i ; }""")
+    fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello");""")
+    fun `test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
 }
