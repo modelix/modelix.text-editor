@@ -1,7 +1,5 @@
 package org.modelix.parser
 
-import org.modelix.model.api.IConcept
-
 class LRClosureTable(val grammar: Grammar) {
     val kernels = KernelsList()
 
@@ -68,10 +66,6 @@ class LRClosureTable(val grammar: Grammar) {
             kernel.gotos[key] = targetKernel.index
         }
     }
-
-    private val lookaheadSetInstances = HashMap<Set<ITerminalSymbol>, LookaheadSet>()
-    private val emptyLookaheadSet = LookaheadSet.empty(lookaheadSetInstances)
-    private fun Set<ITerminalSymbol>.toLookaheadSet() = emptyLookaheadSet + this
 
     inner class KernelsList : Iterable<Kernel> {
         private val kernelsList = ArrayList<Kernel>()
