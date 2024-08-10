@@ -1,29 +1,11 @@
 package org.modelix.editor.kernelf
 
 import org.iets3.core.expr.base.L_org_iets3_core_expr_base
-import org.iets3.core.expr.collections.L_org_iets3_core_expr_collections
-import org.iets3.core.expr.lambda.L_org_iets3_core_expr_lambda
-import org.iets3.core.expr.path.L_org_iets3_core_expr_path
-import org.iets3.core.expr.repl.L_org_iets3_core_expr_repl
-import org.iets3.core.expr.simpleTypes.L_org_iets3_core_expr_simpleTypes
-import org.iets3.core.expr.simpleTypes.tests.L_org_iets3_core_expr_simpleTypes_tests
-import org.iets3.core.expr.tests.L_org_iets3_core_expr_tests
-import org.iets3.core.expr.toplevel.L_org_iets3_core_expr_toplevel
 import org.modelix.editor.EditorEngine
-import org.modelix.editor.celltemplate.ChildCellTemplate
 import org.modelix.editor.celltemplate.ParserForEditor
-import org.modelix.editor.celltemplate.leafSymbols
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
-import org.modelix.model.api.IConcept
-import org.modelix.model.api.getInstantiatableSubConcepts
-import org.modelix.parser.Grammar
 import org.modelix.parser.IParseTreeNode
-import org.modelix.parser.LRParser
-import org.modelix.parser.ExactConceptSymbol
-import org.modelix.parser.ProductionRule
-import org.modelix.parser.createParser
-import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.time.measureTime
@@ -89,14 +71,16 @@ class ParsingTest {
     @Test fun completion1() = runCompletionTest("""1 + ᚹ""")
     @Test fun completion2() = runCompletionTest("""if ᚹ""")
     @Test fun completion3() = runCompletionTest("""list(10,ᚹ""")
-    @Test fun completion4() = runCompletionTest("""val abc:ᚹᚹ""")
-    @Test fun completion5() = runCompletionTest("""if 10 >ᚹᚹ""")
-    @Test fun completion6() = runCompletionTest("""if {ᚹᚹ""")
-    @Test fun completion7() = runCompletionTest("""list(ᚹᚹ*10)""")
+    @Test fun completion4() = runCompletionTest("""val abc:ᚹ""")
+    @Test fun completion5() = runCompletionTest("""if 10 >ᚹ""")
+    @Test fun completion6() = runCompletionTest("""if {ᚹ""")
+    @Test fun completion7() = runCompletionTest("""list(ᚹ*10)""")
     @Test fun completion8a() = runCompletionTest("""ᚹ*10""")
     @Test fun completion8b() = runCompletionTest("""ᚹ * 10""")
     @Test fun completion9() = runCompletionTest("""10 + ᚹ * 20""")
     @Test fun completion10() = runCompletionTest("""10+ᚹ*20""")
+    @Test fun completion11() = runCompletionTest("""(1 ᚹ""")
+    @Test fun completion12() = runCompletionTest("""(1 * ᚹ""")
 
     private fun runCompletionTest(inputString: String) = runTest(inputString, true)
     private fun runParsingTest(inputString: String) = runTest(inputString, false)
@@ -116,6 +100,7 @@ class ParsingTest {
         val time = measureTime {
             parseTrees = parser.parseForest(inputString, complete).toList()
         }
+        //repeat(100) { parser.parseForest(inputString, complete).toList() }
         println(time)
         assertTrue(parseTrees.isNotEmpty())
         println(parseTrees.joinToString("\n---\n"))

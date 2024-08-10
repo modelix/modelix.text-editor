@@ -4,15 +4,11 @@ import org.modelix.editor.EditorEngine
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getInstantiatableSubConcepts
 import org.modelix.model.api.runSynchronized
-import org.modelix.parser.ConstantSymbol
-import org.modelix.parser.ConstantToken
+import org.modelix.parser.ExactConceptSymbol
 import org.modelix.parser.Grammar
 import org.modelix.parser.IDisambiguator
 import org.modelix.parser.LRParser
 import org.modelix.parser.LRTable
-import org.modelix.parser.ExactConceptSymbol
-import org.modelix.parser.INonTerminalSymbol
-import org.modelix.parser.OptionalSymbol
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParseTable
 
@@ -24,32 +20,9 @@ class ParserForEditor(val engine: EditorEngine){
             parseTables.getOrPut(startConcept to forCodeCompletion) {
                 val rules = ArrayList<ProductionRule>()
                 loadRulesFromSubconcepts(rules, startConcept, HashSet(), engine)
-                val modifiedRules = if (forCodeCompletion) modifyForCodeCompletion(rules) else rules
-                Grammar(startConcept, modifiedRules).createParseTable()
+                Grammar(startConcept, rules, forCodeCompletion = forCodeCompletion).createParseTable()
             }
         }
-    }
-
-    private fun modifyForCodeCompletion(rules: List<ProductionRule>): List<ProductionRule> {
-        val result = ArrayList<ProductionRule>()
-        for (rule in rules) {
-            // complete end of the rule
-            for (i in (1 until rule.symbols.size)) {
-                val existingSymbols = rule.symbols.take(i)
-                if (!existingSymbols.any { it is ConstantSymbol }) continue
-                result += ProductionRule(rule.head, existingSymbols + ConstantSymbol.CARET)
-            }
-
-            // complete beginning of the rule
-            for (i in (1 until rule.symbols.size)) {
-                val existingSymbols = rule.symbols.drop(i)
-                if (!existingSymbols.any { it is ConstantSymbol }) continue
-                result += ProductionRule(rule.head, listOf(ConstantSymbol.CARET) + existingSymbols)
-            }
-
-            result += rule
-        }
-        return result
     }
 
     fun getParser(startConcept: IConcept, forCodeCompletion: Boolean, disambiguator: IDisambiguator = IDisambiguator.default()): LRParser {

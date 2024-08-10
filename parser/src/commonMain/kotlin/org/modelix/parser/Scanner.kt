@@ -35,7 +35,7 @@ class Scanner(
         check(expectedNextTerminals.isNotEmpty()) { "Possible terminal symbols unknown" }
         return expectedNextTerminals.asSequence()
             .map { matchInput(it) }
-            .plus(matchRegex(whitespaceRegex) { WhitespaceToken(it) })
+            .plus(matchRegex(whitespaceRegex) { WhitespaceToken(it, position) })
             .filterNotNull()
             .groupBy { it.textLength() }
             .maxByOrNull { it.key }
@@ -62,7 +62,7 @@ class Scanner(
         return when (symbol) {
             is ConstantSymbol -> {
                 if (input.startsWith(symbol.text, position)) {
-                    ConstantToken(symbol.text)
+                    ConstantToken(symbol.text, position)
                 } else {
                     null
                 }
@@ -72,11 +72,11 @@ class Scanner(
                 if (isAtEnd()) EndOfInputToken else null
             }
             is PropertySymbol -> {
-                matchRegex(symbol.regex) { PropertyToken(it) }
+                matchRegex(symbol.regex) { PropertyToken(it, position) }
             }
             is ReferenceSymbol -> {
                 val regex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
-                matchRegex(regex) { ReferenceToken(it) }
+                matchRegex(regex) { ReferenceToken(it, position) }
             }
             is INonTerminalSymbol -> null
             GoalSymbol -> TODO()

@@ -23,7 +23,11 @@ data object EndOfInputToken : IToken {
     override fun textLength(): Int = 0
 }
 
-interface IParseTreeNode
+interface IParseTreeNode {
+    fun childNodes(): Sequence<IParseTreeNode> = emptySequence()
+    fun descendants(): Sequence<IParseTreeNode> = childNodes().flatMap { it.descendantsAndSelf() }
+    fun descendantsAndSelf(): Sequence<IParseTreeNode> = sequenceOf(this) + descendants()
+}
 interface INonTerminalToken : IParseTreeNode {
     fun getNonTerminalSymbol(): INonTerminalSymbol
 }
@@ -40,6 +44,8 @@ class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>
     override fun getNonTerminalSymbol(): INonTerminalSymbol {
         return rule.head
     }
+
+    override fun childNodes(): Sequence<IParseTreeNode> = children.asSequence()
 }
 
 class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTerminalToken {
@@ -67,6 +73,8 @@ class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTermin
         }
         return if (newChildren.size == trees.size) this else ParseForestNode(symbol, newChildren)
     }
+
+    override fun childNodes(): Sequence<IParseTreeNode> = trees.asSequence()
 
     companion object {
         fun create(trees: List<INonTerminalToken>): INonTerminalToken? {

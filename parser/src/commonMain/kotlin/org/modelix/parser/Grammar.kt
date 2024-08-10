@@ -12,11 +12,31 @@ class Grammar {
     private val follows: Map<INonTerminalSymbol, Set<ITerminalSymbol>>
     val knownConstants: Set<String>
 
-    constructor(startConcept: IConcept, rawRules: List<ProductionRule>) {
+    constructor(startConcept: IConcept, rawRules: List<ProductionRule>, forCodeCompletion: Boolean = false) {
         addGoal(startConcept)
         rawRules.forEach { addRule(it) }
+        if (forCodeCompletion) modifyForCodeCompletion()
         follows = computeFollows()
         knownConstants = rules.asSequence().flatMap { it.symbols }.filterIsInstance<ConstantSymbol>().map { it.text }.toSet()
+    }
+
+    private fun modifyForCodeCompletion() {
+        for (rule in rules.toList()) {
+            // complete end of the rule
+            for (i in (1 until rule.symbols.size)) {
+                val existingSymbols = rule.symbols.take(i)
+                if (!existingSymbols.any { it is ConstantSymbol }) continue
+                val nextSymbol = rule.symbols[i]
+                rules += ProductionRule(rule.head, existingSymbols + ConstantSymbol.CARET)
+            }
+
+            // complete beginning of the rule
+            for (i in (1 until rule.symbols.size)) {
+                val existingSymbols = rule.symbols.drop(i)
+                if (!existingSymbols.any { it is ConstantSymbol }) continue
+                rules += ProductionRule(rule.head, listOf(ConstantSymbol.CARET) + existingSymbols)
+            }
+        }
     }
 
     fun getGoalRule() = getRulesForNonTerminal(GoalSymbol).single()
