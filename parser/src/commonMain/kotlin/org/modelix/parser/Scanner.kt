@@ -1,5 +1,7 @@
 package org.modelix.parser
 
+private val defaultReferenceRegex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
+
 class Scanner(
     private val input: CharSequence,
     private var position: Int = 0,

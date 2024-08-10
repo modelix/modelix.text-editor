@@ -1,7 +1,5 @@
 package org.modelix.parser
 
-import org.modelix.model.api.IConcept
-
 interface IParser {
     fun parse(input: String, complete: Boolean): IParseTreeNode
     fun parse(input: String): IParseTreeNode = parse(input, complete = false)
@@ -161,6 +159,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     newStack = newStack.pushState(action.nextState)
                     listOf(Fork(newStack, null))
                 }
+                is CompletionAction -> TODO()
                 is ReduceAction -> {
                     // TODO check if the stack content actually matches the rule symbols
                     val rule = action.rule

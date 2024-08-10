@@ -33,18 +33,18 @@ class ParserForEditor(val engine: EditorEngine){
     private fun modifyForCodeCompletion(rules: List<ProductionRule>): List<ProductionRule> {
         val result = ArrayList<ProductionRule>()
         for (rule in rules) {
-            if (rule.symbols.size == 3) {
-                if (rule.symbols[2] is INonTerminalSymbol) {
-                    result += ProductionRule(rule.head, rule.symbols[0], rule.symbols[1], OptionalSymbol(rule.symbols[2]))
-                    continue
-                }
+            // complete end of the rule
+            for (i in (1 until rule.symbols.size)) {
+                val existingSymbols = rule.symbols.take(i)
+                if (!existingSymbols.any { it is ConstantSymbol }) continue
+                result += ProductionRule(rule.head, existingSymbols + ConstantSymbol.CARET)
             }
 
-            val firstConstant = rule.symbols.indexOfFirst { it is ConstantSymbol }
-            if (firstConstant != -1 && firstConstant < rule.symbols.lastIndex) {
-                val newSymbols = rule.symbols.take(firstConstant + 1) + rule.symbols.drop(firstConstant + 1).foldRight(emptyList()) { it, acc -> listOf(OptionalSymbol(listOf(it) + acc)) }
-                result += ProductionRule(rule.head, newSymbols)
-                continue
+            // complete beginning of the rule
+            for (i in (1 until rule.symbols.size)) {
+                val existingSymbols = rule.symbols.drop(i)
+                if (!existingSymbols.any { it is ConstantSymbol }) continue
+                result += ProductionRule(rule.head, listOf(ConstantSymbol.CARET) + existingSymbols)
             }
 
             result += rule

@@ -4,16 +4,16 @@ sealed interface IToken : IParseTreeNode {
     fun textLength(): Int
 }
 
-data class WhitespaceToken(val text: String) : IToken {
+data class WhitespaceToken(val text: String, val startPos: Int) : IToken {
     override fun textLength() = text.length
 }
-data class ConstantToken(val text: String) : IToken {
+data class ConstantToken(val text: String, val startPos: Int) : IToken {
     override fun textLength() = text.length
 }
-data class PropertyToken(val text: String) : IToken {
+data class PropertyToken(val text: String, val startPos: Int) : IToken {
     override fun textLength() = text.length
 }
-data class ReferenceToken(val text: String) : IToken {
+data class ReferenceToken(val text: String, val startPos: Int) : IToken {
     override fun textLength() = text.length
 }
 data object EmptyToken : IToken {
@@ -89,17 +89,20 @@ class SPPF(val roots: List<IParseTreeNode>) {
 
     private var sequence = 0
     private val nonSharedNodes = LinkedHashSet<IParseTreeNode>()
-    private val sharedNodes = LinkedHashMap<IParseTreeNode, Int>()
+    private val sharedNodes = LinkedHashSet<IParseTreeNode>()
+    private val nodeIds = LinkedHashMap<IParseTreeNode, Int>()
 
     init {
         roots.forEach { load(it) }
     }
 
+    private fun id(node: IParseTreeNode) = nodeIds.getOrPut(node) { sequence++ }
+
     private fun load(node: IParseTreeNode) {
         if (sharedNodes.contains(node)) return
         if (node is INonTerminalToken && nonSharedNodes.contains(node)) {
             nonSharedNodes.remove(node)
-            sharedNodes.put(node, sequence++)
+            sharedNodes.add(node)
             return
         } else {
             nonSharedNodes.add(node)
@@ -112,34 +115,20 @@ class SPPF(val roots: List<IParseTreeNode>) {
     }
 
     override fun toString(): String {
-        return (roots.map { toString(it) } + sharedNodes.map { toString(it.key, false).prependIndent("${it.value}: ") }).joinToString("\n------\n")
+        return (sharedNodes + nonSharedNodes).joinToString("\n") {
+            toString(it)
+        }
     }
 
-    private fun toString(node: IParseTreeNode, allowRef: Boolean = true): String {
-        if (allowRef) {
-            sharedNodes[node]?.let {
-                val fullString = toString(node, false)
-                var firstLine = fullString.substringBefore('\n')
-                if (firstLine.length != fullString.length) firstLine += " ..."
-                return "@$it $firstLine"
-            }
-        }
+    private fun toString(node: IParseTreeNode): String {
         return when (node) {
             is ParseForestNode -> {
-                with(node) {
-                    "forest:$symbol {\n${trees.mapIndexed { i, it -> toString(it).prependIndent("#$i  ") }.joinToString("\n")}\n}"
-                }
+                "n${id(node)} [label=\"${node.symbol}\", shape=diamond]\n" + node.trees.joinToString("\n") { "n${id(node)} -> n${id(it)}" }
             }
             is ParseTreeNode -> {
-                with(node) {
-                    if (children.size > 1) {
-                        "${rule.head} {\n${children.map { toString(it) }.joinToString("\n").prependIndent()}\n}"
-                    } else {
-                        "${rule.head} { ${children.map { toString(it) }.joinToString(" ")} }"
-                    }
-                }
+                "n${id(node)} [label=\"${node.rule.head}\", shape=box]\n" + node.children.joinToString("\n") { "n${id(node)} -> n${id(it)}" }
             }
-            else -> node.toString()
+            else -> "n${id(node)} [label=\"${node}\", shape=oval]"
         }
     }
 }

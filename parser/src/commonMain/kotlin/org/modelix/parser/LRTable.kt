@@ -11,6 +11,7 @@ class LRTable() {
             AcceptAction -> 0
             is GotoAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
             is ReduceAction -> -action.rule.symbols.size
+            is CompletionAction -> -action.item.cursor
             is ShiftAction -> 1 + getDistanceToAccept(states[action.nextState], pathLength + 1)
             is SkipAction -> error("Not expected to appear in the parse table")
         }

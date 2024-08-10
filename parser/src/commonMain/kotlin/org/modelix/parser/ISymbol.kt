@@ -32,6 +32,10 @@ data class ConstantSymbol(val text: String) : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token is ConstantToken && token.text == text
     }
+
+    companion object {
+        val CARET = ConstantSymbol("\u16B9") // ᚹ
+    }
 }
 data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
     override fun toString(): String {
@@ -63,7 +67,7 @@ data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
 data class PropertySymbol(val pattern: String?) : ITerminalSymbol {
     constructor(regex: Regex?) : this(regex?.pattern)
 
-    val regex: Regex? get() = pattern?.let { Regex(it) }
+    val regex: Regex? = pattern?.let { Regex(it) }
 
     override fun toString(): String {
         return "property/$regex/"
