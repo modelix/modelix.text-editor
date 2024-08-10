@@ -61,55 +61,33 @@ class LRTable() {
     }
 }
 
+private val emptyActionsArray: Array<out LRAction> = emptyArray()
 class LRState {
     var kernel: LRClosureTable.Kernel? = null
     var distanceToAccept: Int = -1
 
-    /**
-     * Optimized for low memory consumption
-     */
-    private var actions: Map<ISymbol, Any>? = null
+    private var actions: Map<ISymbol, Array<out LRAction>>? = null
 
     fun addAction(symbol: ISymbol, action: LRAction) {
         val oldMap = actions
         if (oldMap == null) {
-            actions = SingleEntryMap(symbol, action)
+            actions = SingleEntryMap(symbol, arrayOf(action))
         } else {
-            val newMap: MutableMap<ISymbol, Any>
+            val newMap: MutableMap<ISymbol, Array<out LRAction>>
             if (oldMap is SingleEntryMap) {
                 newMap = HashMap(6)
                 newMap[oldMap.key] = oldMap.value
             } else {
-                newMap = oldMap as MutableMap<ISymbol, Any>
+                newMap = oldMap as MutableMap<ISymbol, Array<out LRAction>>
             }
             val newActions: Array<LRAction> = (getActions(symbol) as Array<LRAction>) + action
-            newMap[symbol] = if (newActions.size == 1) newActions[0] else newActions
+            newMap[symbol] = newActions
             actions = newMap
         }
     }
 
     fun getActions(symbol: ISymbol): Array<out LRAction> {
-        return valueToArray(actions?.get(symbol))
-    }
-
-    private fun valueToArray(value: Any?): Array<LRAction> {
-        return when (value) {
-            null -> emptyArray()
-            is LRAction -> arrayOf(value)
-            else -> (value as Array<LRAction>)
-        }
-    }
-
-    private fun valueToSequence(value: Any?): Sequence<LRAction> {
-        return when (value) {
-            null -> emptySequence()
-            is LRAction -> sequenceOf(value)
-            else -> (value as Array<LRAction>).asSequence()
-        }
-    }
-
-    fun getAllActions(): Sequence<LRAction> {
-        return actions?.values?.asSequence()?.flatMap { valueToSequence(it) } ?: emptySequence()
+        return actions?.get(symbol) ?: emptyActionsArray
     }
 
     /**
@@ -137,13 +115,14 @@ class LRState {
     fun getSymbols(): Sequence<ISymbol> = actions?.keys?.asSequence() ?: emptySequence()
 
     fun getSymbolsAndActions(): Sequence<Pair<ISymbol, Array<out LRAction>>> {
-        return actions?.asSequence()?.map { it.key to valueToArray(it.value) } ?: emptySequence()
+        return actions?.asSequence()?.map { it.key to it.value } ?: emptySequence()
     }
 }
 
 sealed class LRAction
 data class ShiftAction(val nextState: Int, val symbol: ITerminalSymbol) : LRAction()
 data class ReduceAction(val rule: ProductionRule) : LRAction()
+data class CompletionAction(val item: RuleItem) : LRAction()
 data class GotoAction(val nextState: Int) : LRAction()
 data object SkipAction : LRAction()
 data object AcceptAction : LRAction()
