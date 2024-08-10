@@ -127,7 +127,7 @@ class SPPF(val roots: List<IParseTreeNode>) {
         return when (node) {
             is ParseForestNode -> {
                 with(node) {
-                    "forest:$symbol {\n${trees.map { toString(it) }.joinToString("\n---\n").prependIndent()}\n}"
+                    "forest:$symbol {\n${trees.mapIndexed { i, it -> toString(it).prependIndent("#$i  ") }.joinToString("\n")}\n}"
                 }
             }
             is ParseTreeNode -> {
