@@ -11,19 +11,8 @@ class LRClosureTable(val grammar: Grammar) {
         var i = 0
         while (i < kernels.size()) {
             val kernel = kernels.getByIndex(i)
-
             updateClosure(kernel)
-
-            if (addGotos(kernel)) {
-                i = 0
-            } else {
-                i++
-            }
-        }
-
-        i = 0
-        while (i < kernels.size()) {
-            updateClosure(kernels.getByIndex(i))
+            addGotos(kernel)
             i++
         }
     }
@@ -58,8 +47,7 @@ class LRClosureTable(val grammar: Grammar) {
         }
     }
 
-    private fun addGotos(kernel: Kernel): Boolean {
-        var lookAheadsPropagated = false
+    private fun addGotos(kernel: Kernel) {
         val newKernels = LinkedHashMap<ISymbol, Set<RuleItem>>()
 
         for (item in kernel.closure.values) {
@@ -76,13 +64,9 @@ class LRClosureTable(val grammar: Grammar) {
             if (targetKernel == null) {
                 val newKernel = kernels.newKernel(newItems)
                 targetKernel = newKernel
-            } else {
-                lookAheadsPropagated = lookAheadsPropagated || kernels.mergeLookaheads(targetKernel, newItems.asSequence())
             }
             kernel.gotos[key] = targetKernel.index
         }
-
-        return lookAheadsPropagated
     }
 
     private val lookaheadSetInstances = HashMap<Set<ITerminalSymbol>, LookaheadSet>()
@@ -94,15 +78,6 @@ class LRClosureTable(val grammar: Grammar) {
         private val kernelsMap: MutableMap<Set<RuleItem>, Kernel> = HashMap()
 
         override fun iterator(): Iterator<Kernel> = kernelsList.iterator()
-
-        fun mergeLookaheads(kernel: Kernel, newItems: Sequence<RuleItem>): Boolean {
-            val merged = kernel.items + newItems
-            if (merged == kernel.items) return false
-            kernelsMap.remove(kernel.items)
-            kernel.items = merged
-            kernelsMap[kernel.items] = kernel
-            return true
-        }
 
         fun newKernel(items: Set<RuleItem>): Kernel {
             val kernel = Kernel(kernelsList.size, items)
