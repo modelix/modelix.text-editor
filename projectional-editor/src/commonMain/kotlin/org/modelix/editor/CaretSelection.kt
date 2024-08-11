@@ -248,7 +248,8 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         // TODO cell should have a provider for parser based completions
         val text = layoutable.cell.getSelectableText() ?: "" // TODO include all cells of the node
         val expectedConcept = node.expectedConcept() ?: return
-        val parseTrees: List<Any> = engine.parse(text, expectedConcept, true)
+        var parseTrees: List<Any> = engine.parse(text, expectedConcept, false)
+        if (parseTrees.isEmpty()) parseTrees = engine.parse(text, expectedConcept, true)
         val actions = parseTrees.map { it.toString() }.map {
             object : ICodeCompletionAction {
                 override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
