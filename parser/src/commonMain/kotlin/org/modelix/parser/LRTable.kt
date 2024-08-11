@@ -47,20 +47,21 @@ class LRTable() {
             }
 
             for (item in kernel.closure.values) {
-                if (item.isComplete()) {
-                    if (item.rule.isGoal()) {
+                if (item.rule.isGoal()) {
+                    if (item.isReadyForReduce()) {
                         state.addAction(EndOfInputSymbol, AcceptAction)
-                    } else {
-                        for (lookahead in closureTable.grammar.getPossibleFollowingTerminals(item.rule.head) + ConstantSymbol.CARET) {
-                            state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
+                    }
+                    state.addAction(ConstantSymbol.CARET, AcceptAction)
+                } else {
+                    if (item.isReadyForReduce()) {
+                        for (lookahead in closureTable.grammar.getPossibleFollowingTerminals(item.rule.head)) {
+                            state.addAction(lookahead, ReduceAction(item.rule))
                         }
                     }
-                }
-            }
 
-            for (item in kernel.items) {
-                if (!item.isComplete()) {
-                    state.addAction(ConstantSymbol.CARET, if (item.rule.isGoal()) AcceptAction else CompletionAction(item))
+                    if (item.cursor > 0) {
+                        state.addAction(ConstantSymbol.CARET, CompletionAction(item))
+                    }
                 }
             }
         }

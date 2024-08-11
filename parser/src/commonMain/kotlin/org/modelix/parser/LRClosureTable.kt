@@ -49,7 +49,7 @@ class LRClosureTable(val grammar: Grammar) {
         val newKernels = LinkedHashMap<ISymbol, Set<RuleItem>>()
 
         for (item in kernel.closure.values) {
-            if (item.isComplete()) continue
+            if (item.isReadyForReduce()) continue
             val newItem = item.forward() ?: continue
             val symbolAfterDot = item.nextSymbol()!!
             kernel.keys.add(symbolAfterDot)
