@@ -1,9 +1,11 @@
 package org.modelix.parser
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.getAllConcepts
 import kotlin.collections.plusAssign
 
+private val LOG = KotlinLogging.logger {  }
 class Grammar {
     private val rules = ArrayList<ProductionRule>()
     private val existingLists = HashSet<ListSymbol>()
@@ -51,13 +53,12 @@ class Grammar {
 
     private fun addRule(rule: ProductionRule) {
         require(rule.head !is SubConceptsSymbol) { "${rule.head} is only allowed on the right hand side of a rule. Invalid rule: $rule" }
-        val filteredSymbols = filterSymbols(rule.symbols)
-        if (filteredSymbols.isEmpty()) return
-
-        val newRule = ProductionRule(rule.head, filteredSymbols)
-        rules += newRule
-
-        loadRulesFromSymbols(newRule.symbols)
+        if (rule.symbols.asSequence().flatMap { it.leafSymbols() }.filterIsInstance<ConstantSymbol>().any { it.text.isBlank() }) {
+            LOG.warn { "Ignoring rule with empty constant: $rule" }
+            return
+        }
+        rules += rule
+        loadRulesFromSymbols(rule.symbols)
         (rule.head as? ExactConceptSymbol)?.let { loadSubConceptRules(it.concept) }
     }
 

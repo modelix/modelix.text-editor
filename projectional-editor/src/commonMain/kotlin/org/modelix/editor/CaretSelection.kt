@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.parser.ConstantSymbol
 import kotlin.math.max
 import kotlin.math.min
 
@@ -249,7 +250,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         val text = layoutable.cell.getSelectableText() ?: "" // TODO include all cells of the node
         val expectedConcept = node.expectedConcept() ?: return
         var parseTrees: List<Any> = engine.parse(text, expectedConcept, false)
-        if (parseTrees.isEmpty()) parseTrees = engine.parse(text, expectedConcept, true)
+        if (parseTrees.isEmpty()) parseTrees = engine.parse(text + ConstantSymbol.CARET.text, expectedConcept, true)
         val actions = parseTrees.map { it.toString() }.map {
             object : ICodeCompletionAction {
                 override fun execute(editor: EditorComponent): ICaretPositionPolicy? {

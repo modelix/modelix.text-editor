@@ -470,6 +470,18 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         val parseTree = parser.parse(input)
         println(parseTree)
     }
+    private fun runClassParsingTest(input: String, completion: Boolean) {
+        println("Running test ...")
+        placeCaretIntoCellWithText("class")
+
+        val layoutable = (editor.getSelection() as CaretSelection).layoutable
+        val node = layoutable.cell.ancestors(true)
+            .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
+        val concept = node.getNode()!!.concept!!
+        val parser = ParserForEditor(editorEngine).getParser(concept, forCodeCompletion = completion)
+        val parseTree = parser.parse(input)
+        println(parseTree)
+    }
 
     fun `test statement parsing 1`() = runParsingTest("int a;")
     fun `test statement parsing 2`() = runParsingTest("int a = 10 + 20;")
@@ -478,6 +490,14 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     fun `test statement parsing 4`() = runParsingTest("""for ( int i = 0 ; i < 10 ; i++ ) { return i ; }""")
     fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello");""")
     fun `test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
+
+    fun `test class parsing 1`() = runClassParsingTest("""
+        class Math {
+            public static int plus(int a, int b) {
+                return a + b;
+            }
+        }
+    """, false)
 
     fun `test completion 1`() = runParsingTest("""intᚹ""")
     fun `test completion 2`() = runParsingTest("""int aᚹ""")

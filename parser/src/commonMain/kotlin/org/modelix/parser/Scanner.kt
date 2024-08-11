@@ -24,7 +24,7 @@ class Scanner(
             position += nextTokens.first().textLength()
             nextTokens = matchNextTokens()
         }
-        check(nextTokens.isNotEmpty()) { "None of the terminals matches the input" }
+        check(nextTokens.isNotEmpty()) { "None of the terminals matches the input: $this" }
         expectedNextTerminals.clear()
         position += nextTokens.first().textLength()
         return nextTokens
