@@ -112,6 +112,23 @@
       <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
       <node concept="2OY0tg" id="CUW2QYKUQU" role="3JBHQ1">
         <node concept="2OY0tg" id="CUW2QYMX13" role="2OY0$2">
+          <node concept="1yhmst" id="4fer1Dvb9xR" role="2OY0$2">
+            <node concept="1yiDfa" id="4fer1Dvb9ys" role="1yhmsp">
+              <ref role="1yiDfm" to="tpee:h9B3oxE" resolve="visibility" />
+            </node>
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9wm" role="2OY0$2">
+            <property role="1yh6cl" value="static" />
+            <ref role="1yh6ct" to="tpee:4kvBDYi2RXX" resolve="isStatic" />
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9wO" role="2OY0$2">
+            <property role="1yh6cl" value="abstract" />
+            <ref role="1yh6ct" to="tpee:fDsVARU" resolve="abstractClass" />
+          </node>
+          <node concept="1yh6c9" id="4fer1Dvb9xl" role="2OY0$2">
+            <property role="1yh6cl" value="final" />
+            <ref role="1yh6ct" to="tpee:hLEXba4" resolve="isFinal" />
+          </node>
           <node concept="3JB3jO" id="63DBII8q9Mk" role="2OY0$2">
             <property role="3JB3xJ" value="class" />
           </node>
