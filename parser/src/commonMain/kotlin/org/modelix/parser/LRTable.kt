@@ -51,10 +51,16 @@ class LRTable() {
                     if (item.rule.isGoal()) {
                         state.addAction(EndOfInputSymbol, AcceptAction)
                     } else {
-                        for (lookahead in closureTable.grammar.getPossibleFollowingTerminals(item.rule.head)) {
+                        for (lookahead in closureTable.grammar.getPossibleFollowingTerminals(item.rule.head) + ConstantSymbol.CARET) {
                             state.addAction(lookahead, if (item.rule.isGoal()) AcceptAction else ReduceAction(item.rule))
                         }
                     }
+                }
+            }
+
+            for (item in kernel.items) {
+                if (!item.isComplete()) {
+                    state.addAction(ConstantSymbol.CARET, if (item.rule.isGoal()) AcceptAction else CompletionAction(item))
                 }
             }
         }

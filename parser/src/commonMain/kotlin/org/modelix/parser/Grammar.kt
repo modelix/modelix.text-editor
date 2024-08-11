@@ -14,7 +14,7 @@ class Grammar {
 
     constructor(startConcept: IConcept, rawRules: List<ProductionRule>, forCodeCompletion: Boolean = false) {
         rawRules.forEach { addRule(it) }
-        if (forCodeCompletion) modifyForCodeCompletion()
+        // if (forCodeCompletion) modifyForCodeCompletion()
         addGoal(startConcept)
         follows = computeFollows()
         knownConstants = rules.asSequence().flatMap { it.symbols }.filterIsInstance<ConstantSymbol>().map { it.text }.toSet()

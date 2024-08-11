@@ -159,37 +159,8 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     newStack = newStack.pushState(action.nextState)
                     listOf(Fork(newStack, null))
                 }
-                is CompletionAction -> TODO()
-                is ReduceAction -> {
-                    // TODO check if the stack content actually matches the rule symbols
-                    val rule = action.rule
-                    if (rule.isGoal()) error("Should be an AcceptAction")
-
-//                    if (reducesSinceLastShift.contains(rule.head to stack.getSize()) && rule.symbols.size == 1) {
-//                        // Endless recursion
-//                        return emptyList()
-//                    }
-
-                    val removeCount = rule.symbols.size * 2
-
-                    return stack.pop(removeCount).mapNotNull { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
-                        val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
-
-                        if (removedTokens.size == 1) {
-                            val symbolToReduce: INonTerminalToken? = removedTokens.single() as? ParseTreeNode
-                            val wrappers = generateSequence(symbolToReduce) {
-                                (it as? ParseTreeNode)?.children?.singleOrNull() as? INonTerminalToken
-                            }.map { it.getNonTerminalSymbol() }
-                            val isUnnecessaryWrapper = wrappers.contains(rule.head)
-                            // if, after applying a series of wrappers, we end up with the same non-terminal that we
-                            // already had on the stack, it means we could have just taken that one without wrapping it
-                            if (isUnnecessaryWrapper) return@mapNotNull null
-                        }
-
-                        val newStack = popped.second.pushNode(ParseTreeNode(rule, removedTokens.reversed()))
-                        Fork(newStack, null)
-                    }
-                }
+                is CompletionAction -> reduceItem(action.item)
+                is ReduceAction -> reduceItem(RuleItem(action.rule, action.rule.symbols.size))
                 is GotoAction -> {
                     listOf(Fork(stack.pushState(action.nextState), null))
                 }
@@ -198,6 +169,36 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                     accepted = true
                     listOf(this)
                 }
+            }
+        }
+
+        private fun reduceItem(item: RuleItem): List<Fork> {
+            // TODO check if the stack content actually matches the rule symbols
+            if (item.rule.isGoal()) error("Should be an AcceptAction")
+
+//                    if (reducesSinceLastShift.contains(rule.head to stack.getSize()) && rule.symbols.size == 1) {
+//                        // Endless recursion
+//                        return emptyList()
+//                    }
+
+            val removeCount = item.cursor * 2
+
+            return stack.pop(removeCount).mapNotNull { popped: Pair<List<StackElement>, IGSStack<StackElement>> ->
+                val removedTokens = popped.first.filter { it.isNode() }.map { it.getToken() }
+
+                if (removedTokens.size == 1) {
+                    val symbolToReduce: INonTerminalToken? = removedTokens.single() as? ParseTreeNode
+                    val wrappers = generateSequence(symbolToReduce) {
+                        (it as? ParseTreeNode)?.children?.singleOrNull() as? INonTerminalToken
+                    }.map { it.getNonTerminalSymbol() }
+                    val isUnnecessaryWrapper = wrappers.contains(item.rule.head)
+                    // if, after applying a series of wrappers, we end up with the same non-terminal that we
+                    // already had on the stack, it means we could have just taken that one without wrapping it
+                    if (isUnnecessaryWrapper) return@mapNotNull null
+                }
+
+                val newStack = popped.second.pushNode(ParseTreeNode(item.rule, removedTokens.reversed()))
+                Fork(newStack, null)
             }
         }
     }
