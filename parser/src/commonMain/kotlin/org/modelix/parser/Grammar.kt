@@ -13,9 +13,9 @@ class Grammar {
     val knownConstants: Set<String>
 
     constructor(startConcept: IConcept, rawRules: List<ProductionRule>, forCodeCompletion: Boolean = false) {
-        addGoal(startConcept)
         rawRules.forEach { addRule(it) }
         if (forCodeCompletion) modifyForCodeCompletion()
+        addGoal(startConcept)
         follows = computeFollows()
         knownConstants = rules.asSequence().flatMap { it.symbols }.filterIsInstance<ConstantSymbol>().map { it.text }.toSet()
     }
@@ -25,7 +25,7 @@ class Grammar {
             // complete end of the rule
             for (i in (1 until rule.symbols.size)) {
                 val existingSymbols = rule.symbols.take(i)
-                if (!existingSymbols.any { it is ConstantSymbol }) continue
+                //if (!existingSymbols.any { it is ConstantSymbol }) continue
                 val nextSymbol = rule.symbols[i]
                 rules += ProductionRule(rule.head, existingSymbols + ConstantSymbol.CARET)
             }
