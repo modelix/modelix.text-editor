@@ -234,7 +234,7 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
             if (t1 !is INonTerminalToken) return null
             if (t2 !is INonTerminalToken) return null
             if (t1.getNonTerminalSymbol() != t2.getNonTerminalSymbol()) return null
-            return StackElement(ParseForestNode.create(listOf(t1, t2)))
+            return StackElement(AmbiguousNode.create(listOf(t1, t2)))
         }
     }
 }

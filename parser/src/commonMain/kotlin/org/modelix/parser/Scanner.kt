@@ -1,7 +1,5 @@
 package org.modelix.parser
 
-private val defaultReferenceRegex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
-
 class Scanner(
     private val input: CharSequence,
     private var position: Int = 0,
@@ -58,28 +56,23 @@ class Scanner(
         expectedNextTerminals.add(terminal)
     }
 
-    private fun matchInput(symbol: ISymbol): IToken? {
+    private fun matchInput(symbol: ITerminalSymbol): IToken? {
         return when (symbol) {
             is ConstantSymbol -> {
                 if (input.startsWith(symbol.text, position)) {
-                    ConstantToken(symbol.text, position)
+                    Token(symbol.text, position, symbol)
                 } else {
                     null
                 }
             }
-            EmptySymbol -> EmptyToken
+            is RegexSymbol -> {
+                matchRegex(symbol.regex) { Token(it, position, symbol) }
+            }
             EndOfInputSymbol -> {
                 if (isAtEnd()) EndOfInputToken else null
             }
-            is PropertySymbol -> {
-                matchRegex(symbol.regex) { PropertyToken(it, position) }
-            }
-            is ReferenceSymbol -> {
-                val regex = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
-                matchRegex(regex) { ReferenceToken(it, position) }
-            }
-            is INonTerminalSymbol -> null
-            GoalSymbol -> TODO()
+            EmptySymbol -> EmptyToken
+            else -> throw UnsupportedOperationException("Unknown symbol: $symbol")
         }
     }
 

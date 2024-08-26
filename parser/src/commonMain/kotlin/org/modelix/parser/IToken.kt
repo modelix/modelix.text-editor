@@ -1,34 +1,35 @@
 package org.modelix.parser
 
 sealed interface IToken : IParseTreeNode {
-    fun textLength(): Int
+    val text: String
+    val symbol: ISymbol?
+    fun textLength(): Int = text.length
 }
 
-data class WhitespaceToken(val text: String, val startPos: Int) : IToken {
-    override fun textLength() = text.length
+data class Token(override val text: String, val startPos: Int, override val symbol: ISymbol?) : IToken
+
+data class WhitespaceToken(override val text: String, val startPos: Int) : IToken {
+    override val symbol: ISymbol? get() = null
 }
-data class ConstantToken(val text: String, val startPos: Int) : IToken {
-    override fun textLength() = text.length
-}
-data class PropertyToken(val text: String, val startPos: Int) : IToken {
-    override fun textLength() = text.length
-}
-data class ReferenceToken(val text: String, val startPos: Int) : IToken {
-    override fun textLength() = text.length
-}
+
 data object EmptyToken : IToken {
-    override fun textLength(): Int = 0
-}
-data object EndOfInputToken : IToken {
+    override val symbol: ISymbol? get() = null
+    override val text: String = ""
     override fun textLength(): Int = 0
 }
 
-interface IParseTreeNode {
+data object EndOfInputToken : IToken {
+    override val symbol: ISymbol? get() = null
+    override val text: String = ""
+    override fun textLength(): Int = 0
+}
+
+sealed interface IParseTreeNode {
     fun childNodes(): Sequence<IParseTreeNode> = emptySequence()
     fun descendants(): Sequence<IParseTreeNode> = childNodes().flatMap { it.descendantsAndSelf() }
     fun descendantsAndSelf(): Sequence<IParseTreeNode> = sequenceOf(this) + descendants()
 }
-interface INonTerminalToken : IParseTreeNode {
+sealed interface INonTerminalToken : IParseTreeNode {
     fun getNonTerminalSymbol(): INonTerminalSymbol
 }
 
@@ -58,20 +59,20 @@ class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTermin
     }
 }
 
-class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
+class AmbiguousNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
     override fun toString(): String {
-        return "forest:$symbol {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
+        return "ambiguous {\n${trees.joinToString("\n---\n").prependIndent()}\n}"
     }
 
     override fun getNonTerminalSymbol(): INonTerminalSymbol {
         return symbol
     }
 
-    fun flatten(): ParseForestNode {
+    fun flatten(): AmbiguousNode {
         val newChildren = trees.flatMap {
-            if (it is ParseForestNode && it.symbol == symbol) it.trees else listOf(it)
+            if (it is AmbiguousNode && it.symbol == symbol) it.trees else listOf(it)
         }
-        return if (newChildren.size == trees.size) this else ParseForestNode(symbol, newChildren)
+        return if (newChildren.size == trees.size) this else AmbiguousNode(symbol, newChildren)
     }
 
     override fun childNodes(): Sequence<IParseTreeNode> = trees.asSequence()
@@ -86,7 +87,7 @@ class ParseForestNode(val symbol: INonTerminalSymbol, val trees: List<INonTermin
                     check(trees.asSequence().drop(1).all { it.getNonTerminalSymbol() == symbol }) {
                         "Cannot merge trees for different non-terminal symbols: $trees"
                     }
-                    ParseForestNode(symbol, trees).flatten()
+                    AmbiguousNode(symbol, trees).flatten()
                 }
             }
         }
@@ -116,7 +117,7 @@ class SPPF(val roots: List<IParseTreeNode>) {
             nonSharedNodes.add(node)
         }
         when (node) {
-            is ParseForestNode -> node.trees.forEach { load(it) }
+            is AmbiguousNode -> node.trees.forEach { load(it) }
             is ParseTreeNode -> node.children.forEach { load(it) }
             else -> {}
         }
@@ -130,7 +131,7 @@ class SPPF(val roots: List<IParseTreeNode>) {
 
     private fun toString(node: IParseTreeNode): String {
         return when (node) {
-            is ParseForestNode -> {
+            is AmbiguousNode -> {
                 "n${id(node)} [label=\"${node.symbol}\", shape=diamond]\n" + node.trees.joinToString("\n") { "n${id(node)} -> n${id(it)}" }
             }
             is ParseTreeNode -> {

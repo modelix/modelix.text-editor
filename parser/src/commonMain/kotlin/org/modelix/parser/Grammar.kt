@@ -92,16 +92,6 @@ class Grammar {
         }
     }
 
-    private fun filterSymbols(symbols: List<ISymbol>): List<ISymbol> {
-        return symbols.mapNotNull { symbol ->
-            when (symbol) {
-                is ConstantSymbol -> symbol.takeIf { it.text.isNotBlank() }
-                is OptionalSymbol -> OptionalSymbol(filterSymbols(symbol.children))
-                else -> symbol
-            }
-        }
-    }
-
     fun getPossibleFollowingTerminals(nonTerminal: INonTerminalSymbol): Set<ITerminalSymbol> = follows[nonTerminal] ?: emptySet()
 
     private val possibleFirstTokensCache = HashMap<INonTerminalSymbol, Set<ITerminalSymbol>>()

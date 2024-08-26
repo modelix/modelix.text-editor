@@ -1,8 +1,8 @@
 package org.modelix.parser
 
 import kotlin.test.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.measureTime
 
 class ExpressionsTest {
 
@@ -495,9 +495,9 @@ class ExpressionsTest {
     fun runTest(input: String, expected: String) {
         val parser = TestGrammar.getParser(TestGrammar.expression)
         val parseTrees = parser.parseForest(input)
-        //println(measureTime { parser.parse(input) })
+        println(measureTime { parser.parse(input) })
 
-        println(SPPF(parseTrees.toList()).toString())
+        println(parseTrees.joinToString("\n---\n"))
         assertTrue(parseTrees.count() > 0)
         // assertEquals(expected, parseTrees.joinToString("\n---\n"))
     }

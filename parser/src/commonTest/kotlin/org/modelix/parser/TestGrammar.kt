@@ -23,19 +23,19 @@ object TestGrammar {
     val rules = ArrayList<ProductionRule>()
 
     init {
-        addRule(integerLiteral, PropertySymbol(Regex("[0-9]+")))
+        addRule(integerLiteral, RegexSymbol(Regex("""\d+""")))
         addRule(plusExpression, SubConceptsSymbol(expression), ConstantSymbol("+"), SubConceptsSymbol(expression))
         addRule(mulExpression, SubConceptsSymbol(expression), ConstantSymbol("*"), SubConceptsSymbol(expression))
         addRule(parensExpression, ConstantSymbol("("), SubConceptsSymbol(expression), ConstantSymbol(")"))
         addRule(listLiteral, ConstantSymbol("list"), ConstantSymbol("["), ListSymbol(SubConceptsSymbol(expression), ConstantSymbol(",")), ConstantSymbol("]"))
-        addRule(stringLiteral, ConstantSymbol("\""), PropertySymbol(Regex("""([^"\\]|\\.)*""")), ConstantSymbol("\""))
+        addRule(stringLiteral, ConstantSymbol("\""), RegexSymbol(RegexSymbol.defaultStringLiteralRegex), ConstantSymbol("\""))
         addRule(ternaryExpression, SubConceptsSymbol(expression), ConstantSymbol("?"), SubConceptsSymbol(expression), ConstantSymbol(":"), SubConceptsSymbol(expression))
 
         addRule(localVariableDeclarationStatement, SubConceptsSymbol(localVariableDeclaration), ConstantSymbol(";"))
         addRule(
             localVariableDeclaration,
             SubConceptsSymbol(type),
-            PropertySymbol(Regex("[_a-zA-Z][_a-zA-Z0-9]*")),
+            RegexSymbol(RegexSymbol.defaultIdentifierPattern),
             OptionalSymbol(
                 ConstantSymbol("="),
                 SubConceptsSymbol(expression)

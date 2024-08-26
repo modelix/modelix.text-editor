@@ -23,6 +23,7 @@ import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
 import org.modelix.parser.ISymbol
 import org.modelix.parser.PropertySymbol
+import org.modelix.parser.RegexSymbol
 
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarConditionSymbol {
@@ -31,7 +32,7 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     var regex: Regex? = null
 
     override fun toParserSymbol(): ISymbol {
-        return PropertySymbol(regex)
+        return PropertySymbol(property, regex ?: RegexSymbol.defaultPropertyPattern)
     }
 
     override fun createCell(context: CellCreationContext, node: INode): CellData {

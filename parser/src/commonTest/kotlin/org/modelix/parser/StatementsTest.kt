@@ -45,9 +45,9 @@ class StatementsTest {
     fun runTest(input: String, expected: String) {
         val parser = TestGrammar.getParser(TestGrammar.statement)
         val parseTrees = parser.parseForest(input)
-        //println(measureTime { parser.parse(input) })
+        println(measureTime { parser.parse(input) })
 
-        println(SPPF(parseTrees.toList()).toString())
+        println(parseTrees.joinToString("\n---\n"))
         assertTrue(parseTrees.count() > 0)
         // assertEquals(expected, parseTrees.joinToString("\n---\n"))
     }

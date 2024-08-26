@@ -33,7 +33,7 @@ class ReferenceCellTemplate(
 ) : CellTemplate(concept), IGrammarSymbol {
 
     override fun toParserSymbol(): ISymbol {
-        return ReferenceSymbol(link.targetConcept)
+        return ReferenceSymbol(link)
     }
 
     override fun createCell(context: CellCreationContext, node: INode): CellData {

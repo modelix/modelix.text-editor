@@ -1,13 +1,16 @@
 package org.modelix.parser
 
 import org.modelix.model.api.IConcept
+import org.modelix.model.api.IProperty
+import org.modelix.model.api.IReferenceLink
+import org.modelix.model.api.IRole
 
-sealed interface ISymbol {
+interface ISymbol {
     fun leafSymbols(): Sequence<ISymbol> = sequenceOf(this)
     fun matches(token: IParseTreeNode): Boolean
 }
-sealed interface ITerminalSymbol : ISymbol
-sealed interface INonTerminalSymbol : ISymbol
+interface ITerminalSymbol : ISymbol
+interface INonTerminalSymbol : ISymbol
 
 data class OptionalSymbol(val children: List<ISymbol>) : INonTerminalSymbol {
     constructor(vararg symbol: ISymbol) : this(symbol.toList())
@@ -24,19 +27,21 @@ data class OptionalSymbol(val children: List<ISymbol>) : INonTerminalSymbol {
         return "optional(${children.joinToString(" ")})"
     }
 }
+
 data class ConstantSymbol(val text: String) : ITerminalSymbol {
     override fun toString(): String {
         return "constant[$text]"
     }
 
     override fun matches(token: IParseTreeNode): Boolean {
-        return token is ConstantToken && token.text == text
+        return token is IToken && (token.symbol == null || token.symbol == this) && token.text == text
     }
 
     companion object {
         val CARET = ConstantSymbol("\u16B9") // ᚹ
     }
 }
+
 data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
     override fun toString(): String {
         return concept.getShortName()
@@ -46,6 +51,7 @@ data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
         return token is INonTerminalToken && token.getNonTerminalSymbol() == this
     }
 }
+
 data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
     override fun toString(): String {
         return concept.getShortName()+"+"
@@ -55,29 +61,65 @@ data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
         return token is INonTerminalToken && token.getNonTerminalSymbol() == this
     }
 }
-data class ReferenceSymbol(val targetConcept: IConcept) : ITerminalSymbol {
-    override fun toString(): String {
-        return "reference[->${targetConcept.getShortName()}]"
+
+open class RegexSymbol(val regex: Regex?) : ITerminalSymbol {
+    override fun matches(token: IParseTreeNode): Boolean {
+        return token is IToken && (token.symbol == null || token.symbol == this) && (regex == null || token.text.matches(regex))
     }
 
-    override fun matches(token: IParseTreeNode): Boolean {
-        return token is ReferenceToken
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as RegexSymbol
+
+        return regex == other.regex
+    }
+
+    override fun hashCode(): Int {
+        return regex?.pattern.hashCode()
+    }
+
+    override fun toString(): String {
+        return "regex/${regex?.pattern}/"
+    }
+
+    companion object {
+        val defaultIdentifierPattern = Regex("""[_a-zA-Z][_a-zA-Z0-9]*""")
+        val defaultStringLiteralRegex = Regex("""([^"\\]|\\.)*""")
+        val defaultPropertyPattern = Regex("""\w+""")
     }
 }
-data class PropertySymbol(val pattern: String?) : ITerminalSymbol {
-    constructor(regex: Regex?) : this(regex?.pattern)
 
-    val regex: Regex? = pattern?.let { Regex(it) }
+abstract class RoleSymbol(regex: Regex?) : RegexSymbol(regex) {
+    abstract val role: IRole
 
-    override fun toString(): String {
-        return "property/$regex/"
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || this::class != other::class) return false
+
+        other as RoleSymbol
+
+        if (role != other.role) return false
+        if (regex?.pattern != other.regex?.pattern) return false
+
+        return true
     }
 
-    override fun matches(token: IParseTreeNode): Boolean {
-        return token is PropertyToken && regex?.matches(token.text) != false
+    override fun hashCode(): Int {
+        return 31 * role.hashCode() + regex?.pattern.hashCode()
     }
 }
-data object EndOfInputSymbol : ITerminalSymbol {
+
+class ReferenceSymbol(override val role: IReferenceLink, regex: Regex? = defaultIdentifierPattern) : RoleSymbol(regex) {
+    override fun toString() = "reference[${role.getSimpleName()}, ${regex?.pattern}]"
+}
+
+class PropertySymbol(override val role: IProperty, regex: Regex? = defaultPropertyPattern) : RoleSymbol(regex) {
+    override fun toString() = "property[${role.getSimpleName()}, ${regex?.pattern}]"
+}
+
+object EndOfInputSymbol : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token == EndOfInputToken
     }
@@ -87,25 +129,13 @@ data object EndOfInputSymbol : ITerminalSymbol {
     }
 }
 
-data object EmptySymbol : ITerminalSymbol {
+object EmptySymbol : ITerminalSymbol {
     override fun matches(token: IParseTreeNode): Boolean {
         return token == EmptyToken
     }
 
     override fun toString(): String {
         return "ε"
-    }
-}
-
-fun List<ISymbol>.expandOptionals(): List<List<ISymbol>> {
-    val symbols = this
-    val index = symbols.indexOfLast { it is OptionalSymbol }
-    if (index == -1) return listOf(this)
-
-    val after = symbols.drop(index + 1)
-    return symbols.take(index).expandOptionals().flatMap { before ->
-        (symbols[index] as OptionalSymbol).children
-            .expandOptionals().map { before + it + after } + listOf(before + after)
     }
 }
 
@@ -118,8 +148,6 @@ class ProductionRule(val head: INonTerminalSymbol, val symbols: List<ISymbol>) {
         }
     }
 
-    fun expandOptionals() = symbols.expandOptionals().map { ProductionRule(head, it) }
-
     override fun toString(): String {
         return "$head -> ${symbols.ifEmpty { listOf(EmptySymbol) }.joinToString(" ")}"
     }
@@ -128,7 +156,7 @@ class ProductionRule(val head: INonTerminalSymbol, val symbols: List<ISymbol>) {
     fun isEmpty() = symbols.isEmpty()
 }
 
-data object GoalSymbol : INonTerminalSymbol {
+object GoalSymbol : INonTerminalSymbol {
     override fun toString(): String = "goal"
     override fun matches(token: IParseTreeNode): Boolean = false
 }
