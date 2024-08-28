@@ -17,6 +17,7 @@ import org.modelix.editor.ICellAction
 import org.modelix.editor.ICellTemplateReference
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.NonExistingChild
 import org.modelix.editor.ReplaceNodeActionProvider
 import org.modelix.editor.SavedCaretPosition
@@ -34,10 +35,14 @@ import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.remove
+import org.modelix.parser.AmbiguousNode
 import org.modelix.parser.ISymbol
 import org.modelix.parser.ITerminalSymbol
 import org.modelix.parser.ListSymbol
 import org.modelix.parser.ExactConceptSymbol
+import org.modelix.parser.INonTerminalToken
+import org.modelix.parser.IParseTreeNode
+import org.modelix.parser.ParseTreeNode
 import org.modelix.parser.SubConceptsSymbol
 
 class ChildCellTemplate(
@@ -61,6 +66,37 @@ class ChildCellTemplate(
             ListSymbol(SubConceptsSymbol(link.targetConcept), separatorSymbols.firstOrNull())
         } else {
             SubConceptsSymbol(link.targetConcept)
+        }
+    }
+
+    override fun consumeTokens(builder: IParseTreeToAstBuilder) {
+        val symbol = toParserSymbol()
+        val token = builder.consumeNextToken { it is INonTerminalToken && it.getNonTerminalSymbol() == symbol } ?: return
+        loadChildrenFromParseTree(builder, token)
+    }
+
+    private fun loadChildrenFromParseTree(builder: IParseTreeToAstBuilder, parseTree: IParseTreeNode) {
+        when (parseTree) {
+            is ParseTreeNode -> {
+                val nonTerminal = parseTree.rule.head
+                when (nonTerminal) {
+                    is ExactConceptSymbol -> {
+                        builder.buildChild(link, parseTree)
+                    }
+                    is SubConceptsSymbol -> {
+                        parseTree.children.forEach { loadChildrenFromParseTree(builder, it) }
+                    }
+                    is ListSymbol -> {
+                        parseTree.children.forEach { loadChildrenFromParseTree(builder, it) }
+                    }
+                    else -> throw NotImplementedError("$nonTerminal")
+                }
+            }
+            is AmbiguousNode -> {
+                // TODO load all alternatives
+                loadChildrenFromParseTree(builder, parseTree.trees.first())
+            }
+            else -> throw NotImplementedError("$parseTree")
         }
     }
 

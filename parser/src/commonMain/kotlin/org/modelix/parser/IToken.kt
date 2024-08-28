@@ -49,16 +49,6 @@ class ParseTreeNode(val rule: ProductionRule, val children: List<IParseTreeNode>
     override fun childNodes(): Sequence<IParseTreeNode> = children.asSequence()
 }
 
-class CompletedNode(val symbol: INonTerminalSymbol) : IParseTreeNode, INonTerminalToken {
-    override fun toString(): String {
-        return "completed[$symbol]"
-    }
-
-    override fun getNonTerminalSymbol(): INonTerminalSymbol {
-        return symbol
-    }
-}
-
 class AmbiguousNode(val symbol: INonTerminalSymbol, val trees: List<INonTerminalToken>) : IParseTreeNode, INonTerminalToken {
     override fun toString(): String {
         return "ambiguous {\n${trees.joinToString("\n---\n").prependIndent()}\n}"

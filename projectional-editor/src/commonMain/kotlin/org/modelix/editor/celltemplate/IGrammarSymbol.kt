@@ -2,6 +2,7 @@ package org.modelix.editor.celltemplate
 
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TemplateCellReference
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.INode
@@ -15,6 +16,8 @@ interface IGrammarSymbol {
     fun getSymbolTransformationAction(node: INode, optionalCell: TemplateCellReference): IActionOrProvider?
 
     fun toParserSymbol(): ISymbol
+
+    fun consumeTokens(builder: IParseTreeToAstBuilder)
 }
 
 interface IOptionalSymbol : IGrammarSymbol {

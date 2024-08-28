@@ -25,6 +25,8 @@ class CodeCompletionMenu(
         entries = computeActions(patternEditor.getTextBeforeCaret())
     }
 
+    fun getEntries(): List<ICodeCompletionAction> = entries
+
     private fun computeActions(pattern: String): List<ICodeCompletionAction> {
         return editor.runRead {
             val parameters = CodeCompletionParameters(editor, pattern)

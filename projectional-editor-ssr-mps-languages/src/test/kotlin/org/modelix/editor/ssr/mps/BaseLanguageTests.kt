@@ -501,4 +501,21 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
     fun `test completion 1`() = runParsingTest("""intᚹ""")
     fun `test completion 2`() = runParsingTest("""int aᚹ""")
+
+    fun `test parser completion`() {
+        placeCaretIntoCellWithText("<no statement>")
+        typeText("int a")
+        repeat(5) { pressKey(KnownKeys.ArrowLeft) }
+        (editor.getSelection() as CaretSelection).triggerParserCompletion()
+        val actions = editor.getCodeCompletionActions()
+        actions.forEach { println("Code Completion Entry: " + it.getMatchingText()) }
+        pressEnter()
+        assertFinalEditorText("""
+            class Class1 {
+              public void method1(<no parameter>) {
+                int a;
+              }
+            }
+        """)
+    }
 }

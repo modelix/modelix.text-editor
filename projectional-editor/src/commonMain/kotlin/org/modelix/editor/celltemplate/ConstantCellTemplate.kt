@@ -8,6 +8,7 @@ import org.modelix.editor.EditorComponent
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
 import org.modelix.editor.ancestors
@@ -20,10 +21,16 @@ import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.parser.ConstantSymbol
 import org.modelix.parser.ISymbol
+import org.modelix.parser.Token
 
 class ConstantCellTemplate(concept: IConcept, val text: String) : CellTemplate(concept), IGrammarSymbol {
 
     override fun toParserSymbol(): ISymbol = ConstantSymbol(text)
+
+    override fun consumeTokens(builder: IParseTreeToAstBuilder) {
+        val symbol = toParserSymbol()
+        val token = builder.consumeNextToken { it is Token && it.symbol == symbol } ?: return
+    }
 
     override fun createCell(context: CellCreationContext, node: INode) = TextCellData(text, "")
 

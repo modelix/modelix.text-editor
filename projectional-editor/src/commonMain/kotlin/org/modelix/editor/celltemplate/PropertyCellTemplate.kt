@@ -12,6 +12,7 @@ import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.ICodeCompletionActionProvider
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.ITextChangeAction
 import org.modelix.editor.PropertyCellReference
 import org.modelix.editor.TemplateCellReference
@@ -24,6 +25,7 @@ import org.modelix.model.api.IProperty
 import org.modelix.parser.ISymbol
 import org.modelix.parser.PropertySymbol
 import org.modelix.parser.RegexSymbol
+import org.modelix.parser.Token
 
 open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
     CellTemplate(concept), IGrammarConditionSymbol {
@@ -33,6 +35,12 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     override fun toParserSymbol(): ISymbol {
         return PropertySymbol(property, regex ?: RegexSymbol.defaultPropertyPattern)
+    }
+
+    override fun consumeTokens(builder: IParseTreeToAstBuilder) {
+        val symbol = toParserSymbol()
+        val token = builder.consumeNextToken { it is Token && it.symbol == symbol } ?: return
+        builder.currentNode().setPropertyValue(property, (token as Token).text)
     }
 
     override fun createCell(context: CellCreationContext, node: INode): CellData {

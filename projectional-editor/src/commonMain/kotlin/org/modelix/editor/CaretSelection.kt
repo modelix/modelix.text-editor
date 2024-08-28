@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.model.api.INode
 import org.modelix.parser.ConstantSymbol
 import org.modelix.parser.IParseTreeNode
 import kotlin.math.max
@@ -245,21 +246,26 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
     fun triggerParserCompletion() {
         val editor = checkNotNull(getEditor()) { "Not attached to any editor" }
         val engine = checkNotNull(editor.engine) { "EditorEngine not available" }
-        val node = layoutable.cell.ancestors(true)
+        val selectedNode = layoutable.cell.ancestors(true)
             .mapNotNull { it.getProperty(CommonCellProperties.node) }.firstOrNull() ?: return
         // TODO cell should have a provider for parser based completions
         val text = layoutable.cell.getSelectableText() ?: "" // TODO include all cells of the node
-        val expectedConcept = node.expectedConcept() ?: return
+        val expectedConcept = selectedNode.expectedConcept() ?: return
         var parseTrees: List<IParseTreeNode> = engine.parse(text, expectedConcept, false)
         if (parseTrees.isEmpty()) parseTrees = engine.parse(text + ConstantSymbol.CARET.text, expectedConcept, true)
-        val actions = parseTrees.map { it.toString() }.map {
+        val asts: List<INode> = parseTrees.map { ParseTreeToAstBuilder.buildNode(engine, it) }
+        val actions = asts.map { ast ->
             object : ICodeCompletionAction {
+                val rendered = engine.createCell(EditorState(), ast)
                 override fun execute(editor: EditorComponent): ICaretPositionPolicy? {
-                    TODO("Not yet implemented")
+                    val newNode = editor.runWrite {
+                        (ast as IPendingNode).commit(selectedNode)
+                    }
+                    return CaretPositionPolicy(newNode)
                 }
 
                 override fun getMatchingText(): String {
-                    return it
+                    return rendered.layout.toString()
                 }
 
                 override fun getDescription(): String {

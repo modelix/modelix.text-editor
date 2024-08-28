@@ -7,17 +7,30 @@ import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.asProvider
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
-import org.modelix.parser.ISymbol
+import org.modelix.parser.INonTerminalToken
 import org.modelix.parser.OptionalSymbol
+import org.modelix.parser.ParseTreeNode
 
 class OptionalCellTemplate(concept: IConcept) : CellTemplate(concept), IOptionalSymbol {
 
-    override fun toParserSymbol(): ISymbol {
+    override fun toParserSymbol(): OptionalSymbol {
         return OptionalSymbol(getChildSymbols().map { it.toParserSymbol() }.toList())
+    }
+
+    override fun consumeTokens(builder: IParseTreeToAstBuilder) {
+        val symbol = toParserSymbol()
+        val token = builder.consumeNextToken { it is INonTerminalToken && it.getNonTerminalSymbol() == symbol } ?: return
+        when (token) {
+            is ParseTreeNode -> {
+                builder.consumeTokens(token.children)
+            }
+            else -> TODO()
+        }
     }
 
     override fun createCell(context: CellCreationContext, node: INode): CellData {
