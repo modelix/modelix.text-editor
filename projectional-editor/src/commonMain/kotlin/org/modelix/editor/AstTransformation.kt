@@ -10,23 +10,16 @@ import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import org.modelix.model.area.IArea
 import org.modelix.parser.AmbiguousNode
-import org.modelix.parser.EmptyToken
-import org.modelix.parser.EndOfInputToken
 import org.modelix.parser.ExactConceptSymbol
-import org.modelix.parser.GoalSymbol
-import org.modelix.parser.INonTerminalSymbol
 import org.modelix.parser.IParseTreeNode
 import org.modelix.parser.ListSymbol
-import org.modelix.parser.OptionalSymbol
 import org.modelix.parser.ParseTreeNode
-import org.modelix.parser.PropertySymbol
-import org.modelix.parser.ReferenceSymbol
 import org.modelix.parser.SubConceptsSymbol
-import org.modelix.parser.Token
-import org.modelix.parser.WhitespaceToken
 
 interface IPendingNode : INode {
     fun commit(location: INonExistingNode): INode
+    fun flattenFirstAmbiguousNode(): List<INode>
+    fun replaceAllAmbiguousWithFirst(): INode
 }
 
 abstract class PendingNodeBase : IPendingNode {
@@ -84,12 +77,63 @@ abstract class PendingNodeBase : IPendingNode {
     override fun usesRoleIds(): Boolean = TODO("Not yet implemented")
 }
 
-class PendingNode(
+class AmbiguousPendingNode(
+    val alternatives: List<INode>
+) : PendingNodeBase() {
+    override fun commit(location: INonExistingNode): INode {
+        throw UnsupportedOperationException()
+    }
+
+    override fun flattenFirstAmbiguousNode(): List<INode> {
+        return alternatives
+    }
+
+    override fun replaceAllAmbiguousWithFirst(): INode {
+        return (alternatives.first() as IPendingNode).replaceAllAmbiguousWithFirst()
+    }
+}
+
+data class PendingNode(
     override val concept: IConcept,
-    val children: MutableMap<IChildLink, MutableList<PendingNode>> = LinkedHashMap(),
+    val children: MutableMap<IChildLink, MutableList<IPendingNode>> = LinkedHashMap(),
     val properties: MutableMap<IProperty, String> = LinkedHashMap(),
     val references: MutableMap<IReferenceLink, INode> = LinkedHashMap()
 ) : PendingNodeBase(), INodeReference {
+
+    override fun flattenFirstAmbiguousNode(): List<INode> {
+        val allChildren: List<Pair<IChildLink, IPendingNode>> = children.flatMap { childrenInRole -> childrenInRole.value.map { childrenInRole.key to it } }
+
+        for ((index, child) in allChildren.withIndex()) {
+            val flattenedChild = child.second.flattenFirstAmbiguousNode()
+            if (flattenedChild.size <= 1) continue
+
+            val allChildrenAlternatives = flattenedChild.map { alternative ->
+                allChildren.take(index) + (child.first to alternative) + allChildren.drop(index + 1)
+            }
+            return allChildrenAlternatives.map {
+                PendingNode(
+                    concept = concept,
+                    children = it.groupBy { it.first }.mapValues { it.value.map { it.second as IPendingNode }.toMutableList() }.toMutableMap(),
+                    properties = properties.toMutableMap(),
+                    references = references.toMutableMap()
+                )
+            }
+
+        }
+
+        return listOf(this)
+    }
+
+    override fun replaceAllAmbiguousWithFirst(): INode {
+        val newChildren = children.mapValues { it.value.map { it.replaceAllAmbiguousWithFirst() as IPendingNode }.toMutableList() }.toMutableMap()
+        return PendingNode(
+            concept = concept,
+            children = newChildren,
+            properties = properties.toMutableMap(),
+            references = references.toMutableMap()
+        )
+    }
+
     fun applyContent(node: INode) {
         for (property in properties) {
             node.setPropertyValue(property.key, property.value)
@@ -100,7 +144,7 @@ class PendingNode(
         for (entry in children) {
             for (pendingChild in entry.value) {
                 val childNode = node.addNewChild(entry.key, -1, pendingChild.concept)
-                pendingChild.applyContent(childNode)
+                (pendingChild as PendingNode).applyContent(childNode)
             }
         }
     }
@@ -134,60 +178,26 @@ class PendingNode(
     }
 }
 
-
-private fun IParseTreeNode.toAst(location: INonExistingNode?, node: INode?) {
-    val parseNode = this
-    when (parseNode) {
-        is AmbiguousNode -> TODO()
-        is ParseTreeNode -> {
-            val outputType: INonTerminalSymbol = parseNode.rule.head
-            when (outputType) {
-                is ExactConceptSymbol -> {
-                    PendingNode(outputType.concept)
-                }
-                is SubConceptsSymbol -> TODO()
-                is ListSymbol -> TODO()
-                is GoalSymbol -> TODO()
-                is OptionalSymbol -> TODO()
-                else -> TODO()
-            }
-        }
-        is Token -> {
-            val symbol = parseNode.symbol
-            when (symbol) {
-                null -> {}
-                is PropertySymbol -> {
-                    node!!.setPropertyValue(symbol.role, parseNode.text)
-                }
-                is ReferenceSymbol -> TODO()
-                else -> TODO()
-            }
-        }
-        is WhitespaceToken -> TODO()
-        EndOfInputToken -> TODO()
-        EmptyToken -> TODO()
-    }
-}
-
 interface IParseTreeToAstBuilder {
     fun currentNode(): INode
-    fun buildNode(parseTreeNode: IParseTreeNode): INode
+    fun buildNode(parseTreeNode: IParseTreeNode): List<INode>
     fun consumeNextToken(predicate: (IParseTreeNode) -> Boolean): IParseTreeNode?
-    fun buildChild(role: IChildLink, childParseTree: ParseTreeNode)
+    fun buildChild(role: IChildLink, childParseTree: IParseTreeNode)
     fun consumeTokens(tokens: List<IParseTreeNode>)
 }
 
-class ParseTreeToAstBuilder(val editorEngine: EditorEngine, val node: PendingNode, val unconsumedTokens: MutableList<IParseTreeNode>) : IParseTreeToAstBuilder {
-    override fun buildChild(role: IChildLink, childParseTree: ParseTreeNode) {
-        node.children.getOrPut(role) { ArrayList() }.add(buildNode(childParseTree) as PendingNode)
+class ParseTreeToAstBuilder(val editorEngine: EditorEngine, var node: PendingNode, val unconsumedTokens: MutableList<IParseTreeNode>) : IParseTreeToAstBuilder {
+    override fun buildChild(role: IChildLink, childParseTree: IParseTreeNode) {
+        val alternatives = buildNode(childParseTree)
+        node.children.getOrPut(role) { ArrayList() }.add(if (alternatives.size == 1) alternatives.single() else AmbiguousPendingNode(alternatives))
     }
 
     override fun currentNode(): INode {
         return node
     }
 
-    override fun buildNode(parseTreeNode: IParseTreeNode): INode {
-        return Companion.buildNode(editorEngine, parseTreeNode)
+    override fun buildNode(parseTreeNode: IParseTreeNode): List<IPendingNode> {
+        return Companion.buildNodes(editorEngine, parseTreeNode)
     }
 
     override fun consumeNextToken(predicate: (IParseTreeNode) -> Boolean): IParseTreeNode? {
@@ -200,7 +210,7 @@ class ParseTreeToAstBuilder(val editorEngine: EditorEngine, val node: PendingNod
     }
 
     companion object {
-        fun buildNode(editorEngine: EditorEngine, parseTreeNode: IParseTreeNode): INode {
+        fun buildNodes(editorEngine: EditorEngine, parseTreeNode: IParseTreeNode): List<IPendingNode> {
             return when (parseTreeNode) {
                 is ParseTreeNode -> {
                     val nonTerminal = parseTreeNode.rule.head
@@ -212,13 +222,19 @@ class ParseTreeToAstBuilder(val editorEngine: EditorEngine, val node: PendingNod
                             for (symbol in childSymbols) {
                                 symbol.consumeTokens(childBuilder)
                             }
-                            childNode
+                            listOf(childNode)
                         }
                         is SubConceptsSymbol -> {
-                            buildNode(editorEngine, parseTreeNode.children.single())
+                            buildNodes(editorEngine, parseTreeNode.children.single())
+                        }
+                        is ListSymbol -> {
+                            parseTreeNode.children.flatMap { buildNodes(editorEngine, it) }
                         }
                         else -> throw NotImplementedError("$nonTerminal")
                     }
+                }
+                is AmbiguousNode -> {
+                    listOf(AmbiguousPendingNode(parseTreeNode.trees.map { buildNodes(editorEngine, it).single() }))
                 }
                 else -> throw NotImplementedError("$parseTreeNode")
             }

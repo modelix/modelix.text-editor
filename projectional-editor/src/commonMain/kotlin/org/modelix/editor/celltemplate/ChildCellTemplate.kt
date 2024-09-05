@@ -93,8 +93,7 @@ class ChildCellTemplate(
                 }
             }
             is AmbiguousNode -> {
-                // TODO load all alternatives
-                loadChildrenFromParseTree(builder, parseTree.trees.first())
+                builder.buildChild(link, parseTree)
             }
             else -> throw NotImplementedError("$parseTree")
         }

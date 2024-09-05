@@ -253,7 +253,16 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         val expectedConcept = selectedNode.expectedConcept() ?: return
         var parseTrees: List<IParseTreeNode> = engine.parse(text, expectedConcept, false)
         if (parseTrees.isEmpty()) parseTrees = engine.parse(text + ConstantSymbol.CARET.text, expectedConcept, true)
-        val asts: List<INode> = parseTrees.map { ParseTreeToAstBuilder.buildNode(engine, it) }
+        var asts: List<INode> = parseTrees
+            .flatMap { ParseTreeToAstBuilder.buildNodes(engine, it) }
+
+        var previousSize: Int
+        do {
+            previousSize = asts.size
+            asts = asts.flatMap { (it as IPendingNode).flattenFirstAmbiguousNode() }
+        } while (asts.size != previousSize && asts.size < 1000)
+
+            //.map { it.replaceAllAmbiguousWithFirst() as IPendingNode }
         val actions = asts.map { ast ->
             object : ICodeCompletionAction {
                 val rendered = engine.createCell(EditorState(), ast)

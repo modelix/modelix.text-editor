@@ -125,7 +125,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
     fun `test initial editor`() {
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
@@ -138,7 +138,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         placeCaretAtEnd(lastMember)
         pressEnter()
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
@@ -154,9 +154,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             "int | LocalVariableDeclarationStatement[LocalVariableDeclaration[IntegerType]]",
             actions.joinToString("\n") { it.getMatchingText() + " | " + it.getDescription() },
         )
-        typeText("int")
+        typeText("int ")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int <no name>;
               }
@@ -170,7 +170,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("abc")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc;
               }
@@ -185,7 +185,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("abc")
         typeText("=")
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc = <no initializer>;
               }
@@ -201,7 +201,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("abc")
         pressKey(KnownKeys.Tab)
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc = <no initializer>;
               }
@@ -222,7 +222,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         placeCaretIntoCellWithText("abc")
 
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc;
                 int def;
@@ -263,7 +263,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("=")
         typeText("10")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc = 10;
               }
@@ -278,7 +278,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("p1")
         pressKey(KnownKeys.Enter)
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1, <choose parameter>) {
                 <no statement>
               }
@@ -288,7 +288,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("p2")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1, string p2) {
                 <no statement>
               }
@@ -306,7 +306,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("p2")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1, int p2) {
                 <no statement>
               }
@@ -330,7 +330,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("p3")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1, int p3, int p2) {
                 <no statement>
               }
@@ -368,7 +368,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("p1")
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1) {
                 <no statement>
               }
@@ -381,7 +381,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|p1")
         pressKey(KnownKeys.Backspace)
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
@@ -396,7 +396,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         pressKey(KnownKeys.Tab)
         typeText("p1")
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1) {
                 <no statement>
               }
@@ -404,7 +404,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
         pressKey(KnownKeys.Delete)
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 <no statement>
               }
@@ -420,7 +420,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         typeText("p1")
         pressKey(KnownKeys.Enter)
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1, <choose parameter>) {
                 <no statement>
               }
@@ -428,7 +428,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
         pressKey(KnownKeys.Backspace)
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(int p1) {
                 <no statement>
               }
@@ -448,7 +448,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         // pressKey(KnownKeys.Enter)
         typeText("20")
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc = 10 + 20;
               }
@@ -505,13 +505,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     fun `test parser completion`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int a")
-        repeat(5) { pressKey(KnownKeys.ArrowLeft) }
+        //repeat(5) { pressKey(KnownKeys.ArrowLeft) }
         (editor.getSelection() as CaretSelection).triggerParserCompletion()
         val actions = editor.getCodeCompletionActions()
         actions.forEach { println("Code Completion Entry: " + it.getMatchingText()) }
         pressEnter()
         assertFinalEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int a;
               }
