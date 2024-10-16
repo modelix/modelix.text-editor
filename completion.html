@@ -1,0 +1,248 @@
+<html>
+
+<head>
+    <style>
+        .completion-popup {
+            background-color: white;
+            border: 1px solid oklch(0.8 0 0);
+            box-shadow: 5px 5px 40px 0 oklch(0 0 0 / 0.3);
+            padding: 6px 0 6px 6px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: "JetBrains Mono", monospace;
+            color: black;
+        }
+        .completion-popup-content {
+            overflow-y: scroll;
+            max-height: 200px;
+        }
+        .entries-container {
+            display: table;
+        }
+        .completion-entry {
+            padding: 3px 0px;
+            display: table-row;
+        }
+        .selected-entry {
+            background-color: oklch(0.9 0.04 260);
+        }
+        .constant {
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        .placeholder {
+            border-radius: 8px;
+            padding: 1px 8px;
+        }
+        .child-placeholder {
+            background-color: oklch(0.8 0.08 290);
+            color: oklch(0.4 0.08 290);
+        }
+        .reference-placeholder {
+            background-color: oklch(0.8 0.08 100);
+            color: oklch(0.4 0.08 108);
+        }
+        .property-placeholder {
+            border-radius: 8px;
+            background-color: oklch(0.8 0.08 200);
+            color: oklch(0.4 0.08 200);
+        }
+        .property-regex {
+            color: oklch(0.6 0.08 200);
+            font-size: 11px;
+        }
+
+        .entry-pattern {
+            display: table-cell;
+        }
+
+        .output-concept {
+            display: table-cell;
+            font-family: Inter, sans-serif;
+            color: oklch(0.7 0 0);
+            font-size: 12px;
+            padding: 3px 3px 3px 12px;
+        }
+
+        .matching {
+            font-weight: bold;
+            color:oklch(0.6 0.2 260);
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="completion-popup" style="position: absolute; left: 20px; right: 20px">
+    <div class="completion-popup-content">
+        <svg style="position: absolute" width="100" height="300" viewBox="0 0 100 300">
+            <line x1="10" x2="10" y1="17" y2="65" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="10" x2="17" y1="25" y2="25" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="10" x2="17" y1="45" y2="45" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="10" x2="17" y1="65" y2="65" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+
+            <line x1="10" x2="10" y1="91" y2="101" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="10" x2="17" y1="101" y2="101" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+
+            <line x1="30" x2="30" y1="109" y2="138" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="30" x2="37" y1="120" y2="120" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+            <line x1="30" x2="37" y1="138" y2="138" stroke="oklch(0.8 0.08 290)" stroke-width="1" />
+
+            <line x1="30" x2="30" y1="198" y2="210" stroke="oklch(0.8 0.08 100)" stroke-width="1" />
+            <line x1="30" x2="37" y1="210" y2="210" stroke="oklch(0.8 0.08 100)" stroke-width="1" />
+        </svg>
+        <div class="entries-container">
+            <div class="completion-entry">
+                <div class="entry-pattern">
+                    <span class="placeholder child-placeholder">leftExpression</span>
+                    <span class="constant">-</span>
+                    <span class="constant">1</span>
+                </div>
+                <div class="output-concept">
+                    MinusExpression
+                </div>
+            </div>
+
+            <div class="completion-entry">
+                <div class="entry-pattern">
+                    <span class="placeholder child-placeholder">leftExpression</span>
+                    <span class="constant">-</span>
+                    <span class="placeholder child-placeholder">rightExpression</span>
+                </div>
+                <div class="output-concept">
+                    MinusExpression
+                </div>
+            </div>
+            <div class="completion-entry" style="opacity: 50%">
+                <div class="entry-pattern" style="padding-left: 149px">
+                    <span class="placeholder property-placeholder">value <span class="property-regex">[0-9]+([.][0-9]+)?</span></span>
+                </div>
+                <div class="output-concept">
+                    IntegerConstant
+                </div>
+            </div>
+            <div class="completion-entry" style="opacity: 50%">
+                <div class="entry-pattern" style="padding-left: 157px">
+                    <span class="constant">1</span>
+                </div>
+                <div class="output-concept">
+                    string
+                </div>
+            </div>
+
+
+            <div class="completion-entry">
+                <div class="entry-pattern">
+                    <span class="placeholder child-placeholder">localVariableDeclaration</span><span class="constant">;</span>
+                </div>
+                <div class="output-concept">
+                    LocalVariableDeclarationStatement
+                </div>
+            </div>
+
+
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 20px">
+                    <span class="placeholder child-placeholder">type</span> <span class="placeholder property-placeholder">name <span class="property-regex">.*</span></span>
+                </div>
+                <div class="output-concept">
+                    LocalVariableDeclaration
+                </div>
+            </div>
+            <div class="completion-entry selected-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">int</span>
+                </div>
+                <div class="output-concept">
+                    IntegerType
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">double</span>
+                </div>
+                <div class="output-concept">
+                    DoubleType
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern">
+                    <span class="placeholder child-placeholder">expression</span><span class="constant">;</span>
+                </div>
+                <div class="output-concept">
+                    ExpressionStatement
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 20px">
+                    <span class="placeholder child-placeholder">type</span><span class="constant matching">.</span><span class="constant"><span class="matching">cl</span><span>ass</span></span>
+                </div>
+                <div class="output-concept">
+                    PrimitiveClassExpression
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant matching">int</span>
+                </div>
+                <div class="output-concept">
+                    IntegerType
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">double</span>
+                </div>
+                <div class="output-concept">
+                    DoubleType
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">short</span>
+                </div>
+                <div class="output-concept">
+                    ShortType
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 20px">
+                    <span class="placeholder reference-placeholder">variableDeclaration</span>
+                </div>
+                <div class="output-concept">
+                    VariableReference
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">int</span>
+                </div>
+                <div class="output-concept">
+                    &#x21e2; LocalVariableDeclaration
+                </div>
+            </div>
+
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 20px">
+                    <span class="placeholder property-placeholder">value <span class="property-regex">[0-9]+([.][0-9]+)?</span></span>
+                </div>
+                <div class="output-concept">
+                    IntegerConstant
+                </div>
+            </div>
+            <div class="completion-entry">
+                <div class="entry-pattern" style="padding-left: 40px">
+                    <span class="constant">1</span>
+                </div>
+                <div class="output-concept">
+                    string
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
