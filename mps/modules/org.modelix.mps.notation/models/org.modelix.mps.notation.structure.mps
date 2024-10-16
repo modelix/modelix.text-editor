@@ -187,6 +187,11 @@
     <property role="EcuMT" value="737165568293187226" />
     <property role="TrG5h" value="PropertyCell" />
     <ref role="1TJDcQ" node="7dm8yUsMxww" resolve="Cell" />
+    <node concept="1TJgyi" id="f1Ei69rzUi" role="1TKVEl">
+      <property role="IQ2nx" value="270683414123658898" />
+      <property role="TrG5h" value="regex" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
     <node concept="1TJgyj" id="CUW2QYKUZw" role="1TKVEi">
       <property role="IQ2ns" value="737165568293187552" />
       <property role="20kJfa" value="property" />

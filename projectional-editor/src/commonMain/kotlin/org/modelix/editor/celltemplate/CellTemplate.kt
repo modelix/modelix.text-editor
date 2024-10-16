@@ -13,6 +13,7 @@ import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICellTemplateReference
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.INonExistingNode
+import org.modelix.editor.IPendingNode
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
 import org.modelix.metamodel.ITypedNode
@@ -47,6 +48,8 @@ abstract class CellTemplate(val concept: IConcept) {
         return children.map { it.apply(context, node) }
     }
     protected abstract fun createCell(context: CellCreationContext, node: INode): CellData
+
+    abstract fun buildCompletionNode(): IPendingNode
 
     open fun getInstantiationActions(location: INonExistingNode, parameters: CodeCompletionParameters): List<IActionOrProvider>? {
         val completionText = properties[CommonCellProperties.codeCompletionText]
