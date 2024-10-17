@@ -7,7 +7,6 @@ import kotlinx.html.TagConsumer
 import kotlinx.html.consumers.DelayedConsumer
 import kotlinx.html.stream.HTMLStreamBuilder
 import org.iets3.core.expr.tests.N_TestSuite
-import org.modelix.client.light.LightModelClient
 import org.modelix.editor.EditorEngine
 import org.modelix.editor.EditorState
 import org.modelix.editor.toHtml
@@ -25,10 +24,8 @@ import org.modelix.model.client2.getReplicatedModel
 import org.modelix.model.data.ModelData
 import org.modelix.model.lazy.RepositoryId
 import org.modelix.model.repositoryconcepts.N_Module
-import org.modelix.model.server.api.buildModelQuery
 import org.modelix.model.withAutoTransactions
 import org.modelix.model.withIncrementalComputationSupport
-import kotlin.time.Duration.Companion.seconds
 
 object KernelfAPI {
     private val LOG = io.github.oshai.kotlinlogging.KotlinLogging.logger { }
@@ -77,27 +74,28 @@ object KernelfAPI {
                     LOG.debug { "Connected to model server" }
                     callback(rootNode)
                 } else {
-                    val builder = LightModelClient.builder().port(48305)
-                    if (url != null) {
-                        builder.url(url)
-                    }
-                    val client = builder.autoTransactions().autoFilterNonLoadedNodes().build()
-                    client.changeQuery(
-                        buildModelQuery {
-                            root {
-                                children("modules") {
-                                    whereProperty("name").startsWith("test.in.expr.")
-                                    children("models") {
-                                        children("rootNodes") {
-                                            descendants {}
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                    )
-                    val rootNode = client.waitForRootNode(30.seconds) ?: throw RuntimeException("Root node not received")
-                    callback(rootNode)
+                    error("Unsupported URL: $url")
+//                    val builder = LightModelClient.builder().port(48305)
+//                    if (url != null) {
+//                        builder.url(url)
+//                    }
+//                    val client = builder.autoTransactions().autoFilterNonLoadedNodes().build()
+//                    client.changeQuery(
+//                        buildModelQuery {
+//                            root {
+//                                children("modules") {
+//                                    whereProperty("name").startsWith("test.in.expr.")
+//                                    children("models") {
+//                                        children("rootNodes") {
+//                                            descendants {}
+//                                        }
+//                                    }
+//                                }
+//                            }
+//                        },
+//                    )
+//                    val rootNode = client.waitForRootNode(30.seconds) ?: throw RuntimeException("Root node not received")
+//                    callback(rootNode)
                 }
             } catch (ex: Exception) {
                 errorCallback(ex)
