@@ -16,15 +16,13 @@ import org.modelix.parser.ListSymbol
 import org.modelix.parser.ParseTreeNode
 import org.modelix.parser.SubConceptsSymbol
 
-interface IPendingNode : INode
-
-fun INode.asPendingNode(): PendingNodeBase = this as PendingNodeBase
+interface IPendingNode : INode {
+    fun commit(location: INonExistingNode): INode
+    fun flattenFirstAmbiguousNode(): List<INode>
+    fun replaceAllAmbiguousWithFirst(): INode
+}
 
 abstract class PendingNodeBase : IPendingNode {
-    abstract fun commit(location: INonExistingNode): INode
-    abstract fun flattenFirstAmbiguousNode(): List<INode>
-    abstract fun replaceAllAmbiguousWithFirst(): INode
-
     override fun addNewChild(role: String?, index: Int, concept: IConcept?): INode = TODO("Not yet implemented")
     override val allChildren: Iterable<INode> get() = TODO("Not yet implemented")
     override val concept: IConcept? get() = TODO("Not yet implemented")
@@ -91,19 +89,19 @@ class AmbiguousPendingNode(
     }
 
     override fun replaceAllAmbiguousWithFirst(): INode {
-        return (alternatives.first() as PendingNodeBase).replaceAllAmbiguousWithFirst()
+        return (alternatives.first() as IPendingNode).replaceAllAmbiguousWithFirst()
     }
 }
 
 data class PendingNode(
     override val concept: IConcept,
-    val children: MutableMap<IChildLink, MutableList<PendingNodeBase>> = LinkedHashMap(),
+    val children: MutableMap<IChildLink, MutableList<IPendingNode>> = LinkedHashMap(),
     val properties: MutableMap<IProperty, String> = LinkedHashMap(),
     val references: MutableMap<IReferenceLink, INode> = LinkedHashMap()
 ) : PendingNodeBase(), INodeReference {
 
     override fun flattenFirstAmbiguousNode(): List<INode> {
-        val allChildren: List<Pair<IChildLink, PendingNodeBase>> = children.flatMap { childrenInRole -> childrenInRole.value.map { childrenInRole.key to it } }
+        val allChildren: List<Pair<IChildLink, IPendingNode>> = children.flatMap { childrenInRole -> childrenInRole.value.map { childrenInRole.key to it } }
 
         for ((index, child) in allChildren.withIndex()) {
             val flattenedChild = child.second.flattenFirstAmbiguousNode()
@@ -115,7 +113,7 @@ data class PendingNode(
             return allChildrenAlternatives.map {
                 PendingNode(
                     concept = concept,
-                    children = it.groupBy { it.first }.mapValues { it.value.map { it.second.asPendingNode() }.toMutableList() }.toMutableMap(),
+                    children = it.groupBy { it.first }.mapValues { it.value.map { it.second as IPendingNode }.toMutableList() }.toMutableMap(),
                     properties = properties.toMutableMap(),
                     references = references.toMutableMap()
                 )
@@ -127,7 +125,7 @@ data class PendingNode(
     }
 
     override fun replaceAllAmbiguousWithFirst(): INode {
-        val newChildren = children.mapValues { it.value.map { it.replaceAllAmbiguousWithFirst().asPendingNode() }.toMutableList() }.toMutableMap()
+        val newChildren = children.mapValues { it.value.map { it.replaceAllAmbiguousWithFirst() as IPendingNode }.toMutableList() }.toMutableMap()
         return PendingNode(
             concept = concept,
             children = newChildren,
@@ -191,7 +189,7 @@ interface IParseTreeToAstBuilder {
 class ParseTreeToAstBuilder(val editorEngine: EditorEngine, var node: PendingNode, val unconsumedTokens: MutableList<IParseTreeNode>) : IParseTreeToAstBuilder {
     override fun buildChild(role: IChildLink, childParseTree: IParseTreeNode) {
         val alternatives = buildNode(childParseTree)
-        node.children.getOrPut(role) { ArrayList() }.add(if (alternatives.size == 1) alternatives.single().asPendingNode() else AmbiguousPendingNode(alternatives))
+        node.children.getOrPut(role) { ArrayList() }.add(if (alternatives.size == 1) alternatives.single() else AmbiguousPendingNode(alternatives))
     }
 
     override fun currentNode(): INode {
