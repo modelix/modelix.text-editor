@@ -54,7 +54,7 @@ data class ExactConceptSymbol(val concept: IConcept) : INonTerminalSymbol {
 
 data class SubConceptsSymbol(val concept: IConcept) : INonTerminalSymbol {
     override fun toString(): String {
-        return concept.getShortName()+"+"
+        return concept.getShortName() + "+"
     }
 
     override fun matches(token: IParseTreeNode): Boolean {

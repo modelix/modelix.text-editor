@@ -5,8 +5,8 @@ interface IParser {
     fun parse(input: String): IParseTreeNode = parse(input, complete = false)
     fun parseCompleting(input: String): IParseTreeNode = parse(input, complete = true)
     fun tryParse(input: String, complete: Boolean): IParseTreeNode?
-    fun parseForest(input: String) : Sequence<IParseTreeNode> = parseForest(input, false)
-    fun parseForest(input: String, complete: Boolean) : Sequence<IParseTreeNode>
+    fun parseForest(input: String): Sequence<IParseTreeNode> = parseForest(input, false)
+    fun parseForest(input: String, complete: Boolean): Sequence<IParseTreeNode>
 }
 
 class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambiguator) : IParser {
@@ -55,9 +55,9 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
                 val notReadyToShift = forks.filter { !it.readyToShift() }
                 if (notReadyToShift.isEmpty()) break
                 forks = readyToShift +
-                        notReadyToShift
-                            .applyActions()
-                            .flatMap { it.forksForNextActions(lookaheadTokens) }
+                    notReadyToShift
+                        .applyActions()
+                        .flatMap { it.forksForNextActions(lookaheadTokens) }
             }
             if (forks.isEmpty()) break
             forks = forks.merge()
@@ -80,21 +80,21 @@ class LRParser(val table: LRTable, private val defaultDisambiguator: IDisambigua
     private fun mergeForks(forks: List<Fork>): List<Fork> {
         if (forks.size < 2) return forks
         val mergedForks = forks.filter { !it.stack.peek().isState() } +
-                forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }
-                    .map { group ->
-                        if (group.value.size == 1) return@map group.value.first()
+            forks.filter { it.stack.peek().isState() }.groupBy { it.stack.peek().getState() to it.actionToApply }
+                .map { group ->
+                    if (group.value.size == 1) return@map group.value.first()
 
-                        val mergedStack = group.value
-                            .map { it.stack }
-                            .reduce { acc, it ->
-                                checkNotNull(acc.tryMerge(it)) { "Merge failed" }
-                            }
+                    val mergedStack = group.value
+                        .map { it.stack }
+                        .reduce { acc, it ->
+                            checkNotNull(acc.tryMerge(it)) { "Merge failed" }
+                        }
 
-                        Fork(
-                            mergedStack,
-                            group.key.second,
-                        )
-                    }
+                    Fork(
+                        mergedStack,
+                        group.key.second,
+                    )
+                }
         // if (forks.size != mergedForks.size) println("forks ${forks.size} -> ${mergedForks.size}")
         check(mergedForks.size <= 1000) { "Too many forks" }
         return mergedForks

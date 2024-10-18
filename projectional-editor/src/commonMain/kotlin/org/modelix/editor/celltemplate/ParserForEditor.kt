@@ -12,7 +12,7 @@ import org.modelix.parser.LRTable
 import org.modelix.parser.ProductionRule
 import org.modelix.parser.createParseTable
 
-class ParserForEditor(val engine: EditorEngine){
+class ParserForEditor(val engine: EditorEngine) {
     private var parseTables = HashMap<Pair<IConcept, Boolean>, LRTable>()
 
     private fun getParseTable(startConcept: IConcept, forCodeCompletion: Boolean): LRTable {

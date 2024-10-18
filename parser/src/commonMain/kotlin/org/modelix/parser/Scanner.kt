@@ -13,7 +13,7 @@ class Scanner(
         val x = 20
         val before = input.substring(maxOf(0, position - x), position)
         val after = input.substring(position, minOf(input.length, position + x))
-        return "${before}^${after}"
+        return "$before^$after"
     }
 
     fun next(): List<IToken> {

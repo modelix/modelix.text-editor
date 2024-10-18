@@ -262,7 +262,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             asts = asts.flatMap { (it as IPendingNode).flattenFirstAmbiguousNode() }
         } while (asts.size != previousSize && asts.size < 1000)
 
-            //.map { it.replaceAllAmbiguousWithFirst() as IPendingNode }
+        // .map { it.replaceAllAmbiguousWithFirst() as IPendingNode }
         val actions = asts.map { ast ->
             object : ICodeCompletionAction {
                 val rendered = engine.createCell(EditorState(), ast)

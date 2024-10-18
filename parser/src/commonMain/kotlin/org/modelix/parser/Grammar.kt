@@ -5,7 +5,7 @@ import org.modelix.model.api.IConcept
 import org.modelix.model.api.getAllConcepts
 import kotlin.collections.plusAssign
 
-private val LOG = KotlinLogging.logger {  }
+private val LOG = KotlinLogging.logger { }
 class Grammar {
     private val rules = ArrayList<ProductionRule>()
     private val existingLists = HashSet<ListSymbol>()
@@ -27,7 +27,7 @@ class Grammar {
             // complete end of the rule
             for (i in (1 until rule.symbols.size)) {
                 val existingSymbols = rule.symbols.take(i)
-                //if (!existingSymbols.any { it is ConstantSymbol }) continue
+                // if (!existingSymbols.any { it is ConstantSymbol }) continue
                 val nextSymbol = rule.symbols[i]
                 rules += ProductionRule(rule.head, existingSymbols + ConstantSymbol.CARET)
             }
@@ -111,7 +111,6 @@ class Grammar {
         }
     }
 
-
     private fun computeFollows(): Map<INonTerminalSymbol, Set<ITerminalSymbol>> {
         val result = HashMap<INonTerminalSymbol, MutableSet<ITerminalSymbol>>()
         var notDone: Boolean
@@ -144,7 +143,6 @@ class Grammar {
                     }
                 }
             }
-
         } while (notDone)
 
         return result
@@ -220,7 +218,6 @@ class Grammar {
             }
         }
     }
-
 
     private val getRulesContainingNonTerminalCache = HashMap<INonTerminalSymbol, List<ProductionRule>>()
     fun getRulesContainingNonTerminal(nonTerminal: INonTerminalSymbol): List<ProductionRule> {

@@ -119,7 +119,6 @@ class MergeGSSNode<E : IGSSElement>(private val element: E, private val previous
 }
 
 fun <T : IGSSElement> Iterable<IGSStack<T>>.push(element: T): IGSStack<T> {
-
     return MergeGSSNode(element, toList())
 }
 
@@ -143,5 +142,5 @@ fun <T : IGSSElement> IGSStack<T>.toLists(): List<List<T>> {
 }
 
 interface IGSSElement {
-    fun merge(other: IGSSElement) : IGSSElement?
+    fun merge(other: IGSSElement): IGSSElement?
 }

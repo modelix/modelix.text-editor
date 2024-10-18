@@ -65,27 +65,38 @@ class ParsingTest {
     @Test fun tuple3() = runParsingTest("""[10, 20, 30]""")
 
     @Test fun test25() = runParsingTest("""val abc: opt<number> = none + 10""")
+
     @Test fun test26() = runParsingTest("""val abc: (number, string => number) = 10""")
 
-
     @Test fun completion1() = runCompletionTest("""1 + ᚹ""")
+
     @Test fun completion2() = runCompletionTest("""if ᚹ""")
+
     @Test fun completion3() = runCompletionTest("""list(10,ᚹ""")
+
     @Test fun completion4() = runCompletionTest("""val abc:ᚹ""")
+
     @Test fun completion5() = runCompletionTest("""if 10 >ᚹ""")
+
     @Test fun completion6() = runCompletionTest("""if {ᚹ""")
+
     @Test fun completion7() = runCompletionTest("""list(ᚹ*10)""")
+
     @Test fun completion8a() = runCompletionTest("""ᚹ*10""")
+
     @Test fun completion8b() = runCompletionTest("""ᚹ * 10""")
+
     @Test fun completion9() = runCompletionTest("""10 + ᚹ * 20""")
+
     @Test fun completion10() = runCompletionTest("""10+ᚹ*20""")
+
     @Test fun completion11() = runCompletionTest("""(1 ᚹ""")
+
     @Test fun completion12() = runCompletionTest("""(1 * ᚹ""")
 
     private fun runCompletionTest(inputString: String) = runTest(inputString, true)
     private fun runParsingTest(inputString: String) = runTest(inputString, false)
     private fun runTest(inputString: String, complete: Boolean = false) {
-
         KernelfLanguages.registerAll()
 
         val engine = EditorEngine(IncrementalEngine())
@@ -100,7 +111,7 @@ class ParsingTest {
         val time = measureTime {
             parseTrees = parser.parseForest(inputString, complete).toList()
         }
-        //repeat(100) { parser.parseForest(inputString, complete).toList() }
+        // repeat(100) { parser.parseForest(inputString, complete).toList() }
         println(time)
         assertTrue(parseTrees.isNotEmpty())
         println(parseTrees.joinToString("\n---\n"))

@@ -505,7 +505,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     fun `test parser completion`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int a")
-        //repeat(5) { pressKey(KnownKeys.ArrowLeft) }
+        // repeat(5) { pressKey(KnownKeys.ArrowLeft) }
         (editor.getSelection() as CaretSelection).triggerParserCompletion()
         val actions = editor.getCodeCompletionActions()
         actions.forEach { println("Code Completion Entry: " + it.getMatchingText()) }

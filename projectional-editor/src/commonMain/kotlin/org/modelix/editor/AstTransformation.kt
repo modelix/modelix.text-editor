@@ -78,7 +78,7 @@ abstract class PendingNodeBase : IPendingNode {
 }
 
 class AmbiguousPendingNode(
-    val alternatives: List<INode>
+    val alternatives: List<INode>,
 ) : PendingNodeBase() {
     override fun commit(location: INonExistingNode): INode {
         throw UnsupportedOperationException()
@@ -97,7 +97,7 @@ data class PendingNode(
     override val concept: IConcept,
     val children: MutableMap<IChildLink, MutableList<IPendingNode>> = LinkedHashMap(),
     val properties: MutableMap<IProperty, String> = LinkedHashMap(),
-    val references: MutableMap<IReferenceLink, INode> = LinkedHashMap()
+    val references: MutableMap<IReferenceLink, INode> = LinkedHashMap(),
 ) : PendingNodeBase(), INodeReference {
 
     override fun flattenFirstAmbiguousNode(): List<INode> {
@@ -118,7 +118,6 @@ data class PendingNode(
                     references = references.toMutableMap()
                 )
             }
-
         }
 
         return listOf(this)

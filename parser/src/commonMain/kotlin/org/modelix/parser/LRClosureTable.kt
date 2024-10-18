@@ -94,7 +94,6 @@ class LRClosureTable(val grammar: Grammar) {
     }
 }
 
-
 fun <T> List<T>.iterateGrowingList(): Iterator<T> = GrowingListIterator<T>(this)
 
 class GrowingListIterator<E>(private val list: List<E>) : Iterator<E> {

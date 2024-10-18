@@ -40,7 +40,7 @@ class ReferenceCellTemplate(
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {
         val symbol = toParserSymbol()
-        val token = builder.consumeNextToken  { it is Token && it.symbol == symbol } ?: return
+        val token = builder.consumeNextToken { it is Token && it.symbol == symbol } ?: return
         // TODO builder.currentNode().setReferenceTarget(link, TODO())
     }
 
