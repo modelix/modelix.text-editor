@@ -55,7 +55,6 @@ kotlin {
                 implementation(kotlin("stdlib-common"))
                 implementation(libs.kotlin.logging)
                 implementation(coreLibs.kotlin.coroutines.core)
-                implementation(libs.modelix.light.model.client)
                 implementation(libs.modelix.model.client)
                 implementation(libs.kotlin.html)
                 implementation(project(":kernelf-apigen"))
@@ -134,10 +133,6 @@ val fixSourceMaps by tasks.registering {
         fixSourceMap(
             rootDir.resolve("../modelix.core/model-client/src").canonicalFile,
             jsOutputDir.resolve("modelix.core-model-client.js.map"),
-        )
-        fixSourceMap(
-            rootDir.resolve("../modelix.core/light-model-client/src").canonicalFile,
-            jsOutputDir.resolve("modelix.core-light-model-client.js.map"),
         )
         fixSourceMap(
             rootDir.resolve("../incremental/src").canonicalFile,

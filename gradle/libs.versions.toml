@@ -6,13 +6,12 @@ npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
 
 [versions]
-modelixCore = "8.15.3"
+modelixCore = "9.1.0"
 modelixBuildtools="1.7.2"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }
 modelix-model-api-gen-runtime = { group = "org.modelix", name = "model-api-gen-runtime", version.ref = "modelixCore" }
-modelix-light-model-client = { group = "org.modelix", name = "light-model-client", version.ref = "modelixCore" }
 modelix-model-client = { group = "org.modelix", name = "model-client", version.ref = "modelixCore" }
 modelix-modelql-core = { group = "org.modelix", name = "modelql-core", version.ref = "modelixCore" }
 modelix-modelql-untyped = { group = "org.modelix", name = "modelql-untyped", version.ref = "modelixCore" }
