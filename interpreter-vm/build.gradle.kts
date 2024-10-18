@@ -20,7 +20,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(coreLibs.kotlin.collections.immutable)
+                implementation(libs.kotlin.collections.immutable)
                 implementation(coreLibs.modelix.incremental)
             }
         }
