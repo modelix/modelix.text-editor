@@ -29,6 +29,8 @@ open class EditorComponent(
     val generatedHtmlMap = GeneratedHtmlMap()
     private var highlightedLine: IVirtualDom.HTMLElement? = null
     private var highlightedCell: IVirtualDom.HTMLElement? = null
+    private var textToInsertAfterUpdate: String? = null
+
     fun getMainLayer(): IVirtualDom.HTMLElement? {
         return getHtmlElement()?.childNodes?.filterIsInstance<IVirtualDom.HTMLElement>()?.find { it.getClasses().contains(MAIN_LAYER_CLASS_NAME) }
     }
@@ -111,6 +113,17 @@ open class EditorComponent(
         selection = updater?.invoke()
             ?: selection?.takeIf { it.isValid() }
             ?: selection?.update(this)
+        selection?.also {
+            val text = textToInsertAfterUpdate
+            textToInsertAfterUpdate = null
+            if (text != null) {
+                (it as? CaretSelection)?.processTypedText(text, this)
+            }
+        }
+    }
+
+    fun insertTextAfterUpdate(text: String) {
+        textToInsertAfterUpdate = text
     }
 
     open fun changeSelection(newSelection: Selection) {
@@ -131,6 +144,10 @@ open class EditorComponent(
         codeCompletionMenu = CodeCompletionMenu(this, anchor, position, entries, pattern, caretPosition)
         codeCompletionMenu?.updateActions()
         update()
+    }
+
+    fun getCodeCompletionActions(): List<ICodeCompletionAction> {
+        return codeCompletionMenu?.getEntries() ?: emptyList()
     }
 
     fun closeCodeCompletionMenu() {

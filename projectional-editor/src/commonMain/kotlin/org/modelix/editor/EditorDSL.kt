@@ -5,18 +5,16 @@ import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedNode
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
+import kotlin.jvm.JvmOverloads
 
-@Deprecated("use editor(...)")
-fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.conceptEditor(concept: ConceptT, body: NotationRootCellTemplateBuilder<NodeT, ConceptT>.() -> Unit): ConceptEditor {
-    return editor(concept, body)
+@JvmOverloads
+fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.editor(concept: ConceptT, applicableToSubConcepts: Boolean = false, body: NotationRootCellTemplateBuilder<NodeT, ConceptT>.() -> Unit): ConceptEditor {
+    return aspects.getAspect(language, EditorAspect).conceptEditor(concept, applicableToSubConcepts = applicableToSubConcepts, body)
 }
 
-fun <NodeT : ITypedNode, ConceptT : IConceptOfTypedNode<NodeT>> LanguageAspectsBuilder<*>.editor(concept: ConceptT, body: NotationRootCellTemplateBuilder<NodeT, ConceptT>.() -> Unit): ConceptEditor {
-    return aspects.getAspect(language, EditorAspect).conceptEditor(concept, body)
-}
-
-fun LanguageAspectsBuilder<*>.editor(concept: IConcept, body: NotationRootCellTemplateBuilder<INode, IConcept>.() -> Unit): ConceptEditor {
-    return aspects.getAspect(language, EditorAspect).conceptEditor(concept, body)
+@JvmOverloads
+fun LanguageAspectsBuilder<*>.editor(concept: IConcept, applicableToSubConcepts: Boolean = false, body: NotationRootCellTemplateBuilder<INode, IConcept>.() -> Unit): ConceptEditor {
+    return aspects.getAspect(language, EditorAspect).conceptEditor(concept, applicableToSubConcepts = applicableToSubConcepts, body)
 }
 
 interface ModelAccessBuilder {

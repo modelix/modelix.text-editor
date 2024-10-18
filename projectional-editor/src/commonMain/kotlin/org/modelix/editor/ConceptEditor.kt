@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import org.modelix.editor.celltemplate.NotationRootCellTemplate
 import org.modelix.metamodel.NullConcept
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
@@ -7,6 +8,7 @@ import org.modelix.model.api.IProperty
 
 class ConceptEditor(
     val declaredConcept: IConcept?,
+    val applicableToSubConcepts: Boolean,
     val templateBuilder: (subConcept: IConcept) -> NotationRootCellTemplate,
 ) {
     fun isApplicable(context: CellCreationContext, node: INode): Boolean {
@@ -31,7 +33,7 @@ class ConceptEditor(
     }
 }
 
-val defaultConceptEditor = ConceptEditor(null as IConcept?) { subConcept ->
+val defaultConceptEditor = ConceptEditor(null as IConcept?, applicableToSubConcepts = true) { subConcept ->
     NotationRootCellTemplateBuilder(NotationRootCellTemplate(subConcept), subConcept, INodeConverter.Untyped).apply {
         subConcept.getShortName().constant()
         curlyBrackets {

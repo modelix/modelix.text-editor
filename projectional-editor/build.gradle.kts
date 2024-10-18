@@ -29,6 +29,7 @@ kotlin {
                 implementation(coreLibs.kotlin.serialization.json)
                 api(coreLibs.modelix.incremental)
                 api(libs.kotlin.html)
+                api(project(":parser"))
             }
         }
         val commonTest by getting {
