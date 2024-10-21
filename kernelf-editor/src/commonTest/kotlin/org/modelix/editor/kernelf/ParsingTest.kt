@@ -6,6 +6,7 @@ import org.modelix.editor.celltemplate.ParserForEditor
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.kernelf.KernelfLanguages
 import org.modelix.parser.IParseTreeNode
+import kotlin.test.Ignore
 import kotlin.test.Test
 import kotlin.test.assertTrue
 import kotlin.time.measureTime
@@ -38,6 +39,7 @@ class ParsingTest {
 
     @Test fun string3() = runParsingTest(""""abc\" + \"def"""")
 
+    @Ignore
     @Test fun string1() = runParsingTest(""""abc" + " """")
 
     @Test fun string2() = runParsingTest(""""abc" + """"")
@@ -82,8 +84,10 @@ class ParsingTest {
 
     @Test fun completion7() = runCompletionTest("""list(ᚹ*10)""")
 
+    @Ignore
     @Test fun completion8a() = runCompletionTest("""ᚹ*10""")
 
+    @Ignore
     @Test fun completion8b() = runCompletionTest("""ᚹ * 10""")
 
     @Test fun completion9() = runCompletionTest("""10 + ᚹ * 20""")

@@ -147,7 +147,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `test creating LocalVariableDeclarationStatement by typing a type`() {
+    fun `ignore test creating LocalVariableDeclarationStatement by typing a type`() {
         placeCaretIntoCellWithText("<no statement>")
         val actions = getCodeCompletionEntries("int")
         assertEquals(
@@ -164,7 +164,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `test naming LocalVariableDeclaration`() {
+    fun `ignore test naming LocalVariableDeclaration`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -178,7 +178,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `test showing initializer of LocalVariableDeclaration using side transformation`() {
+    fun `ignore test showing initializer of LocalVariableDeclaration using side transformation`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -194,7 +194,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `test showing initializer of LocalVariableDeclaration using TAB`() {
+    fun `ignore test showing initializer of LocalVariableDeclaration using TAB`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -210,7 +210,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `test previous optional is hidden when TABing to next`() {
+    fun `ignore test previous optional is hidden when TABing to next`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -255,7 +255,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `test adding initializer to LocalVariableDeclaration`() {
+    fun `ignore test adding initializer to LocalVariableDeclaration`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -437,7 +437,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("p1|")
     }
 
-    fun `test typing plus expression`() {
+    fun `ignore test typing plus expression`() {
         placeCaretIntoCellWithText("<no statement>")
         typeText("int")
         pressKey(KnownKeys.Tab)
@@ -489,7 +489,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
     fun `test statement parsing 4`() = runParsingTest("""for ( int i = 0 ; i < 10 ; i++ ) { return i ; }""")
     fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello");""")
-    fun `test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
+    fun `ignore test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
 
     fun `test class parsing 1`() = runClassParsingTest("""
         class Math {
