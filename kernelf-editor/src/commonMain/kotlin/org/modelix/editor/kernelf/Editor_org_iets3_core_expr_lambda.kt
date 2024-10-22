@@ -126,7 +126,9 @@ val Editor_org_iets3_core_expr_lambda = languageAspects(L_org_iets3_core_expr_la
         "val".constant {
             iets3keyword()
         }
-        concept.name.cell()
+        concept.name.cell {
+            regex("[_a-zA-Z][_a-zA-Z0-9]*")
+        }
         optional {
             ":".constant()
             concept.type.cell()

@@ -22,9 +22,15 @@ class CodeCompletionMenu(
     override fun isHtmlOutputValid(): Boolean = false
 
     fun updateActions() {
-        editor.runRead {
-            val parameters = parameters()
-            entries = actionsCache.update(parameters)
+        entries = computeActions(patternEditor.getTextBeforeCaret())
+    }
+
+    fun getEntries(): List<ICodeCompletionAction> = entries
+
+    private fun computeActions(pattern: String): List<ICodeCompletionAction> {
+        return editor.runRead {
+            val parameters = CodeCompletionParameters(editor, pattern)
+            actionsCache.update(parameters)
                 .filter {
                     val matchingText = it.getMatchingText()
                     matchingText.isNotEmpty() && matchingText.startsWith(parameters.pattern)
@@ -137,10 +143,24 @@ class CodeCompletionMenu(
         }
 
         fun insertText(text: String) {
+            val oldTextBeforeCaret = pattern.substring(0, caretPos)
             pattern = pattern.replaceRange(caretPos until caretPos, text)
+            val remainingText = pattern.substring(caretPos)
             caretPos += text.length
-            updateActions()
-            executeIfSingleAction()
+            val newTextBeforeCaret = pattern.substring(0, caretPos)
+
+            val exactMatches = entries.filter { it.getMatchingText() == oldTextBeforeCaret }
+            if (exactMatches.size == 1 && computeActions(newTextBeforeCaret).isEmpty()) {
+                editor.runWrite {
+                    editor.insertTextAfterUpdate(remainingText)
+                    exactMatches.single().executeAndUpdateSelection(editor)
+                    editor.closeCodeCompletionMenu()
+                    editor.update()
+                }
+            } else {
+                updateActions()
+                executeIfSingleAction()
+            }
         }
 
         fun moveCaret(delta: Int) {
@@ -219,6 +239,7 @@ private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Seq
 
 interface ICodeCompletionAction : IActionOrProvider {
     fun getMatchingText(): String
+    fun getResultingText(): String = getMatchingText()
     fun getDescription(): String
     fun execute(editor: EditorComponent): ICaretPositionPolicy?
     fun shadows(shadowed: ICodeCompletionAction) = false

@@ -73,7 +73,14 @@ val Editor_org_iets3_core_expr_collections = languageAspects(L_org_iets3_core_ex
             concept.typeConstraint.cell()
         }
         noSpace()
-        concept.elements.horizontal()
+        parentheses {
+            concept.elements.horizontal {
+                separator {
+                    noSpace()
+                    ",".constant()
+                }
+            }
+        }
     }
     editor(language.ListPickOp) {
         "pick".constant()

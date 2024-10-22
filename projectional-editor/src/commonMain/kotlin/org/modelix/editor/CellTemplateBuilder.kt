@@ -1,5 +1,17 @@
 package org.modelix.editor
 
+import org.modelix.editor.celltemplate.CellTemplate
+import org.modelix.editor.celltemplate.ChildCellTemplate
+import org.modelix.editor.celltemplate.CollectionCellTemplate
+import org.modelix.editor.celltemplate.ConstantCellTemplate
+import org.modelix.editor.celltemplate.FlagCellTemplate
+import org.modelix.editor.celltemplate.LabelCellTemplate
+import org.modelix.editor.celltemplate.NewLineCellTemplate
+import org.modelix.editor.celltemplate.NoSpaceCellTemplate
+import org.modelix.editor.celltemplate.NotationRootCellTemplate
+import org.modelix.editor.celltemplate.OptionalCellTemplate
+import org.modelix.editor.celltemplate.PropertyCellTemplate
+import org.modelix.editor.celltemplate.ReferenceCellTemplate
 import org.modelix.metamodel.IConceptOfTypedNode
 import org.modelix.metamodel.ITypedChildLink
 import org.modelix.metamodel.ITypedChildListLink
@@ -332,6 +344,14 @@ class PropertyCellTemplateBuilder<NodeT : Any, ConceptT : Any>(
 ) : CellTemplateBuilder<NodeT, ConceptT>(template, concept, nodeConverter) {
     fun validateValue(validator: (String) -> Boolean) {
         (template as PropertyCellTemplate).validator = validator
+    }
+
+    fun regex(regex: String) {
+        regex(Regex(regex))
+    }
+
+    fun regex(regex: Regex) {
+        (template as PropertyCellTemplate).regex = regex
     }
 
     fun readReplace(replacement: (String) -> String) {

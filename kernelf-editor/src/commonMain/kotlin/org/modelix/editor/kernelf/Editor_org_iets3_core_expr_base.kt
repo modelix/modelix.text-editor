@@ -82,7 +82,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
     binaryExpressionSymbols.implement(language.OptionOrExpression) { "?:" }
     binaryExpressionSymbols.implement(L_org_iets3_core_expr_lambda.FunCompose) { ":o:" }
 
-    editor(language.BinaryExpression) {
+    editor(language.BinaryExpression, applicableToSubConcepts = true) {
         val symbol = binaryExpressionSymbols(concept)
         concept.left.cell()
         symbol.constant()
@@ -345,7 +345,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         language.OrTag to "||",
         language.PlusTag to "+",
     )
-    editor(language.OperatorTag) {
+    editor(language.OperatorTag, applicableToSubConcepts = true) {
         val symbol = operatorTagSymbols[concept]
             ?: "Unknown operator tag ${concept.untyped().getLongName()}"
         symbol.constant()
@@ -395,7 +395,7 @@ val Editor_org_iets3_core_expr_base = languageAspects(L_org_iets3_core_expr_base
         }
     }
     editor(language.PrimitiveType) {
-        concept.alias().constant {
+        (concept.alias ?: concept.untyped().getShortName()).constant {
             iets3type()
         }
     }

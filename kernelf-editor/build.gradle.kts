@@ -67,6 +67,7 @@ kotlin {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
                 implementation(project(":kernelf-apigen"))
+                implementation(project(":parser"))
             }
         }
         val jvmMain by getting {
@@ -79,6 +80,7 @@ kotlin {
                 implementation(libs.modelix.model.api.gen.runtime)
                 implementation(kotlin("test"))
                 implementation(kotlin("test-junit"))
+                implementation(coreLibs.logback.classic)
             }
         }
         val jsMain by getting {

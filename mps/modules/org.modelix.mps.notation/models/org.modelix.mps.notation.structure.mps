@@ -92,6 +92,11 @@
     <property role="TrG5h" value="ConceptNotation" />
     <property role="34LRSv" value="notation" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
+    <node concept="1TJgyi" id="1zXwHaHuRnq" role="1TKVEl">
+      <property role="IQ2nx" value="1800739267383358938" />
+      <property role="TrG5h" value="applicableToSubconcepts" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
     <node concept="1TJgyj" id="7dm8yUsMfYJ" role="1TKVEi">
       <property role="IQ2ns" value="8310867745953087407" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
