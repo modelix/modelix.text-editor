@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    alias(coreLibs.plugins.kotlin.serialization)
+    kotlin("plugin.serialization")
     `maven-publish`
 }
 
