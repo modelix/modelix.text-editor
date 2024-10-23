@@ -216,3 +216,5 @@ tasks.named("packJsPackage") {
             .copyTo(packagesDir.resolve("modelix-kernelf-editor.tgz"), overwrite = true)
     }
 }
+
+tasks.named("packJsPackage") { dependsOn(":setupNodeEverywhere") }

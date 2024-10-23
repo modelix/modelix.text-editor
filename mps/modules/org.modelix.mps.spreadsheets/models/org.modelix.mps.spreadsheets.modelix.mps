@@ -6,7 +6,6 @@
     <use id="aee9cad2-acd4-4608-aef2-0004f6a1cdbd" name="jetbrains.mps.lang.actions" version="4" />
     <use id="df345b11-b8c7-4213-ac66-48d2a9b75d88" name="jetbrains.mps.baseLanguageInternal" version="0" />
     <use id="c7b55726-1795-47bd-aa21-714ac1e30f21" name="org.modelix.mps.notation" version="0" />
-    <use id="8f2def56-7502-4f14-994f-472d404e528c" name="org.modelix.mps.baseLanguage2kotlin" version="0" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
@@ -15,7 +14,6 @@
     <import index="v18h" ref="498d89d2-c2e9-11e2-ad49-6cf049e62fe5/java:kotlin(MPS.IDEA/)" />
     <import index="mhfm" ref="3f233e7f-b8a6-46d2-a57f-795d56775243/java:org.jetbrains.annotations(Annotations/)" />
     <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" />
-    <import index="rkxj" ref="r:b1598fca-3527-4718-b3ee-193781dbf052(jetbrains.mps.java.core.newparser)" />
     <import index="kpbf" ref="7124e466-fc92-4803-a656-d7a6b7eb3910/java:jetbrains.mps.text.impl(MPS.TextGen/)" />
     <import index="f2e5" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:kotlinx.serialization.json(org.modelix.mps.editor.common.stubs/)" />
     <import index="1ut2" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:org.modelix.model.mpsadapters.tomps(org.modelix.mps.editor.common.stubs/)" />
@@ -299,11 +297,6 @@
       <concept id="1146644602865" name="jetbrains.mps.baseLanguage.structure.PublicVisibility" flags="nn" index="3Tm1VV" />
       <concept id="1170345865475" name="jetbrains.mps.baseLanguage.structure.AnonymousClass" flags="ig" index="1Y3b0j">
         <reference id="1170346070688" name="classifier" index="1Y3XeK" />
-      </concept>
-    </language>
-    <language id="8f2def56-7502-4f14-994f-472d404e528c" name="org.modelix.mps.baseLanguage2kotlin">
-      <concept id="2346135138155145856" name="org.modelix.mps.baseLanguage2kotlin.structure.BaseLanguageExpressionWrapper" flags="ng" index="1KgSZU">
-        <child id="2346135138155145859" name="expression" index="1KgSZT" />
       </concept>
     </language>
     <language id="fd392034-7849-419d-9071-12563d152375" name="jetbrains.mps.baseLanguage.closures">
@@ -3559,12 +3552,10 @@
       <ref role="3JBHV5" to="ur0y:2ti6llKUmc0" resolve="ColumnReference" />
       <node concept="1yiJt1" id="72hS3ltFkcB" role="3JBHQ1">
         <ref role="1yiJtc" to="ur0y:2ti6llKUmc1" resolve="column" />
-        <node concept="1KgSZU" id="1edLqv8Jwq_" role="1KhJq6">
-          <node concept="2OqwBi" id="1edLqv8JwxC" role="1KgSZT">
-            <node concept="1KnsVF" id="1edLqv8JwqD" role="2Oq$k0" />
-            <node concept="2qgKlT" id="1edLqv8JylR" role="2OqNvi">
-              <ref role="37wK5l" to="xmo0:1gyl2moVSFk" resolve="getColumnLabel" />
-            </node>
+        <node concept="2OqwBi" id="1edLqv8JwxC" role="1KhJq6">
+          <node concept="1KnsVF" id="1edLqv8JwqD" role="2Oq$k0" />
+          <node concept="2qgKlT" id="1edLqv8JylR" role="2OqNvi">
+            <ref role="37wK5l" to="xmo0:1gyl2moVSFk" resolve="getColumnLabel" />
           </node>
         </node>
       </node>

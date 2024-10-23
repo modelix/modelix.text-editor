@@ -17,7 +17,11 @@
         <child id="1197027833540" name="operation" index="2OqNvi" />
       </concept>
       <concept id="1070534370425" name="jetbrains.mps.baseLanguage.structure.IntegerType" flags="in" index="10Oyi0" />
+      <concept id="1070534513062" name="jetbrains.mps.baseLanguage.structure.DoubleType" flags="in" index="10P55v" />
       <concept id="1068390468198" name="jetbrains.mps.baseLanguage.structure.ClassConcept" flags="ig" index="312cEu" />
+      <concept id="1068431474542" name="jetbrains.mps.baseLanguage.structure.VariableDeclaration" flags="ng" index="33uBYm">
+        <child id="1068431790190" name="initializer" index="33vP2m" />
+      </concept>
       <concept id="1068498886296" name="jetbrains.mps.baseLanguage.structure.VariableReference" flags="nn" index="37vLTw">
         <reference id="1068581517664" name="variableDeclaration" index="3cqZAo" />
       </concept>
@@ -34,10 +38,17 @@
       <concept id="1068580123136" name="jetbrains.mps.baseLanguage.structure.StatementList" flags="sn" stub="5293379017992965193" index="3clFbS">
         <child id="1068581517665" name="statement" index="3cqZAp" />
       </concept>
+      <concept id="1068580320020" name="jetbrains.mps.baseLanguage.structure.IntegerConstant" flags="nn" index="3cmrfG">
+        <property id="1068580320021" name="value" index="3cmrfH" />
+      </concept>
       <concept id="1068581242875" name="jetbrains.mps.baseLanguage.structure.PlusExpression" flags="nn" index="3cpWs3" />
       <concept id="1068581242878" name="jetbrains.mps.baseLanguage.structure.ReturnStatement" flags="nn" index="3cpWs6">
         <child id="1068581517676" name="expression" index="3cqZAk" />
       </concept>
+      <concept id="1068581242864" name="jetbrains.mps.baseLanguage.structure.LocalVariableDeclarationStatement" flags="nn" index="3cpWs8">
+        <child id="1068581242865" name="localVariableDeclaration" index="3cpWs9" />
+      </concept>
+      <concept id="1068581242863" name="jetbrains.mps.baseLanguage.structure.LocalVariableDeclaration" flags="nr" index="3cpWsn" />
       <concept id="1068581517677" name="jetbrains.mps.baseLanguage.structure.VoidType" flags="in" index="3cqZAl" />
       <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
         <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
@@ -612,7 +623,18 @@
       <node concept="3cqZAl" id="67j$1x53G4Q" role="3clF45" />
       <node concept="3Tm1VV" id="67j$1x53G4R" role="1B3o_S" />
       <node concept="3clFbS" id="67j$1x53G4S" role="3clF47" />
+      <node concept="37vLTG" id="2ns544GqWEb" role="3clF46">
+        <property role="TrG5h" value="abc" />
+        <node concept="10Oyi0" id="2ns544GqWEc" role="1tU5fm" />
+      </node>
+      <node concept="37vLTG" id="2ns544GqWEd" role="3clF46">
+        <property role="TrG5h" value="def" />
+        <node concept="10P55v" id="2ns544GqWEe" role="1tU5fm" />
+      </node>
     </node>
+    <node concept="2tJIrI" id="2ns544GqWE4" role="jymVt" />
+    <node concept="2tJIrI" id="2ns544GqWDW" role="jymVt" />
+    <node concept="2tJIrI" id="2ns544GqWDX" role="jymVt" />
     <node concept="3clFb_" id="67j$1x53G6f" role="jymVt">
       <property role="TrG5h" value="minuwbbxtjjlsss" />
       <node concept="37vLTG" id="RYBraoAJpy" role="3clF46">
@@ -621,7 +643,22 @@
       </node>
       <node concept="3cqZAl" id="67j$1x53G6h" role="3clF45" />
       <node concept="3Tm1VV" id="67j$1x53G6i" role="1B3o_S" />
-      <node concept="3clFbS" id="67j$1x53G6j" role="3clF47" />
+      <node concept="3clFbS" id="67j$1x53G6j" role="3clF47">
+        <node concept="3cpWs8" id="7HT$1xKtVkN" role="3cqZAp">
+          <node concept="3cpWsn" id="7HT$1xKtVkO" role="3cpWs9">
+            <property role="TrG5h" value="abc" />
+            <node concept="10Oyi0" id="7HT$1xKtVkP" role="1tU5fm" />
+            <node concept="3cpWs3" id="7HT$1xKtVl7" role="33vP2m">
+              <node concept="3cmrfG" id="7HT$1xKtVkY" role="3uHU7B">
+                <property role="3cmrfH" value="10" />
+              </node>
+              <node concept="3cmrfG" id="7HT$1xKtVlg" role="3uHU7w">
+                <property role="3cmrfH" value="10" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
     </node>
     <node concept="2tJIrI" id="5V0cDfz3aJp" role="jymVt" />
     <node concept="3clFb_" id="5V0cDfz3aL0" role="jymVt">

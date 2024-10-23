@@ -8,7 +8,6 @@
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" />
     <import index="hcm8" ref="r:72a7bf00-0175-42ca-b99b-fe8519b6a16f(jetbrains.mps.kotlin.structure)" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" />
-    <import index="ya4x" ref="r:2bbee5fa-3e86-4d20-a22d-b5d5f139bede(org.modelix.mps.baseLanguage2kotlin.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
   </imports>
   <registry>
@@ -108,7 +107,7 @@
       <property role="IQ2ns" value="8310867745953087464" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="condition" />
-      <ref role="20lvS9" to="ya4x:22f9nDgNaDZ" resolve="IBaseLanguageOrKotlinExpression" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
     </node>
     <node concept="1TJgyj" id="7dm8yUsMfNE" role="1TKVEi">
       <property role="IQ2ns" value="8310867745953086698" />
@@ -192,6 +191,11 @@
       <property role="20kJfa" value="property" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" to="tpce:f_TJgxF" resolve="PropertyDeclaration" />
+    </node>
+    <node concept="1TJgyi" id="f1Ei69rzUi" role="1TKVEl">
+      <property role="IQ2nx" value="270683414123658898" />
+      <property role="TrG5h" value="regex" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
   </node>
   <node concept="1TIwiD" id="CUW2QYMiki">
@@ -322,7 +326,7 @@
       <property role="IQ2ns" value="2346135138154959868" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="renderTarget" />
-      <ref role="20lvS9" to="ya4x:22f9nDgNaDZ" resolve="IBaseLanguageOrKotlinExpression" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
     </node>
     <node concept="1TJgyj" id="ziPuhEA2aC" role="1TKVEi">
       <property role="IQ2ns" value="635805674430276264" />

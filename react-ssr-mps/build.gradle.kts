@@ -87,15 +87,15 @@ tasks {
                 outputFolder(defaultDestinationDir.get().resolve(project.name).resolve("languages"))
                 runtimeJars.filterNot { jarsInBasePlugin.contains(it.name) }.forEach {
                     javaJar(it.name)
-                    kotlinJar(it.name)
+//                    kotlinJar(it.name)
                 }
                 moduleDependency(ModuleIdAndName(ModuleId("208eaf68-fd3a-497a-a4b6-4923ff457c3b"), "org.modelix.mps.editor.common.stubs"))
                 moduleDependency(KnownModuleIds.JDK)
                 moduleDependency(KnownModuleIds.MPS_OpenAPI)
                 moduleDependency(KnownModuleIds.MPS_IDEA)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib_jvm)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stubs)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib_jvm)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stubs)
             }
         }
     }

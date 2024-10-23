@@ -47,42 +47,30 @@
         </node>
       </node>
     </node>
-    <node concept="2VgMA2" id="22f9nDgQKqj" role="2VgMA7">
+    <node concept="2VgMA2" id="2QtC6yZ8Ed8" role="2VgMA7">
       <property role="1s431M" value="true" />
-      <node concept="2Qf6Nf" id="22f9nDgQKqm" role="2Qf7GQ">
-        <node concept="2V$Bhx" id="22f9nDgQKqT" role="2Qf6Ng">
-          <property role="2V$B1T" value="8f2def56-7502-4f14-994f-472d404e528c" />
-          <property role="2V$B1Q" value="org.modelix.mps.baseLanguage2kotlin" />
+      <node concept="2Qf6Nf" id="2QtC6yZ8EeY" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="2QtC6z0YK9o" role="2Qf6Ng">
+          <property role="2V$B1T" value="515552c7-fcc0-4ab4-9789-2f3c49344e85" />
+          <property role="2V$B1Q" value="jetbrains.mps.baseLanguage.varVariable" />
         </node>
       </node>
     </node>
-    <node concept="2VgMA2" id="1edLqv8OPSq" role="2VgMA7">
+    <node concept="2VgMA2" id="2QtC6z0YK9l" role="2VgMA7">
       <property role="1s431M" value="true" />
-      <node concept="2Qf6Nf" id="1edLqv8OPSE" role="2Qf7GQ">
-        <node concept="2V$Bhx" id="1edLqv8OPSI" role="2Qf6Ng">
-          <property role="2V$B1T" value="cc24a92d-c78e-4016-a5d4-902df7135727" />
-          <property role="2V$B1Q" value="org.modelix.mps.baseLanguageInsideKotlin" />
+      <node concept="2Qf6Nf" id="2QtC6z0YK9m" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="2QtC6z0YK9n" role="2Qf6Ng">
+          <property role="2V$B1T" value="fd392034-7849-419d-9071-12563d152375" />
+          <property role="2V$B1Q" value="jetbrains.mps.baseLanguage.closures" />
         </node>
       </node>
     </node>
-    <node concept="2VgMA2" id="22f9nDgQNo1" role="2VgMA7">
+    <node concept="2VgMA2" id="2QtC6z08pBM" role="2VgMA7">
       <property role="1s431M" value="true" />
-      <node concept="2Qf6Nf" id="22f9nDgQNo2" role="2Qf7GQ">
-        <node concept="2V$Bhx" id="22f9nDgQNod" role="2Qf6Ng">
-          <property role="2V$B1T" value="6b3888c1-9802-44d8-8baf-f8e6c33ed689" />
-          <property role="2V$B1Q" value="jetbrains.mps.kotlin" />
-        </node>
-      </node>
-      <node concept="2Qf6Nf" id="22f9nDgQNof" role="2Qf7GQ">
-        <node concept="2V$Bhx" id="22f9nDgQNol" role="2Qf6Ng">
-          <property role="2V$B1T" value="eb56ebf4-df56-438e-af06-fc1cd08b495a" />
-          <property role="2V$B1Q" value="jetbrains.mps.kotlin.smodel" />
-        </node>
-      </node>
-      <node concept="2Qf6Nf" id="22f9nDgQVgk" role="2Qf7GQ">
-        <node concept="2V$Bhx" id="22f9nDgQVgs" role="2Qf6Ng">
-          <property role="2V$B1T" value="b17a9ec8-44a5-40a1-9216-058d277424eb" />
-          <property role="2V$B1Q" value="jetbrains.mps.kotlin.internal" />
+      <node concept="2Qf6Nf" id="2QtC6z08pBN" role="2Qf7GQ">
+        <node concept="2V$Bhx" id="2QtC6z08pBP" role="2Qf6Ng">
+          <property role="2V$B1T" value="83888646-71ce-4f1c-9c53-c54016f6ad4f" />
+          <property role="2V$B1Q" value="jetbrains.mps.baseLanguage.collections" />
         </node>
       </node>
     </node>

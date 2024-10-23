@@ -91,18 +91,19 @@ tasks {
                 outputFolder(defaultDestinationDir.get().resolve(project.name).resolve("languages"))
                 runtimeJars.forEach {
                     javaJar(it.name)
-                    kotlinJar(it.name)
+//                    kotlinJar(it.name)
                 }
-                kotlinJarFromMPS("util-8.jar")
+//                kotlinJarFromMPS("util-8.jar")
                 javaJarFromMPS("util-8.jar")
-                kotlinJarFromMPS("annotations.jar")
+//                kotlinJarFromMPS("annotations.jar")
                 moduleDependency(KnownModuleIds.Annotations)
                 moduleDependency(KnownModuleIds.JDK)
                 moduleDependency(KnownModuleIds.MPS_OpenAPI)
+                moduleDependency(KnownModuleIds.MPS_Core)
                 moduleDependency(KnownModuleIds.MPS_IDEA)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib_jvm)
-                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stubs)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stdlib_jvm)
+//                moduleDependency(KnownModuleIds.jetbrains_mps_kotlin_stubs)
             }
         }
     }

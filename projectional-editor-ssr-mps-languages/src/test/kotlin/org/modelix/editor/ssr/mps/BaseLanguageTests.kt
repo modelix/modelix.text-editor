@@ -284,12 +284,12 @@ class BaseLanguageTests : TestBase("SimpleProject") {
               }
             }
         """)
-        typeText("string")
+        typeText("int")
         pressKey(KnownKeys.Tab)
         typeText("p2")
         assertFinalEditorText("""
             public class Class1 {
-              public void method1(int p1, string p2) {
+              public void method1(int p1, int p2) {
                 <no statement>
               }
             }

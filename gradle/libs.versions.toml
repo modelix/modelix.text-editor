@@ -4,10 +4,14 @@
 modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "modelixCore" }
 npm-publish = { id = "dev.petuska.npm.publish", version = "3.4.2" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [versions]
-modelixCore = "8.16.1"
+modelixCore = "9.1.1"
 modelixBuildtools="1.7.3"
+kotlin = "2.1.0-Beta2"
 
 [libraries]
 modelix-model-api = { group = "org.modelix", name = "model-api", version.ref = "modelixCore" }

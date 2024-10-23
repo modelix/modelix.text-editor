@@ -62,7 +62,7 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
         }
     }
 
-    protected fun withUntypedNode(body: (INode) -> Unit) {
+    fun withUntypedNode(body: (INode) -> Unit) {
         template.withNode += body
     }
 

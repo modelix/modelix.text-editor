@@ -18,9 +18,10 @@ plugins {
     `maven-publish`
     id("com.palantir.git-version") version "3.1.0"
     id("com.dorongold.task-tree") version "4.0.0"
-    alias(coreLibs.plugins.kotlin.multiplatform) apply false
-    alias(coreLibs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
     id("org.jetbrains.intellij") version "1.17.4" apply false
+    alias(libs.plugins.npm.publish) apply false
 }
 
 group = "org.modelix"
@@ -136,3 +137,14 @@ rootProject.plugins.withType(org.jetbrains.kotlin.gradle.targets.js.yarn.YarnPlu
 }
 
 copyMps()
+
+// make all 'packJsPackage' tasks depend on all 'kotlinNodeJsSetup' tasks, because gradle complained about this being missing
+tasks.register("setupNodeEverywhere") {
+    dependsOn(":kernelf-apigen:kotlinNodeJsSetup")
+    dependsOn(":kernelf-editor:kotlinNodeJsSetup")
+    dependsOn(":parser:kotlinNodeJsSetup")
+    dependsOn(":projectional-editor:kotlinNodeJsSetup")
+    dependsOn(":projectional-editor-ssr-client:kotlinNodeJsSetup")
+    dependsOn(":projectional-editor-ssr-client-lib:kotlinNodeJsSetup")
+    dependsOn(":projectional-editor-ssr-common:kotlinNodeJsSetup")
+}

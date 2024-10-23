@@ -21,14 +21,10 @@ mpsBuild {
     publication("editor-languages") {
         module("org.modelix.mps.webaspect.devkit")
         module("org.modelix.mps.webaspect.genplan")
-        module("org.modelix.mps.baseLanguage2kotlin")
         module("org.modelix.mps.notation")
     }
     publication("baseLanguage-notation") {
         module("org.modelix.mps.notation.impl.baseLanguage")
-    }
-    publication("baseLanguageInsideKotlin") {
-        module("org.modelix.mps.baseLanguageInsideKotlin")
     }
     publication("react") {
         module("org.modelix.mps.react")

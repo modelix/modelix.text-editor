@@ -1,9 +1,9 @@
 import dev.petuska.npm.publish.task.NpmPackTask
 
 plugins {
-    alias(coreLibs.plugins.kotlin.multiplatform)
+    kotlin("multiplatform")
     `maven-publish`
-    alias(coreLibs.plugins.npm.publish)
+    alias(libs.plugins.npm.publish)
 }
 
 kotlin {
@@ -70,3 +70,5 @@ tasks.register("packageWithoutVersion", Copy::class.java) {
     from(tasks.named("packJsPackage", NpmPackTask::class.java).map { it.outputFile })
     into(project.layout.buildDirectory.dir("packages")).rename { "${project.name}.tgz" }
 }
+
+tasks.named("packJsPackage") { dependsOn(":setupNodeEverywhere") }
