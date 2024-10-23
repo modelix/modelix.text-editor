@@ -121,7 +121,7 @@ tasks {
         intoChild(pluginName.map { "$it/META-INF" })
             .from(patchPluginXml.flatMap { it.outputFiles })
 
-        listOf("editor-languages", "baseLanguage-notation", "baseLanguageInsideKotlin", "react").forEach { publicationName ->
+        listOf("editor-languages", "baseLanguage-notation", "react").forEach { publicationName ->
             intoChild(pluginName.map { "$it/languages" })
                 .from(zipTree({ project(":mps").layout.buildDirectory.file("mpsbuild/publications/$publicationName.zip") }))
                 .eachFile {

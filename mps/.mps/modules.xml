@@ -2,8 +2,6 @@
 <project version="4">
   <component name="MPSProject">
     <projectModules>
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguage2kotlin/org.modelix.mps.baseLanguage2kotlin.mpl" folder="text" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.baseLanguageInsideKotlin/org.modelix.mps.baseLanguageInsideKotlin.mpl" folder="text" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation.impl.baseLanguage/org.modelix.mps.notation.impl.baseLanguage.msd" folder="text" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="text" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.impl.baseLanguage/org.modelix.mps.react.impl.baseLanguage.msd" folder="react" />

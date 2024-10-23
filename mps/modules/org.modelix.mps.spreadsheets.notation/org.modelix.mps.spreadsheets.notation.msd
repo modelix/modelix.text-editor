@@ -32,8 +32,6 @@
     <language slang="l:7866978e-a0f0-4cc7-81bc-4d213d9375e1:jetbrains.mps.lang.smodel" version="19" />
     <language slang="l:c7fb639f-be78-4307-89b0-b5959c3fa8c8:jetbrains.mps.lang.text" version="0" />
     <language slang="l:9ded098b-ad6a-4657-bfd9-48636cfe8bc3:jetbrains.mps.lang.traceable" version="0" />
-    <language slang="l:8f2def56-7502-4f14-994f-472d404e528c:org.modelix.mps.baseLanguage2kotlin" version="0" />
-    <language slang="l:cc24a92d-c78e-4016-a5d4-902df7135727:org.modelix.mps.baseLanguageInsideKotlin" version="0" />
     <language slang="l:c7b55726-1795-47bd-aa21-714ac1e30f21:org.modelix.mps.notation" version="0" />
   </languageVersions>
   <dependencyVersions>
