@@ -39,9 +39,25 @@ class CodeCompletionActionWithCaretPolicy(action: ICodeCompletionAction, val pol
     }
 }
 
-class CodeCompletionActionWithMatchingText(action: ICodeCompletionAction, val overridingMatchingText: String) : CodeCompletionActionWrapper(action) {
+class CodeCompletionActionWithMatchingText(action: ICodeCompletionAction, val overridingMatchingText: (String) -> String) : CodeCompletionActionWrapper(action) {
     override fun getMatchingText(): String {
-        return overridingMatchingText
+        return overridingMatchingText(super.getMatchingText())
+    }
+
+    override fun getTokens(): ICompletionTokenOrList {
+        return ConstantCompletionToken(getMatchingText())
+    }
+}
+
+class CodeCompletionActionWithDescription(action: ICodeCompletionAction, val overridingDescription: String) : CodeCompletionActionWrapper(action) {
+    override fun getDescription(): String {
+        return overridingDescription
+    }
+}
+
+class CodeCompletionActionWithTokens(action: ICodeCompletionAction, val overrideTokens: (ICompletionTokenOrList) -> ICompletionTokenOrList) : CodeCompletionActionWrapper(action) {
+    override fun getTokens(): ICompletionTokenOrList {
+        return overrideTokens(super.getTokens())
     }
 }
 
@@ -53,12 +69,30 @@ fun ICodeCompletionActionProvider.after(body: () -> Unit): CodeCompletionActionP
 
 fun ICodeCompletionActionProvider.withMatchingText(text: (CodeCompletionParameters) -> String): CodeCompletionActionProviderWrapper {
     return CodeCompletionActionProviderWrapper(this) { parameters, it ->
-        CodeCompletionActionWithMatchingText(it, text(parameters))
+        CodeCompletionActionWithMatchingText(it, { text(parameters) })
+    }
+}
+
+fun ICodeCompletionActionProvider.modifyMatchingText(text: (CodeCompletionParameters, String) -> String): CodeCompletionActionProviderWrapper {
+    return CodeCompletionActionProviderWrapper(this) { parameters, it ->
+        CodeCompletionActionWithMatchingText(it, { text(parameters, it) })
+    }
+}
+
+fun ICodeCompletionActionProvider.withDescription(text: (CodeCompletionParameters) -> String): CodeCompletionActionProviderWrapper {
+    return CodeCompletionActionProviderWrapper(this) { parameters, it ->
+        CodeCompletionActionWithDescription(it, text(parameters))
     }
 }
 
 fun ICodeCompletionAction.withMatchingText(text: String): CodeCompletionActionWithMatchingText {
-    return CodeCompletionActionWithMatchingText(this, text)
+    return CodeCompletionActionWithMatchingText(this, { text })
+}
+
+fun ICodeCompletionActionProvider.withTokens(replacement: (ICompletionTokenOrList) -> ICompletionTokenOrList): ICodeCompletionActionProvider {
+    return CodeCompletionActionProviderWrapper(this) { parameters, it ->
+        CodeCompletionActionWithTokens(it, replacement)
+    }
 }
 
 fun ICodeCompletionAction.withCaretPolicy(policy: (ICaretPositionPolicy?) -> ICaretPositionPolicy?): CodeCompletionActionWithCaretPolicy {

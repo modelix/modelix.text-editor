@@ -6,6 +6,7 @@ import org.modelix.editor.CellData
 import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.IActionOrProvider
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TemplateCellReference
@@ -20,6 +21,10 @@ class OptionalCellTemplate(concept: IConcept) : CellTemplate(concept), IOptional
 
     override fun toParserSymbol(): OptionalSymbol {
         return OptionalSymbol(getChildSymbols().map { it.toParserSymbol() }.toList())
+    }
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return null
     }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {

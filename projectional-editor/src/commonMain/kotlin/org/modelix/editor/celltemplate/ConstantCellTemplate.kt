@@ -4,9 +4,11 @@ import org.modelix.editor.CaretPositionPolicy
 import org.modelix.editor.CellCreationContext
 import org.modelix.editor.ChildNodeCellReference
 import org.modelix.editor.CodeCompletionParameters
+import org.modelix.editor.ConstantCompletionToken
 import org.modelix.editor.EditorComponent
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TemplateCellReference
@@ -26,6 +28,10 @@ import org.modelix.parser.Token
 class ConstantCellTemplate(concept: IConcept, val text: String) : CellTemplate(concept), IGrammarSymbol {
 
     override fun toParserSymbol(): ISymbol = ConstantSymbol(text)
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return ConstantCompletionToken(text)
+    }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {
         val symbol = toParserSymbol()

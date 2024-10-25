@@ -30,7 +30,7 @@ import java.nio.file.StandardCopyOption
 import java.util.zip.ZipInputStream
 
 val Project.mpsMajorVersion: String get() {
-    if (project != rootProject) return rootProject.mpsVersion
+    if (project != rootProject) return rootProject.mpsMajorVersion
     return project.findProperty("mps.version.major")?.toString()?.takeIf { it.isNotEmpty() }
         ?: project.findProperty("mps.version")?.toString()?.takeIf { it.isNotEmpty() }?.replace(Regex("""(20\d\d\.\d+).*"""), "$1")
         ?: "2023.2"

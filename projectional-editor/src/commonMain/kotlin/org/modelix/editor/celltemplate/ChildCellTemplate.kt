@@ -5,6 +5,7 @@ import org.modelix.editor.CellActionProperties
 import org.modelix.editor.CellCreationContext
 import org.modelix.editor.CellData
 import org.modelix.editor.CellReference
+import org.modelix.editor.ChildCompletionToken
 import org.modelix.editor.ChildDataReference
 import org.modelix.editor.ChildNodeCellReference
 import org.modelix.editor.CodeCompletionParameters
@@ -16,6 +17,7 @@ import org.modelix.editor.ICaretPositionPolicy
 import org.modelix.editor.ICellAction
 import org.modelix.editor.ICellTemplateReference
 import org.modelix.editor.ICodeCompletionAction
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.NonExistingChild
@@ -67,6 +69,10 @@ class ChildCellTemplate(
         } else {
             SubConceptsSymbol(link.targetConcept)
         }
+    }
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return ChildCompletionToken(link)
     }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {
