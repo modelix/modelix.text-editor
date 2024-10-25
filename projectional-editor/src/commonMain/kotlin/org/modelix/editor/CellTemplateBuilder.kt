@@ -249,7 +249,13 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
             template = ReferenceCellTemplate(
                 concept = template.concept,
                 link = this,
-                presentation = { presentation(targetNodeConverter.fromUntyped(this)) },
+                presentation = {
+                    runCatching {
+                        presentation(targetNodeConverter.fromUntyped(this))
+                    }
+                        .onFailure { LOG.error(it) { "Failed computing presentation for reference target: $this (${this.concept})" } }
+                        .getOrNull()
+                },
             ),
             link = this,
             concept = concept,
