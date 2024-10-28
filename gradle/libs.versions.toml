@@ -26,4 +26,4 @@ kotlin-html = "org.jetbrains.kotlinx:kotlinx-html:0.11.0"
 modelix-build-tools-lib = { group = "org.modelix.mps", name = "build-tools-lib", version.ref = "modelixBuildtools" }
 kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging", version = "7.0.0" }
 slf4j-api = { group = "org.slf4j", name = "slf4j-api", version = "2.0.16" }
-kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.7" }
+kotlin-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version = "0.3.8" }
