@@ -105,7 +105,7 @@ tasks {
 
     val pluginDir = mpsPluginsDir
     if (pluginDir != null) {
-        create<Sync>("installMpsPlugin") {
+        register<Sync>("installMpsPlugin") {
             dependsOn(prepareSandbox)
             from(project.layout.buildDirectory.dir("idea-sandbox/plugins/${project.name}"))
             into(pluginDir.resolve(project.name))
