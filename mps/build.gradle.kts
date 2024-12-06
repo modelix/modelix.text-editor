@@ -7,12 +7,15 @@ plugins {
     alias(libs.plugins.modelix.mps.buildtools)
 }
 
+group = "org.modelix.mps.modules"
+
 mpsBuild {
     dependsOn(":editor-common-mps:buildPlugin")
     dependsOn(":projectional-editor-ssr-mps:buildPlugin")
     dependsOn(":react-ssr-mps:buildPlugin")
     mpsHome = mpsHomeDir.get().asFile.absolutePath
     javaHome = Jvm.current().javaHome
+    disableParentPublication()
 
     search("../editor-common-mps/build/idea-sandbox/plugins/editor-common-mps")
     search("../projectional-editor-ssr-mps/build/idea-sandbox/plugins/projectional-editor-ssr-mps")
