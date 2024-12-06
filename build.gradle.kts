@@ -82,6 +82,19 @@ subprojects {
                     }
                 }
             }
+
+            val gprUser = project.findProperty("gpr.user") as? String ?: System.getenv("GITHUB_ACTOR")
+            val gprToken = project.findProperty("gpr.key") as? String ?: System.getenv("GITHUB_TOKEN")
+            if (gprUser.isNotBlank() && gprToken.isNotBlank()) {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/modelix/modelix.text-editor")
+                    credentials {
+                        username = gprUser
+                        password = gprToken
+                    }
+                }
+            }
         }
     }
 }
