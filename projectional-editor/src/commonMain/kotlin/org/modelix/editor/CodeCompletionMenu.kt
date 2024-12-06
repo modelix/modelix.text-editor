@@ -32,11 +32,11 @@ class CodeCompletionMenu(
             val parameters = CodeCompletionParameters(editor, pattern)
             actionsCache.update(parameters)
                 .filter {
-                    val matchingText = it.getMatchingText()
+                    val matchingText = it.getCompletionPattern()
                     matchingText.isNotEmpty() && matchingText.startsWith(parameters.pattern)
                 }
                 .applyShadowing()
-                .sortedBy { it.getMatchingText().lowercase() }
+                .sortedBy { it.getCompletionPattern().lowercase() }
         }
     }
 
@@ -93,7 +93,7 @@ class CodeCompletionMenu(
                     entries.forEachIndexed { index, action ->
                         tr("ccSelectedEntry".takeIf { index == selectedIndex }) {
                             td("matchingText") {
-                                +action.getMatchingText()
+                                +action.getCompletionPattern()
                             }
                             td("description") {
                                 +action.getDescription()
@@ -239,12 +239,14 @@ private fun IActionOrProvider.flatten(parameters: CodeCompletionParameters): Seq
 
 interface ICodeCompletionAction : IActionOrProvider {
     fun getMatchingText(): String
-    fun getResultingText(): String = getMatchingText()
+    fun getTokens(): ICompletionTokenOrList = ConstantCompletionToken(getMatchingText())
     fun getDescription(): String
     fun execute(editor: EditorComponent): ICaretPositionPolicy?
     fun shadows(shadowed: ICodeCompletionAction) = false
     fun shadowedBy(shadowing: ICodeCompletionAction) = false
 }
+
+fun ICodeCompletionAction.getCompletionPattern(): String = getTokens().toString()
 
 fun ICodeCompletionAction.executeAndUpdateSelection(editor: EditorComponent) {
     val policy = execute(editor)
@@ -281,7 +283,7 @@ enum class CompletionPosition {
 }
 
 fun List<ICodeCompletionAction>.applyShadowing(): List<ICodeCompletionAction> {
-    return groupBy { it.getMatchingText() }.flatMap { applyShadowingToGroup(it.value) }
+    return groupBy { it.getCompletionPattern() }.flatMap { applyShadowingToGroup(it.value) }
 }
 
 private fun applyShadowingToGroup(actions: List<ICodeCompletionAction>): List<ICodeCompletionAction> {

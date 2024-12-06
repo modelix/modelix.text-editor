@@ -15,6 +15,7 @@ import org.modelix.editor.commonAncestor
 import org.modelix.editor.descendants
 import org.modelix.editor.firstLeaf
 import org.modelix.editor.flattenApplicableActions
+import org.modelix.editor.getCompletionPattern
 import org.modelix.editor.getSubstituteActions
 import org.modelix.editor.getVisibleText
 import org.modelix.editor.isVisible
@@ -79,7 +80,7 @@ class CodeCompletionTest {
     fun printActions() {
         val actions = getSubstituteActions(getNumberLiteralCell())
         val parameters = CodeCompletionParameters(editor, "")
-        actions.forEach { println(it.getMatchingText() + " | " + it.getDescription()) }
+        actions.forEach { println(it.getCompletionPattern() + " | " + it.getDescription()) }
     }
 
     @Test
@@ -108,8 +109,13 @@ class CodeCompletionTest {
     fun noDuplicates() {
         val parameters = CodeCompletionParameters(editor, "")
         val actions = getSubstituteActions(getNumberLiteralCell())
-        val knownDuplicates = setOf("none", "[", "it", "|", "ParamRef", "ConvertExpression", "StripUnitExpression", "ValExpression")
-        val actualDuplicates = actions.groupBy { it.getMatchingText() }.filter { it.value.size > 1 }.map { it.key }
+        val knownDuplicates = setOf(
+            "it",
+            "ParamRef { <shortDescription> <virtualPackage> <param> <smodelAttribute> }",
+            "StripUnitExpression { <shortDescription> <virtualPackage> <expr> <smodelAttribute> }",
+            "ValExpression { <shortDescription> <virtualPackage> <smodelAttribute> }"
+        )
+        val actualDuplicates = actions.groupBy { it.getCompletionPattern() }.filter { it.value.size > 1 }.map { it.key }
         val unexpectedDuplicates = actualDuplicates - knownDuplicates
         val missingDuplicates = knownDuplicates - actualDuplicates
         assertTrue(unexpectedDuplicates.isEmpty(), "Duplicate entries found: " + unexpectedDuplicates)
@@ -122,7 +128,7 @@ class CodeCompletionTest {
         val parameters = CodeCompletionParameters(editor, "")
         return branch.computeRead {
             cell.getSubstituteActions().flatMap { it.flattenApplicableActions(parameters) }
-                .sortedBy { it.getMatchingText() }.toList()
+                .sortedBy { it.getCompletionPattern() }.toList()
         }
     }
 }

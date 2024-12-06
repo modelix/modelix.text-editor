@@ -11,10 +11,12 @@ import org.modelix.editor.EditorComponent
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.ICodeCompletionActionProvider
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.ITextChangeAction
 import org.modelix.editor.PropertyCellReference
+import org.modelix.editor.PropertyCompletionToken
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
 import org.modelix.editor.replacement
@@ -35,6 +37,10 @@ open class PropertyCellTemplate(concept: IConcept, val property: IProperty) :
 
     override fun toParserSymbol(): ISymbol {
         return PropertySymbol(property, regex ?: RegexSymbol.defaultPropertyPattern)
+    }
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return PropertyCompletionToken(property)
     }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {

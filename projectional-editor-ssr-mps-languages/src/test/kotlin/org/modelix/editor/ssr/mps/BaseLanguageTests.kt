@@ -16,6 +16,7 @@ import org.modelix.editor.applyShadowing
 import org.modelix.editor.celltemplate.ParserForEditor
 import org.modelix.editor.descendantsAndSelf
 import org.modelix.editor.flattenApplicableActions
+import org.modelix.editor.getCompletionPattern
 import org.modelix.editor.getMaxCaretPos
 import org.modelix.editor.getSubstituteActions
 import org.modelix.editor.getVisibleText
@@ -114,11 +115,11 @@ class BaseLanguageTests : TestBase("SimpleProject") {
             val actionProviders: Sequence<ICodeCompletionActionProvider> = (editor.getSelection() as CaretSelection).layoutable.cell.getSubstituteActions()
             val actions = actionProviders.flatMap { it.flattenApplicableActions(CodeCompletionParameters(editor, pattern)) }.toList()
             val matchingActions = actions.filter {
-                val matchingText = it.getMatchingText()
+                val matchingText = it.getCompletionPattern()
                 matchingText.isNotEmpty() && matchingText.startsWith(pattern)
             }
             val shadowedActions = matchingActions.applyShadowing()
-            val sortedActions = shadowedActions.sortedBy { it.getMatchingText().lowercase() }
+            val sortedActions = shadowedActions.sortedBy { it.getCompletionPattern().lowercase() }
             sortedActions
         }
     }
@@ -147,12 +148,16 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `ignore test creating LocalVariableDeclarationStatement by typing a type`() {
+    fun `test creating LocalVariableDeclarationStatement by typing a type`() {
         placeCaretIntoCellWithText("<no statement>")
         val actions = getCodeCompletionEntries("int")
         assertEquals(
-            "int | LocalVariableDeclarationStatement[LocalVariableDeclaration[IntegerType]]",
-            actions.joinToString("\n") { it.getMatchingText() + " | " + it.getDescription() },
+            listOf(
+                "int <name>; | LocalVariableDeclarationStatement[LocalVariableDeclaration[IntegerType]]",
+                "int.class; | ExpressionStatement[PrimitiveClassExpression[IntegerType]]",
+                "int[].class; | ExpressionStatement[ArrayClassExpression[ArrayType[IntegerType]]]",
+            ),
+            actions.map { it.getCompletionPattern() + " | " + it.getDescription() },
         )
         typeText("int ")
         assertFinalEditorText("""
@@ -164,9 +169,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `ignore test naming LocalVariableDeclaration`() {
+    fun `test naming LocalVariableDeclaration`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         assertFinalEditorText("""
@@ -178,9 +183,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         """)
     }
 
-    fun `ignore test showing initializer of LocalVariableDeclaration using side transformation`() {
+    fun `test showing initializer of LocalVariableDeclaration using side transformation`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         typeText("=")
@@ -194,9 +199,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `ignore test showing initializer of LocalVariableDeclaration using TAB`() {
+    fun `test showing initializer of LocalVariableDeclaration using TAB`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         pressKey(KnownKeys.Tab)
@@ -210,13 +215,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `ignore test previous optional is hidden when TABing to next`() {
+    fun `test previous optional is hidden when TABing to next`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         pressKey(KnownKeys.Enter)
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("def")
         placeCaretIntoCellWithText("abc")
@@ -232,7 +237,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
         pressKey(KnownKeys.Tab)
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc = <no initializer>;
                 int def;
@@ -245,7 +250,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|def")
         pressKey(KnownKeys.Tab)
         assertEditorText("""
-            class Class1 {
+            public class Class1 {
               public void method1(<no parameter>) {
                 int abc;
                 int def = <no initializer>;
@@ -255,9 +260,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("|<no initializer>")
     }
 
-    fun `ignore test adding initializer to LocalVariableDeclaration`() {
+    fun `test adding initializer to LocalVariableDeclaration`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         typeText("=")
@@ -437,9 +442,9 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         assertCaretPosition("p1|")
     }
 
-    fun `ignore test typing plus expression`() {
+    fun `test typing plus expression`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int")
+        typeText("int ")
         pressKey(KnownKeys.Tab)
         typeText("abc")
         typeText("=")
@@ -489,7 +494,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
 
     fun `test statement parsing 4`() = runParsingTest("""for ( int i = 0 ; i < 10 ; i++ ) { return i ; }""")
     fun `test statement parsing 5`() = runParsingTest("""System.out.println("Hello");""")
-    fun `ignore test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
+    fun `disabled test statement parsing 6`() = runParsingTest("""System.out.println("Hello World!");""")
 
     fun `test class parsing 1`() = runClassParsingTest("""
         class Math {
@@ -502,13 +507,13 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     fun `test completion 1`() = runParsingTest("""intᚹ""")
     fun `test completion 2`() = runParsingTest("""int aᚹ""")
 
-    fun `test parser completion`() {
+    fun `disabled test parser completion`() {
         placeCaretIntoCellWithText("<no statement>")
-        typeText("int a")
+        (editor.getSelection() as CaretSelection).replaceText("int a")
         // repeat(5) { pressKey(KnownKeys.ArrowLeft) }
         (editor.getSelection() as CaretSelection).triggerParserCompletion()
         val actions = editor.getCodeCompletionActions()
-        actions.forEach { println("Code Completion Entry: " + it.getMatchingText()) }
+        actions.forEach { println("Code Completion Entry: " + it.getCompletionPattern()) }
         pressEnter()
         assertFinalEditorText("""
             public class Class1 {

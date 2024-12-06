@@ -12,9 +12,13 @@ import org.modelix.editor.EditorState
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICellTemplateReference
 import org.modelix.editor.ICodeCompletionAction
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.TemplateCellReference
 import org.modelix.editor.TextCellData
+import org.modelix.editor.asProvider
+import org.modelix.editor.asTokenList
+import org.modelix.editor.withTokens
 import org.modelix.metamodel.ITypedNode
 import org.modelix.metamodel.untyped
 import org.modelix.model.api.IConcept
@@ -53,7 +57,19 @@ abstract class CellTemplate(val concept: IConcept) {
         if (completionText != null) {
             return listOf(InstantiateNodeCompletionAction(completionText, concept, location))
         }
-        return children.asSequence().mapNotNull { it.getInstantiationActions(location, parameters) }.firstOrNull()
+
+        for ((index, child) in children.withIndex()) {
+            val actions = child.getInstantiationActions(location, parameters)
+            if (actions != null) {
+                val nextTokens = children.drop(index + 1).mapNotNull { it.toCompletionToken() }.asTokenList()
+                if (!nextTokens.isEmpty()) {
+                    return actions.map { it.asProvider().withTokens { innerTokens -> listOf(innerTokens, nextTokens).asTokenList().normalize() } }
+                }
+                return actions
+            }
+        }
+
+        return null
     }
 
     fun getSideTransformActions(before: Boolean, nodeToReplace: INode): List<ICodeCompletionAction>? {
@@ -76,6 +92,8 @@ abstract class CellTemplate(val concept: IConcept) {
             children.asSequence().flatMap { it.getGrammarSymbols() }
         }
     }
+
+    open fun toCompletionToken(): ICompletionTokenOrList? = children.mapNotNull { it.toCompletionToken() }.asTokenList().takeIf { !it.isEmpty() }
 
     fun addChild(child: CellTemplate) {
         children.add(child)

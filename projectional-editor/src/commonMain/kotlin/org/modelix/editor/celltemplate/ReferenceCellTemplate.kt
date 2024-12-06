@@ -11,8 +11,10 @@ import org.modelix.editor.ExistingNode
 import org.modelix.editor.IActionOrProvider
 import org.modelix.editor.ICodeCompletionAction
 import org.modelix.editor.ICodeCompletionActionProvider
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
+import org.modelix.editor.ReferenceCompletionToken
 import org.modelix.editor.ReferenceTargetActionProvider
 import org.modelix.editor.ReferencedNodeCellReference
 import org.modelix.editor.TemplateCellReference
@@ -36,6 +38,10 @@ class ReferenceCellTemplate(
 
     override fun toParserSymbol(): ISymbol {
         return ReferenceSymbol(link)
+    }
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return ReferenceCompletionToken(link)
     }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {

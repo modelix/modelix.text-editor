@@ -6,6 +6,7 @@ import org.modelix.editor.CellData
 import org.modelix.editor.CodeCompletionParameters
 import org.modelix.editor.CommonCellProperties
 import org.modelix.editor.IActionOrProvider
+import org.modelix.editor.ICompletionTokenOrList
 import org.modelix.editor.INonExistingNode
 import org.modelix.editor.IParseTreeToAstBuilder
 import org.modelix.editor.TextCellData
@@ -25,6 +26,10 @@ class FlagCellTemplate(
 ) : PropertyCellTemplate(concept, property), IGrammarSymbol {
 
     override fun toParserSymbol(): ISymbol = OptionalSymbol(ConstantSymbol(text))
+
+    override fun toCompletionToken(): ICompletionTokenOrList? {
+        return null
+    }
 
     override fun consumeTokens(builder: IParseTreeToAstBuilder) {
         val symbol = toParserSymbol()

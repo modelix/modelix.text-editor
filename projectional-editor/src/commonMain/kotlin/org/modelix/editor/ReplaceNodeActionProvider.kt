@@ -21,6 +21,11 @@ data class ReplaceNodeActionProvider(val location: INonExistingNode) : ICodeComp
         return cellModels.flatMap {
             it.getInstantiationActions(location, parameters) ?: emptyList()
         }
+//        return cellModels.flatMap { cm ->
+//            (cm.getInstantiationActions(location, parameters) ?: emptyList()).map { it.asProvider().withDescription {
+//                cm.getGrammarSymbols().map { it.toParserSymbol() }.joinToString(" ")
+//            } }
+//        }
     }
 }
 

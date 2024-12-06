@@ -125,7 +125,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                     }
                     val legalRange = 0 until (layoutable.cell.getSelectableText()?.length ?: 0)
                     if (legalRange.contains(posToDelete)) {
-                        replaceText(posToDelete..posToDelete, "", editor)
+                        replaceText(posToDelete..posToDelete, "", editor, true)
                     } else {
                         val deleteAction = layoutable.cell.ancestors(true)
                             .mapNotNull { it.data.properties[CellActionProperties.delete] }
@@ -135,7 +135,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                         }
                     }
                 } else {
-                    replaceText(min(start, end) until max(start, end), "", editor)
+                    replaceText(min(start, end) until max(start, end), "", editor, true)
                 }
             }
             KnownKeys.Enter -> {
@@ -206,11 +206,11 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
             val matchingActions = editor.runRead {
                 val actions = providers.flatMap { it.flattenApplicableActions(params) }
                 actions
-                    .filter { it.getMatchingText().startsWith(typedText) }
+                    .filter { it.getCompletionPattern().startsWith(typedText) }
                     .applyShadowing()
             }
             if (matchingActions.isNotEmpty()) {
-                if (matchingActions.size == 1 && matchingActions.first().getMatchingText() == typedText) {
+                if (matchingActions.size == 1 && matchingActions.first().getCompletionPattern() == typedText) {
                     matchingActions.first().executeAndUpdateSelection(editor)
                     return
                 }
@@ -224,7 +224,7 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
                 return
             }
         }
-        replaceText(range, typedText, editor)
+        replaceText(range, typedText, editor, true)
     }
 
     fun getAbsoluteX() = layoutable.getX() + end
@@ -291,24 +291,32 @@ class CaretSelection(val layoutable: LayoutableCell, val start: Int, val end: In
         )
     }
 
-    private fun replaceText(range: IntRange, replacement: String, editor: EditorComponent): Boolean {
-        val oldText = layoutable.cell.getSelectableText() ?: ""
+    fun getCurrentCellText() = layoutable.cell.getSelectableText() ?: ""
+
+    fun replaceText(newText: String): Boolean {
+        return replaceText(0 until getCurrentCellText().length, newText, layoutable.cell.editorComponent!!, false)
+    }
+
+    private fun replaceText(range: IntRange, replacement: String, editor: EditorComponent, triggerCompletion: Boolean): Boolean {
+        val oldText = getCurrentCellText()
         val newText = oldText.replaceRange(range, replacement)
 
-        // complete immediately if there is a single matching action
-        val providers = layoutable.cell.getSubstituteActions()
-        val params = CodeCompletionParameters(editor, newText)
-        val actions = editor.runRead { providers.flatMap { it.flattenApplicableActions(params) }.toList() }
-        val matchingActions = actions
-            .filter { it.getMatchingText() == newText }
-            .applyShadowing()
-        val singleAction = matchingActions.singleOrNull()
-        if (singleAction != null) {
-            editor.runWrite {
-                singleAction.executeAndUpdateSelection(editor)
-                editor.state.clearTextReplacement(layoutable)
+        if (triggerCompletion) {
+            // complete immediately if there is a single matching action
+            val providers = layoutable.cell.getSubstituteActions()
+            val params = CodeCompletionParameters(editor, newText)
+            val actions = editor.runRead { providers.flatMap { it.flattenApplicableActions(params) }.toList() }
+            val matchingActions = actions
+                .filter { it.getTokens().consumeForAutoApply(newText)?.length == 0 }
+                .applyShadowing()
+            val singleAction = matchingActions.singleOrNull()
+            if (singleAction != null) {
+                editor.runWrite {
+                    singleAction.executeAndUpdateSelection(editor)
+                    editor.state.clearTextReplacement(layoutable)
+                }
+                return true
             }
-            return true
         }
 
         val replaceTextActions = layoutable.cell.centerAlignedHierarchy().mapNotNull { it.getProperty(CellActionProperties.replaceText) }

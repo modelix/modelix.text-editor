@@ -1,5 +1,6 @@
 package org.modelix.editor
 
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.modelix.editor.celltemplate.CellTemplate
 import org.modelix.editor.celltemplate.ChildCellTemplate
 import org.modelix.editor.celltemplate.CollectionCellTemplate
@@ -29,6 +30,8 @@ import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
 import kotlin.jvm.JvmName
 import kotlin.reflect.KClass
+
+private val LOG = KotlinLogging.logger { }
 
 open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTemplate, val concept: ConceptT, protected val nodeConverter: INodeConverter<NodeT>) {
     val properties = CellProperties()
@@ -249,7 +252,13 @@ open class CellTemplateBuilder<NodeT : Any, ConceptT : Any>(val template: CellTe
             template = ReferenceCellTemplate(
                 concept = template.concept,
                 link = this,
-                presentation = { presentation(targetNodeConverter.fromUntyped(this)) },
+                presentation = {
+                    runCatching {
+                        presentation(targetNodeConverter.fromUntyped(this))
+                    }
+                        .onFailure { LOG.error(it) { "Failed computing presentation for reference target: $this (${this.concept})" } }
+                        .getOrNull()
+                },
             ),
             link = this,
             concept = concept,

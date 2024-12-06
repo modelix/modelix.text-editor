@@ -307,20 +307,6 @@
       </concept>
       <concept id="1225797177491" name="jetbrains.mps.baseLanguage.closures.structure.InvokeFunctionOperation" flags="nn" index="1Bd96e" />
     </language>
-    <language id="c7b55726-1795-47bd-aa21-714ac1e30f21" name="org.modelix.mps.notation">
-      <concept id="635805674430276261" name="org.modelix.mps.notation.structure.ReferenceCell" flags="ng" index="1yiJt1">
-        <reference id="635805674430276264" name="link" index="1yiJtc" />
-        <child id="2346135138154959868" name="renderTarget" index="1KhJq6" />
-      </concept>
-      <concept id="8310867745953062360" name="org.modelix.mps.notation.structure.NotationModule" flags="ng" index="3JBFZQ">
-        <child id="8310867745953085065" name="content" index="3JBHiB" />
-      </concept>
-      <concept id="8310867745953086317" name="org.modelix.mps.notation.structure.ConceptNotation" flags="ng" index="3JBH_3">
-        <reference id="8310867745953086698" name="concept" index="3JBHV5" />
-        <child id="8310867745953087407" name="cell" index="3JBHQ1" />
-      </concept>
-      <concept id="2346135138155555729" name="org.modelix.mps.notation.structure.BL_ReferenceTargetExpression" flags="ng" index="1KnsVF" />
-    </language>
     <language id="3a13115c-633c-4c5c-bbcc-75c4219e9555" name="jetbrains.mps.lang.quotation">
       <concept id="5455284157994012186" name="jetbrains.mps.lang.quotation.structure.NodeBuilderInitLink" flags="ng" index="2pIpSj">
         <reference id="5455284157994012188" name="link" index="2pIpSl" />
@@ -3541,21 +3527,6 @@
                 </node>
               </node>
             </node>
-          </node>
-        </node>
-      </node>
-    </node>
-  </node>
-  <node concept="3JBFZQ" id="72hS3ltD5dh">
-    <property role="TrG5h" value="SpreadsheetsNotation" />
-    <node concept="3JBH_3" id="72hS3ltD5dk" role="3JBHiB">
-      <ref role="3JBHV5" to="ur0y:2ti6llKUmc0" resolve="ColumnReference" />
-      <node concept="1yiJt1" id="72hS3ltFkcB" role="3JBHQ1">
-        <ref role="1yiJtc" to="ur0y:2ti6llKUmc1" resolve="column" />
-        <node concept="2OqwBi" id="1edLqv8JwxC" role="1KhJq6">
-          <node concept="1KnsVF" id="1edLqv8JwqD" role="2Oq$k0" />
-          <node concept="2qgKlT" id="1edLqv8JylR" role="2OqNvi">
-            <ref role="37wK5l" to="xmo0:1gyl2moVSFk" resolve="getColumnLabel" />
           </node>
         </node>
       </node>
