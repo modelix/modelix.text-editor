@@ -66,7 +66,9 @@ subprojects {
         maven { url = uri("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven") }
         mavenCentral()
     }
+}
 
+allprojects {
     publishing {
         repositories {
             if (project.hasProperty("artifacts.itemis.cloud.user")) {
@@ -166,20 +168,6 @@ val packageAllPlugins by tasks.registering(Zip::class) {
 
 // publish all-editor-plugins.zip to GitHub packages to make it appear on the releases page
 publishing {
-    repositories {
-        val gprUser = project.findProperty("gpr.user") as? String ?: System.getenv("GITHUB_ACTOR")
-        val gprToken = project.findProperty("gpr.key") as? String ?: System.getenv("GITHUB_TOKEN")
-        if (gprUser.isNotBlank() && gprToken.isNotBlank()) {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/modelix/modelix.text-editor")
-                credentials {
-                    username = gprUser
-                    password = gprToken
-                }
-            }
-        }
-    }
     publications {
         create<MavenPublication>("maven") {
             artifactId = "all-editor-plugins"
