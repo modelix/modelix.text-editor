@@ -1,3 +1,4 @@
+import org.jetbrains.intellij.tasks.BuildPluginTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
@@ -160,4 +161,29 @@ tasks.register("setupNodeEverywhere") {
     dependsOn(":projectional-editor-ssr-client:kotlinNodeJsSetup")
     dependsOn(":projectional-editor-ssr-client-lib:kotlinNodeJsSetup")
     dependsOn(":projectional-editor-ssr-common:kotlinNodeJsSetup")
+}
+
+val packageAllPlugins by tasks.registering(Zip::class) {
+    val zipTask = this
+    archiveBaseName = "all-editor-plugins"
+    subprojects {
+        tasks.all {
+            if (this.name == "buildPlugin") {
+                val buildPluginTask = this as BuildPluginTask
+                zipTask.dependsOn(buildPluginTask)
+                zipTask.from(zipTree(buildPluginTask.archiveFile))
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            artifactId = "all-editor-plugins"
+            artifact(packageAllPlugins) {
+                extension = "zip"
+            }
+        }
+    }
 }
