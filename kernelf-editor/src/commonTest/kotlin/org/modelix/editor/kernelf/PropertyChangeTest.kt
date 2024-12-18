@@ -40,7 +40,7 @@ class PropertyChangeTest {
     @BeforeTest
     fun beforeTest() {
         KernelfLanguages.registerAll()
-        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree()).withIncrementalComputationSupport()
+        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree(useRoleIds = false)).withIncrementalComputationSupport()
         val parensExpression = branch.computeWrite {
             val parensExpression = PArea(branch).getRoot().addNewChild("root", -1, C_ParensExpression.untyped()).typed<N_ParensExpression>()
             parensExpression.apply {

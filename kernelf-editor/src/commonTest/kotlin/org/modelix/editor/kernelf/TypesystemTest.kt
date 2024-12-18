@@ -42,7 +42,7 @@ class TypesystemTest {
         val engine = EditorEngine(IncrementalEngine())
         KernelfEditor.register(engine)
 
-        branch = PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
+        branch = PBranch(ModelFacade.newLocalTree(useRoleIds = false), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
         ModelData.fromJson(modelJson2).load(branch)
 
         testSuite = branch.computeRead {
