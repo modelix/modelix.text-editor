@@ -3,8 +3,8 @@ import org.modelix.mpsHomeDir
 
 buildscript {
     repositories {
-        mavenLocal()
         maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
+        mavenLocal()
     }
     dependencies {
         classpath(libs.modelix.model.api)
