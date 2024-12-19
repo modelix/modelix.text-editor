@@ -1,10 +1,10 @@
 package org.modelix.editor
 
 import org.modelix.editor.celltemplate.NotationRootCellTemplate
-import org.modelix.metamodel.NullConcept
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
+import org.modelix.model.api.meta.NullConcept
 
 class ConceptEditor(
     val declaredConcept: IConcept?,

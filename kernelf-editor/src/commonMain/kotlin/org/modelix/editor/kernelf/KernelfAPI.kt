@@ -44,7 +44,7 @@ object KernelfAPI {
 
     fun loadModelsFromJson(json: Array<String>): INode {
         // val branch = IncrementalBranch(PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(0xabcdef)))
-        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree()).withIncrementalComputationSupport()
+        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree(useRoleIds = false)).withIncrementalComputationSupport()
         // TODO call IncrementalBranch.dispose
 
         json.forEach { ModelData.fromJson(it).load(branch) }
@@ -125,7 +125,7 @@ object KernelfAPI {
     }
 
     fun renderModelAsHtmlText(modelData: ModelData): String {
-        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree())
+        val branch = ModelFacade.toLocalBranch(ModelFacade.newLocalTree(useRoleIds = false))
         modelData.load(branch)
         val rootNode = ModelFacade.getRootNode(branch)
         return rootNode.allChildren

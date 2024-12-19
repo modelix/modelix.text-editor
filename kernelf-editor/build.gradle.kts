@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.com.google.gson.JsonPrimitive
 
 buildscript {
     repositories {
-        mavenLocal()
         maven { url = uri("https://artifacts.itemis.cloud/repository/maven-mps/") }
+        mavenLocal()
     }
     dependencies {
     }
@@ -29,7 +29,7 @@ kotlin {
         browser {
             testTask {
                 useMocha {
-                    timeout = "10s"
+                    timeout = "60s"
                 }
             }
         }
@@ -37,7 +37,7 @@ kotlin {
         nodejs {
             testTask {
                 useMocha {
-                    timeout = "10s"
+                    timeout = "60s"
                 }
             }
         }

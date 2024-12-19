@@ -42,7 +42,7 @@ open class IncrementalLayoutAfterInsert {
     @BeforeTest
     fun beforeTest() {
         KernelfLanguages.registerAll()
-        branch = PBranch(ModelFacade.newLocalTree(), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
+        branch = PBranch(ModelFacade.newLocalTree(useRoleIds = false), IdGenerator.getInstance(56754)).withIncrementalComputationSupport()
         ModelData.fromJson(modelJson).load(branch)
 
         val engine = EditorEngine(IncrementalEngine())
