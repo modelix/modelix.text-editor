@@ -3,6 +3,7 @@
   <persistence version="9" />
   <languages>
     <use id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react" version="0" />
+    <use id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.components" version="0" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
@@ -25,7 +26,6 @@
       <concept id="8876946878574735510" name="org.modelix.mps.react.structure.PropertyChangeHandler" flags="ng" index="ghf2L">
         <reference id="8876946878574742616" name="property" index="gh8LZ" />
         <child id="8876946878574742646" name="value" index="gh8Lh" />
-        <child id="8876946878574742620" name="node" index="gh8LV" />
       </concept>
       <concept id="8876946878574654557" name="org.modelix.mps.react.structure.PrimitivePropertyValue" flags="ng" index="ghjhU">
         <child id="8876946878574654571" name="value" index="ghjhc" />
@@ -72,8 +72,23 @@
       <concept id="1070475926800" name="jetbrains.mps.baseLanguage.structure.StringLiteral" flags="nn" index="Xl_RD">
         <property id="1070475926801" name="value" index="Xl_RC" />
       </concept>
+      <concept id="1068581242875" name="jetbrains.mps.baseLanguage.structure.PlusExpression" flags="nn" index="3cpWs3" />
+      <concept id="1081773326031" name="jetbrains.mps.baseLanguage.structure.BinaryOperation" flags="nn" index="3uHJSO">
+        <child id="1081773367579" name="rightExpression" index="3uHU7w" />
+        <child id="1081773367580" name="leftExpression" index="3uHU7B" />
+      </concept>
+    </language>
+    <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.components">
+      <concept id="2879488090856866837" name="org.modelix.mps.react.components.structure.NodePropRef" flags="ng" index="2Ly3GW">
+        <reference id="2879488090856866839" name="property" index="2Ly3GY" />
+        <child id="2879488090856866838" name="node" index="2Ly3GZ" />
+      </concept>
+      <concept id="2879488090856848295" name="org.modelix.mps.react.components.structure.TextField" flags="ng" index="2Ly8ie">
+        <child id="2879488090856866844" name="context" index="2Ly3GP" />
+      </concept>
     </language>
     <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
+      <concept id="1179168000618" name="jetbrains.mps.lang.smodel.structure.Node_GetIndexInParentOperation" flags="nn" index="2bSWHS" />
       <concept id="1138056022639" name="jetbrains.mps.lang.smodel.structure.SPropertyAccess" flags="nn" index="3TrcHB">
         <reference id="1138056395725" name="property" index="3TsBF5" />
       </concept>
@@ -187,37 +202,28 @@
       <ref role="3JBHV4" to="oyym:2vPZMAmue7m" resolve="Element" />
       <node concept="gmrTC" id="2vPZMAmuLYY" role="gmrTS">
         <property role="gmPZ6" value="html.li" />
-        <node concept="ggXia" id="2vPZMAmuRqf" role="gn1nJ">
-          <node concept="Xl_RD" id="2vPZMAmuRqu" role="ggXio">
-            <property role="Xl_RC" value="DSumm&lt;" />
-          </node>
-        </node>
-        <node concept="gmrTC" id="2vPZMAmuLYZ" role="gn1nJ">
-          <property role="gmPZ6" value="mui.TextField" />
-          <node concept="gn1nE" id="2vPZMAmuLZ0" role="gn1nH">
-            <property role="gn1nW" value="onChange" />
-            <node concept="ghf20" id="2vPZMAmuLZ1" role="gn1nU">
-              <node concept="ghf2L" id="2vPZMAmuLZ2" role="ghfyX">
-                <ref role="gh8LZ" to="oyym:2vPZMAmue7n" resolve="label" />
-                <node concept="gh8L1" id="2vPZMAmuLZ3" role="gh8Lh">
-                  <property role="gh8Lj" value="event.target.value" />
-                </node>
-                <node concept="ggAI9" id="2vPZMAmuMuP" role="gh8LV" />
+        <node concept="gmrTC" id="2vPZMAmBbY6" role="gn1nJ">
+          <property role="gmPZ6" value="html.div" />
+          <node concept="ggXia" id="2vPZMAmBbYt" role="gn1nJ">
+            <node concept="3cpWs3" id="2vPZMAmBLZG" role="ggXio">
+              <node concept="Xl_RD" id="2vPZMAmBLZJ" role="3uHU7w">
+                <property role="Xl_RC" value=": " />
               </node>
-              <node concept="ghf2g" id="2vPZMAmuLZ5" role="ghf3w">
-                <property role="TrG5h" value="event" />
+              <node concept="3cpWs3" id="2vPZMAmBEjN" role="3uHU7B">
+                <node concept="Xl_RD" id="2vPZMAmBEjQ" role="3uHU7B">
+                  <property role="Xl_RC" value="Number " />
+                </node>
+                <node concept="2OqwBi" id="2vPZMAmBEc5" role="3uHU7w">
+                  <node concept="ggAI9" id="2vPZMAmBE4x" role="2Oq$k0" />
+                  <node concept="2bSWHS" id="2vPZMAmBEjx" role="2OqNvi" />
+                </node>
               </node>
             </node>
           </node>
-          <node concept="gn1nE" id="2vPZMAmuLZ6" role="gn1nH">
-            <property role="gn1nW" value="value" />
-            <node concept="ghjhU" id="2vPZMAmuLZ7" role="gn1nU">
-              <node concept="2OqwBi" id="2vPZMAmuLZ8" role="ghjhc">
-                <node concept="ggAI9" id="2vPZMAmuMuZ" role="2Oq$k0" />
-                <node concept="3TrcHB" id="2vPZMAmuLZa" role="2OqNvi">
-                  <ref role="3TsBF5" to="oyym:2vPZMAmue7n" resolve="label" />
-                </node>
-              </node>
+          <node concept="2Ly8ie" id="2vPZMAmBbY7" role="gn1nJ">
+            <node concept="2Ly3GW" id="2vPZMAmBbY8" role="2Ly3GP">
+              <ref role="2Ly3GY" to="oyym:2vPZMAmue7n" resolve="label" />
+              <node concept="ggAI9" id="2vPZMAmBbY9" role="2Ly3GZ" />
             </node>
           </node>
         </node>

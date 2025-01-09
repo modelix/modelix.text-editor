@@ -19,10 +19,10 @@
   <node concept="1WCD2c" id="4OeoZ0Osahp">
     <property role="bwaGp" value="HelloVideo" />
     <node concept="2LzhVZ" id="2vPZMAmufQY" role="2LzhVL">
-      <property role="2LzhVY" value="e121312312312312321312231232" />
+      <property role="2LzhVY" value="e1" />
     </node>
     <node concept="2LzhVZ" id="2vPZMAmufQZ" role="2LzhVL">
-      <property role="2LzhVY" value="2e23123123" />
+      <property role="2LzhVY" value="e2" />
     </node>
   </node>
 </model>

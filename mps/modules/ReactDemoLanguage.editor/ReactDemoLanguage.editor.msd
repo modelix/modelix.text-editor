@@ -27,6 +27,7 @@
     <language slang="l:c7fb639f-be78-4307-89b0-b5959c3fa8c8:jetbrains.mps.lang.text" version="0" />
     <language slang="l:9ded098b-ad6a-4657-bfd9-48636cfe8bc3:jetbrains.mps.lang.traceable" version="0" />
     <language slang="l:67accce2-9676-4728-9e9c-8b15ea30d924:org.modelix.mps.react" version="0" />
+    <language slang="l:09a61cec-0c2d-4a90-b590-25e493b12f35:org.modelix.mps.react.components" version="0" />
   </languageVersions>
   <dependencyVersions>
     <module reference="3f233e7f-b8a6-46d2-a57f-795d56775243(Annotations)" version="0" />
