@@ -295,8 +295,12 @@
         <ref role="1k5W1q" node="2vPZMAmAxF1" resolve="fullVerticalSpace" />
       </node>
       <node concept="3F2HdR" id="3DO$SWhXWwx" role="3EZMnx">
+        <property role="2czwfO" value="\n" />
         <ref role="1NtTu8" to="8xo1:7GLg2tFqfQU" resolve="content" />
         <node concept="2iRkQZ" id="3DO$SWhXWwz" role="2czzBx" />
+        <node concept="tppnM" id="2vPZMAmF8ey" role="sWeuL">
+          <ref role="1k5W1q" node="2vPZMAmAxFf" resolve="RHalfVerticalSpace" />
+        </node>
       </node>
       <node concept="2iRkQZ" id="3DO$SWhXWok" role="2iSdaV" />
     </node>
@@ -843,12 +847,14 @@
         <node concept="VPM3Z" id="1pvyisdcGKf" role="3F10Kt" />
         <node concept="PMmxH" id="1pvyisdcGKn" role="3EZMnx">
           <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+          <ref role="1k5W1q" node="2vPZMAmxCQO" resolve="RKeyword" />
         </node>
         <node concept="3F0A7n" id="1pvyisddSkW" role="3EZMnx">
           <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
         </node>
         <node concept="3F0ifn" id="1pvyisdcGK$" role="3EZMnx">
           <property role="3F0ifm" value="in" />
+          <ref role="1k5W1q" node="2vPZMAmxCQO" resolve="RKeyword" />
         </node>
         <node concept="3F1sOY" id="1pvyisdcGKR" role="3EZMnx">
           <ref role="1NtTu8" to="8xo1:1pvyisdcGKI" resolve="input" />
@@ -953,6 +959,7 @@
     <node concept="3EZMnI" id="2ti6llKNqWC" role="2wV5jI">
       <node concept="PMmxH" id="2ti6llKNqWJ" role="3EZMnx">
         <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" node="2vPZMAmxCQO" resolve="RKeyword" />
       </node>
       <node concept="3F1sOY" id="2ti6llKNqWO" role="3EZMnx">
         <ref role="1NtTu8" to="8xo1:2ti6llKNqWi" resolve="nodeToRender" />

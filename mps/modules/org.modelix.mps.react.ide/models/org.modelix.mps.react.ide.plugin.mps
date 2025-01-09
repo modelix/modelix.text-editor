@@ -22,6 +22,7 @@
   </imports>
   <registry>
     <language id="28f9e497-3b42-4291-aeba-0a1039153ab1" name="jetbrains.mps.lang.plugin">
+      <concept id="1204908117386" name="jetbrains.mps.lang.plugin.structure.Separator" flags="ng" index="2a7GMi" />
       <concept id="1207145163717" name="jetbrains.mps.lang.plugin.structure.ElementListContents" flags="ng" index="ftmFs">
         <child id="1207145201301" name="reference" index="ftvYc" />
       </concept>
@@ -42,6 +43,7 @@
         <reference id="1203088061055" name="action" index="tCJdB" />
       </concept>
       <concept id="1203092361741" name="jetbrains.mps.lang.plugin.structure.ModificationStatement" flags="lg" index="tT9cl">
+        <reference id="1204992316090" name="point" index="2f8Tey" />
         <reference id="1203092736097" name="modifiedGroup" index="tU$_T" />
       </concept>
       <concept id="1205679047295" name="jetbrains.mps.lang.plugin.structure.ActionParameterDeclaration" flags="ig" index="2S4$dB" />
@@ -140,6 +142,10 @@
   <node concept="2DaZZR" id="2vPZMAmsSPd" />
   <node concept="tC5Ba" id="2vPZMAmsSPe">
     <property role="TrG5h" value="reactGroup" />
+    <node concept="tT9cl" id="2vPZMAmGAKA" role="2f5YQi">
+      <ref role="tU$_T" to="tprs:hyf4Gvz" resolve="NodeActions" />
+      <ref role="2f8Tey" to="tprs:7jff0wjeeqm" resolve="newActions" />
+    </node>
     <node concept="tT9cl" id="2vPZMAmt4si" role="2f5YQi">
       <ref role="tU$_T" to="tprs:1JdTZ5pVxeC" resolve="EditorPopupEx" />
     </node>
@@ -150,6 +156,7 @@
       <node concept="tCFHf" id="2vPZMAmtJdl" role="ftvYc">
         <ref role="tCJdB" node="2vPZMAmt5CB" resolve="copyURL" />
       </node>
+      <node concept="2a7GMi" id="2vPZMAmGBks" role="ftvYc" />
     </node>
   </node>
   <node concept="sE7Ow" id="2vPZMAmt5CB">

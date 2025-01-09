@@ -3,7 +3,7 @@
   <persistence version="9" />
   <languages>
     <use id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react" version="0" />
-    <use id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.components" version="0" />
+    <use id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.muicomponents" version="0" />
     <devkit ref="fbc25dd2-5da4-483a-8b19-70928e1b62d7(jetbrains.mps.devkit.general-purpose)" />
   </languages>
   <imports>
@@ -12,46 +12,12 @@
   <registry>
     <language id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react">
       <concept id="8876946878574570414" name="org.modelix.mps.react.structure.ComponentNodeExpression" flags="ng" index="ggAI9" />
-      <concept id="8876946878574531757" name="org.modelix.mps.react.structure.TextComponent" flags="ng" index="ggXia">
-        <child id="8876946878574531775" name="value" index="ggXio" />
-      </concept>
-      <concept id="8876946878574742630" name="org.modelix.mps.react.structure.JsCode" flags="ng" index="gh8L1">
-        <property id="8876946878574742644" name="code" index="gh8Lj" />
-      </concept>
-      <concept id="8876946878574735527" name="org.modelix.mps.react.structure.JsFunctionPropertyValue" flags="ng" index="ghf20">
-        <child id="8876946878574735559" name="parameters" index="ghf3w" />
-        <child id="8876946878574737562" name="implementation" index="ghfyX" />
-      </concept>
-      <concept id="8876946878574735543" name="org.modelix.mps.react.structure.JsFunctionParameter" flags="ng" index="ghf2g" />
-      <concept id="8876946878574735510" name="org.modelix.mps.react.structure.PropertyChangeHandler" flags="ng" index="ghf2L">
-        <reference id="8876946878574742616" name="property" index="gh8LZ" />
-        <child id="8876946878574742646" name="value" index="gh8Lh" />
-      </concept>
-      <concept id="8876946878574654557" name="org.modelix.mps.react.structure.PrimitivePropertyValue" flags="ng" index="ghjhU">
-        <child id="8876946878574654571" name="value" index="ghjhc" />
-      </concept>
-      <concept id="8876946878575278069" name="org.modelix.mps.react.structure.JsonObjectValue" flags="ng" index="gjbvi">
-        <child id="8876946878575278146" name="members" index="gjbx_" />
-      </concept>
-      <concept id="8876946878575278085" name="org.modelix.mps.react.structure.JsonObjectMember" flags="ng" index="gjbwy">
-        <property id="8876946878575278099" name="key" index="gjbwO" />
-        <child id="8876946878575278101" name="value" index="gjbwM" />
-      </concept>
       <concept id="8876946878573696709" name="org.modelix.mps.react.structure.ReactModule" flags="ng" index="gl9ry">
         <child id="8876946878573903290" name="content" index="gmrQt" />
       </concept>
       <concept id="8876946878573903262" name="org.modelix.mps.react.structure.ConceptRenderer" flags="ng" index="gmrQT">
         <reference id="8310867745953086698" name="concept" index="3JBHV4" />
         <child id="8876946878573903455" name="component" index="gmrTS" />
-      </concept>
-      <concept id="8876946878573903439" name="org.modelix.mps.react.structure.GenericReactComponent" flags="ng" index="gmrTC">
-        <property id="8876946878573977569" name="componentType" index="gmPZ6" />
-        <child id="8876946878574187978" name="properties" index="gn1nH" />
-        <child id="8876946878574187976" name="children" index="gn1nJ" />
-      </concept>
-      <concept id="8876946878574187981" name="org.modelix.mps.react.structure.Property" flags="ng" index="gn1nE">
-        <property id="8876946878574187995" name="propertyName" index="gn1nW" />
-        <child id="8876946878574187997" name="value" index="gn1nU" />
       </concept>
       <concept id="1612157992440222093" name="org.modelix.mps.react.structure.ForEachInteratorVariableReference" flags="ng" index="rqPyE">
         <reference id="1612157992440222094" name="forEach" index="rqPyD" />
@@ -78,13 +44,28 @@
         <child id="1081773367580" name="leftExpression" index="3uHU7B" />
       </concept>
     </language>
-    <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.components">
-      <concept id="2879488090856866837" name="org.modelix.mps.react.components.structure.NodePropRef" flags="ng" index="2Ly3GW">
+    <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.muicomponents">
+      <concept id="2879488090861821590" name="org.modelix.mps.react.muicomponents.structure.Space" flags="ng" index="2Lfa6Z" />
+      <concept id="2879488090860324692" name="org.modelix.mps.react.muicomponents.structure.VerticalLayout" flags="ng" index="2LhRxX">
+        <property id="2879488090860368414" name="gap" index="2LhGOR" />
+      </concept>
+      <concept id="2879488090860989101" name="org.modelix.mps.react.muicomponents.structure.Header" flags="ng" index="2Lilm4">
+        <property id="2879488090860989103" name="level" index="2Lilm6" />
+        <child id="2879488090860989104" name="text" index="2Lilmp" />
+      </concept>
+      <concept id="2879488090859464565" name="org.modelix.mps.react.muicomponents.structure.Label" flags="ng" index="2Lk9xs">
+        <child id="2879488090859488762" name="value" index="2Lk3Fj" />
+      </concept>
+      <concept id="2879488090859879787" name="org.modelix.mps.react.muicomponents.structure.HorizontalLayout" flags="ng" index="2Ln$92" />
+      <concept id="2879488090859879790" name="org.modelix.mps.react.muicomponents.structure.IMUILayoutComponent" flags="ngI" index="2Ln$97">
+        <child id="2879488090859879792" name="children" index="2Ln$9p" />
+      </concept>
+      <concept id="2879488090856866837" name="org.modelix.mps.react.muicomponents.structure.NodePropRef" flags="ng" index="2Ly3GW">
         <reference id="2879488090856866839" name="property" index="2Ly3GY" />
         <child id="2879488090856866838" name="node" index="2Ly3GZ" />
       </concept>
-      <concept id="2879488090856848295" name="org.modelix.mps.react.components.structure.TextField" flags="ng" index="2Ly8ie">
-        <child id="2879488090856866844" name="context" index="2Ly3GP" />
+      <concept id="2879488090856848295" name="org.modelix.mps.react.muicomponents.structure.TextField" flags="ng" index="2Ly8ie">
+        <child id="2879488090856866844" name="data" index="2Ly3GP" />
       </concept>
     </language>
     <language id="7866978e-a0f0-4cc7-81bc-4d213d9375e1" name="jetbrains.mps.lang.smodel">
@@ -103,128 +84,61 @@
     </language>
   </registry>
   <node concept="gl9ry" id="2CeLAhmFoil">
-    <property role="TrG5h" value="react.root" />
-    <node concept="gmrQT" id="2CeLAhmFoim" role="gmrQt">
-      <ref role="3JBHV4" to="oyym:2CeLAhmF5rC" resolve="MarkusRoot" />
-      <node concept="gmrTC" id="2CeLAhmFoin" role="gmrTS">
-        <property role="gmPZ6" value="html.div" />
-        <node concept="gmrTC" id="2vPZMAmu7rs" role="gn1nJ">
-          <property role="gmPZ6" value="html.h1" />
-          <node concept="ggXia" id="2vPZMAmucMn" role="gn1nJ">
-            <node concept="2OqwBi" id="2vPZMAmuzZD" role="ggXio">
-              <node concept="ggAI9" id="2vPZMAmuzS5" role="2Oq$k0" />
-              <node concept="3TrcHB" id="2vPZMAmu$75" role="2OqNvi">
-                <ref role="3TsBF5" to="oyym:2u4zLgG12gd" resolve="name" />
-              </node>
+    <property role="TrG5h" value="ReactDemo" />
+    <node concept="gmrQT" id="2vPZMAmGHZh" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:2CeLAhmF5rC" resolve="ReactRoot" />
+      <node concept="2LhRxX" id="2vPZMAmGHZk" role="gmrTS">
+        <property role="2LhGOR" value="20px" />
+        <node concept="2Lilm4" id="2vPZMAmJgxt" role="2Ln$9p">
+          <property role="2Lilm6" value="2" />
+          <node concept="2OqwBi" id="2vPZMAmJgF4" role="2Lilmp">
+            <node concept="ggAI9" id="2vPZMAmJgzw" role="2Oq$k0" />
+            <node concept="3TrcHB" id="2vPZMAmJgMw" role="2OqNvi">
+              <ref role="3TsBF5" to="oyym:2u4zLgG12gd" resolve="name" />
             </node>
           </node>
         </node>
-        <node concept="gmrTC" id="2vPZMAmqUZW" role="gn1nJ">
-          <property role="gmPZ6" value="mui.TextField" />
-          <node concept="gn1nE" id="2vPZMAmqX_5" role="gn1nH">
-            <property role="gn1nW" value="onChange" />
-            <node concept="ghf20" id="2vPZMAmqX_f" role="gn1nU">
-              <node concept="ghf2L" id="2vPZMAmsrlr" role="ghfyX">
-                <ref role="gh8LZ" to="oyym:2u4zLgG12gd" resolve="name" />
-                <node concept="gh8L1" id="2vPZMAmsrlt" role="gh8Lh">
-                  <property role="gh8Lj" value="event.target.value" />
-                </node>
-              </node>
-              <node concept="ghf2g" id="2vPZMAmqX_i" role="ghf3w">
-                <property role="TrG5h" value="event" />
-              </node>
-            </node>
-          </node>
-          <node concept="gn1nE" id="2vPZMAmqV49" role="gn1nH">
-            <property role="gn1nW" value="value" />
-            <node concept="ghjhU" id="2vPZMAmqV4d" role="gn1nU">
-              <node concept="2OqwBi" id="2vPZMAmqVbL" role="ghjhc">
-                <node concept="ggAI9" id="2vPZMAmqV4b" role="2Oq$k0" />
-                <node concept="3TrcHB" id="2vPZMAmqWWy" role="2OqNvi">
-                  <ref role="3TsBF5" to="oyym:2u4zLgG12gd" resolve="name" />
-                </node>
-              </node>
-            </node>
+        <node concept="2Ly8ie" id="2vPZMAmG_uT" role="2Ln$9p">
+          <node concept="2Ly3GW" id="2vPZMAmG_uV" role="2Ly3GP">
+            <ref role="2Ly3GY" to="oyym:2u4zLgG12gd" resolve="name" />
+            <node concept="ggAI9" id="2vPZMAmG_x3" role="2Ly3GZ" />
           </node>
         </node>
-        <node concept="gmrTC" id="2vPZMAmuggc" role="gn1nJ">
-          <property role="gmPZ6" value="html.ul" />
-          <node concept="rrkbs" id="2vPZMAmufRw" role="gn1nJ">
-            <property role="TrG5h" value="e" />
-            <node concept="2OqwBi" id="2vPZMAmug38" role="rrkk9">
-              <node concept="ggAI9" id="2vPZMAmufTC" role="2Oq$k0" />
-              <node concept="3Tsc0h" id="2vPZMAmuga_" role="2OqNvi">
-                <ref role="3TtcxE" to="oyym:2vPZMAmue7o" resolve="elements" />
-              </node>
-            </node>
-            <node concept="1nBVpq" id="2vPZMAmuMyL" role="rrkkB">
-              <node concept="rqPyE" id="2vPZMAmuM$B" role="1nBVp7">
-                <ref role="rqPyD" node="2vPZMAmufRw" resolve="e" />
-              </node>
+        <node concept="rrkbs" id="2vPZMAmufRw" role="2Ln$9p">
+          <property role="TrG5h" value="e" />
+          <node concept="2OqwBi" id="2vPZMAmug38" role="rrkk9">
+            <node concept="ggAI9" id="2vPZMAmufTC" role="2Oq$k0" />
+            <node concept="3Tsc0h" id="2vPZMAmuga_" role="2OqNvi">
+              <ref role="3TtcxE" to="oyym:2vPZMAmue7o" resolve="elements" />
             </node>
           </node>
-        </node>
-        <node concept="gn1nE" id="2vPZMAmu2ja" role="gn1nH">
-          <property role="gn1nW" value="style" />
-          <node concept="gjbvi" id="2vPZMAmu2l9" role="gn1nU">
-            <node concept="gjbwy" id="2vPZMAmu2lb" role="gjbx_">
-              <property role="gjbwO" value="display" />
-              <node concept="ghjhU" id="2vPZMAmu2le" role="gjbwM">
-                <node concept="Xl_RD" id="2vPZMAmu2ld" role="ghjhc">
-                  <property role="Xl_RC" value="flex" />
-                </node>
-              </node>
-            </node>
-            <node concept="gjbwy" id="2vPZMAmu2lm" role="gjbx_">
-              <property role="gjbwO" value="flexDirection" />
-              <node concept="ghjhU" id="2vPZMAmu2lp" role="gjbwM">
-                <node concept="Xl_RD" id="2vPZMAmu2lo" role="ghjhc">
-                  <property role="Xl_RC" value="column" />
-                </node>
-              </node>
-            </node>
-            <node concept="gjbwy" id="2vPZMAmu6eD" role="gjbx_">
-              <property role="gjbwO" value="gap" />
-              <node concept="ghjhU" id="2vPZMAmu6eG" role="gjbwM">
-                <node concept="Xl_RD" id="2vPZMAmu6eF" role="ghjhc">
-                  <property role="Xl_RC" value="20px" />
-                </node>
-              </node>
+          <node concept="1nBVpq" id="2vPZMAmuMyL" role="rrkkB">
+            <node concept="rqPyE" id="2vPZMAmuM$B" role="1nBVp7">
+              <ref role="rqPyD" node="2vPZMAmufRw" resolve="e" />
             </node>
           </node>
         </node>
       </node>
     </node>
-  </node>
-  <node concept="gl9ry" id="2vPZMAmuLYD">
-    <property role="TrG5h" value="react.element" />
     <node concept="gmrQT" id="2vPZMAmuLYE" role="gmrQt">
       <ref role="3JBHV4" to="oyym:2vPZMAmue7m" resolve="Element" />
-      <node concept="gmrTC" id="2vPZMAmuLYY" role="gmrTS">
-        <property role="gmPZ6" value="html.li" />
-        <node concept="gmrTC" id="2vPZMAmBbY6" role="gn1nJ">
-          <property role="gmPZ6" value="html.div" />
-          <node concept="ggXia" id="2vPZMAmBbYt" role="gn1nJ">
-            <node concept="3cpWs3" id="2vPZMAmBLZG" role="ggXio">
-              <node concept="Xl_RD" id="2vPZMAmBLZJ" role="3uHU7w">
-                <property role="Xl_RC" value=": " />
-              </node>
-              <node concept="3cpWs3" id="2vPZMAmBEjN" role="3uHU7B">
-                <node concept="Xl_RD" id="2vPZMAmBEjQ" role="3uHU7B">
-                  <property role="Xl_RC" value="Number " />
-                </node>
-                <node concept="2OqwBi" id="2vPZMAmBEc5" role="3uHU7w">
-                  <node concept="ggAI9" id="2vPZMAmBE4x" role="2Oq$k0" />
-                  <node concept="2bSWHS" id="2vPZMAmBEjx" role="2OqNvi" />
-                </node>
-              </node>
+      <node concept="2Ln$92" id="2vPZMAmF08v" role="gmrTS">
+        <node concept="2Lk9xs" id="2vPZMAmDAjg" role="2Ln$9p">
+          <node concept="3cpWs3" id="2vPZMAmD_ej" role="2Lk3Fj">
+            <node concept="2OqwBi" id="2vPZMAmD__J" role="3uHU7w">
+              <node concept="ggAI9" id="2vPZMAmD_em" role="2Oq$k0" />
+              <node concept="2bSWHS" id="2vPZMAmDA1Z" role="2OqNvi" />
+            </node>
+            <node concept="Xl_RD" id="2vPZMAmD$ey" role="3uHU7B">
+              <property role="Xl_RC" value="Number " />
             </node>
           </node>
-          <node concept="2Ly8ie" id="2vPZMAmBbY7" role="gn1nJ">
-            <node concept="2Ly3GW" id="2vPZMAmBbY8" role="2Ly3GP">
-              <ref role="2Ly3GY" to="oyym:2vPZMAmue7n" resolve="label" />
-              <node concept="ggAI9" id="2vPZMAmBbY9" role="2Ly3GZ" />
-            </node>
+        </node>
+        <node concept="2Lfa6Z" id="2vPZMAmMuy0" role="2Ln$9p" />
+        <node concept="2Ly8ie" id="2vPZMAmBbY7" role="2Ln$9p">
+          <node concept="2Ly3GW" id="2vPZMAmBbY8" role="2Ly3GP">
+            <ref role="2Ly3GY" to="oyym:2vPZMAmue7n" resolve="label" />
+            <node concept="ggAI9" id="2vPZMAmBbY9" role="2Ly3GZ" />
           </node>
         </node>
       </node>
