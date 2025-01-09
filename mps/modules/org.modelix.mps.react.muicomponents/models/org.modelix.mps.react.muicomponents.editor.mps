@@ -118,7 +118,7 @@
     </node>
   </node>
   <node concept="24kQdi" id="2vPZMAmEWcY">
-    <ref role="1XX52x" to="zaxg:2vPZMAmEVPF" resolve="HorizontalLayout" />
+    <ref role="1XX52x" to="zaxg:2vPZMAmEVPF" resolve="LayoutHorizontal" />
     <node concept="3EZMnI" id="2vPZMAmEWd8" role="2wV5jI">
       <node concept="2iRkQZ" id="2vPZMAmEWd9" role="2iSdaV" />
       <node concept="3EZMnI" id="2vPZMAmEWd3" role="3EZMnx">
@@ -146,7 +146,7 @@
     </node>
   </node>
   <node concept="24kQdi" id="2vPZMAmGCtm">
-    <ref role="1XX52x" to="zaxg:2vPZMAmGCtk" resolve="VerticalLayout" />
+    <ref role="1XX52x" to="zaxg:2vPZMAmGCtk" resolve="LayoutVertical" />
     <node concept="3EZMnI" id="2vPZMAmGCto" role="2wV5jI">
       <node concept="2iRkQZ" id="2vPZMAmGCtp" role="2iSdaV" />
       <node concept="3EZMnI" id="2vPZMAmGCtq" role="3EZMnx">

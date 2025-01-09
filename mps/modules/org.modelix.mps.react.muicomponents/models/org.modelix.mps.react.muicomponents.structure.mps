@@ -98,7 +98,7 @@
   </node>
   <node concept="1TIwiD" id="2vPZMAmEVPF">
     <property role="EcuMT" value="2879488090859879787" />
-    <property role="TrG5h" value="HorizontalLayout" />
+    <property role="TrG5h" value="LayoutHorizontal" />
     <property role="34LRSv" value="horizontal" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmEVPN" role="PzmwI">
@@ -128,7 +128,7 @@
   </node>
   <node concept="1TIwiD" id="2vPZMAmGCtk">
     <property role="EcuMT" value="2879488090860324692" />
-    <property role="TrG5h" value="VerticalLayout" />
+    <property role="TrG5h" value="LayoutVertical" />
     <property role="34LRSv" value="vertical" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmGCtl" role="PzmwI">

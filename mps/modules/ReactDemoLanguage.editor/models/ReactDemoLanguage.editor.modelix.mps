@@ -8,6 +8,7 @@
   </languages>
   <imports>
     <import index="oyym" ref="r:1570828e-e9a4-47ff-95d9-80c800704647(ReactDemoLanguage.structure)" />
+    <import index="1ut2" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:org.modelix.model.mpsadapters.tomps(org.modelix.mps.editor.common.stubs/)" />
   </imports>
   <registry>
     <language id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react">
@@ -46,7 +47,7 @@
     </language>
     <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.muicomponents">
       <concept id="2879488090861821590" name="org.modelix.mps.react.muicomponents.structure.Space" flags="ng" index="2Lfa6Z" />
-      <concept id="2879488090860324692" name="org.modelix.mps.react.muicomponents.structure.VerticalLayout" flags="ng" index="2LhRxX">
+      <concept id="2879488090860324692" name="org.modelix.mps.react.muicomponents.structure.LayoutVertical" flags="ng" index="2LhRxX">
         <property id="2879488090860368414" name="gap" index="2LhGOR" />
       </concept>
       <concept id="2879488090860989101" name="org.modelix.mps.react.muicomponents.structure.Header" flags="ng" index="2Lilm4">
@@ -56,7 +57,7 @@
       <concept id="2879488090859464565" name="org.modelix.mps.react.muicomponents.structure.Label" flags="ng" index="2Lk9xs">
         <child id="2879488090859488762" name="value" index="2Lk3Fj" />
       </concept>
-      <concept id="2879488090859879787" name="org.modelix.mps.react.muicomponents.structure.HorizontalLayout" flags="ng" index="2Ln$92" />
+      <concept id="2879488090859879787" name="org.modelix.mps.react.muicomponents.structure.LayoutHorizontal" flags="ng" index="2Ln$92" />
       <concept id="2879488090859879790" name="org.modelix.mps.react.muicomponents.structure.IMUILayoutComponent" flags="ngI" index="2Ln$97">
         <child id="2879488090859879792" name="children" index="2Ln$9p" />
       </concept>
@@ -90,7 +91,7 @@
       <node concept="2LhRxX" id="2vPZMAmGHZk" role="gmrTS">
         <property role="2LhGOR" value="20px" />
         <node concept="2Lilm4" id="2vPZMAmJgxt" role="2Ln$9p">
-          <property role="2Lilm6" value="2" />
+          <property role="2Lilm6" value="3" />
           <node concept="2OqwBi" id="2vPZMAmJgF4" role="2Lilmp">
             <node concept="ggAI9" id="2vPZMAmJgzw" role="2Oq$k0" />
             <node concept="3TrcHB" id="2vPZMAmJgMw" role="2OqNvi">
