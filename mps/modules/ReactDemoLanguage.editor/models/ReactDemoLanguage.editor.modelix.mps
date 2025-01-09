@@ -60,6 +60,9 @@
         <child id="1612157992440089646" name="input" index="rrkk9" />
         <child id="1612157992440089600" name="component" index="rrkkB" />
       </concept>
+      <concept id="2833354970324905743" name="org.modelix.mps.react.structure.RenderNode" flags="ng" index="1nBVpq">
+        <child id="2833354970324905746" name="nodeToRender" index="1nBVp7" />
+      </concept>
     </language>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
       <concept id="1197027756228" name="jetbrains.mps.baseLanguage.structure.DotExpression" flags="nn" index="2OqwBi">
@@ -85,7 +88,7 @@
     </language>
   </registry>
   <node concept="gl9ry" id="2CeLAhmFoil">
-    <property role="TrG5h" value="react.markus" />
+    <property role="TrG5h" value="react.root" />
     <node concept="gmrQT" id="2CeLAhmFoim" role="gmrQt">
       <ref role="3JBHV4" to="oyym:2CeLAhmF5rC" resolve="MarkusRoot" />
       <node concept="gmrTC" id="2CeLAhmFoin" role="gmrTS">
@@ -133,46 +136,15 @@
           <property role="gmPZ6" value="html.ul" />
           <node concept="rrkbs" id="2vPZMAmufRw" role="gn1nJ">
             <property role="TrG5h" value="e" />
-            <node concept="gmrTC" id="2vPZMAmugpO" role="rrkkB">
-              <property role="gmPZ6" value="html.li" />
-              <node concept="gmrTC" id="2vPZMAmukR7" role="gn1nJ">
-                <property role="gmPZ6" value="mui.TextField" />
-                <node concept="gn1nE" id="2vPZMAmukR8" role="gn1nH">
-                  <property role="gn1nW" value="onChange" />
-                  <node concept="ghf20" id="2vPZMAmukR9" role="gn1nU">
-                    <node concept="ghf2L" id="2vPZMAmukRa" role="ghfyX">
-                      <ref role="gh8LZ" to="oyym:2vPZMAmue7n" resolve="label" />
-                      <node concept="gh8L1" id="2vPZMAmukRb" role="gh8Lh">
-                        <property role="gh8Lj" value="event.target.value" />
-                      </node>
-                      <node concept="rqPyE" id="2vPZMAmukVM" role="gh8LV">
-                        <ref role="rqPyD" node="2vPZMAmufRw" resolve="e" />
-                      </node>
-                    </node>
-                    <node concept="ghf2g" id="2vPZMAmukRc" role="ghf3w">
-                      <property role="TrG5h" value="event" />
-                    </node>
-                  </node>
-                </node>
-                <node concept="gn1nE" id="2vPZMAmukRd" role="gn1nH">
-                  <property role="gn1nW" value="value" />
-                  <node concept="ghjhU" id="2vPZMAmukRe" role="gn1nU">
-                    <node concept="2OqwBi" id="2vPZMAmuldK" role="ghjhc">
-                      <node concept="rqPyE" id="2vPZMAmul6d" role="2Oq$k0">
-                        <ref role="rqPyD" node="2vPZMAmufRw" resolve="e" />
-                      </node>
-                      <node concept="3TrcHB" id="2vPZMAmulW0" role="2OqNvi">
-                        <ref role="3TsBF5" to="oyym:2vPZMAmue7n" resolve="label" />
-                      </node>
-                    </node>
-                  </node>
-                </node>
-              </node>
-            </node>
             <node concept="2OqwBi" id="2vPZMAmug38" role="rrkk9">
               <node concept="ggAI9" id="2vPZMAmufTC" role="2Oq$k0" />
               <node concept="3Tsc0h" id="2vPZMAmuga_" role="2OqNvi">
                 <ref role="3TtcxE" to="oyym:2vPZMAmue7o" resolve="elements" />
+              </node>
+            </node>
+            <node concept="1nBVpq" id="2vPZMAmuMyL" role="rrkkB">
+              <node concept="rqPyE" id="2vPZMAmuM$B" role="1nBVp7">
+                <ref role="rqPyD" node="2vPZMAmufRw" resolve="e" />
               </node>
             </node>
           </node>
@@ -201,6 +173,49 @@
               <node concept="ghjhU" id="2vPZMAmu6eG" role="gjbwM">
                 <node concept="Xl_RD" id="2vPZMAmu6eF" role="ghjhc">
                   <property role="Xl_RC" value="20px" />
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="gl9ry" id="2vPZMAmuLYD">
+    <property role="TrG5h" value="react.element" />
+    <node concept="gmrQT" id="2vPZMAmuLYE" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:2vPZMAmue7m" resolve="Element" />
+      <node concept="gmrTC" id="2vPZMAmuLYY" role="gmrTS">
+        <property role="gmPZ6" value="html.li" />
+        <node concept="ggXia" id="2vPZMAmuRqf" role="gn1nJ">
+          <node concept="Xl_RD" id="2vPZMAmuRqu" role="ggXio">
+            <property role="Xl_RC" value="DSumm&lt;" />
+          </node>
+        </node>
+        <node concept="gmrTC" id="2vPZMAmuLYZ" role="gn1nJ">
+          <property role="gmPZ6" value="mui.TextField" />
+          <node concept="gn1nE" id="2vPZMAmuLZ0" role="gn1nH">
+            <property role="gn1nW" value="onChange" />
+            <node concept="ghf20" id="2vPZMAmuLZ1" role="gn1nU">
+              <node concept="ghf2L" id="2vPZMAmuLZ2" role="ghfyX">
+                <ref role="gh8LZ" to="oyym:2vPZMAmue7n" resolve="label" />
+                <node concept="gh8L1" id="2vPZMAmuLZ3" role="gh8Lh">
+                  <property role="gh8Lj" value="event.target.value" />
+                </node>
+                <node concept="ggAI9" id="2vPZMAmuMuP" role="gh8LV" />
+              </node>
+              <node concept="ghf2g" id="2vPZMAmuLZ5" role="ghf3w">
+                <property role="TrG5h" value="event" />
+              </node>
+            </node>
+          </node>
+          <node concept="gn1nE" id="2vPZMAmuLZ6" role="gn1nH">
+            <property role="gn1nW" value="value" />
+            <node concept="ghjhU" id="2vPZMAmuLZ7" role="gn1nU">
+              <node concept="2OqwBi" id="2vPZMAmuLZ8" role="ghjhc">
+                <node concept="ggAI9" id="2vPZMAmuMuZ" role="2Oq$k0" />
+                <node concept="3TrcHB" id="2vPZMAmuLZa" role="2OqNvi">
+                  <ref role="3TsBF5" to="oyym:2vPZMAmue7n" resolve="label" />
                 </node>
               </node>
             </node>
