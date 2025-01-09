@@ -6,6 +6,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import Grid2 from "@mui/material/Unstable_Grid2"
 import { SimpleTreeView, RichTreeView, TreeItem, TreeItem2 } from '@mui/x-tree-view';
 import {ReferenceTargetChooser} from "./ReferenceTargetChooser.tsx";
+import {Dropdown} from "./Dropdown.tsx";
 import {ModelixTextField} from "./ModelixTextField.tsx";
 import {ModelixSpreadsheet} from "./ModelixSpreadsheet.tsx";
 import {ModelixTextEditor} from "./ModelixTextEditor.tsx";
@@ -90,6 +91,7 @@ export function registerDefaultComponents() {
     registerGenericComponent("mui.RichTreeView", RichTreeView)
     registerGenericComponent("mui.TreeItem", TreeItem)
     registerGenericComponent("mui.TreeItem2", TreeItem2)
+    registerGenericComponent("modelix.Dropdown", Dropdown)
     registerGenericComponent("modelix.ReferenceTargetChooser", ReferenceTargetChooser)
     registerGenericComponent("modelix.TextField", ModelixTextField)
     registerGenericComponent("modelix.Spreadsheet", ModelixSpreadsheet)

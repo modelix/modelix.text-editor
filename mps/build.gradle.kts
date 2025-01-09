@@ -32,6 +32,9 @@ mpsBuild {
     publication("react") {
         module("org.modelix.mps.react")
     }
+    publication("react-demo") {
+        module("ReactDemoLanguage.editor")
+    }
 }
 
 tasks.all {
