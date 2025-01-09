@@ -98,10 +98,17 @@
             </node>
           </node>
         </node>
-        <node concept="2Ly8ie" id="2vPZMAmG_uT" role="2Ln$9p">
-          <node concept="2Ly3GW" id="2vPZMAmG_uV" role="2Ly3GP">
-            <ref role="2Ly3GY" to="oyym:2u4zLgG12gd" resolve="name" />
-            <node concept="ggAI9" id="2vPZMAmG_x3" role="2Ly3GZ" />
+        <node concept="2Ln$92" id="2vPZMAmPw0_" role="2Ln$9p">
+          <node concept="2Lk9xs" id="2vPZMAmPw4D" role="2Ln$9p">
+            <node concept="Xl_RD" id="2vPZMAmPw4K" role="2Lk3Fj">
+              <property role="Xl_RC" value="Name of the thing" />
+            </node>
+          </node>
+          <node concept="2Ly8ie" id="2vPZMAmG_uT" role="2Ln$9p">
+            <node concept="2Ly3GW" id="2vPZMAmG_uV" role="2Ly3GP">
+              <ref role="2Ly3GY" to="oyym:2u4zLgG12gd" resolve="name" />
+              <node concept="ggAI9" id="2vPZMAmG_x3" role="2Ly3GZ" />
+            </node>
           </node>
         </node>
         <node concept="rrkbs" id="2vPZMAmufRw" role="2Ln$9p">

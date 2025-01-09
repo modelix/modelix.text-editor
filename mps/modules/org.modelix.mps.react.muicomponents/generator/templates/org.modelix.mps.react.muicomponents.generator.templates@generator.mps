@@ -280,7 +280,7 @@
                   <property role="gjbwO" value="display" />
                   <node concept="ghjhU" id="2vPZMAmEHFY" role="gjbwM">
                     <node concept="Xl_RD" id="2vPZMAmEHFZ" role="ghjhc">
-                      <property role="Xl_RC" value="grid" />
+                      <property role="Xl_RC" value="flex" />
                     </node>
                   </node>
                 </node>
@@ -288,7 +288,7 @@
                   <property role="gjbwO" value="gridAutoFlow" />
                   <node concept="ghjhU" id="2vPZMAmEHG1" role="gjbwM">
                     <node concept="Xl_RD" id="2vPZMAmEHG2" role="ghjhc">
-                      <property role="Xl_RC" value="column" />
+                      <property role="Xl_RC" value="row" />
                     </node>
                   </node>
                 </node>
@@ -332,15 +332,23 @@
                   <property role="gjbwO" value="display" />
                   <node concept="ghjhU" id="2vPZMAmGCtG" role="gjbwM">
                     <node concept="Xl_RD" id="2vPZMAmGCtH" role="ghjhc">
-                      <property role="Xl_RC" value="grid" />
+                      <property role="Xl_RC" value="flex" />
                     </node>
                   </node>
                 </node>
                 <node concept="gjbwy" id="2vPZMAmGCtI" role="gjbx_">
-                  <property role="gjbwO" value="gridAutoFlow" />
+                  <property role="gjbwO" value="flexDirection" />
                   <node concept="ghjhU" id="2vPZMAmGCtJ" role="gjbwM">
                     <node concept="Xl_RD" id="2vPZMAmGCtK" role="ghjhc">
-                      <property role="Xl_RC" value="row" />
+                      <property role="Xl_RC" value="column" />
+                    </node>
+                  </node>
+                </node>
+                <node concept="gjbwy" id="2vPZMAmNwea" role="gjbx_">
+                  <property role="gjbwO" value="justifyContent" />
+                  <node concept="ghjhU" id="2vPZMAmNwhb" role="gjbwM">
+                    <node concept="Xl_RD" id="2vPZMAmNwha" role="ghjhc">
+                      <property role="Xl_RC" value="left" />
                     </node>
                   </node>
                 </node>
@@ -582,7 +590,7 @@
             <node concept="raruj" id="2vPZMAmMn1j" role="lGtFl" />
             <node concept="ggXia" id="2vPZMAmMn1k" role="gn1nJ">
               <node concept="Xl_RD" id="2vPZMAmMn1m" role="ggXio">
-                <property role="Xl_RC" value="&amp;nbsp;" />
+                <property role="Xl_RC" value=" " />
               </node>
             </node>
           </node>
