@@ -2,6 +2,7 @@
 <model ref="r:c4183f14-1033-4ade-be7c-1beadb184134(org.modelix.mps.react.muicomponents.structure)">
   <persistence version="9" />
   <languages>
+    <use id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure" version="9" />
     <devkit ref="78434eb8-b0e5-444b-850d-e7c4ad2da9ab(jetbrains.mps.devkit.aspect.structure)" />
   </languages>
   <imports>
@@ -117,14 +118,7 @@
     <property role="EcuMT" value="2879488090859879790" />
     <property role="TrG5h" value="IMUILayoutComponent" />
     <node concept="PrWs8" id="2vPZMAmEVPJ" role="PrDN$">
-      <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
-    </node>
-    <node concept="1TJgyj" id="2vPZMAmEVPK" role="1TKVEi">
-      <property role="IQ2ns" value="2879488090859879792" />
-      <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="children" />
-      <property role="20lbJX" value="fLJekj5/_0__n" />
-      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+      <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerComponent" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAmGCtk">
@@ -240,6 +234,27 @@
       <property role="20kJfa" value="statements" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" to="tpee:fzclF80" resolve="StatementList" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="2vPZMAnsypR">
+    <property role="EcuMT" value="2879488090872882807" />
+    <property role="TrG5h" value="ICanWrap" />
+  </node>
+  <node concept="PlHQZ" id="2vPZMAnsysd">
+    <property role="EcuMT" value="2879488090872882957" />
+    <property role="TrG5h" value="IContainerComponent" />
+    <node concept="PrWs8" id="2vPZMAnsyse" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
+    </node>
+    <node concept="PrWs8" id="2vPZMAnsysf" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAnsypR" resolve="ICanWrap" />
+    </node>
+    <node concept="1TJgyj" id="2vPZMAmEVPK" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090859879792" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="children" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
   </node>
 </model>

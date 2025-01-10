@@ -8,7 +8,7 @@
   </languages>
   <imports>
     <import index="vpip" ref="r:fcc69b83-3584-4a79-833a-d9dc948b6fd7(org.modelix.mps.react.editor)" />
-    <import index="zaxg" ref="r:c4183f14-1033-4ade-be7c-1beadb184134(org.modelix.mps.react.muicomponents.structure)" implicit="true" />
+    <import index="zaxg" ref="r:c4183f14-1033-4ade-be7c-1beadb184134(org.modelix.mps.react.muicomponents.structure)" />
     <import index="tpco" ref="r:00000000-0000-4000-0000-011c89590284(jetbrains.mps.lang.core.editor)" implicit="true" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
     <import index="7923" ref="r:2c5a8407-fd65-4ea4-b95e-a8f8fee129c0(org.modelix.mps.react.muicomponents.behavior)" implicit="true" />
@@ -205,6 +205,7 @@
         <node concept="3F0A7n" id="2vPZMAmGN8z" role="3EZMnx">
           <property role="1O74Pk" value="true" />
           <ref role="1NtTu8" to="zaxg:2vPZMAmGN8u" resolve="gap" />
+          <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
         </node>
         <node concept="3F0ifn" id="2vPZMAmGCtt" role="3EZMnx">
           <property role="3F0ifm" value="{" />
@@ -244,6 +245,7 @@
       </node>
       <node concept="3F0A7n" id="2vPZMAmJaEY" role="3EZMnx">
         <ref role="1NtTu8" to="zaxg:2vPZMAmJaEJ" resolve="level" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
       </node>
       <node concept="3F0ifn" id="2vPZMAmJaEW" role="3EZMnx">
         <property role="3F0ifm" value="&gt;" />
