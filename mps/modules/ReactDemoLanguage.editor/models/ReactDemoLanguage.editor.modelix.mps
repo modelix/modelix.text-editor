@@ -13,13 +13,7 @@
   </imports>
   <registry>
     <language id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react">
-      <concept id="5291744615171232095" name="org.modelix.mps.react.structure.CustomHandler" flags="ng" index="24bxNJ">
-        <child id="5291744615171248062" name="body" index="24b$8e" />
-      </concept>
       <concept id="8876946878574570414" name="org.modelix.mps.react.structure.ComponentNodeExpression" flags="ng" index="ggAI9" />
-      <concept id="8876946878574735527" name="org.modelix.mps.react.structure.JsFunctionPropertyValue" flags="ng" index="ghf20">
-        <child id="8876946878574737562" name="implementation" index="ghfyX" />
-      </concept>
       <concept id="8876946878573696709" name="org.modelix.mps.react.structure.ReactModule" flags="ng" index="gl9ry">
         <child id="8876946878573903290" name="content" index="gmrQt" />
       </concept>
@@ -59,11 +53,14 @@
       </concept>
     </language>
     <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.muicomponents">
+      <concept id="2879488090869195431" name="org.modelix.mps.react.muicomponents.structure.Command" flags="ng" index="2KN1Qe">
+        <child id="2879488090869195432" name="statements" index="2KN1Q1" />
+      </concept>
       <concept id="2879488090867630820" name="org.modelix.mps.react.muicomponents.structure.ButtonLabelIcon" flags="ng" index="2KPZRd">
         <property id="2879488090867630821" name="icon" index="2KPZRc" />
       </concept>
       <concept id="2879488090865052965" name="org.modelix.mps.react.muicomponents.structure.Button" flags="ng" index="2L3P8c">
-        <child id="2879488090865234452" name="handler" index="2L28OX" />
+        <child id="2879488090869195443" name="command" index="2KN1Qq" />
         <child id="2879488090865052967" name="label" index="2L3P8e" />
       </concept>
       <concept id="2879488090865052939" name="org.modelix.mps.react.muicomponents.structure.ButtonLabelText" flags="ng" index="2L3P8y">
@@ -176,27 +173,25 @@
           <node concept="2L3P8y" id="2vPZMAmZ3TM" role="2L3P8e">
             <property role="2L3P8_" value="Hinzufügen" />
           </node>
-          <node concept="ghf20" id="2vPZMAmZuaL" role="2L28OX">
-            <node concept="24bxNJ" id="2vPZMAmZuaN" role="ghfyX">
-              <node concept="3clFbS" id="2vPZMAmZuaP" role="24b$8e">
-                <node concept="3clFbF" id="2vPZMAmZuaT" role="3cqZAp">
-                  <node concept="2OqwBi" id="2vPZMAmVRlL" role="3clFbG">
-                    <node concept="2OqwBi" id="2vPZMAmVOHq" role="2Oq$k0">
-                      <node concept="ggAI9" id="2vPZMAmVOwr" role="2Oq$k0" />
-                      <node concept="3Tsc0h" id="2vPZMAmVOOQ" role="2OqNvi">
-                        <ref role="3TtcxE" to="oyym:2vPZMAmue7o" resolve="elements" />
-                      </node>
+          <node concept="2KN1Qe" id="2vPZMAneBr9" role="2KN1Qq">
+            <node concept="3clFbS" id="2vPZMAneBra" role="2KN1Q1">
+              <node concept="3clFbF" id="2vPZMAneBvZ" role="3cqZAp">
+                <node concept="2OqwBi" id="2vPZMAmVRlL" role="3clFbG">
+                  <node concept="2OqwBi" id="2vPZMAmVOHq" role="2Oq$k0">
+                    <node concept="ggAI9" id="2vPZMAmVOwr" role="2Oq$k0" />
+                    <node concept="3Tsc0h" id="2vPZMAmVOOQ" role="2OqNvi">
+                      <ref role="3TtcxE" to="oyym:2vPZMAmue7o" resolve="elements" />
                     </node>
-                    <node concept="TSZUe" id="2vPZMAmWdNw" role="2OqNvi">
-                      <node concept="2pJPEk" id="2vPZMAmWdR3" role="25WWJ7">
-                        <node concept="2pJPED" id="2vPZMAmWdR5" role="2pJPEn">
-                          <ref role="2pJxaS" to="oyym:2vPZMAmue7m" resolve="Element" />
-                          <node concept="2pJxcG" id="2vPZMAmWe0Q" role="2pJxcM">
-                            <ref role="2pJxcJ" to="oyym:2vPZMAmue7n" resolve="label" />
-                            <node concept="WxPPo" id="2vPZMAmWe4m" role="28ntcv">
-                              <node concept="Xl_RD" id="2vPZMAmWe4l" role="WxPPp">
-                                <property role="Xl_RC" value="added" />
-                              </node>
+                  </node>
+                  <node concept="TSZUe" id="2vPZMAmWdNw" role="2OqNvi">
+                    <node concept="2pJPEk" id="2vPZMAmWdR3" role="25WWJ7">
+                      <node concept="2pJPED" id="2vPZMAmWdR5" role="2pJPEn">
+                        <ref role="2pJxaS" to="oyym:2vPZMAmue7m" resolve="Element" />
+                        <node concept="2pJxcG" id="2vPZMAmWe0Q" role="2pJxcM">
+                          <ref role="2pJxcJ" to="oyym:2vPZMAmue7n" resolve="label" />
+                          <node concept="WxPPo" id="2vPZMAmWe4m" role="28ntcv">
+                            <node concept="Xl_RD" id="2vPZMAmWe4l" role="WxPPp">
+                              <property role="Xl_RC" value="added" />
                             </node>
                           </node>
                         </node>
@@ -232,20 +227,18 @@
           </node>
         </node>
         <node concept="2L3P8c" id="2vPZMAn9sBq" role="2Ln$9p">
-          <node concept="ghf20" id="2vPZMAn9sBs" role="2L28OX">
-            <node concept="24bxNJ" id="2vPZMAn9sBt" role="ghfyX">
-              <node concept="3clFbS" id="2vPZMAn9sBu" role="24b$8e">
-                <node concept="3clFbF" id="2vPZMAn9sBv" role="3cqZAp">
-                  <node concept="2OqwBi" id="2vPZMAn9Ady" role="3clFbG">
-                    <node concept="ggAI9" id="2vPZMAn9Adz" role="2Oq$k0" />
-                    <node concept="3YRAZt" id="2vPZMAn9Ad$" role="2OqNvi" />
-                  </node>
+          <node concept="2KPZRd" id="2vPZMAn9td3" role="2L3P8e">
+            <property role="2KPZRc" value="mui.icons.Delete" />
+          </node>
+          <node concept="2KN1Qe" id="2vPZMAneBBa" role="2KN1Qq">
+            <node concept="3clFbS" id="2vPZMAneBBb" role="2KN1Q1">
+              <node concept="3clFbF" id="2vPZMAneBBc" role="3cqZAp">
+                <node concept="2OqwBi" id="2vPZMAn9Ady" role="3clFbG">
+                  <node concept="ggAI9" id="2vPZMAn9Adz" role="2Oq$k0" />
+                  <node concept="3YRAZt" id="2vPZMAn9Ad$" role="2OqNvi" />
                 </node>
               </node>
             </node>
-          </node>
-          <node concept="2KPZRd" id="2vPZMAn9td3" role="2L3P8e">
-            <property role="2KPZRc" value="mui.icons.Delete" />
           </node>
         </node>
       </node>

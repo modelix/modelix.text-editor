@@ -210,12 +210,12 @@
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="2vPZMAmYEOa" resolve="ButtonLabel" />
     </node>
-    <node concept="1TJgyj" id="2vPZMAmZn8k" role="1TKVEi">
-      <property role="IQ2ns" value="2879488090865234452" />
+    <node concept="1TJgyj" id="2vPZMAneuaN" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090869195443" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="handler" />
+      <property role="20kJfa" value="command" />
       <property role="20lbJX" value="fLJekj4/_1" />
-      <ref role="20lvS9" to="8xo1:7GLg2tFtr2B" resolve="JsFunctionPropertyValue" />
+      <ref role="20lvS9" node="2vPZMAneuaB" resolve="Command" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAn8wb$">
@@ -227,6 +227,19 @@
       <property role="IQ2nx" value="2879488090867630821" />
       <property role="TrG5h" value="icon" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAneuaB">
+    <property role="EcuMT" value="2879488090869195431" />
+    <property role="TrG5h" value="Command" />
+    <property role="34LRSv" value="do" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="2vPZMAneuaC" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090869195432" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="statements" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fzclF80" resolve="StatementList" />
     </node>
   </node>
 </model>

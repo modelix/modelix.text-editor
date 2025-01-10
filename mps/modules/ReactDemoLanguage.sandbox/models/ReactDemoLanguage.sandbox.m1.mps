@@ -22,10 +22,10 @@
   </registry>
   <node concept="1WCD2c" id="2vPZMAn5iOK">
     <property role="TrG5h" value="Example" />
-    <node concept="2LzhVZ" id="2vPZMAnc2_a" role="2LzhVL">
+    <node concept="2LzhVZ" id="2vPZMAngn6U" role="2LzhVL">
       <property role="2LzhVY" value="added" />
     </node>
-    <node concept="2LzhVZ" id="2vPZMAnc2_b" role="2LzhVL">
+    <node concept="2LzhVZ" id="2vPZMAngn6V" role="2LzhVL">
       <property role="2LzhVY" value="added" />
     </node>
   </node>
