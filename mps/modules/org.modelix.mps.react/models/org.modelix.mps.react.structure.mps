@@ -369,7 +369,7 @@
   <node concept="1TIwiD" id="1pvyisdcGJV">
     <property role="EcuMT" value="1612157992440089595" />
     <property role="TrG5h" value="ForEachComponent" />
-    <property role="34LRSv" value="foreach" />
+    <property role="34LRSv" value="each" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="1pvyisdcGK0" role="1TKVEi">
       <property role="IQ2ns" value="1612157992440089600" />
@@ -431,6 +431,7 @@
   <node concept="1TIwiD" id="2ti6llKMteI">
     <property role="EcuMT" value="2833354970324652974" />
     <property role="TrG5h" value="WhenCase" />
+    <property role="34LRSv" value="case" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="2ti6llKMteJ" role="1TKVEi">
       <property role="IQ2ns" value="2833354970324652975" />

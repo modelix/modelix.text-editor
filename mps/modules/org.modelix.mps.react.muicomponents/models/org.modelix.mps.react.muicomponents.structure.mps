@@ -13,6 +13,15 @@
   </imports>
   <registry>
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
+      <concept id="3348158742936976480" name="jetbrains.mps.lang.structure.structure.EnumerationMemberDeclaration" flags="ng" index="25R33">
+        <property id="1421157252384165432" name="memberId" index="3tVfz5" />
+      </concept>
+      <concept id="3348158742936976479" name="jetbrains.mps.lang.structure.structure.EnumerationDeclaration" flags="ng" index="25R3W">
+        <child id="3348158742936976577" name="members" index="25R1y" />
+      </concept>
+      <concept id="1082978164218" name="jetbrains.mps.lang.structure.structure.DataTypeDeclaration" flags="ng" index="AxPO6">
+        <property id="7791109065626895363" name="datatypeId" index="3F6X1D" />
+      </concept>
       <concept id="1169125787135" name="jetbrains.mps.lang.structure.structure.AbstractConceptDeclaration" flags="ig" index="PkWjJ">
         <property id="6714410169261853888" name="conceptId" index="EcuMT" />
         <property id="4628067390765956802" name="abstract" index="R5$K7" />
@@ -97,6 +106,11 @@
     <node concept="PrWs8" id="2vPZMAmDs9r" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
     </node>
+    <node concept="1TJgyi" id="2vPZMAn_7No" role="1TKVEl">
+      <property role="IQ2nx" value="2879488090875133144" />
+      <property role="TrG5h" value="style" />
+      <ref role="AX2Wp" node="2vPZMAn_7Nl" resolve="LabelStyle" />
+    </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAmEVPF">
     <property role="EcuMT" value="2879488090859879787" />
@@ -118,7 +132,7 @@
     <property role="EcuMT" value="2879488090859879790" />
     <property role="TrG5h" value="IMUILayoutComponent" />
     <node concept="PrWs8" id="2vPZMAmEVPJ" role="PrDN$">
-      <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerComponent" />
+      <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAmGCtk">
@@ -217,10 +231,12 @@
     <property role="TrG5h" value="ButtonLabelIcon" />
     <property role="34LRSv" value="icon" />
     <ref role="1TJDcQ" node="2vPZMAmYEOa" resolve="ButtonLabel" />
-    <node concept="1TJgyi" id="2vPZMAn8wb_" role="1TKVEl">
-      <property role="IQ2nx" value="2879488090867630821" />
-      <property role="TrG5h" value="icon" />
-      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    <node concept="1TJgyj" id="2vPZMAnBVHD" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090875870057" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="icon" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2vPZMAnBVdU" resolve="Icon" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAneuaB">
@@ -242,7 +258,7 @@
   </node>
   <node concept="PlHQZ" id="2vPZMAnsysd">
     <property role="EcuMT" value="2879488090872882957" />
-    <property role="TrG5h" value="IContainerComponent" />
+    <property role="TrG5h" value="IContainerMultiComponent" />
     <node concept="PrWs8" id="2vPZMAnsyse" role="PrDN$">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
     </node>
@@ -255,6 +271,77 @@
       <property role="20kJfa" value="children" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+  </node>
+  <node concept="25R3W" id="2vPZMAn_7Nl">
+    <property role="3F6X1D" value="2879488090875133141" />
+    <property role="TrG5h" value="LabelStyle" />
+    <node concept="25R33" id="2vPZMAn_7Nm" role="25R1y">
+      <property role="3tVfz5" value="2879488090875133142" />
+      <property role="TrG5h" value="plain" />
+    </node>
+    <node concept="25R33" id="2vPZMAn_7Nn" role="25R1y">
+      <property role="3tVfz5" value="2879488090875133143" />
+      <property role="TrG5h" value="bold" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAnBVdN">
+    <property role="EcuMT" value="2879488090875868019" />
+    <property role="TrG5h" value="Accordion" />
+    <property role="34LRSv" value="accordion" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2vPZMAnBVdO" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
+    </node>
+    <node concept="1TJgyj" id="2vPZMAnEJvM" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090876606450" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="icon" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2vPZMAnBVdU" resolve="Icon" />
+    </node>
+    <node concept="1TJgyj" id="2vPZMAnBVdP" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090875868021" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="summary" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAnBVdU">
+    <property role="EcuMT" value="2879488090875868026" />
+    <property role="TrG5h" value="Icon" />
+    <property role="34LRSv" value="icon" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="2vPZMAnBVdV" role="1TKVEl">
+      <property role="IQ2nx" value="2879488090875868027" />
+      <property role="TrG5h" value="name" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAnIaRS">
+    <property role="EcuMT" value="2879488090877505016" />
+    <property role="TrG5h" value="Box" />
+    <property role="34LRSv" value="box" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2vPZMAnIc9c" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="2vPZMAnIaRU">
+    <property role="EcuMT" value="2879488090877505018" />
+    <property role="TrG5h" value="IContainerSingleComponent" />
+    <node concept="1TJgyj" id="2vPZMAnIaRX" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090877505021" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="child" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+    <node concept="PrWs8" id="2vPZMAnIaRV" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
+    </node>
+    <node concept="PrWs8" id="2vPZMAnIaRW" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAnsypR" resolve="ICanWrap" />
     </node>
   </node>
 </model>
