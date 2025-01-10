@@ -67,7 +67,7 @@
   <node concept="1TIwiD" id="7GLg2tFqfQu">
     <property role="EcuMT" value="8876946878573903262" />
     <property role="TrG5h" value="ConceptRenderer" />
-    <property role="34LRSv" value="renderer" />
+    <property role="34LRSv" value="concept renderer" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="7GLg2tFqfTv" role="1TKVEi">
       <property role="IQ2ns" value="8876946878573903455" />
@@ -450,7 +450,7 @@
   <node concept="1TIwiD" id="2ti6llKNqWf">
     <property role="EcuMT" value="2833354970324905743" />
     <property role="TrG5h" value="RenderNode" />
-    <property role="34LRSv" value="call default renderer" />
+    <property role="34LRSv" value="render default" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="2ti6llKNqWi" role="1TKVEi">
       <property role="IQ2ns" value="2833354970324905746" />
@@ -507,7 +507,7 @@
     <property role="EcuMT" value="5355184975880615607" />
     <property role="TrG5h" value="NamedRenderer" />
     <property role="3GE5qa" value="named-renderer" />
-    <property role="34LRSv" value="named" />
+    <property role="34LRSv" value="named renderer" />
     <ref role="1TJDcQ" node="4Dhs5NhTz4H" resolve="NamedRendererBase" />
     <node concept="PrWs8" id="4Dhs5NhRRqS" role="PzmwI">
       <ref role="PrY4T" node="7GLg2tFqfQG" resolve="IReactModuleContent" />
@@ -603,7 +603,7 @@
     <property role="EcuMT" value="5355184975881978516" />
     <property role="3GE5qa" value="named-renderer" />
     <property role="TrG5h" value="CallNamedRenderer" />
-    <property role="34LRSv" value="call named" />
+    <property role="34LRSv" value="render named" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="1TJgyj" id="4Dhs5NhX4av" role="1TKVEi">
       <property role="IQ2ns" value="5355184975881978527" />
