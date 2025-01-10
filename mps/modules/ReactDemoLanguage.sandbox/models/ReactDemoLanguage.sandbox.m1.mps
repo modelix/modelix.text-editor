@@ -6,23 +6,27 @@
   </languages>
   <imports />
   <registry>
+    <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
+        <property id="1169194664001" name="name" index="TrG5h" />
+      </concept>
+    </language>
     <language id="dce965c2-af99-4a0c-9895-485700f46864" name="ReactDemoLanguage">
       <concept id="2879488090856546774" name="ReactDemoLanguage.structure.Element" flags="ng" index="2LzhVZ">
         <property id="2879488090856546775" name="label" index="2LzhVY" />
       </concept>
       <concept id="3030577733520086760" name="ReactDemoLanguage.structure.ReactRoot" flags="ng" index="1WCD2c">
-        <property id="2847558181205582861" name="name" index="bwaGp" />
         <child id="2879488090856546776" name="elements" index="2LzhVL" />
       </concept>
     </language>
   </registry>
-  <node concept="1WCD2c" id="4OeoZ0Osahp">
-    <property role="bwaGp" value="HelloVideo3_1fdfsdfsf" />
-    <node concept="2LzhVZ" id="2vPZMAmufQY" role="2LzhVL">
-      <property role="2LzhVY" value="e2" />
+  <node concept="1WCD2c" id="2vPZMAn5iOK">
+    <property role="TrG5h" value="Example" />
+    <node concept="2LzhVZ" id="2vPZMAnc2_a" role="2LzhVL">
+      <property role="2LzhVY" value="added" />
     </node>
-    <node concept="2LzhVZ" id="2vPZMAmufQZ" role="2LzhVL">
-      <property role="2LzhVY" value="e2" />
+    <node concept="2LzhVZ" id="2vPZMAnc2_b" role="2LzhVL">
+      <property role="2LzhVY" value="added" />
     </node>
   </node>
 </model>

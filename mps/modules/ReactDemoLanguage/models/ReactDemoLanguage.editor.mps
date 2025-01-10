@@ -8,6 +8,7 @@
   </languages>
   <imports>
     <import index="oyym" ref="r:1570828e-e9a4-47ff-95d9-80c800704647(ReactDemoLanguage.structure)" implicit="true" />
+    <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
   </imports>
   <registry>
     <language id="18bc6592-03a6-4e29-a83a-7ff23bde13ba" name="jetbrains.mps.lang.editor">
@@ -52,7 +53,7 @@
           <property role="3F0ifm" value="Root" />
         </node>
         <node concept="3F0A7n" id="2vPZMAmuDuM" role="3EZMnx">
-          <ref role="1NtTu8" to="oyym:2u4zLgG12gd" resolve="name" />
+          <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
         </node>
       </node>
       <node concept="3EZMnI" id="2vPZMAmurkx" role="3EZMnx">

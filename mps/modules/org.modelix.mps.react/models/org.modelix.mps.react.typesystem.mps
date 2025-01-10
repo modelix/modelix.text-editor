@@ -11,7 +11,6 @@
     <import index="f2e5" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:kotlinx.serialization.json(org.modelix.mps.editor.common.stubs/)" />
     <import index="8xo1" ref="r:41b64586-29ed-47f5-b907-44be07261bbc(org.modelix.mps.react.structure)" implicit="true" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
-    <import index="f2e6" ref="83a7cbdc-dd9d-4dad-be97-957aa1b07375/java:kotlinx.serialization.json(org.modelix.mps.react.ssr.stubs/)" implicit="true" />
   </imports>
   <registry>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
@@ -670,7 +669,7 @@
         <node concept="mw_s8" id="425sFRq4cB7" role="1ZfhKB">
           <node concept="2c44tf" id="425sFRq4cB3" role="mwGJk">
             <node concept="3uibUv" id="425sFRq4cCc" role="2c44tc">
-              <ref role="3uigEE" to="f2e6:~JsonObject" resolve="JsonObject" />
+              <ref role="3uigEE" to="f2e5:~JsonObject" resolve="JsonObject" />
             </node>
           </node>
         </node>

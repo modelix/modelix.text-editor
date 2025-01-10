@@ -14,6 +14,7 @@
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
       <concept id="1169125787135" name="jetbrains.mps.lang.structure.structure.AbstractConceptDeclaration" flags="ig" index="PkWjJ">
         <property id="6714410169261853888" name="conceptId" index="EcuMT" />
+        <property id="4628067390765956802" name="abstract" index="R5$K7" />
         <property id="5092175715804935370" name="conceptAlias" index="34LRSv" />
         <child id="1071489727083" name="linkDeclaration" index="1TKVEi" />
         <child id="1071489727084" name="propertyDeclaration" index="1TKVEl" />
@@ -168,6 +169,64 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmMlUn" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="2vPZMAmYEO7">
+    <property role="EcuMT" value="2879488090865052935" />
+    <property role="TrG5h" value="IMUIAction" />
+    <node concept="PrWs8" id="2vPZMAmYEO8" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAmYEOa">
+    <property role="EcuMT" value="2879488090865052938" />
+    <property role="TrG5h" value="ButtonLabel" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+  </node>
+  <node concept="1TIwiD" id="2vPZMAmYEOb">
+    <property role="EcuMT" value="2879488090865052939" />
+    <property role="TrG5h" value="ButtonLabelText" />
+    <property role="34LRSv" value="text" />
+    <ref role="1TJDcQ" node="2vPZMAmYEOa" resolve="ButtonLabel" />
+    <node concept="1TJgyi" id="2vPZMAmYEOc" role="1TKVEl">
+      <property role="IQ2nx" value="2879488090865052940" />
+      <property role="TrG5h" value="text" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAmYEO_">
+    <property role="EcuMT" value="2879488090865052965" />
+    <property role="TrG5h" value="Button" />
+    <property role="34LRSv" value="button" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2vPZMAmYEOA" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAmYEO7" resolve="IMUIAction" />
+    </node>
+    <node concept="1TJgyj" id="2vPZMAmYEOB" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090865052967" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="label" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2vPZMAmYEOa" resolve="ButtonLabel" />
+    </node>
+    <node concept="1TJgyj" id="2vPZMAmZn8k" role="1TKVEi">
+      <property role="IQ2ns" value="2879488090865234452" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="handler" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFtr2B" resolve="JsFunctionPropertyValue" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2vPZMAn8wb$">
+    <property role="EcuMT" value="2879488090867630820" />
+    <property role="TrG5h" value="ButtonLabelIcon" />
+    <property role="34LRSv" value="icon" />
+    <ref role="1TJDcQ" node="2vPZMAmYEOa" resolve="ButtonLabel" />
+    <node concept="1TJgyi" id="2vPZMAn8wb_" role="1TKVEl">
+      <property role="IQ2nx" value="2879488090867630821" />
+      <property role="TrG5h" value="icon" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
   </node>
 </model>
