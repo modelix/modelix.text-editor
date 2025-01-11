@@ -12,7 +12,14 @@
       </concept>
     </language>
     <language id="dce965c2-af99-4a0c-9895-485700f46864" name="ReactDemoLanguage">
+      <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
+        <property id="2879488090881171739" name="a" index="2K1lSM" />
+        <property id="2879488090881171741" name="c" index="2K1lSO" />
+        <property id="2879488090881171740" name="b" index="2K1lSP" />
+      </concept>
       <concept id="2879488090872081360" name="ReactDemoLanguage.structure.TreeNode" flags="ng" index="2K$1jT">
+        <property id="2879488090879969357" name="a" index="2KaVt$" />
+        <property id="2879488090895352643" name="b" index="2ZffLE" />
         <child id="2879488090872081362" name="children" index="2K$1jV" />
       </concept>
       <concept id="2879488090856546774" name="ReactDemoLanguage.structure.Element" flags="ng" index="2LzhVZ">
@@ -40,72 +47,23 @@
   </node>
   <node concept="2K$1jT" id="2vPZMAnpySp">
     <property role="TrG5h" value="N1" />
+    <property role="2KaVt$" value="a2" />
+    <property role="2ZffLE" value="b1" />
     <node concept="2K$1jT" id="2vPZMAnpySr" role="2K$1jV">
       <property role="TrG5h" value="N21" />
-    </node>
-    <node concept="2K$1jT" id="2vPZMAnBVc9" role="2K$1jV">
-      <property role="TrG5h" value="N21" />
-    </node>
-    <node concept="2K$1jT" id="2vPZMAnBVca" role="2K$1jV">
-      <property role="TrG5h" value="N21" />
-      <node concept="2K$1jT" id="2vPZMAnBVcc" role="2K$1jV">
-        <property role="TrG5h" value="N22" />
-        <node concept="2K$1jT" id="2vPZMAnBVcd" role="2K$1jV">
-          <property role="TrG5h" value="N3" />
-        </node>
-      </node>
-      <node concept="2K$1jT" id="2vPZMAnBVce" role="2K$1jV">
-        <property role="TrG5h" value="N22" />
-        <node concept="2K$1jT" id="2vPZMAnBVcf" role="2K$1jV">
-          <property role="TrG5h" value="N3" />
-          <node concept="2K$1jT" id="2vPZMAnBVcg" role="2K$1jV">
-            <property role="TrG5h" value="N22" />
-            <node concept="2K$1jT" id="2vPZMAnBVch" role="2K$1jV">
-              <property role="TrG5h" value="N3" />
-            </node>
-          </node>
-          <node concept="2K$1jT" id="2vPZMAnBVci" role="2K$1jV">
-            <property role="TrG5h" value="N22" />
-            <node concept="2K$1jT" id="2vPZMAnBVcj" role="2K$1jV">
-              <property role="TrG5h" value="N3" />
-              <node concept="2K$1jT" id="2vPZMAnBVck" role="2K$1jV">
-                <property role="TrG5h" value="N22" />
-                <node concept="2K$1jT" id="2vPZMAnBVcl" role="2K$1jV">
-                  <property role="TrG5h" value="N3" />
-                </node>
-              </node>
-              <node concept="2K$1jT" id="2vPZMAnBVcm" role="2K$1jV">
-                <property role="TrG5h" value="N22" />
-                <node concept="2K$1jT" id="2vPZMAnBVcn" role="2K$1jV">
-                  <property role="TrG5h" value="N3" />
-                </node>
-              </node>
-            </node>
-          </node>
-        </node>
+      <property role="2KaVt$" value="a4" />
+      <property role="2ZffLE" value="b2" />
+      <node concept="2K$1jT" id="2vPZMAnTPM4" role="2K$1jV">
+        <property role="TrG5h" value="N4" />
+        <property role="2KaVt$" value="a3" />
+        <property role="2ZffLE" value="b2" />
       </node>
     </node>
-    <node concept="2K$1jT" id="2vPZMAnBVcb" role="2K$1jV">
-      <property role="TrG5h" value="N21" />
-    </node>
-    <node concept="2K$1jT" id="2vPZMAnpySq" role="2K$1jV">
-      <property role="TrG5h" value="N22" />
-      <node concept="2K$1jT" id="2vPZMAnpySs" role="2K$1jV">
-        <property role="TrG5h" value="N3" />
-      </node>
-    </node>
-    <node concept="2K$1jT" id="2vPZMAnBVc5" role="2K$1jV">
-      <property role="TrG5h" value="N22" />
-      <node concept="2K$1jT" id="2vPZMAnBVc6" role="2K$1jV">
-        <property role="TrG5h" value="N3" />
-      </node>
-    </node>
-    <node concept="2K$1jT" id="2vPZMAnBVc7" role="2K$1jV">
-      <property role="TrG5h" value="N22" />
-      <node concept="2K$1jT" id="2vPZMAnBVc8" role="2K$1jV">
-        <property role="TrG5h" value="N3" />
-      </node>
-    </node>
+  </node>
+  <node concept="2K7qbd" id="2vPZMAnU8vT">
+    <property role="2K1lSM" value="ds4" />
+    <property role="2K1lSP" value="b3" />
+    <property role="2K1lSO" value="c" />
   </node>
 </model>
 

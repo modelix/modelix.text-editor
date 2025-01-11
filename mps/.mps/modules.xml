@@ -9,7 +9,7 @@
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.notation/org.modelix.mps.notation.mpl" folder="text" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.ide/org.modelix.mps.react.ide.msd" folder="react" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.impl.baseLanguage/org.modelix.mps.react.impl.baseLanguage.msd" folder="react" />
-      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.muicomponents/org.modelix.mps.react.muicomponents.mpl" folder="" />
+      <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react.muicomponents/org.modelix.mps.react.muicomponents.mpl" folder="react" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.react/org.modelix.mps.react.mpl" folder="react" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.spreadsheets.sandbox/org.modelix.mps.spreadsheets.sandbox.msd" folder="spreadsheets" />
       <modulePath path="$PROJECT_DIR$/modules/org.modelix.mps.spreadsheets/org.modelix.mps.spreadsheets.mpl" folder="spreadsheets" />

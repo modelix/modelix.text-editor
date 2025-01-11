@@ -386,7 +386,7 @@
       <node concept="3EZMnI" id="7GLg2tFqxZM" role="3EZMnx">
         <node concept="PMmxH" id="7GLg2tFqxZT" role="3EZMnx">
           <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
-          <ref role="1k5W1q" node="2vPZMAmxCQO" resolve="RKeyword" />
+          <ref role="1k5W1q" node="2vPZMAnOoz_" resolve="RComponent" />
         </node>
         <node concept="3F0A7n" id="7GLg2tFqy1R" role="3EZMnx">
           <ref role="1NtTu8" to="8xo1:7GLg2tFqxZx" resolve="componentType" />
@@ -1232,6 +1232,12 @@
           <property role="2czwfO" value="," />
           <ref role="1NtTu8" to="8xo1:4Dhs5NhTz4L" resolve="parameters" />
           <node concept="2iRfu4" id="4Dhs5NhSvgp" role="2czzBx" />
+          <node concept="3F0ifn" id="2vPZMAnT2Rs" role="2czzBI">
+            <property role="3F0ifm" value="" />
+            <node concept="VPxyj" id="2vPZMAnT2Rt" role="3F10Kt">
+              <property role="VOm3f" value="true" />
+            </node>
+          </node>
         </node>
         <node concept="2iRfu4" id="4Dhs5NhSvfJ" role="2iSdaV" />
         <node concept="3F0ifn" id="4Dhs5NhSvgb" role="3EZMnx">
@@ -1370,9 +1376,13 @@
     <node concept="3EZMnI" id="4Dhs5Nildl0" role="2wV5jI">
       <node concept="3F0A7n" id="4Dhs5Nildla" role="3EZMnx">
         <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+        <ref role="1k5W1q" node="2vPZMAmxCR0" resolve="RIdentifier" />
       </node>
       <node concept="3F0ifn" id="4Dhs5Nildlg" role="3EZMnx">
         <property role="3F0ifm" value=":" />
+        <node concept="11L4FC" id="2vPZMAojux1" role="3F10Kt">
+          <property role="VOm3f" value="true" />
+        </node>
       </node>
       <node concept="3F1sOY" id="4Dhs5Nildlo" role="3EZMnx">
         <ref role="1NtTu8" to="8xo1:4Dhs5NildkQ" resolve="type" />
@@ -1391,7 +1401,9 @@
     <node concept="1iCGBv" id="4Dhs5NilDPZ" role="2wV5jI">
       <ref role="1NtTu8" to="8xo1:4Dhs5NilDPP" resolve="decl" />
       <node concept="1sVBvm" id="4Dhs5NilDQ1" role="1sWHZn">
-        <node concept="3SHvHV" id="4Dhs5NilDQb" role="2wV5jI" />
+        <node concept="3SHvHV" id="4Dhs5NilDQb" role="2wV5jI">
+          <ref role="1k5W1q" node="2vPZMAmxCR0" resolve="RIdentifier" />
+        </node>
       </node>
     </node>
   </node>
@@ -1656,6 +1668,17 @@
         </node>
       </node>
     </node>
+    <node concept="14StLt" id="2vPZMAnZ1_N" role="V601i">
+      <property role="TrG5h" value="RInvisibleComponent" />
+      <node concept="Vb9p2" id="2vPZMAnZ1_O" role="3F10Kt">
+        <property role="Vbekb" value="g1_k_vY/BOLD" />
+      </node>
+      <node concept="VechU" id="2vPZMAnZ1_P" role="3F10Kt">
+        <node concept="1iSF2X" id="2vPZMAnZ1_Q" role="VblUZ">
+          <property role="1iTho6" value="1f77c4" />
+        </node>
+      </node>
+    </node>
     <node concept="14StLt" id="2vPZMAnQeIL" role="V601i">
       <property role="TrG5h" value="RComponentSub" />
       <node concept="Vb9p2" id="2vPZMAnQeIM" role="3F10Kt" />
@@ -1687,9 +1710,12 @@
     </node>
     <node concept="14StLt" id="2vPZMAmxCR0" role="V601i">
       <property role="TrG5h" value="RIdentifier" />
+      <node concept="Vb9p2" id="2vPZMAo5IRl" role="3F10Kt">
+        <property role="Vbekb" value="g1_k_vY/BOLD" />
+      </node>
       <node concept="VechU" id="2vPZMAmxCR2" role="3F10Kt">
         <node concept="1iSF2X" id="2vPZMAmxCR3" role="VblUZ">
-          <property role="1iTho6" value="024059" />
+          <property role="1iTho6" value="5d899c" />
         </node>
       </node>
     </node>

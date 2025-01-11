@@ -146,6 +146,9 @@
       <concept id="1204796164442" name="jetbrains.mps.baseLanguage.collections.structure.InternalSequenceOperation" flags="nn" index="23sCx2">
         <child id="1204796294226" name="closure" index="23t8la" />
       </concept>
+      <concept id="1151689724996" name="jetbrains.mps.baseLanguage.collections.structure.SequenceType" flags="in" index="A3Dl8">
+        <child id="1151689745422" name="elementType" index="A3Ik2" />
+      </concept>
       <concept id="1151702311717" name="jetbrains.mps.baseLanguage.collections.structure.ToListOperation" flags="nn" index="ANE8D" />
       <concept id="1237721394592" name="jetbrains.mps.baseLanguage.collections.structure.AbstractContainerCreator" flags="nn" index="HWqM0">
         <child id="1237721435808" name="initValue" index="HW$Y0" />
@@ -516,6 +519,56 @@
     </node>
     <node concept="13hLZK" id="1hCkroLBYJS" role="13h7CW">
       <node concept="3clFbS" id="1hCkroLBYJT" role="2VODD2" />
+    </node>
+  </node>
+  <node concept="13h7C7" id="2vPZMAnZU0y">
+    <ref role="13h7C2" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    <node concept="13hLZK" id="2vPZMAnZU0z" role="13h7CW">
+      <node concept="3clFbS" id="2vPZMAnZU0$" role="2VODD2" />
+    </node>
+  </node>
+  <node concept="13h7C7" id="2vPZMAnZU0Q">
+    <ref role="13h7C2" to="8xo1:2vPZMAnZU0P" resolve="IHasState" />
+    <node concept="13i0hz" id="2vPZMAnZU19" role="13h7CS">
+      <property role="13i0it" value="true" />
+      <property role="TrG5h" value="stateVariables" />
+      <property role="13i0iv" value="true" />
+      <node concept="3Tm1VV" id="2vPZMAnZU1a" role="1B3o_S" />
+      <node concept="A3Dl8" id="2vPZMAnZU1t" role="3clF45">
+        <node concept="3Tqbb2" id="2vPZMAnZU1K" role="A3Ik2">
+          <ref role="ehGHo" to="8xo1:4Dhs5NildkH" resolve="StateVariable" />
+        </node>
+      </node>
+      <node concept="3clFbS" id="2vPZMAnZU1c" role="3clF47" />
+    </node>
+    <node concept="13hLZK" id="2vPZMAnZU0R" role="13h7CW">
+      <node concept="3clFbS" id="2vPZMAnZU0S" role="2VODD2" />
+    </node>
+  </node>
+  <node concept="13h7C7" id="2vPZMAnZU8L">
+    <ref role="13h7C2" to="8xo1:7GLg2tFqfTf" resolve="GenericReactComponent" />
+    <node concept="13hLZK" id="2vPZMAnZU8M" role="13h7CW">
+      <node concept="3clFbS" id="2vPZMAnZU8N" role="2VODD2" />
+    </node>
+    <node concept="13i0hz" id="2vPZMAnZU94" role="13h7CS">
+      <property role="TrG5h" value="stateVariables" />
+      <ref role="13i0hy" node="2vPZMAnZU19" resolve="stateVariables" />
+      <node concept="3Tm1VV" id="2vPZMAnZU95" role="1B3o_S" />
+      <node concept="3clFbS" id="2vPZMAnZU99" role="3clF47">
+        <node concept="3clFbF" id="2vPZMAnZU9t" role="3cqZAp">
+          <node concept="2OqwBi" id="2vPZMAnZUmz" role="3clFbG">
+            <node concept="13iPFW" id="2vPZMAnZU9s" role="2Oq$k0" />
+            <node concept="3Tsc0h" id="2vPZMAnZUxh" role="2OqNvi">
+              <ref role="3TtcxE" to="8xo1:4Dhs5Nildlt" resolve="stateVariables" />
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="A3Dl8" id="2vPZMAnZU9a" role="3clF45">
+        <node concept="3Tqbb2" id="2vPZMAnZU9b" role="A3Ik2">
+          <ref role="ehGHo" to="8xo1:4Dhs5NildkH" resolve="StateVariable" />
+        </node>
+      </node>
     </node>
   </node>
 </model>

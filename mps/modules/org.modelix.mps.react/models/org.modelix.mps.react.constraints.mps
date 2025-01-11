@@ -21,6 +21,7 @@
     <import index="8xo1" ref="r:41b64586-29ed-47f5-b907-44be07261bbc(org.modelix.mps.react.structure)" implicit="true" />
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" implicit="true" />
     <import index="tp25" ref="r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)" implicit="true" />
+    <import index="zdk4" ref="r:e8408387-58e6-408f-90ce-310136ba006d(org.modelix.mps.react.behavior)" implicit="true" />
   </imports>
   <registry>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
@@ -134,9 +135,6 @@
         <child id="3906496115198199033" name="conceptArgument" index="3oSUPX" />
       </concept>
       <concept id="1171407110247" name="jetbrains.mps.lang.smodel.structure.Node_GetAncestorOperation" flags="nn" index="2Xjw5R" />
-      <concept id="3562215692195599741" name="jetbrains.mps.lang.smodel.structure.SLinkImplicitSelect" flags="nn" index="13MTOL">
-        <reference id="3562215692195600259" name="link" index="13MTZf" />
-      </concept>
       <concept id="1171999116870" name="jetbrains.mps.lang.smodel.structure.Node_IsNullOperation" flags="nn" index="3w_OXm" />
       <concept id="1172008320231" name="jetbrains.mps.lang.smodel.structure.Node_IsNotNullOperation" flags="nn" index="3x8VRR" />
       <concept id="1144100932627" name="jetbrains.mps.lang.smodel.structure.OperationParm_Inclusion" flags="ng" index="1xIGOp" />
@@ -173,6 +171,7 @@
         <child id="540871147943773366" name="argument" index="25WWJ7" />
       </concept>
       <concept id="1160666733551" name="jetbrains.mps.baseLanguage.collections.structure.AddAllElementsOperation" flags="nn" index="X8dFx" />
+      <concept id="1201792049884" name="jetbrains.mps.baseLanguage.collections.structure.TranslateOperation" flags="nn" index="3goQfb" />
       <concept id="1165530316231" name="jetbrains.mps.baseLanguage.collections.structure.IsEmptyOperation" flags="nn" index="1v1jN8" />
       <concept id="1202120902084" name="jetbrains.mps.baseLanguage.collections.structure.WhereOperation" flags="nn" index="3zZkjj" />
       <concept id="1202128969694" name="jetbrains.mps.baseLanguage.collections.structure.SelectOperation" flags="nn" index="3$u5V9" />
@@ -482,14 +481,31 @@
                   <node concept="z$bX8" id="4Dhs5Nim72Y" role="2OqNvi">
                     <node concept="1xMEDy" id="4Dhs5Nim8UY" role="1xVPHs">
                       <node concept="chp4Y" id="4Dhs5Nim8XZ" role="ri$Ld">
-                        <ref role="cht4Q" to="8xo1:7GLg2tFqfTf" resolve="GenericReactComponent" />
+                        <ref role="cht4Q" to="8xo1:2vPZMAnZU0P" resolve="IHasState" />
                       </node>
                     </node>
                     <node concept="1xIGOp" id="4Dhs5Nim96j" role="1xVPHs" />
                   </node>
                 </node>
-                <node concept="13MTOL" id="4Dhs5NimdjY" role="2OqNvi">
-                  <ref role="13MTZf" to="8xo1:4Dhs5Nildlt" resolve="stateVariables" />
+                <node concept="3goQfb" id="2vPZMAnZYSp" role="2OqNvi">
+                  <node concept="1bVj0M" id="2vPZMAnZYSr" role="23t8la">
+                    <node concept="3clFbS" id="2vPZMAnZYSs" role="1bW5cS">
+                      <node concept="3clFbF" id="2vPZMAnZYSE" role="3cqZAp">
+                        <node concept="2OqwBi" id="2vPZMAnZZ8L" role="3clFbG">
+                          <node concept="37vLTw" id="2vPZMAnZYSD" role="2Oq$k0">
+                            <ref role="3cqZAo" node="2vPZMAnZYSt" resolve="it" />
+                          </node>
+                          <node concept="2qgKlT" id="2vPZMAnZZsv" role="2OqNvi">
+                            <ref role="37wK5l" to="zdk4:2vPZMAnZU19" resolve="stateVariables" />
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                    <node concept="gl6BB" id="2vPZMAnZYSt" role="1bW2Oz">
+                      <property role="TrG5h" value="it" />
+                      <node concept="2jxLKc" id="2vPZMAnZYSu" role="1tU5fm" />
+                    </node>
+                  </node>
                 </node>
               </node>
             </node>

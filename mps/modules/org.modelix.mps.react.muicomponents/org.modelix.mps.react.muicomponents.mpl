@@ -27,6 +27,7 @@
       <dependencies>
         <dependency reexport="false">dce965c2-af99-4a0c-9895-485700f46864(ReactDemoLanguage)</dependency>
         <dependency reexport="false">ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)</dependency>
+        <dependency reexport="false">cd8940fe-d25b-4a89-862a-d6c143263ab2(org.modelix.mps.react.generator)</dependency>
       </dependencies>
       <languageVersions>
         <language slang="l:f3061a53-9226-4cc5-a443-f952ceaf5816:jetbrains.mps.baseLanguage" version="12" />
@@ -60,10 +61,40 @@
         <module reference="ceab5195-25ea-4f22-9b92-103b95ca8c0c(jetbrains.mps.lang.core)" version="0" />
         <module reference="9ded098b-ad6a-4657-bfd9-48636cfe8bc3(jetbrains.mps.lang.traceable)" version="0" />
         <module reference="67accce2-9676-4728-9e9c-8b15ea30d924(org.modelix.mps.react)" version="0" />
+        <module reference="cd8940fe-d25b-4a89-862a-d6c143263ab2(org.modelix.mps.react.generator)" version="0" />
         <module reference="09a61cec-0c2d-4a90-b590-25e493b12f35(org.modelix.mps.react.muicomponents)" version="0" />
         <module reference="12c2b0c9-17f2-4fe0-b18a-e5977e5e68ca(org.modelix.mps.react.muicomponents.generator)" version="0" />
       </dependencyVersions>
-      <mapping-priorities />
+      <mapping-priorities>
+        <mapping-priority-rule kind="strictly_before">
+          <greater-priority-mapping>
+            <generator generatorUID="12c2b0c9-17f2-4fe0-b18a-e5977e5e68ca(org.modelix.mps.react.muicomponents.generator)" />
+            <external-mapping>
+              <mapping-node modelUID="r:28533761-329d-45b1-be1d-d9be00525f41(org.modelix.mps.react.muicomponents.generator.templates@generator)" nodeID="2879488090856848294" />
+            </external-mapping>
+          </greater-priority-mapping>
+          <lesser-priority-mapping>
+            <generator generatorUID="cd8940fe-d25b-4a89-862a-d6c143263ab2(org.modelix.mps.react.generator)" />
+            <external-mapping>
+              <mapping-node modelUID="r:67a27afd-0bf9-4ffd-a955-a0594f444c75(org.modelix.mps.react.generator.templates@generator)" nodeID="8876946878573694978" />
+            </external-mapping>
+          </lesser-priority-mapping>
+        </mapping-priority-rule>
+        <mapping-priority-rule kind="strictly_before">
+          <greater-priority-mapping>
+            <generator generatorUID="12c2b0c9-17f2-4fe0-b18a-e5977e5e68ca(org.modelix.mps.react.muicomponents.generator)" />
+            <external-mapping>
+              <mapping-node modelUID="r:28533761-329d-45b1-be1d-d9be00525f41(org.modelix.mps.react.muicomponents.generator.templates@generator)" nodeID="2879488090894122764" />
+            </external-mapping>
+          </greater-priority-mapping>
+          <lesser-priority-mapping>
+            <generator generatorUID="12c2b0c9-17f2-4fe0-b18a-e5977e5e68ca(org.modelix.mps.react.muicomponents.generator)" />
+            <external-mapping>
+              <mapping-node modelUID="r:28533761-329d-45b1-be1d-d9be00525f41(org.modelix.mps.react.muicomponents.generator.templates@generator)" nodeID="2879488090856848294" />
+            </external-mapping>
+          </lesser-priority-mapping>
+        </mapping-priority-rule>
+      </mapping-priorities>
     </generator>
   </generators>
   <dependencies>
