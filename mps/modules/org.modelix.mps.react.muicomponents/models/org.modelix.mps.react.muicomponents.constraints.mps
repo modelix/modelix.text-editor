@@ -96,12 +96,16 @@
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
+      </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
     </language>
   </registry>
   <node concept="1M2fIO" id="2vPZMAm$030">
+    <property role="3GE5qa" value="util" />
     <ref role="1M2myG" to="zaxg:2vPZMAmvsgl" resolve="NodePropRef" />
     <node concept="1N5Pfh" id="2vPZMAm$031" role="1Mr941">
       <ref role="1N5Vy1" to="zaxg:2vPZMAmvsgn" resolve="property" />
