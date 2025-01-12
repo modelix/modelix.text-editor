@@ -815,5 +815,28 @@
     <property role="EcuMT" value="2879488090882154549" />
     <property role="TrG5h" value="IHasState" />
   </node>
+  <node concept="1TIwiD" id="7gSxYrNaHs4">
+    <property role="EcuMT" value="8374592933087336196" />
+    <property role="TrG5h" value="IfComp" />
+    <property role="34LRSv" value="if" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="7gSxYrNaHs5" role="PzmwI">
+      <ref role="PrY4T" node="7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+    <node concept="1TJgyj" id="7gSxYrNaHs6" role="1TKVEi">
+      <property role="IQ2ns" value="8374592933087336198" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="condition" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+    <node concept="1TJgyj" id="7gSxYrNaHs7" role="1TKVEi">
+      <property role="IQ2ns" value="8374592933087336199" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="child" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+  </node>
 </model>
 

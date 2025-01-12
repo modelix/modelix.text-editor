@@ -57,6 +57,7 @@
       <concept id="1223387125302" name="jetbrains.mps.lang.editor.structure.QueryFunction_Boolean" flags="in" index="3nzxsE" />
       <concept id="1088185857835" name="jetbrains.mps.lang.editor.structure.InlineEditorComponent" flags="ig" index="1sVBvm" />
       <concept id="1139848536355" name="jetbrains.mps.lang.editor.structure.CellModel_WithRole" flags="ng" index="1$h60E">
+        <property id="1139852716018" name="noTargetText" index="1$x2rV" />
         <property id="1140017977771" name="readOnly" index="1Intyy" />
         <property id="1140114345053" name="allowEmptyText" index="1O74Pk" />
         <reference id="1140103550593" name="relationDeclaration" index="1NtTu8" />
@@ -191,11 +192,39 @@
       <node concept="2iRkQZ" id="2vPZMAmEWd9" role="2iSdaV" />
       <node concept="3EZMnI" id="2vPZMAmEWd3" role="3EZMnx">
         <node concept="2iRfu4" id="2vPZMAmEWd4" role="2iSdaV" />
-        <node concept="PMmxH" id="2vPZMAmEWd2" role="3EZMnx">
+        <node concept="PMmxH" id="cqTc8J2sSU" role="3EZMnx">
           <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
           <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
         </node>
-        <node concept="3F0ifn" id="2vPZMAmEWd6" role="3EZMnx">
+        <node concept="3F0ifn" id="cqTc8J2sSV" role="3EZMnx">
+          <property role="3F0ifm" value="[" />
+          <node concept="11L4FC" id="cqTc8J2sSW" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+          <node concept="11LMrY" id="cqTc8J2sSX" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
+        <node concept="3F1sOY" id="cqTc8J2sSY" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:cqTc8J2sSH" resolve="align" />
+        </node>
+        <node concept="3F0ifn" id="cqTc8J2sSZ" role="3EZMnx">
+          <property role="3F0ifm" value="gap:" />
+          <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+        </node>
+        <node concept="3F0A7n" id="cqTc8J2sT0" role="3EZMnx">
+          <property role="1O74Pk" value="true" />
+          <property role="1$x2rV" value="&lt;none&gt;" />
+          <ref role="1NtTu8" to="zaxg:cqTc8J2sSJ" resolve="gap" />
+          <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+        </node>
+        <node concept="3F0ifn" id="cqTc8J2sT1" role="3EZMnx">
+          <property role="3F0ifm" value="]" />
+          <node concept="11L4FC" id="cqTc8J2sT2" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
+        <node concept="3F0ifn" id="cqTc8J2sT3" role="3EZMnx">
           <property role="3F0ifm" value="{" />
         </node>
       </node>
@@ -223,10 +252,33 @@
           <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
           <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
         </node>
+        <node concept="3F0ifn" id="cqTc8J1QvT" role="3EZMnx">
+          <property role="3F0ifm" value="[" />
+          <node concept="11L4FC" id="cqTc8J1QvV" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+          <node concept="11LMrY" id="cqTc8J1QvX" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
+        <node concept="3F1sOY" id="cqTc8J2oWO" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:cqTc8J2l4k" resolve="align" />
+        </node>
+        <node concept="3F0ifn" id="cqTc8J2oWR" role="3EZMnx">
+          <property role="3F0ifm" value="gap:" />
+          <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+        </node>
         <node concept="3F0A7n" id="2vPZMAmGN8z" role="3EZMnx">
           <property role="1O74Pk" value="true" />
+          <property role="1$x2rV" value="&lt;none&gt;" />
           <ref role="1NtTu8" to="zaxg:2vPZMAmGN8u" resolve="gap" />
           <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+        </node>
+        <node concept="3F0ifn" id="cqTc8J1Qw3" role="3EZMnx">
+          <property role="3F0ifm" value="]" />
+          <node concept="11L4FC" id="cqTc8J1Qw5" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
         </node>
         <node concept="3F0ifn" id="2vPZMAmGCtt" role="3EZMnx">
           <property role="3F0ifm" value="{" />
@@ -628,9 +680,9 @@
       <node concept="2iRkQZ" id="2vPZMAonvgC" role="2iSdaV" />
       <node concept="3EZMnI" id="2vPZMAonvgD" role="3EZMnx">
         <node concept="2iRfu4" id="2vPZMAonvgE" role="2iSdaV" />
-        <node concept="PMmxH" id="2vPZMAonvgF" role="3EZMnx">
-          <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
-          <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+        <node concept="3F0ifn" id="7gSxYrNjfjp" role="3EZMnx">
+          <property role="3F0ifm" value="seq" />
+          <ref role="1k5W1q" to="vpip:2vPZMAmxCQO" resolve="RKeyword" />
         </node>
         <node concept="3F0ifn" id="2vPZMAonvgG" role="3EZMnx">
           <property role="3F0ifm" value="{" />
@@ -666,6 +718,28 @@
       </node>
       <node concept="3F1sOY" id="2vPZMAoGIbE" role="3EZMnx">
         <ref role="1NtTu8" to="zaxg:2vPZMAoGIbr" resolve="widget" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="cqTc8J2hYA">
+    <ref role="1XX52x" to="zaxg:cqTc8J2hYz" resolve="Alignment" />
+    <node concept="3EZMnI" id="cqTc8J2hYE" role="2wV5jI">
+      <node concept="2iRfu4" id="cqTc8J2hYF" role="2iSdaV" />
+      <node concept="3F0ifn" id="cqTc8J2hYC" role="3EZMnx">
+        <property role="3F0ifm" value="vertical:" />
+        <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+      </node>
+      <node concept="3F0A7n" id="cqTc8J2jJm" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:cqTc8J2hY$" resolve="vertical" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+      </node>
+      <node concept="3F0ifn" id="cqTc8J2jJp" role="3EZMnx">
+        <property role="3F0ifm" value="horizontal:" />
+        <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+      </node>
+      <node concept="3F0A7n" id="cqTc8J2jJv" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:cqTc8J2hY_" resolve="horizontal" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
       </node>
     </node>
   </node>

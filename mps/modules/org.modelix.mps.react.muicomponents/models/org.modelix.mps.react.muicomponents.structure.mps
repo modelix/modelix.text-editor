@@ -17,6 +17,7 @@
         <property id="1421157252384165432" name="memberId" index="3tVfz5" />
       </concept>
       <concept id="3348158742936976479" name="jetbrains.mps.lang.structure.structure.EnumerationDeclaration" flags="ng" index="25R3W">
+        <reference id="1075010451642646892" name="defaultMember" index="1H5jkz" />
         <child id="3348158742936976577" name="members" index="25R1y" />
       </concept>
       <concept id="1082978164218" name="jetbrains.mps.lang.structure.structure.DataTypeDeclaration" flags="ng" index="AxPO6">
@@ -110,6 +111,18 @@
     <property role="TrG5h" value="LayoutHorizontal" />
     <property role="34LRSv" value="horizontal" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="cqTc8J2sSJ" role="1TKVEl">
+      <property role="IQ2nx" value="223742654172220975" />
+      <property role="TrG5h" value="gap" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="cqTc8J2sSH" role="1TKVEi">
+      <property role="IQ2ns" value="223742654172220973" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="align" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="cqTc8J2hYz" resolve="Alignment" />
+    </node>
     <node concept="PrWs8" id="2vPZMAmEVPN" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPI" resolve="IMUILayoutComponent" />
     </node>
@@ -140,6 +153,13 @@
       <property role="IQ2nx" value="2879488090860368414" />
       <property role="TrG5h" value="gap" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="cqTc8J2l4k" role="1TKVEi">
+      <property role="IQ2ns" value="223742654172188948" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="align" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="cqTc8J2hYz" resolve="Alignment" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAmJaEH">
@@ -396,7 +416,7 @@
   <node concept="1TIwiD" id="2vPZMAonvgy">
     <property role="EcuMT" value="2879488090888336418" />
     <property role="TrG5h" value="PlainDiv" />
-    <property role="34LRSv" value="div" />
+    <property role="34LRSv" value="seq" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAonvgz" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
@@ -423,6 +443,47 @@
       <property role="20kJfa" value="widget" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+  </node>
+  <node concept="25R3W" id="cqTc8J1POl">
+    <property role="3F6X1D" value="223742654172060949" />
+    <property role="TrG5h" value="AlignmentVertical" />
+    <ref role="1H5jkz" node="cqTc8J1POm" resolve="top" />
+    <node concept="25R33" id="cqTc8J1POm" role="25R1y">
+      <property role="3tVfz5" value="223742654172060950" />
+      <property role="TrG5h" value="top" />
+    </node>
+    <node concept="25R33" id="cqTc8J1POn" role="25R1y">
+      <property role="3tVfz5" value="223742654172060951" />
+      <property role="TrG5h" value="center" />
+    </node>
+  </node>
+  <node concept="25R3W" id="cqTc8J2hI7">
+    <property role="3F6X1D" value="223742654172175239" />
+    <property role="TrG5h" value="HorizontalAligment" />
+    <ref role="1H5jkz" node="cqTc8J2hI8" resolve="left" />
+    <node concept="25R33" id="cqTc8J2hI8" role="25R1y">
+      <property role="3tVfz5" value="223742654172175240" />
+      <property role="TrG5h" value="left" />
+    </node>
+    <node concept="25R33" id="cqTc8J2hI9" role="25R1y">
+      <property role="3tVfz5" value="223742654172175241" />
+      <property role="TrG5h" value="center" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="cqTc8J2hYz">
+    <property role="EcuMT" value="223742654172176291" />
+    <property role="TrG5h" value="Alignment" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="cqTc8J2hY$" role="1TKVEl">
+      <property role="IQ2nx" value="223742654172176292" />
+      <property role="TrG5h" value="vertical" />
+      <ref role="AX2Wp" node="cqTc8J1POl" resolve="DirectionVertical" />
+    </node>
+    <node concept="1TJgyi" id="cqTc8J2hY_" role="1TKVEl">
+      <property role="IQ2nx" value="223742654172176293" />
+      <property role="TrG5h" value="horizontal" />
+      <ref role="AX2Wp" node="cqTc8J2hI7" resolve="DirectionHorizontal" />
     </node>
   </node>
 </model>
