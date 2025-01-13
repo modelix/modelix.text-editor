@@ -365,6 +365,13 @@
     <node concept="PrWs8" id="2vPZMAnIc9c" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
     </node>
+    <node concept="1TJgyj" id="G39ofDbatJ" role="1TKVEi">
+      <property role="IQ2ns" value="793519207830300527" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="borderAndShade" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="G39ofDaJgc" resolve="BorderAndShadeRef" />
+    </node>
   </node>
   <node concept="PlHQZ" id="2vPZMAnIaRU">
     <property role="EcuMT" value="2879488090877505018" />
@@ -569,6 +576,58 @@
       <property role="20kJfa" value="typography" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="cqTc8Jo1wo" resolve="Typography" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="G39ofD9OMC">
+    <property role="EcuMT" value="793519207829949608" />
+    <property role="3GE5qa" value="util" />
+    <property role="TrG5h" value="BorderAndShade" />
+    <property role="34LRSv" value="borderAndShade" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="G39ofD9Po3" role="1TKVEl">
+      <property role="IQ2nx" value="793519207829952003" />
+      <property role="TrG5h" value="borderWidth" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="G39ofD9Qyy" role="1TKVEl">
+      <property role="IQ2nx" value="793519207829956770" />
+      <property role="TrG5h" value="padding" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="G39ofDh217" role="1TKVEl">
+      <property role="IQ2nx" value="793519207831838791" />
+      <property role="TrG5h" value="margin" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyj" id="G39ofD9Rq9" role="1TKVEi">
+      <property role="IQ2ns" value="793519207829960329" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="borderColor" />
+      <ref role="20lvS9" node="cqTc8Jo1wp" resolve="Color" />
+    </node>
+    <node concept="1TJgyj" id="G39ofD9RZe" role="1TKVEi">
+      <property role="IQ2ns" value="793519207829962702" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="shadeColor" />
+      <ref role="20lvS9" node="cqTc8Jo1wp" resolve="Color" />
+    </node>
+    <node concept="PrWs8" id="G39ofD9XM$" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfQG" resolve="IReactModuleContent" />
+    </node>
+    <node concept="PrWs8" id="G39ofDak1K" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="G39ofDaJgc">
+    <property role="EcuMT" value="793519207830189068" />
+    <property role="3GE5qa" value="util" />
+    <property role="TrG5h" value="BorderAndShadeRef" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="G39ofDaJPh" role="1TKVEi">
+      <property role="IQ2ns" value="793519207830191441" />
+      <property role="20kJfa" value="borderAndShade" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="G39ofD9OMC" resolve="BorderAndShade" />
     </node>
   </node>
 </model>

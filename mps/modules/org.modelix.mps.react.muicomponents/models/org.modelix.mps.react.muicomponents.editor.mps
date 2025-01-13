@@ -692,6 +692,25 @@
           <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
           <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
         </node>
+        <node concept="3F0ifn" id="G39ofDaI5Y" role="3EZMnx">
+          <property role="3F0ifm" value="[" />
+          <node concept="11L4FC" id="G39ofDbcvY" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+          <node concept="11LMrY" id="G39ofDbd55" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
+        <node concept="3F1sOY" id="G39ofDbbUR" role="3EZMnx">
+          <property role="1$x2rV" value="&lt;none&gt;" />
+          <ref role="1NtTu8" to="zaxg:G39ofDbatJ" resolve="borderAndShade" />
+        </node>
+        <node concept="3F0ifn" id="G39ofDaIF5" role="3EZMnx">
+          <property role="3F0ifm" value="]" />
+          <node concept="11L4FC" id="G39ofDbdnD" role="3F10Kt">
+            <property role="VOm3f" value="true" />
+          </node>
+        </node>
         <node concept="3F0ifn" id="2vPZMAnIc9n" role="3EZMnx">
           <property role="3F0ifm" value="{" />
           <ref role="1k5W1q" to="vpip:2vPZMAmxCQO" resolve="RKeyword" />
@@ -1066,6 +1085,81 @@
               </node>
             </node>
           </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="G39ofD9SQQ">
+    <property role="3GE5qa" value="util" />
+    <ref role="1XX52x" to="zaxg:G39ofD9OMC" resolve="BorderAndShade" />
+    <node concept="3EZMnI" id="G39ofD9T9q" role="2wV5jI">
+      <node concept="2iRfu4" id="G39ofD9T9r" role="2iSdaV" />
+      <node concept="3F0ifn" id="G39ofD9T9s" role="3EZMnx">
+        <property role="3F0ifm" value="border and shade" />
+        <ref role="1k5W1q" to="vpip:2vPZMAmxCQO" resolve="RKeyword" />
+      </node>
+      <node concept="3F0A7n" id="G39ofD9T9t" role="3EZMnx">
+        <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+        <ref role="1k5W1q" to="vpip:2vPZMAmxCR0" resolve="RIdentifier" />
+      </node>
+      <node concept="3F0ifn" id="G39ofD9T9u" role="3EZMnx">
+        <property role="3F0ifm" value="padding:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnFe33" resolve="RSubKeyword" />
+      </node>
+      <node concept="3F0A7n" id="G39ofD9U1d" role="3EZMnx">
+        <property role="1O74Pk" value="true" />
+        <property role="1$x2rV" value="&lt;none&gt;" />
+        <ref role="1NtTu8" to="zaxg:G39ofD9Qyy" resolve="padding" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+      </node>
+      <node concept="3F0ifn" id="G39ofDh5AL" role="3EZMnx">
+        <property role="3F0ifm" value="margin:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnFe33" resolve="RSubKeyword" />
+      </node>
+      <node concept="3F0A7n" id="G39ofDh5AK" role="3EZMnx">
+        <property role="1O74Pk" value="true" />
+        <property role="1$x2rV" value="&lt;none&gt;" />
+        <ref role="1NtTu8" to="zaxg:G39ofDh217" resolve="margin" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+      </node>
+      <node concept="3F0ifn" id="G39ofD9T9y" role="3EZMnx">
+        <property role="3F0ifm" value="border width:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnFe33" resolve="RSubKeyword" />
+      </node>
+      <node concept="3F0A7n" id="G39ofD9T9z" role="3EZMnx">
+        <property role="1$x2rV" value="&lt;default&gt;" />
+        <property role="1O74Pk" value="true" />
+        <ref role="1NtTu8" to="zaxg:G39ofD9Po3" resolve="borderWidth" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnwE1f" resolve="RHTMLOrJsOrCSS" />
+      </node>
+      <node concept="3F0ifn" id="G39ofD9Vbq" role="3EZMnx">
+        <property role="3F0ifm" value="border color:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnFe33" resolve="RSubKeyword" />
+      </node>
+      <node concept="3F1sOY" id="G39ofD9UAj" role="3EZMnx">
+        <property role="1$x2rV" value="&lt;none&gt;" />
+        <ref role="1NtTu8" to="zaxg:G39ofD9Rq9" resolve="borderColor" />
+      </node>
+      <node concept="3F0ifn" id="G39ofDaohz" role="3EZMnx">
+        <property role="3F0ifm" value="shade color:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnFe33" resolve="RSubKeyword" />
+      </node>
+      <node concept="3F1sOY" id="G39ofDaohy" role="3EZMnx">
+        <property role="1$x2rV" value="&lt;none&gt;" />
+        <ref role="1NtTu8" to="zaxg:G39ofD9RZe" resolve="shadeColor" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="G39ofDaKqm">
+    <property role="3GE5qa" value="util" />
+    <ref role="1XX52x" to="zaxg:G39ofDaJgc" resolve="BorderAndShadeRef" />
+    <node concept="1iCGBv" id="G39ofDaKGU" role="2wV5jI">
+      <ref role="1NtTu8" to="zaxg:G39ofDaJPh" resolve="borderAndShade" />
+      <node concept="1sVBvm" id="G39ofDaKGW" role="1sWHZn">
+        <node concept="3F0A7n" id="G39ofDaKZy" role="2wV5jI">
+          <property role="1Intyy" value="true" />
+          <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+          <ref role="1k5W1q" to="vpip:2vPZMAmxCR0" resolve="RIdentifier" />
         </node>
       </node>
     </node>

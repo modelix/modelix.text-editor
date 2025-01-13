@@ -29,8 +29,10 @@
       <concept id="1071666914219" name="jetbrains.mps.lang.editor.structure.ConceptEditorDeclaration" flags="ig" index="24kQdi">
         <child id="1078153129734" name="inspectedCellModel" index="6VMZX" />
       </concept>
+      <concept id="1176897764478" name="jetbrains.mps.lang.editor.structure.QueryFunction_NodeFactory" flags="in" index="4$FPG" />
       <concept id="1140524381322" name="jetbrains.mps.lang.editor.structure.CellModel_ListWithRole" flags="ng" index="2czfm3">
         <property id="1140524450557" name="separatorText" index="2czwfO" />
+        <child id="1176897874615" name="nodeFactory" index="4_6I_" />
         <child id="1140524464360" name="cellLayout" index="2czzBx" />
         <child id="1140524464359" name="emptyCellModel" index="2czzBI" />
         <child id="1233141163694" name="separatorStyle" index="sWeuL" />
@@ -400,11 +402,20 @@
         <ref role="1k5W1q" node="2vPZMAmAxF1" resolve="fullVerticalSpace" />
       </node>
       <node concept="3F2HdR" id="3DO$SWhXWwx" role="3EZMnx">
-        <property role="2czwfO" value="\n" />
         <ref role="1NtTu8" to="8xo1:7GLg2tFqfQU" resolve="content" />
         <node concept="2iRkQZ" id="3DO$SWhXWwz" role="2czzBx" />
-        <node concept="tppnM" id="2vPZMAmF8ey" role="sWeuL">
-          <ref role="1k5W1q" node="2vPZMAmAxFf" resolve="RHalfVerticalSpace" />
+        <node concept="4$FPG" id="G39ofDwznW" role="4_6I_">
+          <node concept="3clFbS" id="G39ofDwznX" role="2VODD2">
+            <node concept="3clFbF" id="G39ofDwzo9" role="3cqZAp">
+              <node concept="2ShNRf" id="G39ofDwzo7" role="3clFbG">
+                <node concept="3zrR0B" id="G39ofDwP_1" role="2ShVmc">
+                  <node concept="3Tqbb2" id="G39ofDwP_5" role="3zrR0E">
+                    <ref role="ehGHo" to="8xo1:G39ofDwxCj" resolve="EmptyContent" />
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
         </node>
       </node>
       <node concept="2iRkQZ" id="3DO$SWhXWok" role="2iSdaV" />
@@ -2040,6 +2051,15 @@
       </node>
       <node concept="3F0ifn" id="7gSxYrNfFsW" role="3EZMnx">
         <property role="3F0ifm" value="}" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="G39ofDwywh">
+    <ref role="1XX52x" to="8xo1:G39ofDwxCj" resolve="EmptyContent" />
+    <node concept="3F0ifn" id="G39ofDwyMP" role="2wV5jI">
+      <property role="3F0ifm" value="" />
+      <node concept="VPxyj" id="G39ofDwz5p" role="3F10Kt">
+        <property role="VOm3f" value="true" />
       </node>
     </node>
   </node>
