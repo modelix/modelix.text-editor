@@ -2,7 +2,7 @@
 
 [plugins]
 modelix-model-api-gen = { id = "org.modelix.model-api-gen", version.ref = "modelixCore" }
-npm-publish = { id = "dev.petuska.npm.publish", version = "3.5.1" }
+npm-publish = { id = "dev.petuska.npm.publish", version = "3.5.2" }
 modelix-mps-buildtools = { id = "org.modelix.mps.build-tools", version.ref = "modelixBuildtools" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
