@@ -1164,5 +1164,90 @@
       </node>
     </node>
   </node>
+  <node concept="24kQdi" id="2NkZbYeZYCG">
+    <ref role="1XX52x" to="zaxg:2NkZbYeZWAz" resolve="TreeNode" />
+    <node concept="3EZMnI" id="2NkZbYeZYVg" role="2wV5jI">
+      <node concept="PMmxH" id="2NkZbYf1JEM" role="3EZMnx">
+        <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+      </node>
+      <node concept="3EZMnI" id="2NkZbYf027n" role="3EZMnx">
+        <node concept="2EHx9g" id="2NkZbYf03hF" role="2iSdaV" />
+        <node concept="3EZMnI" id="2NkZbYf01fJ" role="3EZMnx">
+          <node concept="2iRfu4" id="2NkZbYf01fK" role="2iSdaV" />
+          <node concept="3F0ifn" id="2NkZbYeZZMX" role="3EZMnx">
+            <property role="3F0ifm" value="id" />
+            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+          </node>
+          <node concept="3F0ifn" id="2NkZbYf00o4" role="3EZMnx">
+            <property role="3F0ifm" value="=" />
+          </node>
+          <node concept="3F1sOY" id="2NkZbYf00Xb" role="3EZMnx">
+            <ref role="1NtTu8" to="zaxg:2NkZbYeZXux" resolve="idExpr" />
+          </node>
+        </node>
+        <node concept="3EZMnI" id="2NkZbYf02pV" role="3EZMnx">
+          <node concept="2iRfu4" id="2NkZbYf02pW" role="2iSdaV" />
+          <node concept="3F0ifn" id="2NkZbYf02pX" role="3EZMnx">
+            <property role="3F0ifm" value="label" />
+            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+          </node>
+          <node concept="3F0ifn" id="2NkZbYf02pY" role="3EZMnx">
+            <property role="3F0ifm" value="=" />
+          </node>
+          <node concept="3F1sOY" id="2NkZbYf02pZ" role="3EZMnx">
+            <ref role="1NtTu8" to="zaxg:2NkZbYeZY3A" resolve="labelExpr" />
+          </node>
+        </node>
+        <node concept="3EZMnI" id="2NkZbYf02Gy" role="3EZMnx">
+          <node concept="2iRfu4" id="2NkZbYf02Gz" role="2iSdaV" />
+          <node concept="3F0ifn" id="2NkZbYf02G$" role="3EZMnx">
+            <property role="3F0ifm" value="children" />
+            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+          </node>
+          <node concept="3F0ifn" id="2NkZbYf02G_" role="3EZMnx">
+            <property role="3F0ifm" value="=" />
+          </node>
+          <node concept="3F1sOY" id="2NkZbYf02GA" role="3EZMnx">
+            <ref role="1NtTu8" to="zaxg:2NkZbYeZYm9" resolve="childrenExpr" />
+          </node>
+        </node>
+      </node>
+      <node concept="2iRfu4" id="2NkZbYeZYVj" role="2iSdaV" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="2NkZbYfayiC">
+    <ref role="1XX52x" to="zaxg:2NkZbYfax87" resolve="TreeView" />
+    <node concept="3EZMnI" id="2NkZbYfaAml" role="2wV5jI">
+      <node concept="2iRkQZ" id="2NkZbYfaAmm" role="2iSdaV" />
+      <node concept="3EZMnI" id="2NkZbYfazsP" role="3EZMnx">
+        <node concept="2iRfu4" id="2NkZbYfazsQ" role="2iSdaV" />
+        <node concept="PMmxH" id="2NkZbYfayRK" role="3EZMnx">
+          <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+          <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+        </node>
+        <node concept="3F0ifn" id="2NkZbYfaCF7" role="3EZMnx">
+          <property role="3F0ifm" value="selection state tracker:" />
+          <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+        </node>
+        <node concept="3F1sOY" id="2NkZbYfaEH0" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:2NkZbYfaDge" resolve="selectionStateTracker" />
+        </node>
+        <node concept="3F0ifn" id="2NkZbYfa$B3" role="3EZMnx">
+          <property role="3F0ifm" value="{" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="2NkZbYfaBe0" role="3EZMnx">
+        <node concept="2iRfu4" id="2NkZbYfaBe1" role="2iSdaV" />
+        <node concept="3XFhqQ" id="2NkZbYfaAVs" role="3EZMnx" />
+        <node concept="3F1sOY" id="2NkZbYfaBwV" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:2vPZMAnIaRX" resolve="child" />
+        </node>
+      </node>
+      <node concept="3F0ifn" id="2NkZbYfaBNv" role="3EZMnx">
+        <property role="3F0ifm" value="}" />
+      </node>
+    </node>
+  </node>
 </model>
 

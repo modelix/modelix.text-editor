@@ -630,5 +630,51 @@
       <ref role="20lvS9" node="G39ofD9OMC" resolve="BorderAndShade" />
     </node>
   </node>
+  <node concept="1TIwiD" id="2NkZbYeZWAz">
+    <property role="EcuMT" value="3230484732399569315" />
+    <property role="TrG5h" value="TreeNode" />
+    <property role="34LRSv" value="tree node" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2NkZbYeZXbY" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+    <node concept="1TJgyj" id="2NkZbYeZXux" role="1TKVEi">
+      <property role="IQ2ns" value="3230484732399572897" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="idExpr" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+    <node concept="1TJgyj" id="2NkZbYeZY3A" role="1TKVEi">
+      <property role="IQ2ns" value="3230484732399575270" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="labelExpr" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+    <node concept="1TJgyj" id="2NkZbYeZYm9" role="1TKVEi">
+      <property role="IQ2ns" value="3230484732399576457" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="childrenExpr" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2NkZbYfax87">
+    <property role="EcuMT" value="3230484732402340359" />
+    <property role="TrG5h" value="TreeView" />
+    <property role="34LRSv" value="tree view" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2NkZbYfaxHc" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
+    </node>
+    <node concept="1TJgyj" id="2NkZbYfaDge" role="1TKVEi">
+      <property role="IQ2ns" value="3230484732402373646" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="selectionStateTracker" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="8xo1:4Dhs5NilDPI" resolve="StateVariableReference" />
+    </node>
+  </node>
 </model>
 

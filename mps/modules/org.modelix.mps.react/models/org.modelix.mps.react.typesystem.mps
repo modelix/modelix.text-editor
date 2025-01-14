@@ -32,6 +32,7 @@
       <concept id="1070475926800" name="jetbrains.mps.baseLanguage.structure.StringLiteral" flags="nn" index="Xl_RD">
         <property id="1070475926801" name="value" index="Xl_RC" />
       </concept>
+      <concept id="1070534058343" name="jetbrains.mps.baseLanguage.structure.NullLiteral" flags="nn" index="10Nm6u" />
       <concept id="1068431474542" name="jetbrains.mps.baseLanguage.structure.VariableDeclaration" flags="ng" index="33uBYm">
         <child id="1068431790190" name="initializer" index="33vP2m" />
       </concept>
@@ -612,6 +613,42 @@
           <node concept="1Z2H0r" id="4Dhs5NinKrH" role="mwGJk">
             <node concept="1YBJjd" id="4Dhs5NinKtF" role="1Z2MuG">
               <ref role="1YBMHb" node="4Dhs5NinKre" resolve="n" />
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="3clFbJ" id="2NkZbYe$Dn6" role="3cqZAp">
+        <node concept="3clFbS" id="2NkZbYe$Dn8" role="3clFbx">
+          <node concept="1ZobV4" id="2NkZbYe$HvM" role="3cqZAp">
+            <node concept="mw_s8" id="2NkZbYe$HMQ" role="1ZfhKB">
+              <node concept="1Z2H0r" id="2NkZbYe$HMM" role="mwGJk">
+                <node concept="1YBJjd" id="2NkZbYe$I5A" role="1Z2MuG">
+                  <ref role="1YBMHb" node="4Dhs5NinKre" resolve="n" />
+                </node>
+              </node>
+            </node>
+            <node concept="mw_s8" id="2NkZbYe$HvP" role="1ZfhK$">
+              <node concept="1Z2H0r" id="2NkZbYe$Fxs" role="mwGJk">
+                <node concept="2OqwBi" id="2NkZbYe$FYa" role="1Z2MuG">
+                  <node concept="1YBJjd" id="2NkZbYe$FPR" role="2Oq$k0">
+                    <ref role="1YBMHb" node="4Dhs5NinKre" resolve="n" />
+                  </node>
+                  <node concept="3TrEf2" id="2NkZbYe$GsF" role="2OqNvi">
+                    <ref role="3Tt5mk" to="8xo1:4Dhs5Nile3D" resolve="initializer" />
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3y3z36" id="2NkZbYe$EU9" role="3clFbw">
+          <node concept="10Nm6u" id="2NkZbYe$FdE" role="3uHU7w" />
+          <node concept="2OqwBi" id="2NkZbYe$DNV" role="3uHU7B">
+            <node concept="1YBJjd" id="2NkZbYe$DDN" role="2Oq$k0">
+              <ref role="1YBMHb" node="4Dhs5NinKre" resolve="n" />
+            </node>
+            <node concept="3TrEf2" id="2NkZbYe$Eio" role="2OqNvi">
+              <ref role="3Tt5mk" to="8xo1:4Dhs5Nile3D" resolve="initializer" />
             </node>
           </node>
         </node>
