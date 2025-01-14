@@ -1212,6 +1212,19 @@
             <ref role="1NtTu8" to="zaxg:2NkZbYeZYm9" resolve="childrenExpr" />
           </node>
         </node>
+        <node concept="3EZMnI" id="2NkZbYfIwdG" role="3EZMnx">
+          <node concept="2iRfu4" id="2NkZbYfIwdH" role="2iSdaV" />
+          <node concept="3F0ifn" id="2NkZbYfIwdI" role="3EZMnx">
+            <property role="3F0ifm" value="typography" />
+            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+          </node>
+          <node concept="3F0ifn" id="6r1E9h1rJih" role="3EZMnx">
+            <property role="3F0ifm" value=":" />
+          </node>
+          <node concept="3F1sOY" id="2NkZbYfIx5o" role="3EZMnx">
+            <ref role="1NtTu8" to="zaxg:2NkZbYfIvCh" resolve="typography" />
+          </node>
+        </node>
       </node>
       <node concept="2iRfu4" id="2NkZbYeZYVj" role="2iSdaV" />
     </node>

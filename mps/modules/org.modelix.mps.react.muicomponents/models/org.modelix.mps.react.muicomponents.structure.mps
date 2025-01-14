@@ -659,6 +659,13 @@
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
     </node>
+    <node concept="1TJgyj" id="2NkZbYfIvCh" role="1TKVEi">
+      <property role="IQ2ns" value="3230484732411771409" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="typography" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="G39ofC9AxO" resolve="TypographyRef" />
+    </node>
   </node>
   <node concept="1TIwiD" id="2NkZbYfax87">
     <property role="EcuMT" value="3230484732402340359" />
