@@ -9,6 +9,7 @@
   <imports>
     <import index="oyym" ref="r:1570828e-e9a4-47ff-95d9-80c800704647(ReactDemoLanguage.structure)" />
     <import index="1ut2" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:org.modelix.model.mpsadapters.tomps(org.modelix.mps.editor.common.stubs/)" />
+    <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
     <import index="wrwm" ref="r:44d56dac-a204-4926-8f4e-cd6684c153aa(ReactDemoLanguage.behavior)" implicit="true" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
   </imports>
@@ -19,12 +20,27 @@
         <child id="8374592933087336199" name="child" index="274_3x" />
       </concept>
       <concept id="8876946878574570414" name="org.modelix.mps.react.structure.ComponentNodeExpression" flags="ng" index="ggAI9" />
+      <concept id="8876946878575278069" name="org.modelix.mps.react.structure.JsonObjectValue" flags="ng" index="gjbvi">
+        <child id="8876946878575278146" name="members" index="gjbx_" />
+      </concept>
+      <concept id="8876946878575278085" name="org.modelix.mps.react.structure.JsonObjectMember" flags="ng" index="gjbwy">
+        <child id="8876946878575278101" name="value" index="gjbwM" />
+      </concept>
+      <concept id="8876946878575334731" name="org.modelix.mps.react.structure.IJsonValue" flags="ngI" index="gjTlG" />
       <concept id="8876946878573696709" name="org.modelix.mps.react.structure.ReactModule" flags="ng" index="gl9ry">
         <child id="8876946878573903290" name="content" index="gmrQt" />
       </concept>
       <concept id="8876946878573903262" name="org.modelix.mps.react.structure.ConceptRenderer" flags="ng" index="gmrQT">
         <reference id="8310867745953086698" name="concept" index="3JBHV4" />
         <child id="8876946878573903455" name="component" index="gmrTS" />
+      </concept>
+      <concept id="8876946878573903439" name="org.modelix.mps.react.structure.GenericReactComponent" flags="ng" index="gmrTC">
+        <property id="8876946878573977569" name="componentType" index="gmPZ6" />
+        <child id="8876946878574187978" name="properties" index="gn1nH" />
+      </concept>
+      <concept id="8876946878574187981" name="org.modelix.mps.react.structure.Property" flags="ng" index="gn1nE">
+        <property id="8876946878574187995" name="propertyName" index="gn1nW" />
+        <child id="8876946878574187997" name="value" index="gn1nU" />
       </concept>
       <concept id="5355184975888307501" name="org.modelix.mps.react.structure.StateVariable" flags="ng" index="2o1qlL">
         <child id="5355184975888310505" name="initializer" index="2o1p2P" />
@@ -68,7 +84,11 @@
       <concept id="1070475926800" name="jetbrains.mps.baseLanguage.structure.StringLiteral" flags="nn" index="Xl_RD">
         <property id="1070475926801" name="value" index="Xl_RC" />
       </concept>
+      <concept id="1081236700937" name="jetbrains.mps.baseLanguage.structure.StaticMethodCall" flags="nn" index="2YIFZM">
+        <reference id="1144433194310" name="classConcept" index="1Pybhc" />
+      </concept>
       <concept id="1070534058343" name="jetbrains.mps.baseLanguage.structure.NullLiteral" flags="nn" index="10Nm6u" />
+      <concept id="1070534370425" name="jetbrains.mps.baseLanguage.structure.IntegerType" flags="in" index="10Oyi0" />
       <concept id="1225271177708" name="jetbrains.mps.baseLanguage.structure.StringType" flags="in" index="17QB3L" />
       <concept id="1068580123155" name="jetbrains.mps.baseLanguage.structure.ExpressionStatement" flags="nn" index="3clFbF">
         <child id="1068580123156" name="expression" index="3clFbG" />
@@ -93,6 +113,19 @@
       </concept>
     </language>
     <language id="09a61cec-0c2d-4a90-b590-25e493b12f35" name="org.modelix.mps.react.muicomponents">
+      <concept id="2041619518467936854" name="org.modelix.mps.react.muicomponents.structure.ItFunction" flags="ng" index="28B5xO">
+        <child id="2041619518467939227" name="body" index="28B56T" />
+      </concept>
+      <concept id="2041619518467973873" name="org.modelix.mps.react.muicomponents.structure.ItFunctionIt" flags="ng" index="28Bezj" />
+      <concept id="2041619518470133481" name="org.modelix.mps.react.muicomponents.structure.ValueConverterRef" flags="ng" index="28JXNb">
+        <reference id="2041619518470135876" name="valueConverter" index="28JYDA" />
+      </concept>
+      <concept id="2041619518464403866" name="org.modelix.mps.react.muicomponents.structure.ValueConverter" flags="ng" index="28LAeS">
+        <child id="2041619518464409821" name="widgetType" index="28LwFZ" />
+        <child id="2041619518464407448" name="modelType" index="28LBQU" />
+        <child id="2041619518466562632" name="widgetToModel" index="28Sl1E" />
+        <child id="2041619518466565006" name="modelToWidget" index="28SmAG" />
+      </concept>
       <concept id="3230484732399569315" name="org.modelix.mps.react.muicomponents.structure.TreeNode" flags="ng" index="2yaNks">
         <child id="3230484732399576457" name="childrenExpr" index="2yaL$Q" />
         <child id="3230484732399575270" name="labelExpr" index="2yaLLp" />
@@ -164,7 +197,9 @@
         <reference id="2879488090856866839" name="property" index="2Ly3GY" />
         <child id="2879488090856866838" name="node" index="2Ly3GZ" />
       </concept>
-      <concept id="2879488090856848295" name="org.modelix.mps.react.muicomponents.structure.TextField" flags="ng" index="2Ly8ie" />
+      <concept id="2879488090856848295" name="org.modelix.mps.react.muicomponents.structure.TextField" flags="ng" index="2Ly8ie">
+        <child id="2041619518470150050" name="valueConverter" index="28JTQ0" />
+      </concept>
       <concept id="2879488090893902552" name="org.modelix.mps.react.muicomponents.structure.LabelWidgetPair" flags="ng" index="2ZhLRL">
         <child id="2879488090893902555" name="widget" index="2ZhLRM" />
         <child id="2879488090893902554" name="label" index="2ZhLRN" />
@@ -279,16 +314,29 @@
         <property role="GuJNo" value="cccccc" />
       </node>
     </node>
-    <node concept="3y96$F" id="G39ofDbEQO" role="gmrQt">
-      <property role="TrG5h" value="default" />
-      <property role="3y94Ox" value="5px 20px" />
-      <property role="3yhKn4" value="10px 10px" />
-    </node>
-    <node concept="3y96$F" id="2NkZbYfBifG" role="gmrQt">
-      <property role="TrG5h" value="inset" />
-      <property role="3yhKn4" value="10px 10px" />
-    </node>
     <node concept="3ywjYg" id="G39ofDxX99" role="gmrQt" />
+    <node concept="28LAeS" id="1LliyakIooS" role="gmrQt">
+      <property role="TrG5h" value="number" />
+      <node concept="17QB3L" id="1LliyakIooT" role="28LwFZ" />
+      <node concept="10Oyi0" id="1LliyakIquy" role="28LBQU" />
+      <node concept="28B5xO" id="1LliyakUCe6" role="28Sl1E">
+        <node concept="2YIFZM" id="1LliyakUCO4" role="28B56T">
+          <ref role="37wK5l" to="wyt6:~Integer.parseInt(java.lang.String)" resolve="parseInt" />
+          <ref role="1Pybhc" to="wyt6:~Integer" resolve="Integer" />
+          <node concept="28Bezj" id="1LliyakUD6O" role="37wK5m" />
+        </node>
+      </node>
+      <node concept="28B5xO" id="1LliyakNrPw" role="28SmAG">
+        <node concept="3cpWs3" id="1LliyakQkqs" role="28B56T">
+          <node concept="Xl_RD" id="1LliyakQkqv" role="3uHU7w">
+            <property role="Xl_RC" value="" />
+          </node>
+          <node concept="28Bezj" id="1LliyakQk7J" role="3uHU7B" />
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="1LliyamlazR" role="gmrQt" />
+    <node concept="3ywjYg" id="1LliyakIo1Z" role="gmrQt" />
     <node concept="gmrQT" id="2iVdnDeSIrm" role="gmrQt">
       <ref role="3JBHV4" to="oyym:2iVdnDeS_Ov" resolve="WidgetTest" />
       <node concept="2LhRxX" id="2iVdnDeSJ5l" role="gmrTS">
@@ -299,10 +347,30 @@
             <node concept="ggAI9" id="2iVdnDeSJFf" role="2Ly3GZ" />
           </node>
         </node>
-        <node concept="1EpdjT" id="1Lliyakr07C" role="2Ln$9p">
-          <node concept="2Ly3GW" id="1Lliyakr07E" role="2Ly3GP">
+        <node concept="1EpdjT" id="1LliyamnLJj" role="2Ln$9p">
+          <node concept="2Ly3GW" id="1LliyamnLJl" role="2Ly3GP">
             <ref role="2Ly3GY" to="oyym:2iVdnDeSBj3" resolve="bool" />
-            <node concept="ggAI9" id="1Lliyakr0qs" role="2Ly3GZ" />
+            <node concept="ggAI9" id="1LliyamnM9X" role="2Ly3GZ" />
+          </node>
+        </node>
+        <node concept="2Ly8ie" id="1LliyakUFLU" role="2Ln$9p">
+          <node concept="2Ly3GW" id="1LliyakUFLV" role="2Ly3GP">
+            <ref role="2Ly3GY" to="oyym:2iVdnDeSD4x" resolve="number" />
+            <node concept="ggAI9" id="1LliyakUFLW" role="2Ly3GZ" />
+          </node>
+          <node concept="28JXNb" id="1Lliyalbd9f" role="28JTQ0">
+            <ref role="28JYDA" node="1LliyakIooS" resolve="number" />
+          </node>
+        </node>
+        <node concept="gmrTC" id="1LliyamnNkz" role="2Ln$9p">
+          <property role="gmPZ6" value="mui.Autocomplete" />
+          <node concept="gn1nE" id="1LliyamnNBg" role="gn1nH">
+            <property role="gn1nW" value="options" />
+            <node concept="gjbvi" id="1LliyamnNTO" role="gn1nU">
+              <node concept="gjbwy" id="1LliyamnOco" role="gjbx_">
+                <node concept="gjTlG" id="1LliyamnOcp" role="gjbwM" />
+              </node>
+            </node>
           </node>
         </node>
       </node>
@@ -890,6 +958,24 @@
         <node concept="G4ZHx" id="cqTc8J3C99" role="G4MFJ" />
       </node>
     </node>
+  </node>
+  <node concept="gl9ry" id="1LliyakIjE$">
+    <property role="TrG5h" value="StdLib" />
+    <node concept="3y96$F" id="G39ofDbEQO" role="gmrQt">
+      <property role="TrG5h" value="default" />
+      <property role="3y94Ox" value="5px 20px" />
+      <property role="3yhKn4" value="10px 10px" />
+    </node>
+    <node concept="3y96$F" id="2NkZbYfBifG" role="gmrQt">
+      <property role="TrG5h" value="inset" />
+      <property role="3yhKn4" value="10px 10px" />
+    </node>
+    <node concept="3ywjYg" id="1LliyakImP8" role="gmrQt" />
+    <node concept="GuJNq" id="1LliyakInqe" role="gmrQt">
+      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
+      <property role="TrG5h" value="default" />
+    </node>
+    <node concept="3ywjYg" id="1LliyakInqd" role="gmrQt" />
   </node>
 </model>
 
