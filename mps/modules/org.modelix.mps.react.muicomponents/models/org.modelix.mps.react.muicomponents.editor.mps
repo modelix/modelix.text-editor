@@ -1199,19 +1199,6 @@
             <ref role="1NtTu8" to="zaxg:2NkZbYeZY3A" resolve="labelExpr" />
           </node>
         </node>
-        <node concept="3EZMnI" id="2NkZbYf02Gy" role="3EZMnx">
-          <node concept="2iRfu4" id="2NkZbYf02Gz" role="2iSdaV" />
-          <node concept="3F0ifn" id="2NkZbYf02G$" role="3EZMnx">
-            <property role="3F0ifm" value="children" />
-            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
-          </node>
-          <node concept="3F0ifn" id="2NkZbYf02G_" role="3EZMnx">
-            <property role="3F0ifm" value="=" />
-          </node>
-          <node concept="3F1sOY" id="2NkZbYf02GA" role="3EZMnx">
-            <ref role="1NtTu8" to="zaxg:2NkZbYeZYm9" resolve="childrenExpr" />
-          </node>
-        </node>
         <node concept="3EZMnI" id="2NkZbYfIwdG" role="3EZMnx">
           <node concept="2iRfu4" id="2NkZbYfIwdH" role="2iSdaV" />
           <node concept="3F0ifn" id="2NkZbYfIwdI" role="3EZMnx">
@@ -1223,6 +1210,19 @@
           </node>
           <node concept="3F1sOY" id="2NkZbYfIx5o" role="3EZMnx">
             <ref role="1NtTu8" to="zaxg:2NkZbYfIvCh" resolve="typography" />
+          </node>
+        </node>
+        <node concept="3EZMnI" id="2NkZbYf02Gy" role="3EZMnx">
+          <node concept="2iRfu4" id="2NkZbYf02Gz" role="2iSdaV" />
+          <node concept="3F0ifn" id="2NkZbYf02G$" role="3EZMnx">
+            <property role="3F0ifm" value="children" />
+            <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+          </node>
+          <node concept="3F0ifn" id="2NkZbYf02G_" role="3EZMnx">
+            <property role="3F0ifm" value="=" />
+          </node>
+          <node concept="3F1sOY" id="2NkZbYf02GA" role="3EZMnx">
+            <ref role="1NtTu8" to="zaxg:2NkZbYeZYm9" resolve="childrenExpr" />
           </node>
         </node>
       </node>
@@ -1259,6 +1259,19 @@
       </node>
       <node concept="3F0ifn" id="2NkZbYfaBNv" role="3EZMnx">
         <property role="3F0ifm" value="}" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="2iVdnDeRYZv">
+    <ref role="1XX52x" to="zaxg:2iVdnDeRY63" resolve="Checkbox" />
+    <node concept="3EZMnI" id="2iVdnDeRZSg" role="2wV5jI">
+      <node concept="2iRfu4" id="2iVdnDeRZSh" role="2iSdaV" />
+      <node concept="PMmxH" id="2iVdnDeRZir" role="3EZMnx">
+        <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+      </node>
+      <node concept="3F1sOY" id="2iVdnDeS0bd" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:2vPZMAmvsgs" resolve="data" />
       </node>
     </node>
   </node>

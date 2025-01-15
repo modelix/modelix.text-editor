@@ -184,6 +184,7 @@
       <concept id="793519207813113972" name="org.modelix.mps.react.muicomponents.structure.TypographyRef" flags="ng" index="3z9kRR">
         <reference id="793519207813113973" name="typography" index="3z9kRQ" />
       </concept>
+      <concept id="2646768005435875715" name="org.modelix.mps.react.muicomponents.structure.Checkbox" flags="ng" index="1EpdjT" />
     </language>
     <language id="3a13115c-633c-4c5c-bbcc-75c4219e9555" name="jetbrains.mps.lang.quotation">
       <concept id="5455284157993911077" name="jetbrains.mps.lang.quotation.structure.NodeBuilderInitProperty" flags="ng" index="2pJxcG">
@@ -288,6 +289,25 @@
       <property role="3yhKn4" value="10px 10px" />
     </node>
     <node concept="3ywjYg" id="G39ofDxX99" role="gmrQt" />
+    <node concept="gmrQT" id="2iVdnDeSIrm" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:2iVdnDeS_Ov" resolve="WidgetTest" />
+      <node concept="2LhRxX" id="2iVdnDeSJ5l" role="gmrTS">
+        <node concept="G4ZHx" id="2iVdnDeSJ5m" role="G4Vnm" />
+        <node concept="2Ly8ie" id="2iVdnDeSJoi" role="2Ln$9p">
+          <node concept="2Ly3GW" id="2iVdnDeSJoj" role="2Ly3GP">
+            <ref role="2Ly3GY" to="oyym:2iVdnDeSAqk" resolve="text" />
+            <node concept="ggAI9" id="2iVdnDeSJFf" role="2Ly3GZ" />
+          </node>
+        </node>
+        <node concept="1EpdjT" id="1Lliyakr07C" role="2Ln$9p">
+          <node concept="2Ly3GW" id="1Lliyakr07E" role="2Ly3GP">
+            <ref role="2Ly3GY" to="oyym:2iVdnDeSBj3" resolve="bool" />
+            <node concept="ggAI9" id="1Lliyakr0qs" role="2Ly3GZ" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="2iVdnDeSI4z" role="gmrQt" />
     <node concept="gmrQT" id="2NkZbYes9wI" role="gmrQt">
       <ref role="3JBHV4" to="oyym:2NkZbYerWzG" resolve="NewTreeItem" />
       <node concept="2yaNks" id="2NkZbYf1JnU" role="gmrTS">

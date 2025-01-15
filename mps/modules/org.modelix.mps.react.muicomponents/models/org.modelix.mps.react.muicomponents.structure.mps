@@ -683,5 +683,14 @@
       <ref role="20lvS9" to="8xo1:4Dhs5NilDPI" resolve="StateVariableReference" />
     </node>
   </node>
+  <node concept="1TIwiD" id="2iVdnDeRY63">
+    <property role="EcuMT" value="2646768005435875715" />
+    <property role="TrG5h" value="Checkbox" />
+    <property role="34LRSv" value="checkbox" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2iVdnDeRYGe" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+  </node>
 </model>
 

@@ -160,5 +160,26 @@
       <ref role="20lvS9" node="2NkZbYerWzG" resolve="NewTreeItem" />
     </node>
   </node>
+  <node concept="1TIwiD" id="2iVdnDeS_Ov">
+    <property role="EcuMT" value="2646768005436038431" />
+    <property role="TrG5h" value="WidgetTest" />
+    <property role="19KtqR" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="2iVdnDeSAqk" role="1TKVEl">
+      <property role="IQ2nx" value="2646768005436040852" />
+      <property role="TrG5h" value="text" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
+    </node>
+    <node concept="1TJgyi" id="2iVdnDeSBj3" role="1TKVEl">
+      <property role="IQ2nx" value="2646768005436044483" />
+      <property role="TrG5h" value="bool" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+    <node concept="1TJgyi" id="2iVdnDeSD4x" role="1TKVEl">
+      <property role="IQ2nx" value="2646768005436051745" />
+      <property role="TrG5h" value="number" />
+      <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+  </node>
 </model>
 
