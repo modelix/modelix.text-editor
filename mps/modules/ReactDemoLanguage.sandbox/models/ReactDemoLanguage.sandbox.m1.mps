@@ -35,6 +35,7 @@
         <child id="3230484732390141462" name="root" index="2yILaD" />
       </concept>
       <concept id="2646768005436038431" name="ReactDemoLanguage.structure.WidgetTest" flags="ng" index="1Emmx_">
+        <property id="2259758642304371634" name="droppy" index="JXSOL" />
         <property id="2646768005436040852" name="text" index="1EmlfI" />
         <property id="2646768005436051745" name="number" index="1Emqhr" />
       </concept>
@@ -3664,7 +3665,8 @@
   </node>
   <node concept="1Emmx_" id="2iVdnDeWFta">
     <property role="1EmlfI" value="Hello" />
-    <property role="1Emqhr" value="1235444" />
+    <property role="1Emqhr" value="123" />
+    <property role="JXSOL" value="E" />
   </node>
 </model>
 

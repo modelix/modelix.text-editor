@@ -21,6 +21,7 @@
       <concept id="1402906326895675325" name="jetbrains.mps.lang.editor.structure.CellActionMap_FunctionParm_selectedNode" flags="nn" index="0IXxy" />
       <concept id="1071666914219" name="jetbrains.mps.lang.editor.structure.ConceptEditorDeclaration" flags="ig" index="24kQdi" />
       <concept id="1140524381322" name="jetbrains.mps.lang.editor.structure.CellModel_ListWithRole" flags="ng" index="2czfm3">
+        <property id="1140524450557" name="separatorText" index="2czwfO" />
         <child id="1140524464360" name="cellLayout" index="2czzBx" />
         <child id="1140524464359" name="emptyCellModel" index="2czzBI" />
       </concept>
@@ -54,6 +55,7 @@
         <child id="1223387335081" name="query" index="3n$kyP" />
       </concept>
       <concept id="1186414928363" name="jetbrains.mps.lang.editor.structure.SelectableStyleSheetItem" flags="ln" index="VPM3Z" />
+      <concept id="1186414949600" name="jetbrains.mps.lang.editor.structure.AutoDeletableStyleClassItem" flags="ln" index="VPRnO" />
       <concept id="1233758997495" name="jetbrains.mps.lang.editor.structure.PunctuationLeftStyleClassItem" flags="ln" index="11L4FC" />
       <concept id="1233759184865" name="jetbrains.mps.lang.editor.structure.PunctuationRightStyleClassItem" flags="ln" index="11LMrY" />
       <concept id="1139535219966" name="jetbrains.mps.lang.editor.structure.CellActionMapDeclaration" flags="ig" index="1h_SRR">
@@ -1422,6 +1424,54 @@
           <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
           <ref role="1k5W1q" to="vpip:2vPZMAmxCR0" resolve="RIdentifier" />
         </node>
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="2D6UMN610Y3">
+    <ref role="1XX52x" to="zaxg:2D6UMN5ZxG9" resolve="Dropdown" />
+    <node concept="3EZMnI" id="2D6UMN613hi" role="2wV5jI">
+      <node concept="2iRkQZ" id="2D6UMN613hj" role="2iSdaV" />
+      <node concept="3EZMnI" id="2D6UMN611Ra" role="3EZMnx">
+        <node concept="2iRfu4" id="2D6UMN611Rb" role="2iSdaV" />
+        <node concept="PMmxH" id="2D6UMN611hl" role="3EZMnx">
+          <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+          <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+        </node>
+        <node concept="3F1sOY" id="2D6UMN612t1" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:2vPZMAmvsgs" resolve="data" />
+        </node>
+      </node>
+      <node concept="3EZMnI" id="2D6UMN613Rv" role="3EZMnx">
+        <node concept="VPM3Z" id="2D6UMN613Rx" role="3F10Kt" />
+        <node concept="3XFhqQ" id="2D6UMN614av" role="3EZMnx" />
+        <node concept="3F1sOY" id="2D6UMN616fi" role="3EZMnx">
+          <ref role="1NtTu8" to="zaxg:2D6UMN615Dt" resolve="choices" />
+        </node>
+        <node concept="2iRfu4" id="2D6UMN613R$" role="2iSdaV" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="2D6UMN62OiI">
+    <ref role="1XX52x" to="zaxg:2D6UMN62NpD" resolve="StaticChoicesSpecifier" />
+    <node concept="3EZMnI" id="2D6UMN62XEC" role="2wV5jI">
+      <node concept="2iRfu4" id="2D6UMN62XED" role="2iSdaV" />
+      <node concept="PMmxH" id="2D6UMN62O_E" role="3EZMnx">
+        <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+      </node>
+      <node concept="3F2HdR" id="2D6UMN62XX_" role="3EZMnx">
+        <property role="2czwfO" value="," />
+        <ref role="1NtTu8" to="zaxg:2D6UMN62UHo" resolve="choices" />
+        <node concept="2iRfu4" id="2D6UMN62XXB" role="2czzBx" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="2D6UMN62VT5">
+    <ref role="1XX52x" to="zaxg:2D6UMN62V0l" resolve="ChoiceEntry" />
+    <node concept="3F0A7n" id="2D6UMN62Wc1" role="2wV5jI">
+      <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+      <node concept="VPRnO" id="2D6UMN62WuX" role="3F10Kt">
+        <property role="VOm3f" value="true" />
       </node>
     </node>
   </node>

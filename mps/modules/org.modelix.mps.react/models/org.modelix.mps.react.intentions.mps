@@ -67,11 +67,13 @@
     <language id="d7a92d38-f7db-40d0-8431-763b0c3c9f20" name="jetbrains.mps.lang.intentions">
       <concept id="1192794744107" name="jetbrains.mps.lang.intentions.structure.IntentionDeclaration" flags="ig" index="2S6QgY" />
       <concept id="1192794782375" name="jetbrains.mps.lang.intentions.structure.DescriptionBlock" flags="in" index="2S6ZIM" />
+      <concept id="1192795771125" name="jetbrains.mps.lang.intentions.structure.IsApplicableBlock" flags="in" index="2SaL7w" />
       <concept id="1192795911897" name="jetbrains.mps.lang.intentions.structure.ExecuteBlock" flags="in" index="2Sbjvc" />
       <concept id="1192796902958" name="jetbrains.mps.lang.intentions.structure.ConceptFunctionParameter_node" flags="nn" index="2Sf5sV" />
       <concept id="2522969319638091381" name="jetbrains.mps.lang.intentions.structure.BaseIntentionDeclaration" flags="ig" index="2ZfUlf">
         <reference id="2522969319638198290" name="forConcept" index="2ZfgGC" />
         <child id="2522969319638198291" name="executeFunction" index="2ZfgGD" />
+        <child id="2522969319638093995" name="isApplicableFunction" index="2ZfVeh" />
         <child id="2522969319638093993" name="descriptionFunction" index="2ZfVej" />
       </concept>
       <concept id="1240316299033" name="jetbrains.mps.lang.intentions.structure.QueryBlock" flags="in" index="38BcoT">
@@ -371,6 +373,27 @@
             <node concept="2qgKlT" id="2vPZMAnt1Ig" role="2OqNvi">
               <ref role="37wK5l" to="7923:2vPZMAnsyqb" resolve="wrap" />
               <node concept="2Sf5sV" id="2vPZMAnt1Pl" role="37wK5m" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="2SaL7w" id="gNsEGB2FNn" role="2ZfVeh">
+      <node concept="3clFbS" id="gNsEGB2FNo" role="2VODD2">
+        <node concept="3clFbF" id="gNsEGB2I51" role="3cqZAp">
+          <node concept="2OqwBi" id="gNsEGB2IS0" role="3clFbG">
+            <node concept="1PxgMI" id="gNsEGB2I53" role="2Oq$k0">
+              <node concept="chp4Y" id="gNsEGB2I54" role="3oSUPX">
+                <ref role="cht4Q" to="zaxg:2vPZMAnsypR" resolve="ICanWrap" />
+              </node>
+              <node concept="2OqwBi" id="gNsEGB2I55" role="1m5AlR">
+                <node concept="38Zlrr" id="gNsEGB2I56" role="2Oq$k0" />
+                <node concept="LFhST" id="gNsEGB2I57" role="2OqNvi" />
+              </node>
+            </node>
+            <node concept="2qgKlT" id="gNsEGB2J$m" role="2OqNvi">
+              <ref role="37wK5l" to="7923:gNsEGB2zdH" resolve="canThisBeWrapped" />
+              <node concept="2Sf5sV" id="gNsEGB2JSr" role="37wK5m" />
             </node>
           </node>
         </node>

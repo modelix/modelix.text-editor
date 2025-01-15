@@ -472,6 +472,9 @@
     <node concept="PrWs8" id="2vPZMAoGIbp" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
     </node>
+    <node concept="PrWs8" id="gNsEGB2pTG" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnsypR" resolve="ICanWrap" />
+    </node>
     <node concept="1TJgyj" id="2vPZMAoGIbq" role="1TKVEi">
       <property role="IQ2ns" value="2879488090893902554" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -784,6 +787,49 @@
       <property role="20kJfa" value="valueConverter" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="1Lliyak$MAq" resolve="ValueConverter" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2D6UMN5ZxG9">
+    <property role="EcuMT" value="3046380775495572233" />
+    <property role="TrG5h" value="Dropdown" />
+    <property role="34LRSv" value="dropdown" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2D6UMN6104X" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+    <node concept="1TJgyj" id="2D6UMN615Dt" role="1TKVEi">
+      <property role="IQ2ns" value="3046380775495981661" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="choices" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="2D6UMN62MwU" resolve="ChoicesSpecifier" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2D6UMN62MwU">
+    <property role="EcuMT" value="3046380775496427578" />
+    <property role="TrG5h" value="ChoicesSpecifier" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+  </node>
+  <node concept="1TIwiD" id="2D6UMN62NpD">
+    <property role="EcuMT" value="3046380775496431209" />
+    <property role="TrG5h" value="StaticChoicesSpecifier" />
+    <property role="34LRSv" value="static choices" />
+    <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoicesSpecifier" />
+    <node concept="1TJgyj" id="2D6UMN62UHo" role="1TKVEi">
+      <property role="IQ2ns" value="3046380775496461144" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="choices" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="2D6UMN62V0l" resolve="ChoiceEntry" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="2D6UMN62V0l">
+    <property role="EcuMT" value="3046380775496462357" />
+    <property role="TrG5h" value="ChoiceEntry" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="2D6UMN62VAa" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
     </node>
   </node>
 </model>
