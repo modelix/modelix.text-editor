@@ -65,6 +65,7 @@
     <property role="EcuMT" value="2879488090856848295" />
     <property role="TrG5h" value="TextField" />
     <property role="34LRSv" value="textfield" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAolc6p" role="PzmwI">
       <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
@@ -99,6 +100,7 @@
     <property role="EcuMT" value="2879488090859464565" />
     <property role="TrG5h" value="Label" />
     <property role="34LRSv" value="label" />
+    <property role="3GE5qa" value="output" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="1TJgyj" id="G39ofC8uZm" role="1TKVEi">
       <property role="IQ2ns" value="793519207812820950" />
@@ -182,6 +184,7 @@
     <property role="EcuMT" value="2879488090860989101" />
     <property role="TrG5h" value="Header" />
     <property role="34LRSv" value="header" />
+    <property role="3GE5qa" value="output" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmJaEI" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
@@ -209,6 +212,7 @@
     <property role="EcuMT" value="2879488090861821590" />
     <property role="TrG5h" value="Space" />
     <property role="34LRSv" value="space" />
+    <property role="3GE5qa" value="output" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmMlUn" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
@@ -245,6 +249,7 @@
     <property role="EcuMT" value="2879488090865052965" />
     <property role="TrG5h" value="Button" />
     <property role="34LRSv" value="button" />
+    <property role="3GE5qa" value="action" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAmYEOA" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmYEO7" resolve="IMUIAction" />
@@ -333,6 +338,7 @@
     <property role="EcuMT" value="2879488090875868019" />
     <property role="TrG5h" value="Accordion" />
     <property role="34LRSv" value="accordion" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAnBVdO" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
@@ -356,6 +362,7 @@
     <property role="EcuMT" value="2879488090875868026" />
     <property role="TrG5h" value="Icon" />
     <property role="34LRSv" value="icon" />
+    <property role="3GE5qa" value="output" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="1TJgyi" id="2vPZMAnBVdV" role="1TKVEl">
       <property role="IQ2nx" value="2879488090875868027" />
@@ -367,6 +374,7 @@
     <property role="EcuMT" value="2879488090877505016" />
     <property role="TrG5h" value="Box" />
     <property role="34LRSv" value="box" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAnIc9c" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
@@ -400,6 +408,7 @@
     <property role="EcuMT" value="2879488090881917716" />
     <property role="TrG5h" value="State" />
     <property role="34LRSv" value="state" />
+    <property role="3GE5qa" value="action" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAnZ0cn" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnZ0cm" resolve="IInvisible" />
@@ -447,6 +456,7 @@
     <property role="EcuMT" value="2879488090887798733" />
     <property role="TrG5h" value="ShowAndEdit" />
     <property role="34LRSv" value="showAndEdit" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAolrZe" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
@@ -456,6 +466,7 @@
     <property role="EcuMT" value="2879488090888336418" />
     <property role="TrG5h" value="PlainDiv" />
     <property role="34LRSv" value="seq" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAonvgz" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
@@ -465,6 +476,7 @@
     <property role="EcuMT" value="2879488090893902552" />
     <property role="TrG5h" value="LabelWidgetPair" />
     <property role="34LRSv" value="lwp" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAoGIbp" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
@@ -640,6 +652,7 @@
     <property role="EcuMT" value="3230484732399569315" />
     <property role="TrG5h" value="TreeNode" />
     <property role="34LRSv" value="tree node" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2NkZbYeZXbY" role="PzmwI">
       <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
@@ -677,6 +690,7 @@
     <property role="EcuMT" value="3230484732402340359" />
     <property role="TrG5h" value="TreeView" />
     <property role="34LRSv" value="tree view" />
+    <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2NkZbYfaxHc" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
@@ -693,6 +707,7 @@
     <property role="EcuMT" value="2646768005435875715" />
     <property role="TrG5h" value="Checkbox" />
     <property role="34LRSv" value="checkbox" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2iVdnDeRYGe" role="PzmwI">
       <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
@@ -790,6 +805,7 @@
     <property role="EcuMT" value="3046380775495572233" />
     <property role="TrG5h" value="Dropdown" />
     <property role="34LRSv" value="dropdown" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2D6UMN6104X" role="PzmwI">
       <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
@@ -806,12 +822,14 @@
     <property role="EcuMT" value="3046380775496427578" />
     <property role="TrG5h" value="ChoiceSpecifier" />
     <property role="R5$K7" value="true" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
   </node>
   <node concept="1TIwiD" id="2D6UMN62NpD">
     <property role="EcuMT" value="3046380775496431209" />
     <property role="TrG5h" value="ChoiceSpecifierStatic" />
     <property role="34LRSv" value="static choices" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
     <node concept="1TJgyj" id="2D6UMN62UHo" role="1TKVEi">
       <property role="IQ2ns" value="3046380775496461144" />
@@ -824,6 +842,7 @@
   <node concept="1TIwiD" id="2D6UMN62V0l">
     <property role="EcuMT" value="3046380775496462357" />
     <property role="TrG5h" value="ChoiceEntry" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2D6UMN62VAa" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
@@ -833,6 +852,7 @@
     <property role="EcuMT" value="302711679384721934" />
     <property role="TrG5h" value="ChoiceSpecifierDynamic" />
     <property role="34LRSv" value="dynamic choices" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
     <node concept="1TJgyj" id="gNsEGB5DCf" role="1TKVEi">
       <property role="IQ2ns" value="302711679384721935" />
@@ -846,6 +866,7 @@
     <property role="EcuMT" value="6637716746556023873" />
     <property role="TrG5h" value="ReferenceTargetChooser" />
     <property role="34LRSv" value="targetchooser" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="5KtU3pY8yh2" role="PzmwI">
       <ref role="PrY4T" node="5KtU3pYaMW3" resolve="IReferenceWidget" />
@@ -911,6 +932,43 @@
     </node>
     <node concept="PrWs8" id="5KtU3pYaNNF" role="PrDN$">
       <ref role="PrY4T" node="5KtU3pYaLcv" resolve="IHasSingleReferenceBinding" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5KtU3pZ8DQW">
+    <property role="EcuMT" value="6637716746572832188" />
+    <property role="3GE5qa" value="layout" />
+    <property role="TrG5h" value="Grid" />
+    <property role="34LRSv" value="grid" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="5KtU3pZ8Kft" role="1TKVEi">
+      <property role="IQ2ns" value="6637716746572858333" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="items" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="5KtU3pZ8Esn" resolve="GridItem" />
+    </node>
+    <node concept="1TJgyi" id="5KtU3pZ8KOy" role="1TKVEl">
+      <property role="IQ2nx" value="6637716746572860706" />
+      <property role="TrG5h" value="spacing" />
+      <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+    <node concept="PrWs8" id="5KtU3pZ9By2" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAmEVPI" resolve="IMUILayoutComponent" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5KtU3pZ8Esn">
+    <property role="EcuMT" value="6637716746572834583" />
+    <property role="3GE5qa" value="layout" />
+    <property role="TrG5h" value="GridItem" />
+    <property role="34LRSv" value="item" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyi" id="5KtU3pZ8F1s" role="1TKVEl">
+      <property role="IQ2nx" value="6637716746572836956" />
+      <property role="TrG5h" value="cols" />
+      <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+    <node concept="PrWs8" id="5KtU3pZ8FT3" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
     </node>
   </node>
 </model>

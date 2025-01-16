@@ -402,6 +402,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="2vPZMAn_p7C">
+    <property role="3GE5qa" value="output" />
     <ref role="13h7C2" to="zaxg:2vPZMAmDmtP" resolve="Label" />
     <node concept="13hLZK" id="2vPZMAn_p7D" role="13h7CW">
       <node concept="3clFbS" id="2vPZMAn_p7E" role="2VODD2">
@@ -420,6 +421,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="2vPZMAnEJvN">
+    <property role="3GE5qa" value="layout" />
     <ref role="13h7C2" to="zaxg:2vPZMAnBVdN" resolve="Accordion" />
     <node concept="13hLZK" id="2vPZMAnEJvO" role="13h7CW">
       <node concept="3clFbS" id="2vPZMAnEJvP" role="2VODD2">
@@ -559,6 +561,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="2vPZMAnZU_y">
+    <property role="3GE5qa" value="action" />
     <ref role="13h7C2" to="zaxg:2vPZMAnZ0ck" resolve="State" />
     <node concept="13hLZK" id="2vPZMAnZU_z" role="13h7CW">
       <node concept="3clFbS" id="2vPZMAnZU_$" role="2VODD2" />
@@ -585,6 +588,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="2vPZMAory6T">
+    <property role="3GE5qa" value="widgets" />
     <ref role="13h7C2" to="zaxg:2vPZMAolrZd" resolve="ShowAndEdit" />
     <node concept="13hLZK" id="2vPZMAory6U" role="13h7CW">
       <node concept="3clFbS" id="2vPZMAory6V" role="2VODD2" />
@@ -1082,6 +1086,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="gNsEGB2qvR">
+    <property role="3GE5qa" value="layout" />
     <ref role="13h7C2" to="zaxg:2vPZMAoGIbo" resolve="LabelWidgetPair" />
     <node concept="13hLZK" id="gNsEGB2qvS" role="13h7CW">
       <node concept="3clFbS" id="gNsEGB2qvT" role="2VODD2" />
@@ -1229,6 +1234,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="5KtU3pYnaq3">
+    <property role="3GE5qa" value="widgets" />
     <ref role="13h7C2" to="zaxg:5KtU3pY8yh1" resolve="ReferenceTargetChooser" />
     <node concept="13hLZK" id="5KtU3pYnaq4" role="13h7CW">
       <node concept="3clFbS" id="5KtU3pYnaq5" role="2VODD2" />

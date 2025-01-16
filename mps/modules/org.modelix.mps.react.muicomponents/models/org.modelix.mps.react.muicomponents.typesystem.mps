@@ -223,6 +223,7 @@
   </node>
   <node concept="1YbPZF" id="2NkZbYf050T">
     <property role="TrG5h" value="typeof_TreeNode" />
+    <property role="3GE5qa" value="layout" />
     <node concept="3clFbS" id="2NkZbYf050U" role="18ibNy">
       <node concept="1ZobV4" id="2NkZbYf07O$" role="3cqZAp">
         <node concept="mw_s8" id="2NkZbYf087C" role="1ZfhKB">
@@ -323,6 +324,7 @@
   </node>
   <node concept="1YbPZF" id="2NkZbYfb8sO">
     <property role="TrG5h" value="typeof_TreeView" />
+    <property role="3GE5qa" value="layout" />
     <node concept="3clFbS" id="2NkZbYfb8sP" role="18ibNy">
       <node concept="1ZobV4" id="2NkZbYfbbRJ" role="3cqZAp">
         <node concept="mw_s8" id="2NkZbYfbcaN" role="1ZfhKB">
@@ -507,6 +509,7 @@
   </node>
   <node concept="1YbPZF" id="1LliyakXFEQ">
     <property role="TrG5h" value="typeof_TextField" />
+    <property role="3GE5qa" value="widgets" />
     <node concept="3clFbS" id="1LliyakXFER" role="18ibNy">
       <node concept="3cpWs8" id="1LliyakY5K7" role="3cqZAp">
         <node concept="3cpWsn" id="1LliyakY5K8" role="3cpWs9">
