@@ -142,7 +142,9 @@
         <reference id="6637716746556371466" name="reference" index="yeDCW" />
         <child id="6637716746556371465" name="node" index="yeDCZ" />
       </concept>
-      <concept id="6637716746556023873" name="org.modelix.mps.react.muicomponents.structure.ReferenceTargetChooser" flags="ng" index="yfWLR" />
+      <concept id="6637716746556023873" name="org.modelix.mps.react.muicomponents.structure.ReferenceTargetChooser" flags="ng" index="yfWLR">
+        <child id="6637716746559848368" name="presentationFun" index="ygpu6" />
+      </concept>
       <concept id="302711679384721934" name="org.modelix.mps.react.muicomponents.structure.ChoiceSpecifierDynamic" flags="ng" index="z9uy_">
         <child id="302711679384721935" name="choices" index="z9uy$" />
       </concept>
@@ -375,6 +377,19 @@
           <node concept="yeDCY" id="5KtU3pYbvWp" role="ydJhi">
             <ref role="yeDCW" to="oyym:5KtU3pXwbBQ" resolve="target" />
             <node concept="ggAI9" id="5KtU3pYbwJ2" role="yeDCZ" />
+          </node>
+          <node concept="28B5xO" id="5KtU3pYpFHJ" role="ygpu6">
+            <node concept="3cpWs3" id="5KtU3pYpHiP" role="28B56T">
+              <node concept="2OqwBi" id="5KtU3pYpHIc" role="3uHU7w">
+                <node concept="28Bezj" id="5KtU3pYpHiS" role="2Oq$k0" />
+                <node concept="3TrcHB" id="5KtU3pYpIaB" role="2OqNvi">
+                  <ref role="3TsBF5" to="tpck:h0TrG11" resolve="name" />
+                </node>
+              </node>
+              <node concept="Xl_RD" id="5KtU3pYpG0u" role="3uHU7B">
+                <property role="Xl_RC" value="X" />
+              </node>
+            </node>
           </node>
         </node>
       </node>

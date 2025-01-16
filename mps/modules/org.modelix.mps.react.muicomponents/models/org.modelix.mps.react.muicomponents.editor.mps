@@ -255,7 +255,7 @@
           <node concept="3F0A7n" id="2vPZMAmvsgS" role="2wV5jI">
             <property role="1Intyy" value="true" />
             <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
-            <ref role="1k5W1q" to="vpip:2vPZMAmxCQV" resolve="RConcept" />
+            <ref role="1k5W1q" to="vpip:5KtU3pYyDEg" resolve="RFeature" />
           </node>
         </node>
       </node>
@@ -1499,6 +1499,14 @@
       <node concept="3F1sOY" id="5KtU3pY8_aR" role="3EZMnx">
         <ref role="1NtTu8" to="zaxg:5KtU3pYaLL$" resolve="data" />
       </node>
+      <node concept="3F0ifn" id="5KtU3pYnmHD" role="3EZMnx">
+        <property role="3F0ifm" value="label:" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
+      </node>
+      <node concept="3F1sOY" id="5KtU3pYnniK" role="3EZMnx">
+        <property role="1$x2rV" value="&lt;default&gt;" />
+        <ref role="1NtTu8" to="zaxg:5KtU3pYn7YK" resolve="labelFun" />
+      </node>
     </node>
   </node>
   <node concept="24kQdi" id="5KtU3pY9S07">
@@ -1524,7 +1532,7 @@
           <node concept="3F0A7n" id="5KtU3pY9SiN" role="2wV5jI">
             <property role="1Intyy" value="true" />
             <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
-            <ref role="1k5W1q" to="vpip:2vPZMAmxCQV" resolve="RConcept" />
+            <ref role="1k5W1q" to="vpip:5KtU3pYyDEg" resolve="RFeature" />
           </node>
         </node>
       </node>

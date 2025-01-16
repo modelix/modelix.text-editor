@@ -845,10 +845,19 @@
   <node concept="1TIwiD" id="5KtU3pY8yh1">
     <property role="EcuMT" value="6637716746556023873" />
     <property role="TrG5h" value="ReferenceTargetChooser" />
-    <property role="34LRSv" value="ref-target-chooser" />
+    <property role="34LRSv" value="targetchooser" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="5KtU3pY8yh2" role="PzmwI">
       <ref role="PrY4T" node="5KtU3pYaMW3" resolve="IReferenceWidget" />
+    </node>
+    <node concept="PrWs8" id="5KtU3pYn9eN" role="PzmwI">
+      <ref role="PrY4T" node="1LliyakMlNn" resolve="IItFunctionContext" />
+    </node>
+    <node concept="1TJgyj" id="5KtU3pYn7YK" role="1TKVEi">
+      <property role="IQ2ns" value="6637716746559848368" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="labelFun" />
+      <ref role="20lvS9" node="1LliyakMh9m" resolve="ItFunction" />
     </node>
   </node>
   <node concept="PlHQZ" id="5KtU3pY9cIT">

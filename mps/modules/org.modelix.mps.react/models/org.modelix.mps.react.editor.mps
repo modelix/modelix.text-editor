@@ -66,6 +66,7 @@
         <child id="1186402402630" name="styles" index="V601i" />
       </concept>
       <concept id="1186403694788" name="jetbrains.mps.lang.editor.structure.ColorStyleClassItem" flags="ln" index="VaVBg">
+        <property id="1186403713874" name="color" index="Vb096" />
         <child id="1186403803051" name="query" index="VblUZ" />
       </concept>
       <concept id="1186403751766" name="jetbrains.mps.lang.editor.structure.FontStyleStyleClassItem" flags="ln" index="Vb9p2">
@@ -115,6 +116,10 @@
       </concept>
       <concept id="1223387125302" name="jetbrains.mps.lang.editor.structure.QueryFunction_Boolean" flags="in" index="3nzxsE" />
       <concept id="1088185857835" name="jetbrains.mps.lang.editor.structure.InlineEditorComponent" flags="ig" index="1sVBvm" />
+      <concept id="1215007762405" name="jetbrains.mps.lang.editor.structure.FloatStyleClassItem" flags="ln" index="3$6MrZ">
+        <property id="1215007802031" name="value" index="3$6WeP" />
+      </concept>
+      <concept id="1215007897487" name="jetbrains.mps.lang.editor.structure.PaddingRightStyleClassItem" flags="ln" index="3$7jql" />
       <concept id="1139848536355" name="jetbrains.mps.lang.editor.structure.CellModel_WithRole" flags="ng" index="1$h60E">
         <property id="1139852716018" name="noTargetText" index="1$x2rV" />
         <property id="1140017977771" name="readOnly" index="1Intyy" />
@@ -1761,6 +1766,18 @@
         <node concept="1iSF2X" id="2vPZMAmxCQY" role="VblUZ">
           <property role="1iTho6" value="BF6415" />
         </node>
+      </node>
+    </node>
+    <node concept="14StLt" id="5KtU3pYyDEg" role="V601i">
+      <property role="TrG5h" value="RFeature" />
+      <node concept="Vb9p2" id="hEUNR2k" role="3F10Kt">
+        <property role="Vbekb" value="g1_kEg4" />
+      </node>
+      <node concept="VechU" id="hEZR8wA" role="3F10Kt">
+        <property role="Vb096" value="fLJRk5B" />
+      </node>
+      <node concept="3$7jql" id="hFHdBvV" role="3F10Kt">
+        <property role="3$6WeP" value="0.0" />
       </node>
     </node>
     <node concept="14StLt" id="2vPZMAmxCR0" role="V601i">
