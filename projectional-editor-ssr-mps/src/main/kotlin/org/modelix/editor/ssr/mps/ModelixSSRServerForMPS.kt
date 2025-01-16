@@ -20,9 +20,8 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
-import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.html.respondHtml
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.routing.get
@@ -84,8 +83,8 @@ import org.modelix.scopes.IScope
 import org.modelix.scopes.IScopeProvider
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
-import java.time.Duration
 import java.util.Collections
+import kotlin.time.Duration.Companion.seconds
 
 @Service(Service.Level.PROJECT)
 class ModelixSSRServerForMPSProject(private val project: Project) : Disposable {
@@ -103,7 +102,7 @@ class ModelixSSRServerForMPSProject(private val project: Project) : Disposable {
 class ModelixSSRServerForMPS : Disposable {
 
     private var ssrServer: ModelixSSRServer? = null
-    private var ktorServer: ApplicationEngine? = null
+    private var ktorServer: EmbeddedServer<*, *>? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
     private var mpsIntegration: EditorIntegrationForMPS? = null
 
@@ -147,8 +146,8 @@ class ModelixSSRServerForMPS : Disposable {
 
     private fun Application.initKtorServer(ssrServer: ModelixSSRServer) {
         install(WebSockets) {
-            pingPeriod = Duration.ofSeconds(15)
-            timeout = Duration.ofSeconds(15)
+            pingPeriod = 15.seconds
+            timeout = 15.seconds
             maxFrameSize = Long.MAX_VALUE
             masking = false
         }

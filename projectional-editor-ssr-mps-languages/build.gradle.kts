@@ -1,3 +1,4 @@
+import org.modelix.excludeMPSLibraries
 import org.modelix.mpsHomeDir
 import org.modelix.mpsPluginsDir
 
@@ -11,9 +12,9 @@ kotlin {
 }
 
 dependencies {
-    testImplementation(project(":projectional-editor-ssr-mps"))
-    testImplementation(project(":projectional-editor"))
-    testImplementation(libs.modelix.mps.model.adapters)
+    testImplementation(project(":projectional-editor-ssr-mps"), excludeMPSLibraries)
+    testImplementation(project(":projectional-editor"), excludeMPSLibraries)
+    testImplementation(libs.modelix.mps.model.adapters, excludeMPSLibraries)
 }
 
 intellij {

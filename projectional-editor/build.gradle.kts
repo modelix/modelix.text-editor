@@ -41,7 +41,6 @@ kotlin {
         }
         val jvmMain by getting {
             dependencies {
-                implementation(coreLibs.kotlin.coroutines.swing)
             }
         }
         val jvmTest by getting {

@@ -9,9 +9,8 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
 import io.ktor.server.application.Application
-import io.ktor.server.application.call
 import io.ktor.server.application.install
-import io.ktor.server.engine.ApplicationEngine
+import io.ktor.server.engine.EmbeddedServer
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.respond
@@ -43,8 +42,8 @@ import svg.plugin.RenderSession
 import svg.plugin.optBoolean
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
-import java.time.Duration
 import java.util.Collections
+import kotlin.time.Duration.Companion.seconds
 
 private val LOG = io.github.oshai.kotlinlogging.KotlinLogging.logger { }
 
@@ -67,7 +66,7 @@ class ImageEditorForMPS : Disposable {
         fun getInstance() = ApplicationManager.getApplication().getService(ImageEditorForMPS::class.java)
     }
 
-    private var ktorServer: ApplicationEngine? = null
+    private var ktorServer: EmbeddedServer<*, *>? = null
     private val projects: MutableSet<Project> = Collections.synchronizedSet(HashSet())
     private val commandLister = object : org.jetbrains.mps.openapi.repository.CommandListener {
         override fun commandFinished() {
@@ -116,8 +115,8 @@ class ImageEditorForMPS : Disposable {
 
     private fun Application.initKtorServer() {
         install(WebSockets) {
-            pingPeriod = Duration.ofSeconds(15)
-            timeout = Duration.ofSeconds(15)
+            pingPeriod = 15.seconds
+            timeout = 15.seconds
             maxFrameSize = Long.MAX_VALUE
             masking = false
         }
