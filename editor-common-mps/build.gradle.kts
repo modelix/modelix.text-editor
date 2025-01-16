@@ -18,7 +18,6 @@ kotlin {
 dependencies {
     compileOnly(kotlin("stdlib"))
     compileOnly(coreLibs.kotlin.coroutines.core)
-    compileOnly(coreLibs.kotlin.coroutines.swing)
     compileOnly(coreLibs.kotlin.serialization.json)
 
     api(coreLibs.ktor.server.core, excludeMPSLibraries)
