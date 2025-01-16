@@ -3,6 +3,8 @@ import * as mui from "@mui/material";
 import * as icons from "@mui/icons-material";
 import {GenericComponent} from "./GenericComponent.tsx";
 import { DataGrid } from '@mui/x-data-grid';
+//import { Grid2 } from '@mui/material/Unstable_Grid2';
+import Grid2 from "@mui/material/Unstable_Grid2"
 import { SimpleTreeView, RichTreeView, TreeItem, TreeItem2 } from '@mui/x-tree-view';
 import {ReferenceTargetChooser} from "./ReferenceTargetChooser.tsx";
 import {Dropdown} from "./Dropdown.tsx";
@@ -85,6 +87,7 @@ export function registerDefaultComponents() {
     }
 
     registerGenericComponent("mui.DataGrid", DataGrid)
+    registerGenericComponent("mui.Grid2", Grid2)
     registerGenericComponent("mui.SimpleTreeView", SimpleTreeView)
     registerGenericComponent("mui.RichTreeView", RichTreeView)
     registerGenericComponent("mui.TreeItem", TreeItem)
