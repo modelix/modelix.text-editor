@@ -67,7 +67,7 @@
     <property role="34LRSv" value="textfield" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAolc6p" role="PzmwI">
-      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+      <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
     </node>
     <node concept="1TJgyj" id="1LliyakUHuy" role="1TKVEi">
       <property role="IQ2ns" value="2041619518470150050" />
@@ -425,7 +425,7 @@
   </node>
   <node concept="PlHQZ" id="2vPZMAolbCE">
     <property role="EcuMT" value="2879488090887731754" />
-    <property role="TrG5h" value="ISingleDataBinding" />
+    <property role="TrG5h" value="IHasSinglePropertyBinding" />
     <property role="3GE5qa" value="interfaces" />
     <node concept="1TJgyj" id="2vPZMAmvsgs" role="1TKVEi">
       <property role="IQ2ns" value="2879488090856866844" />
@@ -441,9 +441,6 @@
     <property role="3GE5qa" value="interfaces" />
     <node concept="PrWs8" id="2vPZMAolc2B" role="PrDN$">
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
-    </node>
-    <node concept="PrWs8" id="2vPZMAolc2C" role="PrDN$">
-      <ref role="PrY4T" node="2vPZMAolbCE" resolve="ISingleDataBinding" />
     </node>
   </node>
   <node concept="1TIwiD" id="2vPZMAolrZd">
@@ -698,7 +695,7 @@
     <property role="34LRSv" value="checkbox" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2iVdnDeRYGe" role="PzmwI">
-      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+      <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
     </node>
   </node>
   <node concept="1TIwiD" id="1Lliyak$MAq">
@@ -795,27 +792,27 @@
     <property role="34LRSv" value="dropdown" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2D6UMN6104X" role="PzmwI">
-      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+      <ref role="PrY4T" node="5KtU3pY9cIT" resolve="IPropertyWidget" />
     </node>
     <node concept="1TJgyj" id="2D6UMN615Dt" role="1TKVEi">
       <property role="IQ2ns" value="3046380775495981661" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="choices" />
       <property role="20lbJX" value="fLJekj4/_1" />
-      <ref role="20lvS9" node="2D6UMN62MwU" resolve="ChoicesSpecifier" />
+      <ref role="20lvS9" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
     </node>
   </node>
   <node concept="1TIwiD" id="2D6UMN62MwU">
     <property role="EcuMT" value="3046380775496427578" />
-    <property role="TrG5h" value="ChoicesSpecifier" />
+    <property role="TrG5h" value="ChoiceSpecifier" />
     <property role="R5$K7" value="true" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
   </node>
   <node concept="1TIwiD" id="2D6UMN62NpD">
     <property role="EcuMT" value="3046380775496431209" />
-    <property role="TrG5h" value="StaticChoicesSpecifier" />
+    <property role="TrG5h" value="ChoiceSpecifierStatic" />
     <property role="34LRSv" value="static choices" />
-    <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoicesSpecifier" />
+    <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
     <node concept="1TJgyj" id="2D6UMN62UHo" role="1TKVEi">
       <property role="IQ2ns" value="3046380775496461144" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -830,6 +827,81 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2D6UMN62VAa" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="gNsEGB5DCe">
+    <property role="EcuMT" value="302711679384721934" />
+    <property role="TrG5h" value="ChoiceSpecifierDynamic" />
+    <property role="34LRSv" value="dynamic choices" />
+    <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
+    <node concept="1TJgyj" id="gNsEGB5DCf" role="1TKVEi">
+      <property role="IQ2ns" value="302711679384721935" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="choices" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5KtU3pY8yh1">
+    <property role="EcuMT" value="6637716746556023873" />
+    <property role="TrG5h" value="ReferenceTargetChooser" />
+    <property role="34LRSv" value="ref-target-chooser" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="5KtU3pY8yh2" role="PzmwI">
+      <ref role="PrY4T" node="5KtU3pYaMW3" resolve="IReferenceWidget" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="5KtU3pY9cIT">
+    <property role="EcuMT" value="6637716746556197817" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IPropertyWidget" />
+    <node concept="PrWs8" id="5KtU3pY9dkk" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+    <node concept="PrWs8" id="5KtU3pY9f4d" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAolbCE" resolve="IHasSinglePropertyBinding" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5KtU3pY9R88">
+    <property role="EcuMT" value="6637716746556371464" />
+    <property role="TrG5h" value="NodeReferenceRef" />
+    <property role="3GE5qa" value="util" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="5KtU3pY9R89" role="1TKVEi">
+      <property role="IQ2ns" value="6637716746556371465" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="node" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+    <node concept="1TJgyj" id="5KtU3pY9R8a" role="1TKVEi">
+      <property role="IQ2ns" value="6637716746556371466" />
+      <property role="20kJfa" value="reference" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:f_TJgxE" resolve="LinkDeclaration" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="5KtU3pYaLcv">
+    <property role="EcuMT" value="6637716746556609311" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IHasSingleReferenceBinding" />
+    <node concept="1TJgyj" id="5KtU3pYaLL$" role="1TKVEi">
+      <property role="IQ2ns" value="6637716746556611684" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="data" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="5KtU3pY9R88" resolve="NodeReferenceRef" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="5KtU3pYaMW3">
+    <property role="EcuMT" value="6637716746556616451" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IReferenceWidget" />
+    <node concept="PrWs8" id="5KtU3pYaNx8" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+    <node concept="PrWs8" id="5KtU3pYaNNF" role="PrDN$">
+      <ref role="PrY4T" node="5KtU3pYaLcv" resolve="IHasSingleReferenceBinding" />
     </node>
   </node>
 </model>

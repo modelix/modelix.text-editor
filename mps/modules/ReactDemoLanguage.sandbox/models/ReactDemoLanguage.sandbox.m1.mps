@@ -7,11 +7,17 @@
   <imports />
   <registry>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
+      <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
+        <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
+      </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
       </concept>
     </language>
     <language id="dce965c2-af99-4a0c-9895-485700f46864" name="ReactDemoLanguage">
+      <concept id="6637716746545074245" name="ReactDemoLanguage.structure.RefTest" flags="ng" index="xpJxN">
+        <reference id="6637716746545445366" name="target" index="xBl70" />
+      </concept>
       <concept id="3230484732390131948" name="ReactDemoLanguage.structure.NewTreeItem" flags="ng" index="2yINhj">
         <property id="3230484732390137903" name="b" index="2yILMg" />
         <property id="3230484732390135530" name="a" index="2yIMDl" />
@@ -3666,7 +3672,27 @@
   <node concept="1Emmx_" id="2iVdnDeWFta">
     <property role="1EmlfI" value="Hello" />
     <property role="1Emqhr" value="123" />
-    <property role="JXSOL" value="E" />
+    <property role="JXSOL" value="B1" />
+  </node>
+  <node concept="xpJxN" id="5KtU3pXwkrs">
+    <property role="TrG5h" value="R1" />
+    <property role="3GE5qa" value="ref" />
+    <ref role="xBl70" node="5KtU3pXZl3S" resolve="R3" />
+  </node>
+  <node concept="xpJxN" id="5KtU3pXZkuN">
+    <property role="TrG5h" value="R2" />
+    <property role="3GE5qa" value="ref" />
+    <ref role="xBl70" node="5KtU3pXwkrs" resolve="R1" />
+  </node>
+  <node concept="xpJxN" id="5KtU3pXZl3S">
+    <property role="TrG5h" value="R3" />
+    <property role="3GE5qa" value="ref" />
+    <ref role="xBl70" node="5KtU3pXwkrs" resolve="R1" />
+  </node>
+  <node concept="xpJxN" id="5KtU3pY43zL">
+    <property role="TrG5h" value="S3" />
+    <property role="3GE5qa" value="ref" />
+    <ref role="xBl70" node="5KtU3pXwkrs" resolve="R1" />
   </node>
 </model>
 

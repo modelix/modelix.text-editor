@@ -1452,7 +1452,7 @@
     </node>
   </node>
   <node concept="24kQdi" id="2D6UMN62OiI">
-    <ref role="1XX52x" to="zaxg:2D6UMN62NpD" resolve="StaticChoicesSpecifier" />
+    <ref role="1XX52x" to="zaxg:2D6UMN62NpD" resolve="ChoiceSpecifierStatic" />
     <node concept="3EZMnI" id="2D6UMN62XEC" role="2wV5jI">
       <node concept="2iRfu4" id="2D6UMN62XED" role="2iSdaV" />
       <node concept="PMmxH" id="2D6UMN62O_E" role="3EZMnx">
@@ -1472,6 +1472,61 @@
       <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
       <node concept="VPRnO" id="2D6UMN62WuX" role="3F10Kt">
         <property role="VOm3f" value="true" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="gNsEGB5FHi">
+    <ref role="1XX52x" to="zaxg:gNsEGB5DCe" resolve="ChoiceSpecifierDynamic" />
+    <node concept="3EZMnI" id="gNsEGB5G0$" role="2wV5jI">
+      <node concept="2iRfu4" id="gNsEGB5G0_" role="2iSdaV" />
+      <node concept="PMmxH" id="gNsEGB5G0A" role="3EZMnx">
+        <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" to="vpip:cqTc8J2jIR" resolve="RComponentProperty" />
+      </node>
+      <node concept="3F1sOY" id="gNsEGB5GTo" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:gNsEGB5DCf" resolve="choices" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="5KtU3pY8zI5">
+    <ref role="1XX52x" to="zaxg:5KtU3pY8yh1" resolve="ReferenceTargetChooser" />
+    <node concept="3EZMnI" id="5KtU3pY8$Si" role="2wV5jI">
+      <node concept="2iRfu4" id="5KtU3pY8$Sj" role="2iSdaV" />
+      <node concept="PMmxH" id="5KtU3pY8$jd" role="3EZMnx">
+        <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+        <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+      </node>
+      <node concept="3F1sOY" id="5KtU3pY8_aR" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:5KtU3pYaLL$" resolve="data" />
+      </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="5KtU3pY9S07">
+    <property role="3GE5qa" value="util" />
+    <ref role="1XX52x" to="zaxg:5KtU3pY9R88" resolve="NodeReferenceRef" />
+    <node concept="3EZMnI" id="5KtU3pY9SiF" role="2wV5jI">
+      <node concept="2iRfu4" id="5KtU3pY9SiG" role="2iSdaV" />
+      <node concept="3F1sOY" id="5KtU3pY9SiH" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:5KtU3pY9R89" resolve="node" />
+      </node>
+      <node concept="3F0ifn" id="5KtU3pY9SiI" role="3EZMnx">
+        <property role="3F0ifm" value="-&gt;" />
+        <node concept="11L4FC" id="5KtU3pY9SiJ" role="3F10Kt">
+          <property role="VOm3f" value="true" />
+        </node>
+        <node concept="11LMrY" id="5KtU3pY9SiK" role="3F10Kt">
+          <property role="VOm3f" value="true" />
+        </node>
+      </node>
+      <node concept="1iCGBv" id="5KtU3pY9SiL" role="3EZMnx">
+        <ref role="1NtTu8" to="zaxg:5KtU3pY9R8a" resolve="reference" />
+        <node concept="1sVBvm" id="5KtU3pY9SiM" role="1sWHZn">
+          <node concept="3F0A7n" id="5KtU3pY9SiN" role="2wV5jI">
+            <property role="1Intyy" value="true" />
+            <ref role="1NtTu8" to="tpck:h0TrG11" resolve="name" />
+            <ref role="1k5W1q" to="vpip:2vPZMAmxCQV" resolve="RConcept" />
+          </node>
+        </node>
       </node>
     </node>
   </node>
