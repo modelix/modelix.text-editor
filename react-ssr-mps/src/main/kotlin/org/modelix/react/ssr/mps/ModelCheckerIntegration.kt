@@ -32,6 +32,14 @@ object ModelCheckerIntegration {
         return getMessages(ModelixNodeAsMPSNode.toModelixNode(node))
     }
 
+    @JvmStatic
+    fun getMessagesAsString(node: SNode): String {
+        val messages = getMessages(node)
+        val str = messages.joinToString("|") { it.getMessage() }
+        System.err.println(str)
+        return str
+    }
+
     private fun checkRoot(rootNode: INode): Map<INodeReference, List<NodeReportItem>> {
         val messages: List<NodeReportItem> = checkRootNode(rootNode).bind(IRenderer.contextIncrementalEngine.getValue()).invoke()
         return messages.groupBy { MPSNodeReference(it.node) }
