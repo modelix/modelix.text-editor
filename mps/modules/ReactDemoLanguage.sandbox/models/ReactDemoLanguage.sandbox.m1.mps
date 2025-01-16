@@ -37,7 +37,9 @@
       <concept id="2879488090856546774" name="ReactDemoLanguage.structure.Element" flags="ng" index="2LzhVZ">
         <property id="2879488090856546775" name="label" index="2LzhVY" />
       </concept>
-      <concept id="3693585498076077970" name="ReactDemoLanguage.structure.ErrorChecking" flags="ng" index="3r6pZy" />
+      <concept id="3693585498076077970" name="ReactDemoLanguage.structure.ErrorChecking" flags="ng" index="3r6pZy">
+        <property id="8719348500657695438" name="s" index="3vy3ed" />
+      </concept>
       <concept id="793519207838200150" name="ReactDemoLanguage.structure.NewTree" flags="ng" index="3yDxjl">
         <child id="3230484732390141462" name="root" index="2yILaD" />
       </concept>
@@ -3697,6 +3699,7 @@
   </node>
   <node concept="3r6pZy" id="3d2g73Cnh77">
     <property role="TrG5h" value="error" />
+    <property role="3vy3ed" value="12" />
   </node>
 </model>
 

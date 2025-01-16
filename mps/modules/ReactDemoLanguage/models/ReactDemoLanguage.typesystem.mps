@@ -33,6 +33,9 @@
       </concept>
     </language>
     <language id="7a5dda62-9140-4668-ab76-d5ed1746f2b2" name="jetbrains.mps.lang.typesystem">
+      <concept id="1207055528241" name="jetbrains.mps.lang.typesystem.structure.WarningStatement" flags="nn" index="a7r0C">
+        <child id="1207055552304" name="warningText" index="a7wSD" />
+      </concept>
       <concept id="1175517767210" name="jetbrains.mps.lang.typesystem.structure.ReportErrorStatement" flags="nn" index="2MkqsV">
         <child id="1175517851849" name="errorString" index="2MkJ7o" />
       </concept>
@@ -93,11 +96,11 @@
               <ref role="1YBMHb" node="3d2g73CmYRr" resolve="errorChecking" />
             </node>
           </node>
-          <node concept="2MkqsV" id="1u3TjKQqsbD" role="3cqZAp">
-            <node concept="Xl_RD" id="1u3TjKQqsbE" role="2MkJ7o">
+          <node concept="a7r0C" id="7aqy6W7iScc" role="3cqZAp">
+            <node concept="Xl_RD" id="7aqy6W7iSce" role="a7wSD">
               <property role="Xl_RC" value="and a second one" />
             </node>
-            <node concept="1YBJjd" id="1u3TjKQqsbF" role="1urrMF">
+            <node concept="1YBJjd" id="7aqy6W7iScf" role="1urrMF">
               <ref role="1YBMHb" node="3d2g73CmYRr" resolve="errorChecking" />
             </node>
           </node>

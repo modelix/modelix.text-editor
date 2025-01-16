@@ -988,5 +988,15 @@
       <ref role="PrY4T" node="2vPZMAmEVPG" resolve="IMUIComponent" />
     </node>
   </node>
+  <node concept="1TIwiD" id="7$1mkeArAgt">
+    <property role="EcuMT" value="8719348500655924253" />
+    <property role="3GE5qa" value="output" />
+    <property role="TrG5h" value="ErrorBox" />
+    <property role="34LRSv" value="errorcheck" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="7$1mkeArAPS" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
+    </node>
+  </node>
 </model>
 

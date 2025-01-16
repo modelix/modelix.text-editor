@@ -1,5 +1,6 @@
 package org.modelix.react.ssr.mps
 
+import io.ktor.util.*
 import jetbrains.mps.checkers.ConstraintsChecker
 import jetbrains.mps.errors.item.NodeReportItem
 import jetbrains.mps.progress.EmptyProgressMonitor
@@ -35,8 +36,7 @@ object ModelCheckerIntegration {
     @JvmStatic
     fun getMessagesAsString(node: SNode): String {
         val messages = getMessages(node)
-        val str = messages.joinToString("|") { it.getMessage() }
-        System.err.println(str)
+        val str = messages.joinToString(" # ") { it.getMessage() }
         return str
     }
 
