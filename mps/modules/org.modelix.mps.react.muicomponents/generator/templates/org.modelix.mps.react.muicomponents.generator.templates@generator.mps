@@ -27,8 +27,8 @@
     <import index="tp25" ref="r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)" />
     <import index="e11" ref="83a7cbdc-dd9d-4dad-be97-957aa1b07375/java:org.modelix.react.ssr.mps(org.modelix.mps.react.ssr.stubs/)" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
-    <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
     <import index="7923" ref="r:2c5a8407-fd65-4ea4-b95e-a8f8fee129c0(org.modelix.mps.react.muicomponents.behavior)" implicit="true" />
+    <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
   </imports>
   <registry>
     <language id="13744753-c81f-424a-9c1b-cf8943bf4e86" name="jetbrains.mps.lang.sharedConcepts">
@@ -175,6 +175,7 @@
         <child id="1068580123135" name="body" index="3clF47" />
       </concept>
       <concept id="1068580123165" name="jetbrains.mps.baseLanguage.structure.InstanceMethodDeclaration" flags="ig" index="3clFb_" />
+      <concept id="1068580123152" name="jetbrains.mps.baseLanguage.structure.EqualsExpression" flags="nn" index="3clFbC" />
       <concept id="1068580123155" name="jetbrains.mps.baseLanguage.structure.ExpressionStatement" flags="nn" index="3clFbF">
         <child id="1068580123156" name="expression" index="3clFbG" />
       </concept>
@@ -446,9 +447,71 @@
               <property role="TrG5h" value="error" />
               <node concept="17QB3L" id="1u3TjKQnmBx" role="2o1qlE" />
               <node concept="2YIFZM" id="cjVovOLkTH" role="2o1p2P">
-                <ref role="37wK5l" to="e11:~ModelCheckerIntegration.getMessagesAsString(org.jetbrains.mps.openapi.model.SNode)" resolve="getMessagesAsString" />
+                <ref role="37wK5l" to="e11:~ModelCheckerIntegration.getMessagesAsString(org.jetbrains.mps.openapi.model.SNode,boolean)" resolve="getMessagesAsString" />
                 <ref role="1Pybhc" to="e11:~ModelCheckerIntegration" resolve="ModelCheckerIntegration" />
                 <node concept="ggAI9" id="cjVovOLkTI" role="37wK5m" />
+                <node concept="1W57fq" id="3O0weE7rNu3" role="lGtFl">
+                  <node concept="3IZrLx" id="3O0weE7rNu4" role="3IZSJc">
+                    <node concept="3clFbS" id="3O0weE7rNu5" role="2VODD2">
+                      <node concept="3clFbF" id="3O0weE7rO3L" role="3cqZAp">
+                        <node concept="3clFbC" id="3O0weE7rSQS" role="3clFbG">
+                          <node concept="10Nm6u" id="3O0weE7rTah" role="3uHU7w" />
+                          <node concept="2OqwBi" id="3O0weE7rOvQ" role="3uHU7B">
+                            <node concept="30H73N" id="3O0weE7rO3K" role="2Oq$k0" />
+                            <node concept="2qgKlT" id="3O0weE7rQYl" role="2OqNvi">
+                              <ref role="37wK5l" to="7923:6tfgpzo6Drj" resolve="onlyForFeature" />
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                  <node concept="gft3U" id="3O0weE7rTER" role="UU_$l">
+                    <node concept="2YIFZM" id="4gkNF0Kd5Gy" role="gfFT$">
+                      <ref role="37wK5l" to="e11:~ModelCheckerIntegration.getMessagesAsStringForFeature(org.jetbrains.mps.openapi.model.SNode,java.lang.String)" resolve="getMessagesAsStringForFeature" />
+                      <ref role="1Pybhc" to="e11:~ModelCheckerIntegration" resolve="ModelCheckerIntegration" />
+                      <node concept="ggAI9" id="4gkNF0Kd5Gz" role="37wK5m" />
+                      <node concept="Xl_RD" id="4gkNF0Kd6jF" role="37wK5m">
+                        <property role="Xl_RC" value="name" />
+                        <node concept="17Uvod" id="4gkNF0Kd6BC" role="lGtFl">
+                          <property role="2qtEX9" value="value" />
+                          <property role="P4ACc" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1070475926800/1070475926801" />
+                          <node concept="3zFVjK" id="4gkNF0Kd6BD" role="3zH0cK">
+                            <node concept="3clFbS" id="4gkNF0Kd6BE" role="2VODD2">
+                              <node concept="3clFbF" id="4gkNF0Kd7b5" role="3cqZAp">
+                                <node concept="2OqwBi" id="4gkNF0Kd7G3" role="3clFbG">
+                                  <node concept="30H73N" id="4gkNF0Kd7b4" role="2Oq$k0" />
+                                  <node concept="2qgKlT" id="4gkNF0Kdaqh" role="2OqNvi">
+                                    <ref role="37wK5l" to="7923:6tfgpzo6Drj" resolve="onlyForFeature" />
+                                  </node>
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+                <node concept="3clFbT" id="7Y5y_Q0dI$U" role="37wK5m">
+                  <property role="3clFbU" value="true" />
+                  <node concept="17Uvod" id="7Y5y_Q0dJ_T" role="lGtFl">
+                    <property role="2qtEX9" value="value" />
+                    <property role="P4ACc" value="f3061a53-9226-4cc5-a443-f952ceaf5816/1068580123137/1068580123138" />
+                    <node concept="3zFVjK" id="7Y5y_Q0dJ_U" role="3zH0cK">
+                      <node concept="3clFbS" id="7Y5y_Q0dJ_V" role="2VODD2">
+                        <node concept="3clFbF" id="7Y5y_Q0dPGf" role="3cqZAp">
+                          <node concept="2OqwBi" id="7Y5y_Q0dQ8k" role="3clFbG">
+                            <node concept="30H73N" id="7Y5y_Q0dPGe" role="2Oq$k0" />
+                            <node concept="3TrcHB" id="7Y5y_Q0dSPp" role="2OqNvi">
+                              <ref role="3TsBF5" to="zaxg:2CLPJ2uDwEt" resolve="onlyFeatureUnspecific" />
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
               </node>
             </node>
             <node concept="2o1qlL" id="1u3TjKP$3Y6" role="2o1qk1">

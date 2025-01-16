@@ -1,8 +1,12 @@
 package org.modelix.react.ssr.mps
 
+import com.jetbrains.rd.generator.nova.PredefinedType
 import io.ktor.util.*
 import jetbrains.mps.checkers.ConstraintsChecker
 import jetbrains.mps.errors.item.NodeReportItem
+import jetbrains.mps.errors.messageTargets.MessageTarget
+import jetbrains.mps.errors.messageTargets.PropertyMessageTarget
+import jetbrains.mps.errors.messageTargets.ReferenceMessageTarget
 import jetbrains.mps.progress.EmptyProgressMonitor
 import jetbrains.mps.smodel.MPSModuleRepository
 import jetbrains.mps.typesystemEngine.checker.NonTypesystemChecker
@@ -34,10 +38,30 @@ object ModelCheckerIntegration {
     }
 
     @JvmStatic
-    fun getMessagesAsString(node: SNode): String {
-        val messages = getMessages(node)
-        val str = messages.joinToString(" # ") { it.getMessage() }
+    fun getMessagesAsString(node: SNode, onlyFeatureUnspecific: Boolean): String {
+        var messages = getMessages(node)
+        if (onlyFeatureUnspecific) messages = messages.filter { roleName(it.messageTarget) == null }
+        val str = messages.joinToString(" # ") { it.severity.toString() + ": " + it.message.split(":")[1] + roleLabel(it.messageTarget) }
         return str
+    }
+
+    @JvmStatic
+    fun getMessagesAsStringForFeature(node: SNode, featureName: String): String {
+        val allMessages = getMessages(node)
+        val messages = allMessages.filter { featureName.equals(roleName(it.messageTarget))}
+        val str = messages.joinToString(" # ") { it.severity.toString() + ": " + it.message.split(":")[1] }
+        return str
+    }
+
+    private fun roleLabel(t: MessageTarget): String {
+        val roleName = roleName(t) ?: return ""
+        return "($roleName)"
+    }
+
+    private fun roleName(t: MessageTarget): String? {
+        if (t is PropertyMessageTarget) return t.role
+        if (t is ReferenceMessageTarget) return t.role
+        return null;
     }
 
     private fun checkRoot(rootNode: INode): Map<INodeReference, List<NodeReportItem>> {

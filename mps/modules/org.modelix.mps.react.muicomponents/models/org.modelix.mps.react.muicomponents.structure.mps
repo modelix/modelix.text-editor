@@ -891,6 +891,9 @@
     <node concept="PrWs8" id="5KtU3pY9f4d" role="PrDN$">
       <ref role="PrY4T" node="2vPZMAolbCE" resolve="IHasSinglePropertyBinding" />
     </node>
+    <node concept="PrWs8" id="6tfgpzo6vfY" role="PrDN$">
+      <ref role="PrY4T" node="6tfgpzo6r_t" resolve="IRefersToFeature" />
+    </node>
   </node>
   <node concept="1TIwiD" id="5KtU3pY9R88">
     <property role="EcuMT" value="6637716746556371464" />
@@ -932,6 +935,9 @@
     </node>
     <node concept="PrWs8" id="5KtU3pYaNNF" role="PrDN$">
       <ref role="PrY4T" node="5KtU3pYaLcv" resolve="IHasSingleReferenceBinding" />
+    </node>
+    <node concept="PrWs8" id="6tfgpzo6$3x" role="PrDN$">
+      <ref role="PrY4T" node="6tfgpzo6r_t" resolve="IRefersToFeature" />
     </node>
   </node>
   <node concept="1TIwiD" id="5KtU3pZ8DQW">
@@ -991,12 +997,22 @@
   <node concept="1TIwiD" id="7$1mkeArAgt">
     <property role="EcuMT" value="8719348500655924253" />
     <property role="3GE5qa" value="output" />
-    <property role="TrG5h" value="ErrorBox" />
-    <property role="34LRSv" value="errorcheck" />
+    <property role="TrG5h" value="ErrorReporting" />
+    <property role="34LRSv" value="E" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="7$1mkeArAPS" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
     </node>
+    <node concept="1TJgyi" id="2CLPJ2uDwEt" role="1TKVEl">
+      <property role="IQ2nx" value="3040447552393972381" />
+      <property role="TrG5h" value="onlyFeatureUnspecific" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="6tfgpzo6r_t">
+    <property role="EcuMT" value="7444240833783118173" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IRefersToFeature" />
   </node>
 </model>
 

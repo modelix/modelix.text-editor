@@ -16,6 +16,10 @@
       <concept id="1082485599095" name="jetbrains.mps.baseLanguage.structure.BlockStatement" flags="nn" index="9aQIb">
         <child id="1082485599096" name="statements" index="9aQI4" />
       </concept>
+      <concept id="1215693861676" name="jetbrains.mps.baseLanguage.structure.BaseAssignmentExpression" flags="nn" index="d038R">
+        <child id="1068498886297" name="rValue" index="37vLTx" />
+        <child id="1068498886295" name="lValue" index="37vLTJ" />
+      </concept>
       <concept id="1202948039474" name="jetbrains.mps.baseLanguage.structure.InstanceMethodCallOperation" flags="nn" index="liA8E" />
       <concept id="1154032098014" name="jetbrains.mps.baseLanguage.structure.AbstractLoopStatement" flags="nn" index="2LF5Ji">
         <child id="1154032183016" name="body" index="2LFqv$" />
@@ -36,6 +40,7 @@
       <concept id="1068498886296" name="jetbrains.mps.baseLanguage.structure.VariableReference" flags="nn" index="37vLTw">
         <reference id="1068581517664" name="variableDeclaration" index="3cqZAo" />
       </concept>
+      <concept id="1068498886294" name="jetbrains.mps.baseLanguage.structure.AssignmentExpression" flags="nn" index="37vLTI" />
       <concept id="4972933694980447171" name="jetbrains.mps.baseLanguage.structure.BaseVariableDeclaration" flags="ng" index="19Szcq">
         <child id="5680397130376446158" name="type" index="1tU5fm" />
       </concept>
@@ -54,6 +59,9 @@
         <child id="1068581242865" name="localVariableDeclaration" index="3cpWs9" />
       </concept>
       <concept id="1068581242863" name="jetbrains.mps.baseLanguage.structure.LocalVariableDeclaration" flags="nr" index="3cpWsn" />
+      <concept id="1081516740877" name="jetbrains.mps.baseLanguage.structure.NotExpression" flags="nn" index="3fqX7Q">
+        <child id="1081516765348" name="expression" index="3fr31v" />
+      </concept>
       <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
         <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
       </concept>
@@ -82,6 +90,9 @@
       </concept>
       <concept id="1138055754698" name="jetbrains.mps.lang.smodel.structure.SNodeType" flags="in" index="3Tqbb2">
         <reference id="1138405853777" name="concept" index="ehGHo" />
+      </concept>
+      <concept id="1138056022639" name="jetbrains.mps.lang.smodel.structure.SPropertyAccess" flags="nn" index="3TrcHB">
+        <reference id="1138056395725" name="property" index="3TsBF5" />
       </concept>
       <concept id="1228341669568" name="jetbrains.mps.lang.smodel.structure.Node_DetachOperation" flags="nn" index="3YRAZt" />
     </language>
@@ -220,6 +231,42 @@
               </node>
             </node>
             <node concept="3GX2aA" id="G39ofCXx8B" role="2OqNvi" />
+          </node>
+        </node>
+      </node>
+    </node>
+  </node>
+  <node concept="2S6QgY" id="2CLPJ2uD_Px">
+    <property role="3GE5qa" value="output" />
+    <property role="TrG5h" value="toggleFeatureUnspecific" />
+    <ref role="2ZfgGC" to="zaxg:7$1mkeArAgt" resolve="ErrorReporting" />
+    <node concept="2S6ZIM" id="2CLPJ2uD_Py" role="2ZfVej">
+      <node concept="3clFbS" id="2CLPJ2uD_Pz" role="2VODD2">
+        <node concept="3clFbF" id="2CLPJ2uDCa_" role="3cqZAp">
+          <node concept="Xl_RD" id="2CLPJ2uDCa$" role="3clFbG">
+            <property role="Xl_RC" value="Toggle Feature-unspecific /g" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="2Sbjvc" id="2CLPJ2uD_P$" role="2ZfgGD">
+      <node concept="3clFbS" id="2CLPJ2uD_P_" role="2VODD2">
+        <node concept="3clFbF" id="2CLPJ2uDCz4" role="3cqZAp">
+          <node concept="37vLTI" id="2CLPJ2uDFOq" role="3clFbG">
+            <node concept="3fqX7Q" id="2CLPJ2uDGl4" role="37vLTx">
+              <node concept="2OqwBi" id="2CLPJ2uDHi8" role="3fr31v">
+                <node concept="2Sf5sV" id="2CLPJ2uDGSd" role="2Oq$k0" />
+                <node concept="3TrcHB" id="2CLPJ2uDHPN" role="2OqNvi">
+                  <ref role="3TsBF5" to="zaxg:2CLPJ2uDwEt" resolve="onlyFeatureUnspecific" />
+                </node>
+              </node>
+            </node>
+            <node concept="2OqwBi" id="2CLPJ2uDCJC" role="37vLTJ">
+              <node concept="2Sf5sV" id="2CLPJ2uDCz3" role="2Oq$k0" />
+              <node concept="3TrcHB" id="2CLPJ2uDDks" role="2OqNvi">
+                <ref role="3TsBF5" to="zaxg:2CLPJ2uDwEt" resolve="onlyFeatureUnspecific" />
+              </node>
+            </node>
           </node>
         </node>
       </node>
