@@ -20,8 +20,15 @@
         <reference id="1075010451642646892" name="defaultMember" index="1H5jkz" />
         <child id="3348158742936976577" name="members" index="25R1y" />
       </concept>
+      <concept id="6054523464627964745" name="jetbrains.mps.lang.structure.structure.AttributeInfo_AttributedConcept" flags="ng" index="trNpa">
+        <reference id="6054523464627965081" name="concept" index="trN6q" />
+      </concept>
       <concept id="1082978164218" name="jetbrains.mps.lang.structure.structure.DataTypeDeclaration" flags="ng" index="AxPO6">
         <property id="7791109065626895363" name="datatypeId" index="3F6X1D" />
+      </concept>
+      <concept id="2992811758677295509" name="jetbrains.mps.lang.structure.structure.AttributeInfo" flags="ng" index="M6xJ_">
+        <property id="7588428831955550663" name="role" index="Hh88m" />
+        <child id="7588428831947959310" name="attributed" index="EQaZv" />
       </concept>
       <concept id="1169125787135" name="jetbrains.mps.lang.structure.structure.AbstractConceptDeclaration" flags="ig" index="PkWjJ">
         <property id="6714410169261853888" name="conceptId" index="EcuMT" />
@@ -55,6 +62,7 @@
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
       <concept id="1133920641626" name="jetbrains.mps.lang.core.structure.BaseConcept" flags="ng" index="2VYdi">
         <property id="1193676396447" name="virtualPackage" index="3GE5qa" />
+        <child id="5169995583184591170" name="smodelAttribute" index="lGtFl" />
       </concept>
       <concept id="1169194658468" name="jetbrains.mps.lang.core.structure.INamedConcept" flags="ngI" index="TrEIO">
         <property id="1169194664001" name="name" index="TrG5h" />
@@ -998,21 +1006,47 @@
     <property role="EcuMT" value="8719348500655924253" />
     <property role="3GE5qa" value="output" />
     <property role="TrG5h" value="ErrorReporting" />
-    <property role="34LRSv" value="E" />
+    <property role="34LRSv" value="errorreporting" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="7$1mkeArAPS" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
     </node>
+    <node concept="1TJgyi" id="2xzaHpg1aM4" role="1TKVEl">
+      <property role="IQ2nx" value="2910216884165323908" />
+      <property role="TrG5h" value="onlyGlobalErrors" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
     <node concept="1TJgyi" id="2CLPJ2uDwEt" role="1TKVEl">
       <property role="IQ2nx" value="3040447552393972381" />
-      <property role="TrG5h" value="onlyFeatureUnspecific" />
-      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+      <property role="TrG5h" value="restrictToFeature" />
+      <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
   </node>
   <node concept="PlHQZ" id="6tfgpzo6r_t">
     <property role="EcuMT" value="7444240833783118173" />
     <property role="3GE5qa" value="interfaces" />
     <property role="TrG5h" value="IRefersToFeature" />
+  </node>
+  <node concept="1TIwiD" id="2xzaHpfUqlh">
+    <property role="EcuMT" value="2910216884163552593" />
+    <property role="TrG5h" value="ErrorReportingAnnotation" />
+    <ref role="1TJDcQ" to="tpck:2ULFgo8_XDk" resolve="NodeAttribute" />
+    <node concept="M6xJ_" id="2xzaHpfUvTe" role="lGtFl">
+      <property role="Hh88m" value="errorreporting" />
+      <node concept="trNpa" id="2xzaHpfUwc9" role="EQaZv">
+        <ref role="trN6q" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+      </node>
+    </node>
+    <node concept="1TJgyi" id="7HYB$0ntJMl" role="1TKVEl">
+      <property role="IQ2nx" value="8898723911839448213" />
+      <property role="TrG5h" value="overrideReportAnyFeature" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+    <node concept="1TJgyi" id="7HYB$0ntKF4" role="1TKVEl">
+      <property role="IQ2nx" value="8898723911839451844" />
+      <property role="TrG5h" value="overrideReportOnlyGlobal" />
+      <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
   </node>
 </model>
 

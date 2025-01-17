@@ -38,18 +38,22 @@ object ModelCheckerIntegration {
     }
 
     @JvmStatic
-    fun getMessagesAsString(node: SNode, onlyFeatureUnspecific: Boolean): String {
+    fun getMessages(node: SNode, onlyGlobal: Boolean, featureName: String?): String {
         var messages = getMessages(node)
-        if (onlyFeatureUnspecific) messages = messages.filter { roleName(it.messageTarget) == null }
-        val str = messages.joinToString(" # ") { it.severity.toString() + ": " + it.message.split(":")[1] + roleLabel(it.messageTarget) }
-        return str
-    }
-
-    @JvmStatic
-    fun getMessagesAsStringForFeature(node: SNode, featureName: String): String {
-        val allMessages = getMessages(node)
-        val messages = allMessages.filter { featureName.equals(roleName(it.messageTarget))}
+        System.err.println("--------")
+        System.err.println("node: "+node.toString())
+        System.err.println("only global: "+onlyGlobal)
+        System.err.println("feature name: "+featureName)
+        System.err.println("all messages: "+messages)
+        if (onlyGlobal) {
+            messages = messages.filter { roleName(it.messageTarget) == null }
+            System.err.println("filtered only global: "+messages)
+        } else if (!featureName.isNullOrBlank()) {
+            messages = messages.filter { featureName.equals(roleName(it.messageTarget))}
+            System.err.println("filtered f feature: "+messages)
+        }
         val str = messages.joinToString(" # ") { it.severity.toString() + ": " + it.message.split(":")[1] }
+        System.err.println("result: "+str)
         return str
     }
 
@@ -59,8 +63,14 @@ object ModelCheckerIntegration {
     }
 
     private fun roleName(t: MessageTarget): String? {
-        if (t is PropertyMessageTarget) return t.role
-        if (t is ReferenceMessageTarget) return t.role
+        if (t is PropertyMessageTarget) {
+            System.err.println("   "+t.role)
+            return t.role
+        }
+        if (t is ReferenceMessageTarget) {
+            System.err.println("   "+t.role)
+            return t.role
+        }
         return null;
     }
 
