@@ -201,5 +201,45 @@
       <ref role="1YaFvo" to="oyym:3d2g73CmXYi" resolve="ErrorChecking" />
     </node>
   </node>
+  <node concept="18kY7G" id="69AB$B3iUDZ">
+    <property role="TrG5h" value="check_TreeNode" />
+    <node concept="3clFbS" id="69AB$B3iUE0" role="18ibNy">
+      <node concept="3clFbJ" id="69AB$B3iUX0" role="3cqZAp">
+        <node concept="2OqwBi" id="69AB$B3iX_w" role="3clFbw">
+          <node concept="2OqwBi" id="69AB$B3iVq9" role="2Oq$k0">
+            <node concept="1YBJjd" id="69AB$B3iVg1" role="2Oq$k0">
+              <ref role="1YBMHb" node="69AB$B3iUE2" resolve="treeNode" />
+            </node>
+            <node concept="3TrcHB" id="69AB$B3iVS0" role="2OqNvi">
+              <ref role="3TsBF5" to="oyym:2vPZMAnR$xd" resolve="a" />
+            </node>
+          </node>
+          <node concept="liA8E" id="69AB$B3n2SD" role="2OqNvi">
+            <ref role="37wK5l" to="wyt6:~String.startsWith(java.lang.String)" resolve="startsWith" />
+            <node concept="Xl_RD" id="69AB$B3n2SF" role="37wK5m">
+              <property role="Xl_RC" value="error" />
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="69AB$B3iUX2" role="3clFbx">
+          <node concept="2MkqsV" id="69AB$B3j0gI" role="3cqZAp">
+            <node concept="Xl_RD" id="69AB$B3j0zp" role="2MkJ7o">
+              <property role="Xl_RC" value="a cannot be 'error'" />
+            </node>
+            <node concept="1YBJjd" id="69AB$B3j0Qn" role="1urrMF">
+              <ref role="1YBMHb" node="69AB$B3iUE2" resolve="treeNode" />
+            </node>
+            <node concept="2ODE4t" id="69AB$B3j19f" role="1urrC5">
+              <ref role="2ODJFN" to="oyym:2vPZMAnR$xd" resolve="a" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="69AB$B3iUE2" role="1YuTPh">
+      <property role="TrG5h" value="treeNode" />
+      <ref role="1YaFvo" to="oyym:2vPZMAnpuJg" resolve="TreeNode" />
+    </node>
+  </node>
 </model>
 

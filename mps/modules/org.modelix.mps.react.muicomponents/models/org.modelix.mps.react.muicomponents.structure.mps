@@ -701,7 +701,7 @@
     <property role="3GE5qa" value="layout" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2NkZbYfaxHc" role="PzmwI">
-      <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
+      <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
     </node>
     <node concept="1TJgyj" id="2NkZbYfaDge" role="1TKVEi">
       <property role="IQ2ns" value="3230484732402373646" />
@@ -835,7 +835,7 @@
   </node>
   <node concept="1TIwiD" id="2D6UMN62NpD">
     <property role="EcuMT" value="3046380775496431209" />
-    <property role="TrG5h" value="ChoiceSpecifierStatic" />
+    <property role="TrG5h" value="StringChoiceSpecifierStatic" />
     <property role="34LRSv" value="static choices" />
     <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
@@ -858,7 +858,7 @@
   </node>
   <node concept="1TIwiD" id="gNsEGB5DCe">
     <property role="EcuMT" value="302711679384721934" />
-    <property role="TrG5h" value="ChoiceSpecifierDynamic" />
+    <property role="TrG5h" value="StringChoiceSpecifierDynamic" />
     <property role="34LRSv" value="dynamic choices" />
     <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" node="2D6UMN62MwU" resolve="ChoiceSpecifier" />
@@ -1046,6 +1046,71 @@
       <property role="IQ2nx" value="8898723911839451844" />
       <property role="TrG5h" value="overrideReportOnlyGlobal" />
       <ref role="AX2Wp" to="tpck:fKAQMTB" resolve="boolean" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5Qmp_LAQ2pv">
+    <property role="EcuMT" value="6743690039082362463" />
+    <property role="TrG5h" value="NodeFactory" />
+    <property role="34LRSv" value="factory" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="5Qmp_LAY5BS" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+    <node concept="PrWs8" id="5Qmp_LAQazM" role="PzmwI">
+      <ref role="PrY4T" node="1LliyakMlNn" resolve="IItFunctionContext" />
+    </node>
+    <node concept="PrWs8" id="5Qmp_LATBBr" role="PzmwI">
+      <ref role="PrY4T" node="5Qmp_LAVe3h" resolve="IHasSingleChildBinding" />
+    </node>
+    <node concept="1TJgyj" id="5Qmp_LAQ3ic" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039082366092" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="concepts" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+    <node concept="1TJgyj" id="5Qmp_LAQ3RB" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039082368487" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="labelFun" />
+      <ref role="20lvS9" node="1LliyakMh9m" resolve="ItFunction" />
+    </node>
+    <node concept="1TJgyj" id="5Qmp_LAQ4t2" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039082370882" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="createFun" />
+      <ref role="20lvS9" node="1LliyakMh9m" resolve="ItFunction" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="5Qmp_LAUTgf">
+    <property role="EcuMT" value="6743690039083635727" />
+    <property role="3GE5qa" value="util" />
+    <property role="TrG5h" value="NodeChildRef" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="5Qmp_LAUU8d" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039083639309" />
+      <property role="20kJfa" value="child" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:f_TJgxE" resolve="LinkDeclaration" />
+    </node>
+    <node concept="1TJgyj" id="5Qmp_LAUTPE" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039083638122" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="node" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="5Qmp_LAVe3h">
+    <property role="EcuMT" value="6743690039083720913" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IHasSingleChildBinding" />
+    <node concept="1TJgyj" id="5Qmp_LAVe3i" role="1TKVEi">
+      <property role="IQ2ns" value="6743690039083720914" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="data" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="5Qmp_LAUTgf" resolve="NodeChildRef" />
     </node>
   </node>
 </model>

@@ -12,6 +12,7 @@
     <import index="8xo1" ref="r:41b64586-29ed-47f5-b907-44be07261bbc(org.modelix.mps.react.structure)" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
+    <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
   </imports>
   <registry>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
@@ -19,6 +20,7 @@
         <child id="1082485599096" name="statements" index="9aQI4" />
       </concept>
       <concept id="4836112446988635817" name="jetbrains.mps.baseLanguage.structure.UndefinedType" flags="in" index="2jxLKc" />
+      <concept id="1202948039474" name="jetbrains.mps.baseLanguage.structure.InstanceMethodCallOperation" flags="nn" index="liA8E" />
       <concept id="1154032098014" name="jetbrains.mps.baseLanguage.structure.AbstractLoopStatement" flags="nn" index="2LF5Ji">
         <child id="1154032183016" name="body" index="2LFqv$" />
       </concept>
@@ -59,6 +61,13 @@
         <child id="1068581242865" name="localVariableDeclaration" index="3cpWs9" />
       </concept>
       <concept id="1068581242863" name="jetbrains.mps.baseLanguage.structure.LocalVariableDeclaration" flags="nr" index="3cpWsn" />
+      <concept id="1081516740877" name="jetbrains.mps.baseLanguage.structure.NotExpression" flags="nn" index="3fqX7Q">
+        <child id="1081516765348" name="expression" index="3fr31v" />
+      </concept>
+      <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
+        <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
+        <child id="1068499141038" name="actualArgument" index="37wK5m" />
+      </concept>
       <concept id="1107535904670" name="jetbrains.mps.baseLanguage.structure.ClassifierType" flags="in" index="3uibUv">
         <reference id="1107535924139" name="classifier" index="3uigEE" />
       </concept>
@@ -117,6 +126,7 @@
       <concept id="1195213580585" name="jetbrains.mps.lang.typesystem.structure.AbstractCheckingRule" flags="ig" index="18hYwZ">
         <child id="1195213635060" name="body" index="18ibNy" />
       </concept>
+      <concept id="1195214364922" name="jetbrains.mps.lang.typesystem.structure.NonTypesystemRule" flags="ig" index="18kY7G" />
       <concept id="3937244445246642777" name="jetbrains.mps.lang.typesystem.structure.AbstractReportStatement" flags="ng" index="1urrMJ">
         <child id="3937244445246642781" name="nodeToReport" index="1urrMF" />
       </concept>
@@ -158,6 +168,8 @@
         <child id="6733348108486823193" name="leftExpression" index="1m5AlR" />
         <child id="3906496115198199033" name="conceptArgument" index="3oSUPX" />
       </concept>
+      <concept id="1143234257716" name="jetbrains.mps.lang.smodel.structure.Node_GetModelOperation" flags="nn" index="I4A8Y" />
+      <concept id="1212008292747" name="jetbrains.mps.lang.smodel.structure.Model_GetLongNameOperation" flags="nn" index="LkI2h" />
       <concept id="1171407110247" name="jetbrains.mps.lang.smodel.structure.Node_GetAncestorOperation" flags="nn" index="2Xjw5R" />
       <concept id="1139621453865" name="jetbrains.mps.lang.smodel.structure.Node_IsInstanceOfOperation" flags="nn" index="1mIQ4w">
         <child id="1177027386292" name="conceptArgument" index="cj9EA" />
@@ -945,6 +957,46 @@
     <node concept="1YaCAy" id="2vPZMAnoriB" role="1YuTPh">
       <property role="TrG5h" value="nr" />
       <ref role="1YaFvo" to="8xo1:4Dhs5NhX4ak" resolve="CallNamedRenderer" />
+    </node>
+  </node>
+  <node concept="18kY7G" id="1XYAF4M7x2r">
+    <property role="TrG5h" value="check_ReactModule" />
+    <node concept="3clFbS" id="1XYAF4M7x2s" role="18ibNy">
+      <node concept="3clFbJ" id="1XYAF4M7xmd" role="3cqZAp">
+        <node concept="3fqX7Q" id="1XYAF4M7xDg" role="3clFbw">
+          <node concept="2OqwBi" id="1XYAF4M7_pK" role="3fr31v">
+            <node concept="2OqwBi" id="1XYAF4M7zpc" role="2Oq$k0">
+              <node concept="2OqwBi" id="1XYAF4M7yqo" role="2Oq$k0">
+                <node concept="1YBJjd" id="1XYAF4M7xWo" role="2Oq$k0">
+                  <ref role="1YBMHb" node="1XYAF4M7x2u" resolve="reactModule" />
+                </node>
+                <node concept="I4A8Y" id="1XYAF4M7yVg" role="2OqNvi" />
+              </node>
+              <node concept="LkI2h" id="1XYAF4M7zQD" role="2OqNvi" />
+            </node>
+            <node concept="liA8E" id="1XYAF4M7A$I" role="2OqNvi">
+              <ref role="37wK5l" to="wyt6:~String.endsWith(java.lang.String)" resolve="endsWith" />
+              <node concept="Xl_RD" id="1XYAF4M7A$K" role="37wK5m">
+                <property role="Xl_RC" value=".modelix" />
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="1XYAF4M7xmf" role="3clFbx">
+          <node concept="2MkqsV" id="1XYAF4M7AV5" role="3cqZAp">
+            <node concept="Xl_RD" id="1XYAF4M7Be8" role="2MkJ7o">
+              <property role="Xl_RC" value="the model containing React editor definitions must be named modelix." />
+            </node>
+            <node concept="1YBJjd" id="1XYAF4M7ByS" role="1urrMF">
+              <ref role="1YBMHb" node="1XYAF4M7x2u" resolve="reactModule" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="1XYAF4M7x2u" role="1YuTPh">
+      <property role="TrG5h" value="reactModule" />
+      <ref role="1YaFvo" to="8xo1:7GLg2tFptr5" resolve="ReactModule" />
     </node>
   </node>
 </model>

@@ -14,6 +14,8 @@
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
     <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
     <import index="guwi" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.io(JDK/)" implicit="true" />
+    <import index="tpcn" ref="r:00000000-0000-4000-0000-011c8959028b(jetbrains.mps.lang.structure.behavior)" implicit="true" />
+    <import index="tp2q" ref="r:00000000-0000-4000-0000-011c8959032e(jetbrains.mps.baseLanguage.collections.structure)" implicit="true" />
   </imports>
   <registry>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
@@ -797,7 +799,7 @@
                 <ref role="1YBMHb" node="5KtU3pYaBlt" resolve="nrr" />
               </node>
               <node concept="3TrEf2" id="5KtU3pYaBCi" role="2OqNvi">
-                <ref role="3Tt5mk" to="zaxg:2vPZMAmvsgm" resolve="node" />
+                <ref role="3Tt5mk" to="zaxg:5KtU3pY9R89" resolve="node" />
               </node>
             </node>
           </node>
@@ -851,6 +853,158 @@
     <node concept="1YaCAy" id="5KtU3pYaE4Z" role="1YuTPh">
       <property role="TrG5h" value="nrr" />
       <ref role="1YaFvo" to="zaxg:5KtU3pY9R88" resolve="NodeReferenceRef" />
+    </node>
+  </node>
+  <node concept="18kY7G" id="5Qmp_LAV1fP">
+    <property role="TrG5h" value="check_NodeChildRef" />
+    <property role="3GE5qa" value="util" />
+    <node concept="3clFbS" id="5Qmp_LAV1fQ" role="18ibNy">
+      <node concept="3clFbJ" id="5Qmp_LAV1yu" role="3cqZAp">
+        <node concept="3fqX7Q" id="5Qmp_LAV1yv" role="3clFbw">
+          <node concept="2OqwBi" id="5Qmp_LAV1yw" role="3fr31v">
+            <node concept="2OqwBi" id="5Qmp_LAV1yx" role="2Oq$k0">
+              <node concept="2OqwBi" id="5Qmp_LAV1yy" role="2Oq$k0">
+                <node concept="1YBJjd" id="5Qmp_LAV1yz" role="2Oq$k0">
+                  <ref role="1YBMHb" node="5Qmp_LAV1fS" resolve="ncr" />
+                </node>
+                <node concept="3TrEf2" id="5Qmp_LAV1y$" role="2OqNvi">
+                  <ref role="3Tt5mk" to="zaxg:5Qmp_LAUTPE" resolve="node" />
+                </node>
+              </node>
+              <node concept="3JvlWi" id="5Qmp_LAV1y_" role="2OqNvi" />
+            </node>
+            <node concept="1mIQ4w" id="5Qmp_LAV1yA" role="2OqNvi">
+              <node concept="chp4Y" id="5Qmp_LAV1yB" role="cj9EA">
+                <ref role="cht4Q" to="tp25:gzTqbfa" resolve="SNodeType" />
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="5Qmp_LAV1yC" role="3clFbx">
+          <node concept="2MkqsV" id="5Qmp_LAV1yD" role="3cqZAp">
+            <node concept="Xl_RD" id="5Qmp_LAV1yE" role="2MkJ7o">
+              <property role="Xl_RC" value="must be a node" />
+            </node>
+            <node concept="2OqwBi" id="5Qmp_LAV1yF" role="1urrMF">
+              <node concept="1YBJjd" id="5Qmp_LAV1yG" role="2Oq$k0">
+                <ref role="1YBMHb" node="5Qmp_LAV1fS" resolve="ncr" />
+              </node>
+              <node concept="3TrEf2" id="5Qmp_LAV1yH" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAUTPE" resolve="node" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="5Qmp_LAV1fS" role="1YuTPh">
+      <property role="TrG5h" value="ncr" />
+      <ref role="1YaFvo" to="zaxg:5Qmp_LAUTgf" resolve="NodeChildRef" />
+    </node>
+  </node>
+  <node concept="1YbPZF" id="5Qmp_LAV4aN">
+    <property role="TrG5h" value="typeof_NodeChildRef" />
+    <property role="3GE5qa" value="util" />
+    <node concept="3clFbS" id="5Qmp_LAV4aO" role="18ibNy">
+      <node concept="3clFbJ" id="5Qmp_LAV62Z" role="3cqZAp">
+        <node concept="3clFbS" id="5Qmp_LAV631" role="3clFbx">
+          <node concept="1Z5TYs" id="5Qmp_LAV52A" role="3cqZAp">
+            <node concept="mw_s8" id="5Qmp_LAV52B" role="1ZfhKB">
+              <node concept="2pJPEk" id="5Qmp_LAV52C" role="mwGJk">
+                <node concept="2pJPED" id="5Qmp_LAV52D" role="2pJPEn">
+                  <ref role="2pJxaS" to="tp25:gzTqbfa" resolve="SNodeType" />
+                  <node concept="2pIpSj" id="5Qmp_LAV52E" role="2pJxcM">
+                    <ref role="2pIpSl" to="tp25:g$ehGDh" resolve="concept" />
+                    <node concept="36biLy" id="5Qmp_LAV52F" role="28nt2d">
+                      <node concept="2OqwBi" id="5Qmp_LAV52G" role="36biLW">
+                        <node concept="2OqwBi" id="5Qmp_LAV52H" role="2Oq$k0">
+                          <node concept="1YBJjd" id="5Qmp_LAV52I" role="2Oq$k0">
+                            <ref role="1YBMHb" node="5Qmp_LAV4aQ" resolve="ncr" />
+                          </node>
+                          <node concept="3TrEf2" id="5Qmp_LAV52J" role="2OqNvi">
+                            <ref role="3Tt5mk" to="zaxg:5Qmp_LAUU8d" resolve="child" />
+                          </node>
+                        </node>
+                        <node concept="3TrEf2" id="5Qmp_LAV52K" role="2OqNvi">
+                          <ref role="3Tt5mk" to="tpce:fA0lvVK" resolve="target" />
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node concept="mw_s8" id="5Qmp_LAV52L" role="1ZfhK$">
+              <node concept="1Z2H0r" id="5Qmp_LAV52M" role="mwGJk">
+                <node concept="1YBJjd" id="5Qmp_LAV52N" role="1Z2MuG">
+                  <ref role="1YBMHb" node="5Qmp_LAV4aQ" resolve="ncr" />
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+        <node concept="2OqwBi" id="5Qmp_LAV7lD" role="3clFbw">
+          <node concept="2OqwBi" id="5Qmp_LAV6v6" role="2Oq$k0">
+            <node concept="1YBJjd" id="5Qmp_LAV6lK" role="2Oq$k0">
+              <ref role="1YBMHb" node="5Qmp_LAV4aQ" resolve="ncr" />
+            </node>
+            <node concept="3TrEf2" id="5Qmp_LAV6WG" role="2OqNvi">
+              <ref role="3Tt5mk" to="zaxg:5Qmp_LAUU8d" resolve="child" />
+            </node>
+          </node>
+          <node concept="2qgKlT" id="5Qmp_LAV8os" role="2OqNvi">
+            <ref role="37wK5l" to="tpcn:hEwIfAt" resolve="isSingular" />
+          </node>
+        </node>
+        <node concept="9aQIb" id="5Qmp_LAVadO" role="9aQIa">
+          <node concept="3clFbS" id="5Qmp_LAVadP" role="9aQI4">
+            <node concept="1Z5TYs" id="5Qmp_LAVayd" role="3cqZAp">
+              <node concept="mw_s8" id="5Qmp_LAVaye" role="1ZfhKB">
+                <node concept="2pJPEk" id="5Qmp_LAVayf" role="mwGJk">
+                  <node concept="2pJPED" id="5Qmp_LAVban" role="2pJPEn">
+                    <ref role="2pJxaS" to="tp2q:gKA3Dh4" resolve="SequenceType" />
+                    <node concept="2pIpSj" id="5Qmp_LAVbuf" role="2pJxcM">
+                      <ref role="2pIpSl" to="tp2q:gKA3Ige" resolve="elementType" />
+                      <node concept="2pJPED" id="5Qmp_LAVayg" role="28nt2d">
+                        <ref role="2pJxaS" to="tp25:gzTqbfa" resolve="SNodeType" />
+                        <node concept="2pIpSj" id="5Qmp_LAVayh" role="2pJxcM">
+                          <ref role="2pIpSl" to="tp25:g$ehGDh" resolve="concept" />
+                          <node concept="36biLy" id="5Qmp_LAVayi" role="28nt2d">
+                            <node concept="2OqwBi" id="5Qmp_LAVayj" role="36biLW">
+                              <node concept="2OqwBi" id="5Qmp_LAVayk" role="2Oq$k0">
+                                <node concept="1YBJjd" id="5Qmp_LAVayl" role="2Oq$k0">
+                                  <ref role="1YBMHb" node="5Qmp_LAV4aQ" resolve="ncr" />
+                                </node>
+                                <node concept="3TrEf2" id="5Qmp_LAVaym" role="2OqNvi">
+                                  <ref role="3Tt5mk" to="zaxg:5Qmp_LAUU8d" resolve="child" />
+                                </node>
+                              </node>
+                              <node concept="3TrEf2" id="5Qmp_LAVayn" role="2OqNvi">
+                                <ref role="3Tt5mk" to="tpce:fA0lvVK" resolve="target" />
+                              </node>
+                            </node>
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+              <node concept="mw_s8" id="5Qmp_LAVayo" role="1ZfhK$">
+                <node concept="1Z2H0r" id="5Qmp_LAVayp" role="mwGJk">
+                  <node concept="1YBJjd" id="5Qmp_LAVayq" role="1Z2MuG">
+                    <ref role="1YBMHb" node="5Qmp_LAV4aQ" resolve="ncr" />
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="5Qmp_LAV4aQ" role="1YuTPh">
+      <property role="TrG5h" value="ncr" />
+      <ref role="1YaFvo" to="zaxg:5Qmp_LAUTgf" resolve="NodeChildRef" />
     </node>
   </node>
 </model>

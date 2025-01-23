@@ -24,6 +24,7 @@
         <child id="3230484732390143835" name="children" index="2yIKJ$" />
       </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
+      <concept id="2269421348088144220" name="ReactDemoLanguage.structure.Member" flags="ng" index="H1vJH" />
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
         <property id="2879488090881171741" name="c" index="2K1lSO" />
@@ -70,15 +71,15 @@
   </node>
   <node concept="2K$1jT" id="2vPZMAnpySp">
     <property role="TrG5h" value="N1" />
-    <property role="2KaVt$" value="a23" />
+    <property role="2KaVt$" value="12" />
     <property role="2ZffLE" value="b14" />
     <node concept="2K$1jT" id="2vPZMAnpySr" role="2K$1jV">
       <property role="TrG5h" value="N21" />
-      <property role="2KaVt$" value="a43" />
+      <property role="2KaVt$" value="test" />
       <property role="2ZffLE" value="b2" />
       <node concept="2K$1jT" id="2vPZMAnTPM4" role="2K$1jV">
         <property role="TrG5h" value="N4" />
-        <property role="2KaVt$" value="a34" />
+        <property role="2KaVt$" value="test" />
         <property role="2ZffLE" value="b2" />
       </node>
     </node>
@@ -3700,6 +3701,9 @@
   <node concept="3r6pZy" id="3d2g73Cnh77">
     <property role="TrG5h" value="bla" />
     <property role="3vy3ed" value="error" />
+  </node>
+  <node concept="H1vJH" id="3XUo8X8irsG">
+    <property role="TrG5h" value="StringMember" />
   </node>
 </model>
 
