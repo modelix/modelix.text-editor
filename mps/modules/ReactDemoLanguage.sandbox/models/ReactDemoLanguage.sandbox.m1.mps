@@ -25,6 +25,9 @@
       </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
       <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
+      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Record" flags="ng" index="H1sAW">
+        <child id="2269421348088149062" name="members" index="H1uVR" />
+      </concept>
       <concept id="2269421348088144220" name="ReactDemoLanguage.structure.Member" flags="ng" index="H1vJH">
         <child id="2269421348088162409" name="type" index="H1jbo" />
       </concept>
@@ -3707,7 +3710,14 @@
   </node>
   <node concept="H1vJH" id="3XUo8X8irsG">
     <property role="TrG5h" value="StringMember" />
-    <node concept="H1gZI" id="af0_0CHm$E" role="H1jbo" />
+    <node concept="H1gZI" id="af0_0CZEv6" role="H1jbo" />
+  </node>
+  <node concept="H1sAW" id="af0_0Da16s">
+    <property role="TrG5h" value="R1" />
+    <node concept="H1vJH" id="af0_0DjA4u" role="H1uVR">
+      <property role="TrG5h" value="M1" />
+      <node concept="H1gZI" id="af0_0DjADz" role="H1jbo" />
+    </node>
   </node>
 </model>
 

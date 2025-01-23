@@ -1737,5 +1737,45 @@
       <node concept="3clFbS" id="5Qmp_LAUZHM" role="2VODD2" />
     </node>
   </node>
+  <node concept="13h7C7" id="af0_0CTpco">
+    <ref role="13h7C2" to="zaxg:af0_0CR$4e" resolve="CreateDeleteRenderChild" />
+    <node concept="13hLZK" id="af0_0CTpcp" role="13h7CW">
+      <node concept="3clFbS" id="af0_0CTpcq" role="2VODD2" />
+    </node>
+  </node>
+  <node concept="13h7C7" id="af0_0CTtMO">
+    <property role="3GE5qa" value="interfaces" />
+    <ref role="13h7C2" to="zaxg:af0_0CSxPf" resolve="IChildWidget" />
+    <node concept="13hLZK" id="af0_0CTtMP" role="13h7CW">
+      <node concept="3clFbS" id="af0_0CTtMQ" role="2VODD2" />
+    </node>
+    <node concept="13i0hz" id="af0_0CTu5Z" role="13h7CS">
+      <property role="13i0it" value="true" />
+      <property role="TrG5h" value="featureName" />
+      <ref role="13i0hy" node="6tfgpzo6suP" resolve="featureName" />
+      <node concept="3clFbS" id="af0_0CTu62" role="3clF47">
+        <node concept="3clFbF" id="af0_0CTuGg" role="3cqZAp">
+          <node concept="2OqwBi" id="af0_0CTwD7" role="3clFbG">
+            <node concept="2OqwBi" id="af0_0CTvIf" role="2Oq$k0">
+              <node concept="2OqwBi" id="af0_0CTuVT" role="2Oq$k0">
+                <node concept="13iPFW" id="af0_0CTuGf" role="2Oq$k0" />
+                <node concept="3TrEf2" id="af0_0CTvyl" role="2OqNvi">
+                  <ref role="3Tt5mk" to="zaxg:5Qmp_LAVe3i" resolve="data" />
+                </node>
+              </node>
+              <node concept="3TrEf2" id="af0_0CTwc9" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAUU8d" resolve="child" />
+              </node>
+            </node>
+            <node concept="3TrcHB" id="af0_0CTxiW" role="2OqNvi">
+              <ref role="3TsBF5" to="tpck:h0TrG11" resolve="name" />
+            </node>
+          </node>
+        </node>
+      </node>
+      <node concept="17QB3L" id="af0_0CTupb" role="3clF45" />
+      <node concept="3Tm1VV" id="af0_0CTupc" role="1B3o_S" />
+    </node>
+  </node>
 </model>
 

@@ -463,7 +463,7 @@
   <node concept="1TIwiD" id="2vPZMAolrZd">
     <property role="EcuMT" value="2879488090887798733" />
     <property role="TrG5h" value="ShowAndEdit" />
-    <property role="34LRSv" value="showAndEdit" />
+    <property role="34LRSv" value="show-and-edit" />
     <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="2vPZMAolrZe" role="PzmwI">
@@ -1110,6 +1110,29 @@
       <property role="20kJfa" value="data" />
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="5Qmp_LAUTgf" resolve="NodeChildRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="af0_0CR$4e">
+    <property role="EcuMT" value="184368653051773198" />
+    <property role="TrG5h" value="CreateDeleteRenderChild" />
+    <property role="34LRSv" value="create-delete-render" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="af0_0CSvbY" role="PzmwI">
+      <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="af0_0CSxPf">
+    <property role="EcuMT" value="184368653052026191" />
+    <property role="3GE5qa" value="interfaces" />
+    <property role="TrG5h" value="IChildWidget" />
+    <node concept="PrWs8" id="af0_0CSyr0" role="PrDN$">
+      <ref role="PrY4T" node="2vPZMAolc2A" resolve="IWidget" />
+    </node>
+    <node concept="PrWs8" id="af0_0CSyHz" role="PrDN$">
+      <ref role="PrY4T" node="5Qmp_LAVe3h" resolve="IHasSingleChildBinding" />
+    </node>
+    <node concept="PrWs8" id="af0_0CSziY" role="PrDN$">
+      <ref role="PrY4T" node="6tfgpzo6r_t" resolve="IRefersToFeature" />
     </node>
   </node>
 </model>

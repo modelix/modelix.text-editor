@@ -229,8 +229,10 @@
       <property role="IQ2ns" value="2269421348088149062" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="members" />
-      <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="1XYAF4MuQ5s" resolve="Member" />
+    </node>
+    <node concept="PrWs8" id="af0_0CZKxl" role="PzmwI">
+      <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
     </node>
   </node>
   <node concept="1TIwiD" id="1XYAF4MuQ5s">
@@ -238,6 +240,7 @@
     <property role="3GE5qa" value="record" />
     <property role="TrG5h" value="Member" />
     <property role="19KtqR" value="true" />
+    <property role="34LRSv" value="member" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="1XYAF4MuQFh" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />

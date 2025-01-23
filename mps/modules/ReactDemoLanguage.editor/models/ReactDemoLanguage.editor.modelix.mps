@@ -28,10 +28,6 @@
         <reference id="8310867745953086698" name="concept" index="3JBHV4" />
         <child id="8876946878573903455" name="component" index="gmrTS" />
       </concept>
-      <concept id="8876946878573903439" name="org.modelix.mps.react.structure.GenericReactComponent" flags="ng" index="gmrTC">
-        <property id="8876946878573977569" name="componentType" index="gmPZ6" />
-        <child id="8876946878574187976" name="children" index="gn1nJ" />
-      </concept>
       <concept id="5355184975888307501" name="org.modelix.mps.react.structure.StateVariable" flags="ng" index="2o1qlL">
         <child id="5355184975888310505" name="initializer" index="2o1p2P" />
         <child id="5355184975888307510" name="type" index="2o1qlE" />
@@ -61,24 +57,12 @@
         <child id="5355184975881056561" name="parameters" index="2rHO5H" />
         <child id="5355184975881056562" name="component" index="2rHO5I" />
       </concept>
-      <concept id="2833354970324652966" name="org.modelix.mps.react.structure.When" flags="ng" index="1nAWFN">
-        <child id="2833354970324652969" name="else" index="1nAWFW" />
-        <child id="2833354970324652971" name="cases" index="1nAWFY" />
-      </concept>
-      <concept id="2833354970324652974" name="org.modelix.mps.react.structure.WhenCase" flags="ng" index="1nAWFV">
-        <child id="2833354970324652977" name="compnent" index="1nAWF$" />
-        <child id="2833354970324652975" name="condition" index="1nAWFU" />
-      </concept>
       <concept id="2833354970324905743" name="org.modelix.mps.react.structure.RenderNode" flags="ng" index="1nBVpq">
         <child id="2833354970324905746" name="nodeToRender" index="1nBVp7" />
       </concept>
       <concept id="793519207835900435" name="org.modelix.mps.react.structure.EmptyContent" flags="ng" index="3ywjYg" />
     </language>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
-      <concept id="1215693861676" name="jetbrains.mps.baseLanguage.structure.BaseAssignmentExpression" flags="nn" index="d038R">
-        <child id="1068498886297" name="rValue" index="37vLTx" />
-        <child id="1068498886295" name="lValue" index="37vLTJ" />
-      </concept>
       <concept id="4836112446988635817" name="jetbrains.mps.baseLanguage.structure.UndefinedType" flags="in" index="2jxLKc" />
       <concept id="1197027756228" name="jetbrains.mps.baseLanguage.structure.DotExpression" flags="nn" index="2OqwBi">
         <child id="1197027771414" name="operand" index="2Oq$k0" />
@@ -95,7 +79,6 @@
       <concept id="1068498886296" name="jetbrains.mps.baseLanguage.structure.VariableReference" flags="nn" index="37vLTw">
         <reference id="1068581517664" name="variableDeclaration" index="3cqZAo" />
       </concept>
-      <concept id="1068498886294" name="jetbrains.mps.baseLanguage.structure.AssignmentExpression" flags="nn" index="37vLTI" />
       <concept id="1225271177708" name="jetbrains.mps.baseLanguage.structure.StringType" flags="in" index="17QB3L" />
       <concept id="4972933694980447171" name="jetbrains.mps.baseLanguage.structure.BaseVariableDeclaration" flags="ng" index="19Szcq">
         <child id="5680397130376446158" name="type" index="1tU5fm" />
@@ -165,6 +148,7 @@
       <concept id="3230484732402340359" name="org.modelix.mps.react.muicomponents.structure.TreeView" flags="ng" index="2zZIUS">
         <child id="3230484732402373646" name="selectionStateTracker" index="2zZAyL" />
       </concept>
+      <concept id="184368653051773198" name="org.modelix.mps.react.muicomponents.structure.CreateDeleteRenderChild" flags="ng" index="Ekkdu" />
       <concept id="223742654172176291" name="org.modelix.mps.react.muicomponents.structure.Alignment" flags="ng" index="G4ZHx" />
       <concept id="223742654177875992" name="org.modelix.mps.react.muicomponents.structure.Typography" flags="ng" index="GuJNq">
         <property id="793519207812312126" name="style" index="3z6gAX" />
@@ -230,7 +214,6 @@
       <concept id="2879488090856848295" name="org.modelix.mps.react.muicomponents.structure.TextField" flags="ng" index="2Ly8ie">
         <child id="2041619518470150050" name="valueConverter" index="28JTQ0" />
       </concept>
-      <concept id="6743690039082362463" name="org.modelix.mps.react.muicomponents.structure.NodeFactory" flags="ng" index="Vj$03" />
       <concept id="6743690039083720913" name="org.modelix.mps.react.muicomponents.structure.IHasSingleChildBinding" flags="ngI" index="VuCqd">
         <child id="6743690039083720914" name="data" index="VuCqe" />
       </concept>
@@ -299,7 +282,6 @@
       <concept id="1143234257716" name="jetbrains.mps.lang.smodel.structure.Node_GetModelOperation" flags="nn" index="I4A8Y" />
       <concept id="1171305280644" name="jetbrains.mps.lang.smodel.structure.Node_GetDescendantsOperation" flags="nn" index="2Rf3mk" />
       <concept id="1171323947159" name="jetbrains.mps.lang.smodel.structure.Model_NodesOperation" flags="nn" index="2SmgA7" />
-      <concept id="1171999116870" name="jetbrains.mps.lang.smodel.structure.Node_IsNullOperation" flags="nn" index="3w_OXm" />
       <concept id="1144101972840" name="jetbrains.mps.lang.smodel.structure.OperationParm_Concept" flags="ng" index="1xMEDy">
         <child id="1207343664468" name="conceptArgument" index="ri$Ld" />
       </concept>
@@ -432,70 +414,51 @@
       </node>
     </node>
     <node concept="3ywjYg" id="5Qmp_LAzkEU" role="gmrQt" />
-    <node concept="gmrQT" id="3XUo8X8ivOm" role="gmrQt">
-      <ref role="3JBHV4" to="oyym:1XYAF4MuQ5s" resolve="Member" />
-      <node concept="gmrTC" id="3XUo8X8ixcz" role="gmrTS">
-        <property role="gmPZ6" value="mui.Box" />
-        <node concept="2Ln$92" id="3XUo8X8iUVI" role="gn1nJ">
-          <node concept="G4ZHx" id="3XUo8X8iUVJ" role="G4MFJ" />
-          <node concept="2Ly8ie" id="3XUo8X8iTbp" role="2Ln$9p">
-            <node concept="2Ly3GW" id="3XUo8X8iTbq" role="2Ly3GP">
-              <ref role="2Ly3GY" to="tpck:h0TrG11" resolve="name" />
-              <node concept="ggAI9" id="3XUo8X8iTu1" role="2Ly3GZ" />
+    <node concept="gmrQT" id="af0_0CZGgg" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:1XYAF4MuPcd" resolve="Record" />
+      <node concept="2LhRxX" id="af0_0CZH2u" role="gmrTS">
+        <node concept="G4ZHx" id="af0_0CZH2v" role="G4Vnm" />
+        <node concept="2Ln$92" id="af0_0Df4l9" role="2Ln$9p">
+          <node concept="G4ZHx" id="af0_0Df4la" role="G4MFJ" />
+          <node concept="2Lk9xs" id="af0_0CZHlp" role="2Ln$9p">
+            <node concept="3z9kRR" id="af0_0CZHlq" role="3z8GDl">
+              <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
+            </node>
+            <node concept="Xl_RD" id="af0_0CZHWj" role="2Lk3Fj">
+              <property role="Xl_RC" value="record" />
             </node>
           </node>
-          <node concept="2Lfa6Z" id="3XUo8X8iUmi" role="2Ln$9p" />
-          <node concept="1nAWFN" id="3XUo8X8i_p3" role="2Ln$9p">
-            <node concept="1nAWFV" id="3XUo8X8i_FH" role="1nAWFY">
-              <node concept="2OqwBi" id="3XUo8X8iAp2" role="1nAWFU">
-                <node concept="2OqwBi" id="5Qmp_LAFy$O" role="2Oq$k0">
-                  <node concept="ggAI9" id="3XUo8X8i_Yi" role="2Oq$k0" />
-                  <node concept="3TrEf2" id="5Qmp_LAFzaf" role="2OqNvi">
-                    <ref role="3Tt5mk" to="oyym:1XYAF4MuUxD" resolve="type" />
-                  </node>
-                </node>
-                <node concept="3w_OXm" id="3XUo8X8iAOR" role="2OqNvi" />
-              </node>
-              <node concept="Vj$03" id="5Qmp_LAQXbN" role="1nAWF$">
-                <node concept="Vvv9j" id="5Qmp_LAWeAc" role="VuCqe">
-                  <ref role="Vvshh" to="oyym:1XYAF4MuUxD" resolve="type" />
-                  <node concept="ggAI9" id="5Qmp_LAWeTn" role="VvvGQ" />
-                </node>
-              </node>
+          <node concept="2Ly8ie" id="af0_0CZJVe" role="2Ln$9p">
+            <node concept="2Ly3GW" id="af0_0CZJVi" role="2Ly3GP">
+              <ref role="2Ly3GY" to="tpck:h0TrG11" resolve="name" />
+              <node concept="ggAI9" id="af0_0CZKel" role="2Ly3GZ" />
             </node>
-            <node concept="2Ln$92" id="3XUo8X8iC1n" role="1nAWFW">
-              <node concept="G4ZHx" id="3XUo8X8iC1o" role="G4MFJ" />
-              <node concept="1nBVpq" id="5Qmp_LAzn9Z" role="2Ln$9p">
-                <node concept="2OqwBi" id="5Qmp_LAzn_G" role="1nBVp7">
-                  <node concept="ggAI9" id="5Qmp_LAzntu" role="2Oq$k0" />
-                  <node concept="3TrEf2" id="5Qmp_LAzo9i" role="2OqNvi">
-                    <ref role="3Tt5mk" to="oyym:1XYAF4MuUxD" resolve="type" />
-                  </node>
-                </node>
-              </node>
-              <node concept="2L3P8c" id="3XUo8X8iCTb" role="2Ln$9p">
-                <node concept="2KN1Qe" id="3XUo8X8iCTf" role="2KN1Qq">
-                  <node concept="3clFbS" id="3XUo8X8iCTh" role="2KN1Q1">
-                    <node concept="3clFbF" id="3XUo8X8iQNP" role="3cqZAp">
-                      <node concept="37vLTI" id="5Qmp_LAr8rn" role="3clFbG">
-                        <node concept="10Nm6u" id="5Qmp_LAr8Iz" role="37vLTx" />
-                        <node concept="2OqwBi" id="5Qmp_LAr6cm" role="37vLTJ">
-                          <node concept="ggAI9" id="5Qmp_LAr626" role="2Oq$k0" />
-                          <node concept="3TrEf2" id="5Qmp_LAr6Cb" role="2OqNvi">
-                            <ref role="3Tt5mk" to="oyym:1XYAF4MuUxD" resolve="type" />
-                          </node>
-                        </node>
-                      </node>
-                    </node>
-                  </node>
-                </node>
-                <node concept="2KPZRd" id="3XUo8X8iDKW" role="2L3P8e">
-                  <node concept="2Kq$Lj" id="3XUo8X8iDKY" role="2Kq$h0">
-                    <property role="2Kq$Li" value="mui.icons.Clear" />
-                  </node>
-                </node>
-              </node>
-            </node>
+          </node>
+        </node>
+        <node concept="Ekkdu" id="af0_0D5LHB" role="2Ln$9p">
+          <node concept="Vvv9j" id="af0_0D5LHD" role="VuCqe">
+            <ref role="Vvshh" to="oyym:1XYAF4MuRh6" resolve="members" />
+            <node concept="ggAI9" id="af0_0D5M0$" role="VvvGQ" />
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="af0_0CZFPJ" role="gmrQt" />
+    <node concept="gmrQT" id="3XUo8X8ivOm" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:1XYAF4MuQ5s" resolve="Member" />
+      <node concept="2Ln$92" id="af0_0CUnym" role="gmrTS">
+        <node concept="G4ZHx" id="af0_0CUnyn" role="G4MFJ" />
+        <node concept="2Ly8ie" id="af0_0CUnyo" role="2Ln$9p">
+          <node concept="2Ly3GW" id="af0_0CUnyp" role="2Ly3GP">
+            <ref role="2Ly3GY" to="tpck:h0TrG11" resolve="name" />
+            <node concept="ggAI9" id="af0_0CUnyq" role="2Ly3GZ" />
+          </node>
+        </node>
+        <node concept="2Lfa6Z" id="af0_0CUnyr" role="2Ln$9p" />
+        <node concept="Ekkdu" id="af0_0D5Nbh" role="2Ln$9p">
+          <node concept="Vvv9j" id="af0_0D5Nbj" role="VuCqe">
+            <ref role="Vvshh" to="oyym:1XYAF4MuUxD" resolve="type" />
+            <node concept="ggAI9" id="af0_0D5Nue" role="VvvGQ" />
           </node>
         </node>
       </node>
