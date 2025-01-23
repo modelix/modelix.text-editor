@@ -8,7 +8,8 @@ module.exports = {
                 "deps",
                 "projectional-editor",
                 "mps-plugin",
-                "interpreter"
+                "interpreter",
+                "react"
             ],
         ],
         "subject-case": [0, 'never'],
