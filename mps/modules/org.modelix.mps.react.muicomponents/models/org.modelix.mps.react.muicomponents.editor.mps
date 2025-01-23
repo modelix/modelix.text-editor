@@ -1914,6 +1914,7 @@
             <ref role="1k5W1q" to="vpip:2vPZMAnQeIL" resolve="RComponentSub" />
           </node>
           <node concept="3F1sOY" id="5Qmp_LATCTf" role="3EZMnx">
+            <property role="1$x2rV" value="&lt;subconcepts&gt;" />
             <ref role="1NtTu8" to="zaxg:5Qmp_LAQ3ic" resolve="concepts" />
           </node>
         </node>
