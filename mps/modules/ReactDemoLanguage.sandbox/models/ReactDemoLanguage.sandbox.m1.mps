@@ -23,8 +23,16 @@
         <property id="3230484732390135530" name="a" index="2yIMDl" />
         <child id="3230484732390143835" name="children" index="2yIKJ$" />
       </concept>
+      <concept id="184368653074202448" name="ReactDemoLanguage.structure.RecordMember" flags="ng" index="CIRO0">
+        <child id="184368653074206030" name="type" index="CISWu" />
+      </concept>
+      <concept id="184368653074208403" name="ReactDemoLanguage.structure.Record" flags="ng" index="CITj3">
+        <child id="184368653074210776" name="members" index="CITQ8" />
+      </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
-      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Record" flags="ng" index="H1sAW" />
+      <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
+      <concept id="2269421348088153904" name="ReactDemoLanguage.structure.StringType" flags="ng" index="H1hQ1" />
+      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW" />
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
         <property id="2879488090881171741" name="c" index="2K1lSO" />
@@ -3703,7 +3711,19 @@
     <property role="3vy3ed" value="error" />
   </node>
   <node concept="H1sAW" id="af0_0Da16s">
-    <property role="TrG5h" value="ARecord" />
+    <property role="TrG5h" value="AnOuter" />
+  </node>
+  <node concept="CITj3" id="af0_0EddMs">
+    <property role="TrG5h" value="Address" />
+    <node concept="CIRO0" id="af0_0Egsuq" role="CITQ8">
+      <property role="TrG5h" value="city" />
+      <node concept="H1hQ1" id="af0_0Egtm4" role="CISWu" />
+    </node>
+    <node concept="CIRO0" id="af0_0Ej3n9" role="CITQ8">
+      <property role="TrG5h" value="dsdsa" />
+      <node concept="H1gZI" id="af0_0Ej3We" role="CISWu" />
+    </node>
+    <node concept="CIRO0" id="af0_0Elwv3" role="CITQ8" />
   </node>
 </model>
 

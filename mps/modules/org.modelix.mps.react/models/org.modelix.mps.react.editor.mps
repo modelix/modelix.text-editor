@@ -144,7 +144,6 @@
       </concept>
       <concept id="1073389882823" name="jetbrains.mps.lang.editor.structure.CellModel_RefNode" flags="sg" stub="730538219795960754" index="3F1sOY" />
       <concept id="1073390211982" name="jetbrains.mps.lang.editor.structure.CellModel_RefNodeList" flags="sg" stub="2794558372793454595" index="3F2HdR" />
-      <concept id="5624877018226900666" name="jetbrains.mps.lang.editor.structure.TransformationMenu" flags="ng" index="3ICUPy" />
       <concept id="6684862045052272180" name="jetbrains.mps.lang.editor.structure.QueryFunctionParameter_SubstituteMenu_NodeToWrap" flags="ng" index="3N4pyC" />
       <concept id="6684862045052059649" name="jetbrains.mps.lang.editor.structure.QueryFunction_SubstituteMenu_WrapperHandler" flags="ig" index="3N5aqt" />
       <concept id="6684862045052059291" name="jetbrains.mps.lang.editor.structure.SubstituteMenuPart_Wrapper" flags="ng" index="3N5dw7">
@@ -2129,9 +2128,9 @@
       </node>
     </node>
   </node>
-  <node concept="3ICUPy" id="5KtU3pXwmmA">
+  <node concept="22mcaB" id="af0_0Edk5X">
     <ref role="aqKnT" to="8xo1:G39ofDwxCj" resolve="EmptyContent" />
-    <node concept="22hDWj" id="5KtU3pXwmD9" role="22hAXT" />
+    <node concept="22hDWj" id="af0_0Edkow" role="22hAXT" />
   </node>
 </model>
 
