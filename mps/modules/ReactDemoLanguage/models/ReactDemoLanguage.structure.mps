@@ -221,15 +221,15 @@
   </node>
   <node concept="1TIwiD" id="1XYAF4MuPcd">
     <property role="EcuMT" value="2269421348088140557" />
-    <property role="TrG5h" value="Record" />
+    <property role="TrG5h" value="Outer" />
     <property role="19KtqR" value="true" />
     <property role="3GE5qa" value="record" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="1TJgyj" id="1XYAF4MuRh6" role="1TKVEi">
       <property role="IQ2ns" value="2269421348088149062" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="members" />
-      <ref role="20lvS9" node="1XYAF4MuQ5s" resolve="Member" />
+      <property role="20kJfa" value="inner" />
+      <ref role="20lvS9" node="1XYAF4MuQ5s" resolve="Inner" />
     </node>
     <node concept="PrWs8" id="af0_0CZKxl" role="PzmwI">
       <ref role="PrY4T" to="tpck:h0TrEE$" resolve="INamedConcept" />
@@ -238,7 +238,7 @@
   <node concept="1TIwiD" id="1XYAF4MuQ5s">
     <property role="EcuMT" value="2269421348088144220" />
     <property role="3GE5qa" value="record" />
-    <property role="TrG5h" value="Member" />
+    <property role="TrG5h" value="Inner" />
     <property role="19KtqR" value="true" />
     <property role="34LRSv" value="member" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
