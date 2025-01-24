@@ -1007,5 +1007,87 @@
       <ref role="1YaFvo" to="zaxg:5Qmp_LAUTgf" resolve="NodeChildRef" />
     </node>
   </node>
+  <node concept="18kY7G" id="af0_0ERKQv">
+    <property role="TrG5h" value="check_CreateDeleteRenderChild" />
+    <node concept="3clFbS" id="af0_0ERKQw" role="18ibNy">
+      <node concept="3clFbJ" id="af0_0ERLrT" role="3cqZAp">
+        <node concept="3fqX7Q" id="af0_0ERSul" role="3clFbw">
+          <node concept="2OqwBi" id="af0_0ERSun" role="3fr31v">
+            <node concept="2OqwBi" id="af0_0ERSuo" role="2Oq$k0">
+              <node concept="1YBJjd" id="af0_0ERSup" role="2Oq$k0">
+                <ref role="1YBMHb" node="af0_0ERKQy" resolve="cdrc" />
+              </node>
+              <node concept="3TrEf2" id="af0_0ERSuq" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAVe3i" resolve="data" />
+              </node>
+            </node>
+            <node concept="2qgKlT" id="af0_0ERSur" role="2OqNvi">
+              <ref role="37wK5l" to="7923:af0_0ERInP" resolve="isSingle" />
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="af0_0ERLrV" role="3clFbx">
+          <node concept="2MkqsV" id="af0_0ERPp5" role="3cqZAp">
+            <node concept="Xl_RD" id="af0_0ERPG6" role="2MkJ7o">
+              <property role="Xl_RC" value="this can only be used for single-valued child links" />
+            </node>
+            <node concept="2OqwBi" id="af0_0ERQ_6" role="1urrMF">
+              <node concept="1YBJjd" id="af0_0ERQ6y" role="2Oq$k0">
+                <ref role="1YBMHb" node="af0_0ERKQy" resolve="cdrc" />
+              </node>
+              <node concept="3TrEf2" id="af0_0ERRbp" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAVe3i" resolve="data" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="af0_0ERKQy" role="1YuTPh">
+      <property role="TrG5h" value="cdrc" />
+      <ref role="1YaFvo" to="zaxg:af0_0CR$4e" resolve="CreateDeleteRenderChild" />
+    </node>
+  </node>
+  <node concept="1YbPZF" id="af0_0ERTYl">
+    <property role="TrG5h" value="typeof_CreateDeleteRenderChildList" />
+    <node concept="3clFbS" id="af0_0ERTYm" role="18ibNy">
+      <node concept="3clFbJ" id="af0_0ERUgY" role="3cqZAp">
+        <node concept="3fqX7Q" id="af0_0ERUgZ" role="3clFbw">
+          <node concept="2OqwBi" id="af0_0ERUh0" role="3fr31v">
+            <node concept="2OqwBi" id="af0_0ERUh1" role="2Oq$k0">
+              <node concept="1YBJjd" id="af0_0ERUh2" role="2Oq$k0">
+                <ref role="1YBMHb" node="af0_0ERTYo" resolve="cdrcl" />
+              </node>
+              <node concept="3TrEf2" id="af0_0ERUh3" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAVe3i" resolve="data" />
+              </node>
+            </node>
+            <node concept="2qgKlT" id="af0_0ERUh4" role="2OqNvi">
+              <ref role="37wK5l" to="7923:af0_0ERF3S" resolve="isMultiple" />
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="af0_0ERUh5" role="3clFbx">
+          <node concept="2MkqsV" id="af0_0ERUh6" role="3cqZAp">
+            <node concept="Xl_RD" id="af0_0ERUh7" role="2MkJ7o">
+              <property role="Xl_RC" value="this can only be used for multi-valued child links" />
+            </node>
+            <node concept="2OqwBi" id="af0_0ERUh8" role="1urrMF">
+              <node concept="1YBJjd" id="af0_0ERUh9" role="2Oq$k0">
+                <ref role="1YBMHb" node="af0_0ERTYo" resolve="cdrcl" />
+              </node>
+              <node concept="3TrEf2" id="af0_0ERUha" role="2OqNvi">
+                <ref role="3Tt5mk" to="zaxg:5Qmp_LAVe3i" resolve="data" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="af0_0ERTYo" role="1YuTPh">
+      <property role="TrG5h" value="cdrcl" />
+      <ref role="1YaFvo" to="zaxg:af0_0ERAHe" resolve="CreateDeleteRenderChildList" />
+    </node>
+  </node>
 </model>
 

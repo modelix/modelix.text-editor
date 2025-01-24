@@ -957,9 +957,9 @@
     <node concept="1TJgyj" id="5KtU3pZ8Kft" role="1TKVEi">
       <property role="IQ2ns" value="6637716746572858333" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="items" />
+      <property role="20kJfa" value="childcren" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
-      <ref role="20lvS9" node="5KtU3pZ8Esn" resolve="GridItem" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="1TJgyi" id="5KtU3pZ8KOy" role="1TKVEl">
       <property role="IQ2nx" value="6637716746572860706" />
@@ -974,12 +974,15 @@
     <property role="EcuMT" value="6637716746572834583" />
     <property role="3GE5qa" value="layout" />
     <property role="TrG5h" value="GridItem" />
-    <property role="34LRSv" value="item" />
+    <property role="34LRSv" value="grid-item" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="1TJgyi" id="5KtU3pZ8F1s" role="1TKVEl">
       <property role="IQ2nx" value="6637716746572836956" />
       <property role="TrG5h" value="cols" />
       <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+    <node concept="PrWs8" id="af0_0ElKUG" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="PrWs8" id="5KtU3pZ8FT3" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
@@ -1133,6 +1136,15 @@
     </node>
     <node concept="PrWs8" id="af0_0CSziY" role="PrDN$">
       <ref role="PrY4T" node="6tfgpzo6r_t" resolve="IRefersToFeature" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="af0_0ERAHe">
+    <property role="EcuMT" value="184368653085338446" />
+    <property role="TrG5h" value="CreateDeleteRenderChildList" />
+    <property role="34LRSv" value="create-delete-render-list" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="af0_0ERB$P" role="PzmwI">
+      <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
     </node>
   </node>
 </model>

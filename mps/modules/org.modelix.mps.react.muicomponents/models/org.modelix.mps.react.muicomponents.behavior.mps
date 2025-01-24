@@ -16,6 +16,7 @@
     <import index="tp25" ref="r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)" implicit="true" />
     <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" implicit="true" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
+    <import index="tpcn" ref="r:00000000-0000-4000-0000-011c8959028b(jetbrains.mps.lang.structure.behavior)" implicit="true" />
   </imports>
   <registry>
     <language id="af65afd8-f0dd-4942-87d9-63a55f2a9db1" name="jetbrains.mps.lang.behavior">
@@ -113,6 +114,9 @@
       </concept>
       <concept id="1068581242863" name="jetbrains.mps.baseLanguage.structure.LocalVariableDeclaration" flags="nr" index="3cpWsn" />
       <concept id="1081506762703" name="jetbrains.mps.baseLanguage.structure.GreaterThanExpression" flags="nn" index="3eOSWO" />
+      <concept id="1081516740877" name="jetbrains.mps.baseLanguage.structure.NotExpression" flags="nn" index="3fqX7Q">
+        <child id="1081516765348" name="expression" index="3fr31v" />
+      </concept>
       <concept id="1204053956946" name="jetbrains.mps.baseLanguage.structure.IMethodCall" flags="ngI" index="1ndlxa">
         <reference id="1068499141037" name="baseMethodDeclaration" index="37wK5l" />
         <child id="1068499141038" name="actualArgument" index="37wK5m" />
@@ -1733,6 +1737,42 @@
         </node>
       </node>
     </node>
+    <node concept="13i0hz" id="af0_0ERF3S" role="13h7CS">
+      <property role="TrG5h" value="isMultiple" />
+      <node concept="3Tm1VV" id="af0_0ERF3T" role="1B3o_S" />
+      <node concept="10P_77" id="af0_0ERFnG" role="3clF45" />
+      <node concept="3clFbS" id="af0_0ERF3V" role="3clF47">
+        <node concept="3clFbF" id="af0_0ERFEx" role="3cqZAp">
+          <node concept="3fqX7Q" id="af0_0ERI4q" role="3clFbG">
+            <node concept="2OqwBi" id="af0_0ERI4s" role="3fr31v">
+              <node concept="2OqwBi" id="af0_0ERI4t" role="2Oq$k0">
+                <node concept="13iPFW" id="af0_0ERI4u" role="2Oq$k0" />
+                <node concept="3TrEf2" id="af0_0ERI4v" role="2OqNvi">
+                  <ref role="3Tt5mk" to="zaxg:5Qmp_LAUU8d" resolve="child" />
+                </node>
+              </node>
+              <node concept="2qgKlT" id="af0_0ERI4w" role="2OqNvi">
+                <ref role="37wK5l" to="tpcn:hEwIfAt" resolve="isSingular" />
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="13i0hz" id="af0_0ERInP" role="13h7CS">
+      <property role="TrG5h" value="isSingle" />
+      <node concept="3Tm1VV" id="af0_0ERInQ" role="1B3o_S" />
+      <node concept="10P_77" id="af0_0ERInR" role="3clF45" />
+      <node concept="3clFbS" id="af0_0ERInS" role="3clF47">
+        <node concept="3clFbF" id="af0_0ERJj_" role="3cqZAp">
+          <node concept="3fqX7Q" id="af0_0ERJjl" role="3clFbG">
+            <node concept="BsUDl" id="af0_0ERJNH" role="3fr31v">
+              <ref role="37wK5l" node="af0_0ERF3S" resolve="isMultiple" />
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
     <node concept="13hLZK" id="5Qmp_LAUZHL" role="13h7CW">
       <node concept="3clFbS" id="5Qmp_LAUZHM" role="2VODD2" />
     </node>
@@ -1775,6 +1815,13 @@
       </node>
       <node concept="17QB3L" id="af0_0CTupb" role="3clF45" />
       <node concept="3Tm1VV" id="af0_0CTupc" role="1B3o_S" />
+    </node>
+  </node>
+  <node concept="13h7C7" id="af0_0ERC04">
+    <property role="3GE5qa" value="interfaces" />
+    <ref role="13h7C2" to="zaxg:5Qmp_LAVe3h" resolve="IHasSingleChildBinding" />
+    <node concept="13hLZK" id="af0_0ERC05" role="13h7CW">
+      <node concept="3clFbS" id="af0_0ERC06" role="2VODD2" />
     </node>
   </node>
 </model>

@@ -143,7 +143,7 @@
       </concept>
       <concept id="6637716746572832188" name="org.modelix.mps.react.muicomponents.structure.Grid" flags="ng" index="zfRma">
         <property id="6637716746572860706" name="spacing" index="zfIkk" />
-        <child id="6637716746572858333" name="items" index="zfIJF" />
+        <child id="6637716746572858333" name="childcren" index="zfIJF" />
       </concept>
       <concept id="3230484732402340359" name="org.modelix.mps.react.muicomponents.structure.TreeView" flags="ng" index="2zZIUS">
         <child id="3230484732402373646" name="selectionStateTracker" index="2zZAyL" />
@@ -381,8 +381,8 @@
     <node concept="3ywjYg" id="1LliyamlazR" role="gmrQt" />
     <node concept="gmrQT" id="af0_0Edt5x" role="gmrQt">
       <ref role="3JBHV4" to="oyym:af0_0Ed7Xg" resolve="RecordMember" />
-      <node concept="2Ln$92" id="af0_0EdtRL" role="gmrTS">
-        <node concept="G4ZHx" id="af0_0EdtRM" role="G4MFJ" />
+      <node concept="2Ln$92" id="af0_0ELaFb" role="gmrTS">
+        <node concept="G4ZHx" id="af0_0ELaFc" role="G4MFJ" />
         <node concept="2Ly8ie" id="af0_0Eduam" role="2Ln$9p">
           <node concept="2Ly3GW" id="af0_0Eduan" role="2Ly3GP">
             <ref role="2Ly3GY" to="tpck:h0TrG11" resolve="name" />
@@ -393,23 +393,6 @@
           <node concept="Vvv9j" id="af0_0Edv3j" role="VuCqe">
             <ref role="Vvshh" to="oyym:af0_0Ed8Pe" resolve="type" />
             <node concept="ggAI9" id="af0_0Edvm3" role="VvvGQ" />
-          </node>
-        </node>
-        <node concept="2L3P8c" id="af0_0Ej4xw" role="2Ln$9p">
-          <node concept="2KPZRd" id="af0_0Ej4Og" role="2L3P8e">
-            <node concept="2Kq$Lj" id="af0_0Ej4Oi" role="2Kq$h0">
-              <property role="2Kq$Li" value="mui.icons.Clear" />
-            </node>
-          </node>
-          <node concept="2KN1Qe" id="af0_0Ej4x$" role="2KN1Qq">
-            <node concept="3clFbS" id="af0_0Ej4xA" role="2KN1Q1">
-              <node concept="3clFbF" id="af0_0Ej5pp" role="3cqZAp">
-                <node concept="2OqwBi" id="af0_0Ej5z_" role="3clFbG">
-                  <node concept="ggAI9" id="af0_0Ej5po" role="2Oq$k0" />
-                  <node concept="3YRAZt" id="af0_0Ej60d" role="2OqNvi" />
-                </node>
-              </node>
-            </node>
           </node>
         </node>
       </node>
@@ -547,7 +530,7 @@
           </node>
           <node concept="Ekkdu" id="af0_0D5LHB" role="2Ln$9p">
             <node concept="Vvv9j" id="af0_0D5LHD" role="VuCqe">
-              <ref role="Vvshh" to="oyym:1XYAF4MuRh6" resolve="members" />
+              <ref role="Vvshh" to="oyym:1XYAF4MuRh6" resolve="inner" />
               <node concept="ggAI9" id="af0_0D5M0$" role="VvvGQ" />
             </node>
           </node>
