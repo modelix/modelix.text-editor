@@ -4,6 +4,8 @@ import jetbrains.mps.checkers.ConstraintsChecker
 import jetbrains.mps.errors.item.NodeReportItem
 import jetbrains.mps.errors.messageTargets.MessageTarget
 import jetbrains.mps.errors.messageTargets.NodeMessageTarget
+import jetbrains.mps.errors.messageTargets.PropertyMessageTarget
+import jetbrains.mps.errors.messageTargets.ReferenceMessageTarget
 import jetbrains.mps.progress.EmptyProgressMonitor
 import jetbrains.mps.smodel.MPSModuleRepository
 import jetbrains.mps.typesystemEngine.checker.NonTypesystemChecker
@@ -56,6 +58,29 @@ object ModelCheckerIntegration {
     @JvmStatic
     fun getMessages(node: SNode, target: MessageTarget): List<NodeReportItem> {
         return getAllMessages(node).filter { it.messageTarget.sameAs(target) }
+    }
+
+    @JvmStatic
+    @Deprecated("Provide an SConceptFeature")
+    fun getMessages(node: SNode, onlyGlobal: Boolean, featureName: String?): String {
+        fun roleName(t: MessageTarget): String? {
+            if (t is PropertyMessageTarget) {
+                return t.role
+            }
+            if (t is ReferenceMessageTarget) {
+                return t.role
+            }
+            return null
+        }
+
+        var messages = getAllMessages(node)
+        if (onlyGlobal) {
+            messages = messages.filter { roleName(it.messageTarget) == null }
+        } else if (!featureName.isNullOrBlank()) {
+            messages = messages.filter { featureName.equals(roleName(it.messageTarget)) }
+        }
+        val str = messages.joinToString(" # ") { it.severity.toString() + ": " + it.message.split(":")[1] }
+        return str
     }
 
     private fun checkRoot(rootNode: INode): Map<INodeReference, List<NodeReportItem>> {
