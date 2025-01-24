@@ -4,7 +4,6 @@ import com.intellij.ide.browsers.actions.WebPreviewVirtualFile
 import com.intellij.openapi.actionSystem.ActionUpdateThread
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
-import com.intellij.openapi.fileEditor.impl.FileEditorOpenOptions
 import com.intellij.openapi.project.DumbAwareAction
 import com.intellij.util.Urls
 import jetbrains.mps.ide.actions.MPSCommonDataKeys
@@ -40,7 +39,11 @@ class OpenNodeInWebEditorAction : DumbAwareAction() {
         }
 
         val file = WebPreviewVirtualFile(nodeFile, workaroundUrl)
-        val editor = FileEditorManagerEx.getInstanceEx(project).openFile(file, null, FileEditorOpenOptions().withReuseOpen())
+        FileEditorManagerEx.getInstanceEx(project).openFile(
+            file = file,
+            focusEditor = true,
+            searchForOpen = true
+        )
     }
 
     override fun update(e: AnActionEvent) {
