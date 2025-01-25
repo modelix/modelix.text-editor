@@ -79,6 +79,9 @@
       <concept id="1202989658459" name="jetbrains.mps.lang.constraints.structure.ConstraintFunctionParameter_parentNode" flags="nn" index="nLn13" />
       <concept id="8966504967485224688" name="jetbrains.mps.lang.constraints.structure.ConstraintFunctionParameter_contextNode" flags="nn" index="2rP1CM" />
       <concept id="5564765827938091039" name="jetbrains.mps.lang.constraints.structure.ConstraintFunction_ReferentSearchScope_Scope" flags="ig" index="3dgokm" />
+      <concept id="8401916545537438642" name="jetbrains.mps.lang.constraints.structure.InheritedNodeScopeFactory" flags="ng" index="1dDu$B">
+        <reference id="8401916545537438643" name="kind" index="1dDu$A" />
+      </concept>
       <concept id="1163200368514" name="jetbrains.mps.lang.constraints.structure.ConstraintFunction_ReferentSetHandler" flags="in" index="3k9gUc" />
       <concept id="1163200647017" name="jetbrains.mps.lang.constraints.structure.ConstraintFunctionParameter_referenceNode" flags="nn" index="3kakTB" />
       <concept id="1163202640154" name="jetbrains.mps.lang.constraints.structure.ConstraintFunctionParameter_newReferentNode" flags="nn" index="3khVwk" />
@@ -134,9 +137,6 @@
         <child id="3906496115198199033" name="conceptArgument" index="3oSUPX" />
       </concept>
       <concept id="1171407110247" name="jetbrains.mps.lang.smodel.structure.Node_GetAncestorOperation" flags="nn" index="2Xjw5R" />
-      <concept id="3562215692195599741" name="jetbrains.mps.lang.smodel.structure.SLinkImplicitSelect" flags="nn" index="13MTOL">
-        <reference id="3562215692195600259" name="link" index="13MTZf" />
-      </concept>
       <concept id="1171999116870" name="jetbrains.mps.lang.smodel.structure.Node_IsNullOperation" flags="nn" index="3w_OXm" />
       <concept id="1172008320231" name="jetbrains.mps.lang.smodel.structure.Node_IsNotNullOperation" flags="nn" index="3x8VRR" />
       <concept id="1144100932627" name="jetbrains.mps.lang.smodel.structure.OperationParm_Inclusion" flags="ng" index="1xIGOp" />
@@ -470,31 +470,8 @@
     <ref role="1M2myG" to="8xo1:4Dhs5NilDPI" resolve="StateVariableReference" />
     <node concept="1N5Pfh" id="4Dhs5Nim6nd" role="1Mr941">
       <ref role="1N5Vy1" to="8xo1:4Dhs5NilDPP" resolve="decl" />
-      <node concept="3dgokm" id="4Dhs5Nim6oT" role="1N6uqs">
-        <node concept="3clFbS" id="4Dhs5Nim6oU" role="2VODD2">
-          <node concept="3clFbF" id="4Dhs5Nim6sB" role="3cqZAp">
-            <node concept="2YIFZM" id="4Dhs5Nim6wk" role="3clFbG">
-              <ref role="37wK5l" to="o8zo:4IP40Bi3eAf" resolve="forNamedElements" />
-              <ref role="1Pybhc" to="o8zo:4IP40Bi3e_R" resolve="ListScope" />
-              <node concept="2OqwBi" id="4Dhs5Nimb3K" role="37wK5m">
-                <node concept="2OqwBi" id="4Dhs5Nim6Ji" role="2Oq$k0">
-                  <node concept="2rP1CM" id="4Dhs5Nim6yG" role="2Oq$k0" />
-                  <node concept="z$bX8" id="4Dhs5Nim72Y" role="2OqNvi">
-                    <node concept="1xMEDy" id="4Dhs5Nim8UY" role="1xVPHs">
-                      <node concept="chp4Y" id="4Dhs5Nim8XZ" role="ri$Ld">
-                        <ref role="cht4Q" to="8xo1:7GLg2tFqfTf" resolve="GenericReactComponent" />
-                      </node>
-                    </node>
-                    <node concept="1xIGOp" id="4Dhs5Nim96j" role="1xVPHs" />
-                  </node>
-                </node>
-                <node concept="13MTOL" id="4Dhs5NimdjY" role="2OqNvi">
-                  <ref role="13MTZf" to="8xo1:4Dhs5Nildlt" resolve="stateVariables" />
-                </node>
-              </node>
-            </node>
-          </node>
-        </node>
+      <node concept="1dDu$B" id="6Ddb4_fPGnX" role="1N6uqs">
+        <ref role="1dDu$A" to="8xo1:4Dhs5NildkH" resolve="StateVariable" />
       </node>
     </node>
   </node>

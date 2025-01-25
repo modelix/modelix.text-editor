@@ -43,7 +43,7 @@ function jsonToProps(json: Record<string, any> | undefined): Record<string, any>
 
     for (const key in json) {
         const value = json[key]
-        if (typeof value == "object") {
+        if (typeof value == "object" && value != null) {
             if (typeof value.jsCode == "string") {
                 const code = eval(value.jsCode);
                 result = {
