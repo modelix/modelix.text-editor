@@ -6,7 +6,7 @@ import org.jetbrains.mps.openapi.module.SRepository
 import org.modelix.incremental.IIncrementalEngine
 import org.modelix.model.api.ConceptReference
 import org.modelix.model.api.INode
-import org.modelix.react.ssr.server.ComponentOrText
+import org.modelix.react.ssr.server.IComponentOrList
 
 class ReactSSRAspectDescriptors : Disposable {
     private val descriptorCache: DescriptorCache<IReactSSRAspectDescriptor> = DescriptorCache(IReactSSRAspectDescriptor::class.java).also { Disposer.register(this, it) }
@@ -44,12 +44,12 @@ abstract class ReactSSRAspectDescriptorBase : IReactSSRAspectDescriptor {
 
 interface IReactNodeRenderer {
     fun isApplicable(node: INode): Boolean
-    fun render(node: INode, context: IRenderContext): ComponentOrText
+    fun render(node: INode, context: IRenderContext): IComponentOrList
 }
 
 interface IRenderContext {
     fun getIncrementalEngine(): IIncrementalEngine
-    fun renderNode(node: INode): ComponentOrText
+    fun renderNode(node: INode): IComponentOrList
     fun getState(id: String, defaultValue: String?): String?
     fun setState(id: String, value: String?): String?
     fun getState(id: String, defaultValue: Boolean): Boolean
