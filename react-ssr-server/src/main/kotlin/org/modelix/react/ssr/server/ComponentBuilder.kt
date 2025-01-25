@@ -39,6 +39,10 @@ abstract class ComponentContainerBuilder {
         this.children += children
     }
 
+    fun child(children: IComponentOrList) {
+        this.children += children.flatten()
+    }
+
     fun text(text: String) {
         children += ComponentOrText(text = text)
     }

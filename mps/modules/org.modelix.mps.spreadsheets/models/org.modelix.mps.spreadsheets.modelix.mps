@@ -112,7 +112,7 @@
       </concept>
       <concept id="5355184975881056557" name="org.modelix.mps.react.structure.NamedRendererBase" flags="ng" index="2rHO5L">
         <child id="5355184975881056561" name="parameters" index="2rHO5H" />
-        <child id="5355184975881056562" name="component" index="2rHO5I" />
+        <child id="5355184975881056562" name="components" index="2rHO5I" />
       </concept>
       <concept id="5355184975881402769" name="org.modelix.mps.react.structure.CustomHandlerParameterReference" flags="ng" index="2rIwBd">
         <reference id="5355184975881402770" name="decl" index="2rIwBe" />

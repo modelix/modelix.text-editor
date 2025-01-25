@@ -21,8 +21,8 @@ import org.modelix.react.ssr.mps.aspect.CompositeReactSSRAspectDescriptor
 import org.modelix.react.ssr.mps.aspect.IReactSSRAspectDescriptor
 import org.modelix.react.ssr.mps.aspect.IRenderContext
 import org.modelix.react.ssr.mps.aspect.ReactSSRAspectDescriptors
-import org.modelix.react.ssr.server.ComponentOrText
 import org.modelix.react.ssr.server.GenericNodeRenderer
+import org.modelix.react.ssr.server.IComponentOrList
 import org.modelix.react.ssr.server.IRenderer
 import org.modelix.react.ssr.server.IRendererFactory
 import org.modelix.react.ssr.server.ViewModel
@@ -83,8 +83,8 @@ class CompiledMPSRenderer(
         }
     }
 
-    fun renderMPSNode(node: INode, descriptor: IReactSSRAspectDescriptor): ComponentOrText = renderMPSNodeIncremental(node, descriptor)
-    private val renderMPSNodeIncremental: (INode, IReactSSRAspectDescriptor) -> ComponentOrText = incremenentalEngine.incrementalFunction("renderMPSNode") { _, node: INode, descriptor: IReactSSRAspectDescriptor ->
+    fun renderMPSNode(node: INode, descriptor: IReactSSRAspectDescriptor): IComponentOrList = renderMPSNodeIncremental(node, descriptor)
+    private val renderMPSNodeIncremental: (INode, IReactSSRAspectDescriptor) -> IComponentOrList = incremenentalEngine.incrementalFunction("renderMPSNode") { _, node: INode, descriptor: IReactSSRAspectDescriptor ->
         val renderers = node.concept!!.getAllConcepts().asSequence().flatMap {
             descriptor.getRenderersForConcept(node.concept!!.getReference() as ConceptReference).filter { it.isApplicable(node) }
         }
@@ -95,7 +95,7 @@ class CompiledMPSRenderer(
             object : IRenderContext {
                 override fun getIncrementalEngine(): IIncrementalEngine = incrementalEngine
 
-                override fun renderNode(node: INode): ComponentOrText {
+                override fun renderNode(node: INode): IComponentOrList {
                     return renderMPSNode(node, descriptor)
                 }
 

@@ -46,6 +46,7 @@ import org.modelix.mps.react.N_TextComponent
 import org.modelix.react.ssr.server.Component
 import org.modelix.react.ssr.server.ComponentOrText
 import org.modelix.react.ssr.server.GenericNodeRenderer
+import org.modelix.react.ssr.server.IComponentOrList
 import org.modelix.react.ssr.server.JsCode
 import org.modelix.react.ssr.server.ViewModel
 import org.modelix.react.ssr.server.buildComponent
@@ -96,8 +97,8 @@ class InterpretedMPSRenderer(
             .associateBy { it.concept.asConceptReference() }
     }
 
-    private fun renderMPSNode(node: INode): ComponentOrText = renderMPSNodeIncremental(node)
-    private val renderMPSNodeIncremental: (INode) -> ComponentOrText = incremenentalEngine.incrementalFunction("renderMPSNode") { _, node: INode ->
+    private fun renderMPSNode(node: INode): IComponentOrList = renderMPSNodeIncremental(node)
+    private val renderMPSNodeIncremental: (INode) -> IComponentOrList = incremenentalEngine.incrementalFunction("renderMPSNode") { _, node: INode ->
         val allComponents = findConceptComponents()
 
         val renderers = node.concept!!.getAllConcepts().asSequence().mapNotNull {
@@ -106,12 +107,12 @@ class InterpretedMPSRenderer(
         val renderer = renderers.firstOrNull() // TODO resolve conflict if multiple renderers are applicable
             ?: return@incrementalFunction renderNode(node)
 
-        val rootComponent = checkNotNull(renderer.component.get()) { "No root component found" }
-        renderComponent(node, rootComponent).first()
+        val rootComponents = checkNotNull(renderer.components) { "No root component found" }
+        IComponentOrList.fromSequence(rootComponents.asSequence().map { renderComponent(node, it) })
     }
 
-    private fun renderComponent(node: INode, component: N_IReactComponent): List<ComponentOrText> = renderComponentIncremental(node, component)
-    private val renderComponentIncremental: (INode, N_IReactComponent) -> List<ComponentOrText> = incremenentalEngine.incrementalFunction("renderComponent") { _, node: INode, component: N_IReactComponent ->
+    private fun renderComponent(node: INode, component: N_IReactComponent): List<IComponentOrList> = renderComponentIncremental(node, component)
+    private val renderComponentIncremental: (INode, N_IReactComponent) -> List<IComponentOrList> = incremenentalEngine.incrementalFunction("renderComponent") { _, node: INode, component: N_IReactComponent ->
         try {
             when (component) {
                 is N_ChildrenComponent -> {
@@ -144,7 +145,7 @@ class InterpretedMPSRenderer(
                                         }
                                         is N_ComponentPropertyValue -> {
                                             value.component.get()?.let { renderComponent(node, it).firstOrNull() }?.let {
-                                                property(property.propertyName, it)
+                                                property(property.propertyName, it.flatten().single())
                                             }
                                         }
                                         is N_JsFunctionPropertyValue -> {}
@@ -156,7 +157,7 @@ class InterpretedMPSRenderer(
                                 }
 
                                 for (child in component.children) {
-                                    child(renderComponent(node, child))
+                                    child(IComponentOrList.create(renderComponent(node, child)))
                                 }
                             }
                         )

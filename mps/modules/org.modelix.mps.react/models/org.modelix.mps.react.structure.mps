@@ -72,8 +72,8 @@
     <node concept="1TJgyj" id="7GLg2tFqfTv" role="1TKVEi">
       <property role="IQ2ns" value="8876946878573903455" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="component" />
-      <property role="20lbJX" value="fLJekj4/_1" />
+      <property role="20kJfa" value="components" />
+      <property role="20lbJX" value="fLJekj6/_1__n" />
       <ref role="20lvS9" node="7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="1TJgyj" id="7dm8yUsMfNE" role="1TKVEi">
@@ -583,8 +583,8 @@
     <node concept="1TJgyj" id="4Dhs5NhTz4M" role="1TKVEi">
       <property role="IQ2ns" value="5355184975881056562" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="component" />
-      <property role="20lbJX" value="fLJekj4/_1" />
+      <property role="20kJfa" value="components" />
+      <property role="20lbJX" value="fLJekj6/_1__n" />
       <ref role="20lvS9" node="7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="PrWs8" id="4Dhs5NhTz4J" role="PzmwI">

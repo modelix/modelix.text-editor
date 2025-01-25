@@ -61,11 +61,49 @@ class JsonObjectAsCustomMessageHandlerParameters(val obj: JsonObject) : ICustomM
     override fun getString(name: String): String? = obj.get(name)?.jsonPrimitive?.content
 }
 
+sealed interface IComponentOrList {
+    fun flatten(): List<ComponentOrText>
+
+    companion object {
+        @JvmStatic
+        fun create(vararg parameters: Any?): IComponentOrList {
+            return fromSequence(parameters.asSequence())
+        }
+
+        @JvmStatic
+        fun create(parameter: Any?): IComponentOrList {
+            return when (parameter) {
+                null -> ComponentsList(emptyList())
+                is String -> ComponentOrText(text = parameter)
+                is Component -> ComponentOrText(component = parameter)
+                is ComponentsList -> parameter
+                is ComponentOrText -> parameter
+                is Iterable<Any?> -> fromSequence(parameter.asSequence())
+                is Sequence<Any?> -> fromSequence(parameter)
+                else -> throw IllegalArgumentException("Unsupported: $parameter")
+            }
+        }
+
+        fun fromSequence(seq: Sequence<Any?>): IComponentOrList {
+            val elements = seq.map { create(it) }
+                .flatMap { it.flatten() }
+                .toList()
+            return if (elements.size == 1) elements.single() else ComponentsList(elements)
+        }
+    }
+}
+
+data class ComponentsList(val components: List<ComponentOrText>) : IComponentOrList {
+    override fun flatten(): List<ComponentOrText> = components
+}
+
 @Serializable
 data class ComponentOrText(
     val component: Component? = null,
     val text: String? = null,
-) {
+) : IComponentOrList {
+    override fun flatten(): List<ComponentOrText> = listOf(this)
+
     fun findHandler(id: String): ICustomMessageHandler? {
         return component?.findHandler(id)
     }
