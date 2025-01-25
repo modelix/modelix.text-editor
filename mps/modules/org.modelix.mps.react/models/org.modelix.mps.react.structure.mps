@@ -815,7 +815,7 @@
     <property role="EcuMT" value="8374592933087336196" />
     <property role="TrG5h" value="IfComp" />
     <property role="34LRSv" value="if" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="7gSxYrNaHs5" role="PzmwI">
       <ref role="PrY4T" node="7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
@@ -837,7 +837,7 @@
   <node concept="1TIwiD" id="G39ofDwxCj">
     <property role="EcuMT" value="793519207835900435" />
     <property role="TrG5h" value="EmptyContent" />
-    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" resolve="BaseConcept" />
     <node concept="PrWs8" id="G39ofDwydI" role="PzmwI">
       <ref role="PrY4T" node="7GLg2tFqfQG" resolve="IReactModuleContent" />
     </node>
