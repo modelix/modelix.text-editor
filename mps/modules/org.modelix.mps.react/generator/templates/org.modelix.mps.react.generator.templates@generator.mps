@@ -32,6 +32,19 @@
     <import index="1ppg" ref="208eaf68-fd3a-497a-a4b6-4923ff457c3b/java:org.modelix.kotlin.utils(org.modelix.mps.editor.common.stubs/)" implicit="true" />
   </imports>
   <registry>
+    <language id="67accce2-9676-4728-9e9c-8b15ea30d924" name="org.modelix.mps.react">
+      <concept id="8876946878573903439" name="org.modelix.mps.react.structure.GenericReactComponent" flags="ng" index="gmrTC">
+        <property id="8876946878573977569" name="componentType" index="gmPZ6" />
+      </concept>
+      <concept id="2833354970324652966" name="org.modelix.mps.react.structure.When" flags="ng" index="1nAWFN">
+        <child id="2833354970324652969" name="else" index="1nAWFW" />
+        <child id="2833354970324652971" name="cases" index="1nAWFY" />
+      </concept>
+      <concept id="2833354970324652974" name="org.modelix.mps.react.structure.WhenCase" flags="ng" index="1nAWFV">
+        <child id="2833354970324652977" name="compnent" index="1nAWF$" />
+        <child id="2833354970324652975" name="condition" index="1nAWFU" />
+      </concept>
+    </language>
     <language id="f3061a53-9226-4cc5-a443-f952ceaf5816" name="jetbrains.mps.baseLanguage">
       <concept id="1082485599095" name="jetbrains.mps.baseLanguage.structure.BlockStatement" flags="nn" index="9aQIb">
         <child id="1082485599096" name="statements" index="9aQI4" />
@@ -2681,6 +2694,52 @@
           </node>
           <node concept="3clFbH" id="2ti6llKKTXB" role="3cqZAp" />
           <node concept="3clFbH" id="2ti6llKKTXC" role="3cqZAp" />
+        </node>
+      </node>
+    </node>
+    <node concept="3aamgX" id="cqTc8IVEp0" role="3acgRq">
+      <ref role="30HIoZ" to="8xo1:7gSxYrNaHs4" resolve="IfComp" />
+      <node concept="gft3U" id="cqTc8IVTG4" role="1lVwrX">
+        <node concept="1nAWFN" id="cqTc8IVTG8" role="gfFT$">
+          <node concept="1nAWFV" id="cqTc8IVTG9" role="1nAWFY">
+            <node concept="3clFbT" id="cqTc8IVTGc" role="1nAWFU">
+              <property role="3clFbU" value="true" />
+              <node concept="29HgVG" id="cqTc8IVTGh" role="lGtFl">
+                <node concept="3NFfHV" id="cqTc8IVTGi" role="3NFExx">
+                  <node concept="3clFbS" id="cqTc8IVTGj" role="2VODD2">
+                    <node concept="3clFbF" id="cqTc8IVTGp" role="3cqZAp">
+                      <node concept="2OqwBi" id="cqTc8IVTGk" role="3clFbG">
+                        <node concept="3TrEf2" id="cqTc8IVTGn" role="2OqNvi">
+                          <ref role="3Tt5mk" to="8xo1:7gSxYrNaHs6" resolve="condition" />
+                        </node>
+                        <node concept="30H73N" id="cqTc8IVTGo" role="2Oq$k0" />
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node concept="gmrTC" id="cqTc8IVTLQ" role="1nAWF$">
+              <property role="gmPZ6" value="html.div" />
+              <node concept="29HgVG" id="cqTc8IVTQx" role="lGtFl">
+                <node concept="3NFfHV" id="cqTc8IVTQy" role="3NFExx">
+                  <node concept="3clFbS" id="cqTc8IVTQz" role="2VODD2">
+                    <node concept="3clFbF" id="cqTc8IVTQD" role="3cqZAp">
+                      <node concept="2OqwBi" id="cqTc8IVTQ$" role="3clFbG">
+                        <node concept="3TrEf2" id="cqTc8IVTQB" role="2OqNvi">
+                          <ref role="3Tt5mk" to="8xo1:7gSxYrNaHs7" resolve="child" />
+                        </node>
+                        <node concept="30H73N" id="cqTc8IVTQC" role="2Oq$k0" />
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+          <node concept="gmrTC" id="cqTc8IVTLa" role="1nAWFW">
+            <property role="gmPZ6" value="html.div" />
+          </node>
         </node>
       </node>
     </node>
