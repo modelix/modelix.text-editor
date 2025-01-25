@@ -406,7 +406,7 @@
         <node concept="2iRfu4" id="3DO$SWhXWpj" role="2iSdaV" />
       </node>
       <node concept="3F0ifn" id="2vPZMAmA3rn" role="3EZMnx">
-        <ref role="1k5W1q" node="2vPZMAmAxF1" resolve="fullVerticalSpace" />
+        <ref role="1k5W1q" node="2vPZMAmAxF1" resolve="RFullVerticalSpace" />
       </node>
       <node concept="3F2HdR" id="3DO$SWhXWwx" role="3EZMnx">
         <ref role="1NtTu8" to="8xo1:7GLg2tFqfQU" resolve="content" />
@@ -723,7 +723,7 @@
     <property role="3GE5qa" value="function" />
     <ref role="1XX52x" to="8xo1:7GLg2tFtr2B" resolve="JsFunctionPropertyValue" />
     <node concept="3EZMnI" id="2vPZMAn7xQk" role="2wV5jI">
-      <ref role="1k5W1q" node="2vPZMAn1cgK" resolve="RCode" />
+      <ref role="1k5W1q" node="2vPZMAn1cgK" resolve="RBehaviorCode" />
       <node concept="2iRkQZ" id="2vPZMAn7xQl" role="2iSdaV" />
       <node concept="3EZMnI" id="7GLg2tFujye" role="3EZMnx">
         <node concept="PMmxH" id="7GLg2tFujyv" role="3EZMnx">
