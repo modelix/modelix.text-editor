@@ -102,7 +102,7 @@ class InterpretedMPSRenderer(
         val allComponents = findConceptComponents()
 
         val renderers = node.concept!!.getAllConcepts().asSequence().mapNotNull {
-            allComponents[node.concept!!.getReference() as ConceptReference]
+            allComponents[it.getReference() as ConceptReference]
         }
         val renderer = renderers.firstOrNull() // TODO resolve conflict if multiple renderers are applicable
             ?: return@incrementalFunction renderNode(node)
