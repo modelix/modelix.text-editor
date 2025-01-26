@@ -86,7 +86,7 @@ class CompiledMPSRenderer(
     fun renderMPSNode(node: INode, descriptor: IReactSSRAspectDescriptor): IComponentOrList = renderMPSNodeIncremental(node, descriptor)
     private val renderMPSNodeIncremental: (INode, IReactSSRAspectDescriptor) -> IComponentOrList = incremenentalEngine.incrementalFunction("renderMPSNode") { _, node: INode, descriptor: IReactSSRAspectDescriptor ->
         val renderers = node.concept!!.getAllConcepts().asSequence().flatMap {
-            descriptor.getRenderersForConcept(node.concept!!.getReference() as ConceptReference).filter { it.isApplicable(node) }
+            descriptor.getRenderersForConcept(it.getReference() as ConceptReference).filter { it.isApplicable(node) }
         }
         val renderer = renderers.firstOrNull() // TODO resolve conflict if multiple renderers are applicable
             ?: return@incrementalFunction renderNode(node)
