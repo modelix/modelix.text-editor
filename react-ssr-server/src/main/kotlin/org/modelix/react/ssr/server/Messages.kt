@@ -67,7 +67,7 @@ data class ComponentOrText(
     val text: String? = null,
 ) {
     fun findHandler(id: String): ICustomMessageHandler? {
-        return component?.findHandler(id)
+        return  component?.findHandler(id)
     }
 }
 

@@ -1065,6 +1065,12 @@
     <node concept="PrWs8" id="5Qmp_LATBBr" role="PzmwI">
       <ref role="PrY4T" node="5Qmp_LAVe3h" resolve="IHasSingleChildBinding" />
     </node>
+    <node concept="1TJgyj" id="4fhsnyrZIYu" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500888990" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="conceptSelector" />
+      <ref role="20lvS9" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    </node>
     <node concept="1TJgyj" id="5Qmp_LAQ3ic" role="1TKVEi">
       <property role="IQ2ns" value="6743690039082366092" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -1145,6 +1151,88 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="af0_0ERB$P" role="PzmwI">
       <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYNP6">
+    <property role="EcuMT" value="4886811833500646726" />
+    <property role="TrG5h" value="ConceptSelector" />
+    <property role="R5$K7" value="true" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYOrb">
+    <property role="EcuMT" value="4886811833500649163" />
+    <property role="TrG5h" value="SingleConceptSelector" />
+    <property role="34LRSv" value="single" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrYPAP" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500654005" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="concept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYP1g">
+    <property role="EcuMT" value="4886811833500651600" />
+    <property role="TrG5h" value="ConceptRef" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="4fhsnyrYQvu" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500657630" />
+      <property role="20kJfa" value="concept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:h0PkWnZ" resolve="AbstractConceptDeclaration" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYT7x">
+    <property role="EcuMT" value="4886811833500668385" />
+    <property role="TrG5h" value="MultipleSpecificConceptSelector" />
+    <property role="34LRSv" value="multiple" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrYW$$" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500682532" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="concepts" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZ7V3">
+    <property role="EcuMT" value="4886811833500729027" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="MultipleConceptSelector" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZpbP">
+    <property role="EcuMT" value="4886811833500799733" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="SubconceptsConceptSelector" />
+    <property role="34LRSv" value="subconcepts-of" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrZq4s" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500803356" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="parentConcept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZsqp">
+    <property role="EcuMT" value="4886811833500812953" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="ExpressionConceptSelector" />
+    <property role="34LRSv" value="expression" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrZGM0" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500880000" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="expression" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
     </node>
   </node>
 </model>

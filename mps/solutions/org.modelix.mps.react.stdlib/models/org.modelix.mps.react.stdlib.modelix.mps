@@ -17,9 +17,13 @@
       <concept id="223742654177875992" name="org.modelix.mps.react.muicomponents.structure.Typography" flags="ng" index="GuJNq">
         <property id="793519207812312126" name="style" index="3z6gAX" />
       </concept>
+      <concept id="223742654177875993" name="org.modelix.mps.react.muicomponents.structure.Color" flags="ng" index="GuJNr">
+        <property id="223742654177875994" name="value" index="GuJNo" />
+      </concept>
       <concept id="793519207829949608" name="org.modelix.mps.react.muicomponents.structure.BorderAndShade" flags="ng" index="3y96$F">
         <property id="793519207829956770" name="padding" index="3y94Ox" />
         <property id="793519207831838791" name="margin" index="3yhKn4" />
+        <child id="793519207829962702" name="shadeColor" index="3y95Dd" />
       </concept>
     </language>
     <language id="ceab5195-25ea-4f22-9b92-103b95ca8c0c" name="jetbrains.mps.lang.core">
@@ -35,14 +39,25 @@
       <property role="3y94Ox" value="5px 20px" />
       <property role="3yhKn4" value="10px 10px" />
     </node>
+    <node concept="3y96$F" id="4fhsnyrLq6r" role="gmrQt">
+      <property role="TrG5h" value="grey" />
+      <property role="3y94Ox" value="5px 20px" />
+      <property role="3yhKn4" value="10px 10px" />
+      <node concept="GuJNr" id="4fhsnyrLqY2" role="3y95Dd">
+        <property role="GuJNo" value="cccccc" />
+      </node>
+    </node>
     <node concept="3y96$F" id="2NkZbYfBifG" role="gmrQt">
       <property role="TrG5h" value="inset" />
       <property role="3yhKn4" value="10px 10px" />
     </node>
     <node concept="3ywjYg" id="1LliyakImP8" role="gmrQt" />
     <node concept="GuJNq" id="1LliyakInqe" role="gmrQt">
-      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
       <property role="TrG5h" value="default" />
+    </node>
+    <node concept="GuJNq" id="4fhsnyrKFa$" role="gmrQt">
+      <property role="TrG5h" value="bold" />
+      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
     </node>
     <node concept="3ywjYg" id="1LliyakInqd" role="gmrQt" />
   </node>

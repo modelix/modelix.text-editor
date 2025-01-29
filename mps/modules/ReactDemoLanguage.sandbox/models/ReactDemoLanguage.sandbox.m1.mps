@@ -30,10 +30,13 @@
         <child id="184368653074210776" name="members" index="CITQ8" />
       </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
-      <concept id="2269421348088158746" name="ReactDemoLanguage.structure.BoolType" flags="ng" index="H1g2F" />
       <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
-      <concept id="2269421348088153904" name="ReactDemoLanguage.structure.StringType" flags="ng" index="H1hQ1" />
-      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW" />
+      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW">
+        <child id="2269421348088149062" name="inner" index="H1uVR" />
+      </concept>
+      <concept id="2269421348088144220" name="ReactDemoLanguage.structure.Inner" flags="ng" index="H1vJH">
+        <child id="2269421348088162409" name="type" index="H1jbo" />
+      </concept>
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
         <property id="2879488090881171741" name="c" index="2K1lSO" />
@@ -3713,6 +3716,10 @@
   </node>
   <node concept="H1sAW" id="af0_0Da16s">
     <property role="TrG5h" value="AnOuter" />
+    <node concept="H1vJH" id="3HasdXI7V30" role="H1uVR">
+      <property role="TrG5h" value="dssfd" />
+      <node concept="H1gZI" id="1DF9TaQDf5V" role="H1jbo" />
+    </node>
   </node>
   <node concept="CITj3" id="af0_0EddMs">
     <property role="TrG5h" value="Address" />
@@ -3720,13 +3727,9 @@
       <property role="TrG5h" value="zip" />
       <node concept="H1gZI" id="af0_0EQ95j" role="CISWu" />
     </node>
-    <node concept="CIRO0" id="af0_0EQ9EI" role="CITQ8">
-      <property role="TrG5h" value="city" />
-      <node concept="H1g2F" id="af0_0Fv2XR" role="CISWu" />
-    </node>
-    <node concept="CIRO0" id="af0_0Fv2XS" role="CITQ8">
-      <property role="TrG5h" value="zip" />
-      <node concept="H1hQ1" id="af0_0Fv3yX" role="CISWu" />
+    <node concept="CIRO0" id="1DF9TaQDg$D" role="CITQ8">
+      <property role="TrG5h" value="fgf" />
+      <node concept="H1gZI" id="1DF9TaQDgRc" role="CISWu" />
     </node>
   </node>
 </model>
