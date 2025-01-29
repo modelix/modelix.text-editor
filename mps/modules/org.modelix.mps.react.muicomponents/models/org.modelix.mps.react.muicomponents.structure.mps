@@ -8,8 +8,8 @@
   <imports>
     <import index="tpce" ref="r:00000000-0000-4000-0000-011c89590292(jetbrains.mps.lang.structure.structure)" />
     <import index="8xo1" ref="r:41b64586-29ed-47f5-b907-44be07261bbc(org.modelix.mps.react.structure)" />
-    <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
+    <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
   </imports>
   <registry>
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
@@ -424,15 +424,15 @@
     <node concept="PrWs8" id="2vPZMAnZ0co" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnsysd" resolve="IContainerMultiComponent" />
     </node>
-    <node concept="PrWs8" id="6Ddb4_fP2jq" role="PzmwI">
-      <ref role="PrY4T" to="tpck:3fifI_xCcJN" resolve="ScopeProvider" />
-    </node>
     <node concept="1TJgyj" id="2vPZMAnZ0cp" role="1TKVEi">
       <property role="IQ2ns" value="2879488090881917721" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="variables" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
       <ref role="20lvS9" to="8xo1:4Dhs5NildkH" resolve="StateVariable" />
+    </node>
+    <node concept="PrWs8" id="2vPZMAnZU_x" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:2vPZMAnZU0P" resolve="IHasState" />
     </node>
   </node>
   <node concept="PlHQZ" id="2vPZMAnZ0cm">
@@ -957,9 +957,9 @@
     <node concept="1TJgyj" id="5KtU3pZ8Kft" role="1TKVEi">
       <property role="IQ2ns" value="6637716746572858333" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
-      <property role="20kJfa" value="items" />
+      <property role="20kJfa" value="childcren" />
       <property role="20lbJX" value="fLJekj5/_0__n" />
-      <ref role="20lvS9" node="5KtU3pZ8Esn" resolve="GridItem" />
+      <ref role="20lvS9" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="1TJgyi" id="5KtU3pZ8KOy" role="1TKVEl">
       <property role="IQ2nx" value="6637716746572860706" />
@@ -974,12 +974,15 @@
     <property role="EcuMT" value="6637716746572834583" />
     <property role="3GE5qa" value="layout" />
     <property role="TrG5h" value="GridItem" />
-    <property role="34LRSv" value="item" />
+    <property role="34LRSv" value="grid-item" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="1TJgyi" id="5KtU3pZ8F1s" role="1TKVEl">
       <property role="IQ2nx" value="6637716746572836956" />
       <property role="TrG5h" value="cols" />
       <ref role="AX2Wp" to="tpck:fKAQMTA" resolve="integer" />
+    </node>
+    <node concept="PrWs8" id="af0_0ElKUG" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
     <node concept="PrWs8" id="5KtU3pZ8FT3" role="PzmwI">
       <ref role="PrY4T" node="2vPZMAnIaRU" resolve="IContainerSingleComponent" />
@@ -1062,6 +1065,12 @@
     <node concept="PrWs8" id="5Qmp_LATBBr" role="PzmwI">
       <ref role="PrY4T" node="5Qmp_LAVe3h" resolve="IHasSingleChildBinding" />
     </node>
+    <node concept="1TJgyj" id="4fhsnyrZIYu" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500888990" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="conceptSelector" />
+      <ref role="20lvS9" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    </node>
     <node concept="1TJgyj" id="5Qmp_LAQ3ic" role="1TKVEi">
       <property role="IQ2ns" value="6743690039082366092" />
       <property role="20lmBu" value="fLJjDmT/aggregation" />
@@ -1133,6 +1142,97 @@
     </node>
     <node concept="PrWs8" id="af0_0CSziY" role="PrDN$">
       <ref role="PrY4T" node="6tfgpzo6r_t" resolve="IRefersToFeature" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYP1g">
+    <property role="EcuMT" value="4886811833500651600" />
+    <property role="TrG5h" value="ConceptRef" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="4fhsnyrYQvu" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500657630" />
+      <property role="20kJfa" value="concept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpce:h0PkWnZ" resolve="AbstractConceptDeclaration" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYNP6">
+    <property role="EcuMT" value="4886811833500646726" />
+    <property role="TrG5h" value="ConceptSelector" />
+    <property role="R5$K7" value="true" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZ7V3">
+    <property role="EcuMT" value="4886811833500729027" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="MultipleConceptSelector" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYOrb">
+    <property role="EcuMT" value="4886811833500649163" />
+    <property role="TrG5h" value="SingleConceptSelector" />
+    <property role="34LRSv" value="single" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrYPAP" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500654005" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="concept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZpbP">
+    <property role="EcuMT" value="4886811833500799733" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="SubconceptsConceptSelector" />
+    <property role="34LRSv" value="subconcepts-of" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrZq4s" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500803356" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="parentConcept" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrYT7x">
+    <property role="EcuMT" value="4886811833500668385" />
+    <property role="TrG5h" value="MultipleSpecificConceptSelector" />
+    <property role="34LRSv" value="multiple" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrYW$$" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500682532" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="concepts" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="4fhsnyrZsqp">
+    <property role="EcuMT" value="4886811833500812953" />
+    <property role="3GE5qa" value="util.conceptselector" />
+    <property role="TrG5h" value="ExpressionConceptSelector" />
+    <property role="34LRSv" value="expression" />
+    <ref role="1TJDcQ" node="4fhsnyrZ7V3" resolve="MultipleConceptSelector" />
+    <node concept="1TJgyj" id="4fhsnyrZGM0" role="1TKVEi">
+      <property role="IQ2ns" value="4886811833500880000" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="expression" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="af0_0ERAHe">
+    <property role="EcuMT" value="184368653085338446" />
+    <property role="TrG5h" value="CreateDeleteRenderChildList" />
+    <property role="34LRSv" value="create-delete-render-list" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="af0_0ERB$P" role="PzmwI">
+      <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
     </node>
   </node>
 </model>
