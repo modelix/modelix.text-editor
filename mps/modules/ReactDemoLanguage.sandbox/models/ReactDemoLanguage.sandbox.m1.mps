@@ -33,7 +33,12 @@
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
       <concept id="2269421348088158746" name="ReactDemoLanguage.structure.BoolType" flags="ng" index="H1g2F" />
       <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
-      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW" />
+      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW">
+        <child id="2269421348088149062" name="inner" index="H1uVR" />
+      </concept>
+      <concept id="2269421348088144220" name="ReactDemoLanguage.structure.Inner" flags="ng" index="H1vJH">
+        <child id="2269421348088162409" name="type" index="H1jbo" />
+      </concept>
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
         <property id="2879488090881171741" name="c" index="2K1lSO" />
@@ -73,9 +78,6 @@
     </node>
     <node concept="2LzhVZ" id="2vPZMAnqKH4" role="2LzhVL">
       <property role="2LzhVY" value="added" />
-    </node>
-    <node concept="2LzhVZ" id="2vPZMAnqWLE" role="2LzhVL">
-      <property role="2LzhVY" value="added1" />
     </node>
   </node>
   <node concept="2K$1jT" id="2vPZMAnpySp">
@@ -3713,6 +3715,10 @@
   </node>
   <node concept="H1sAW" id="af0_0Da16s">
     <property role="TrG5h" value="AnOuter" />
+    <node concept="H1vJH" id="7thXQ5cbckD" role="H1uVR">
+      <property role="TrG5h" value="dasdasdasdasffsdfsd" />
+      <node concept="H1g2F" id="7thXQ5cbckE" role="H1jbo" />
+    </node>
   </node>
   <node concept="CITj3" id="af0_0EddMs">
     <property role="TrG5h" value="Address" />
@@ -3721,7 +3727,7 @@
       <node concept="H1gZI" id="af0_0EQ95j" role="CISWu" />
     </node>
     <node concept="CIRO0" id="1DF9TaQDg$D" role="CITQ8">
-      <property role="TrG5h" value="fgf" />
+      <property role="TrG5h" value="fgfsdfsdfsdfsdfsdfds" />
       <node concept="H1g2F" id="XLt1rGAt4R" role="CISWu" />
     </node>
     <node concept="CIRO0" id="XLt1rGAu_a" role="CITQ8" />

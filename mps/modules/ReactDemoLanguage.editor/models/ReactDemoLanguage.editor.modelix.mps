@@ -457,40 +457,21 @@
     </node>
     <node concept="3ywjYg" id="af0_0EdiUZ" role="gmrQt" />
     <node concept="gmrQT" id="5Qmp_LAzlhO" role="gmrQt">
-      <ref role="3JBHV4" to="oyym:1XYAF4MuSsK" resolve="StringType" />
+      <ref role="3JBHV4" to="oyym:1XYAF4MuRQV" resolve="Type" />
       <node concept="2Lk9xs" id="3XUo8X8iX4f" role="gmrTS">
         <node concept="3z9kRR" id="3XUo8X8iX4g" role="3z8GDl">
           <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
         </node>
-        <node concept="Xl_RD" id="5Qmp_LABrPG" role="2Lk3Fj">
-          <property role="Xl_RC" value="string" />
+        <node concept="2OqwBi" id="7thXQ5c8Btx" role="2Lk3Fj">
+          <node concept="2OqwBi" id="7thXQ5c8ART" role="2Oq$k0">
+            <node concept="ggAI9" id="7thXQ5c8AKl" role="2Oq$k0" />
+            <node concept="2yIwOk" id="7thXQ5c8AZl" role="2OqNvi" />
+          </node>
+          <node concept="3n3YKJ" id="7thXQ5c8BV1" role="2OqNvi" />
         </node>
       </node>
     </node>
     <node concept="3ywjYg" id="5Qmp_LABuzu" role="gmrQt" />
-    <node concept="gmrQT" id="5Qmp_LABs8l" role="gmrQt">
-      <ref role="3JBHV4" to="oyym:1XYAF4MuTCq" resolve="BoolType" />
-      <node concept="2Lk9xs" id="5Qmp_LABs8m" role="gmrTS">
-        <node concept="3z9kRR" id="5Qmp_LABs8n" role="3z8GDl">
-          <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
-        </node>
-        <node concept="Xl_RD" id="5Qmp_LABs8o" role="2Lk3Fj">
-          <property role="Xl_RC" value="bool" />
-        </node>
-      </node>
-    </node>
-    <node concept="3ywjYg" id="5Qmp_LABu7s" role="gmrQt" />
-    <node concept="gmrQT" id="5Qmp_LABsgk" role="gmrQt">
-      <ref role="3JBHV4" to="oyym:1XYAF4MuTlv" resolve="IntType" />
-      <node concept="2Lk9xs" id="5Qmp_LABsgl" role="gmrTS">
-        <node concept="3z9kRR" id="5Qmp_LABsgm" role="3z8GDl">
-          <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
-        </node>
-        <node concept="Xl_RD" id="5Qmp_LABsgn" role="2Lk3Fj">
-          <property role="Xl_RC" value="int" />
-        </node>
-      </node>
-    </node>
     <node concept="3ywjYg" id="5Qmp_LAzkEU" role="gmrQt" />
     <node concept="gmrQT" id="af0_0CZGgg" role="gmrQt">
       <ref role="3JBHV4" to="oyym:1XYAF4MuPcd" resolve="Record" />
