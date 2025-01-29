@@ -10,6 +10,7 @@
     <import index="8xo1" ref="r:41b64586-29ed-47f5-b907-44be07261bbc(org.modelix.mps.react.structure)" />
     <import index="tpck" ref="r:00000000-0000-4000-0000-011c89590288(jetbrains.mps.lang.core.structure)" implicit="true" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
+    <import index="tp25" ref="r:00000000-0000-4000-0000-011c89590301(jetbrains.mps.lang.smodel.structure)" implicit="true" />
   </imports>
   <registry>
     <language id="c72da2b9-7cce-4447-8389-f407dc1158b7" name="jetbrains.mps.lang.structure">
@@ -432,7 +433,7 @@
       <ref role="20lvS9" to="8xo1:4Dhs5NildkH" resolve="StateVariable" />
     </node>
     <node concept="PrWs8" id="2vPZMAnZU_x" role="PzmwI">
-      <ref role="PrY4T" to="8xo1:2vPZMAnZU0P" resolve="IHasState" />
+      <ref role="PrY4T" to="tpck:3fifI_xCcJN" resolve="ScopeProvider" />
     </node>
   </node>
   <node concept="PlHQZ" id="2vPZMAnZ0cm">
@@ -1129,6 +1130,12 @@
     <node concept="PrWs8" id="af0_0CSvbY" role="PzmwI">
       <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
     </node>
+    <node concept="1TJgyj" id="XLt1rGB3kb" role="1TKVEi">
+      <property role="IQ2ns" value="1112798224744985867" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="conceptSelector" />
+      <ref role="20lvS9" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    </node>
   </node>
   <node concept="PlHQZ" id="af0_0CSxPf">
     <property role="EcuMT" value="184368653052026191" />
@@ -1197,6 +1204,13 @@
       <property role="20lbJX" value="fLJekj4/_1" />
       <ref role="20lvS9" node="4fhsnyrYP1g" resolve="ConceptRef" />
     </node>
+    <node concept="1TJgyj" id="XLt1rGFiC9" role="1TKVEi">
+      <property role="IQ2ns" value="1112798224746097161" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="languages" />
+      <property role="20lbJX" value="fLJekj5/_0__n" />
+      <ref role="20lvS9" to="tp25:3TEgbCBRn3N" resolve="LanguageRefExpression" />
+    </node>
   </node>
   <node concept="1TIwiD" id="4fhsnyrYT7x">
     <property role="EcuMT" value="4886811833500668385" />
@@ -1233,6 +1247,12 @@
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="af0_0ERB$P" role="PzmwI">
       <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
+    </node>
+    <node concept="1TJgyj" id="XLt1rGBo_I" role="1TKVEi">
+      <property role="IQ2ns" value="1112798224745073006" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="conceptSelector" />
+      <ref role="20lvS9" node="4fhsnyrYNP6" resolve="ConceptSelector" />
     </node>
   </node>
 </model>
