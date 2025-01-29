@@ -143,7 +143,7 @@
       </concept>
       <concept id="6637716746572832188" name="org.modelix.mps.react.muicomponents.structure.Grid" flags="ng" index="zfRma">
         <property id="6637716746572860706" name="spacing" index="zfIkk" />
-        <child id="6637716746572858333" name="items" index="zfIJF" />
+        <child id="6637716746572858333" name="childcren" index="zfIJF" />
       </concept>
       <concept id="3230484732402340359" name="org.modelix.mps.react.muicomponents.structure.TreeView" flags="ng" index="2zZIUS">
         <child id="3230484732402373646" name="selectionStateTracker" index="2zZAyL" />
@@ -280,9 +280,11 @@
         <child id="1144104376918" name="parameter" index="1xVPHs" />
       </concept>
       <concept id="1179409122411" name="jetbrains.mps.lang.smodel.structure.Node_ConceptMethodCall" flags="nn" index="2qgKlT" />
+      <concept id="7453996997717780434" name="jetbrains.mps.lang.smodel.structure.Node_GetSConceptOperation" flags="nn" index="2yIwOk" />
       <concept id="1143234257716" name="jetbrains.mps.lang.smodel.structure.Node_GetModelOperation" flags="nn" index="I4A8Y" />
       <concept id="1171305280644" name="jetbrains.mps.lang.smodel.structure.Node_GetDescendantsOperation" flags="nn" index="2Rf3mk" />
       <concept id="1171323947159" name="jetbrains.mps.lang.smodel.structure.Model_NodesOperation" flags="nn" index="2SmgA7" />
+      <concept id="6870613620390542976" name="jetbrains.mps.lang.smodel.structure.ConceptAliasOperation" flags="ng" index="3n3YKJ" />
       <concept id="1144101972840" name="jetbrains.mps.lang.smodel.structure.OperationParm_Concept" flags="ng" index="1xMEDy">
         <child id="1207343664468" name="conceptArgument" index="ri$Ld" />
       </concept>
@@ -379,6 +381,32 @@
       </node>
     </node>
     <node concept="3ywjYg" id="1LliyamlazR" role="gmrQt" />
+    <node concept="gmrQT" id="7pCqlJiXSvp" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:7pCqlJiMr3F" resolve="ConstraintChild" />
+      <node concept="2Lk9xs" id="7pCqlJiXSHI" role="gmrTS">
+        <node concept="3z9kRR" id="7pCqlJiXSHJ" role="3z8GDl">
+          <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
+        </node>
+        <node concept="2OqwBi" id="7pCqlJiXTMg" role="2Lk3Fj">
+          <node concept="2OqwBi" id="7pCqlJiXSPV" role="2Oq$k0">
+            <node concept="ggAI9" id="7pCqlJiXSHN" role="2Oq$k0" />
+            <node concept="2yIwOk" id="7pCqlJiXTjV" role="2OqNvi" />
+          </node>
+          <node concept="3n3YKJ" id="7pCqlJiXUFL" role="2OqNvi" />
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="7pCqlJiXSfA" role="gmrQt" />
+    <node concept="gmrQT" id="7pCqlJiNi15" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:7pCqlJiMr3E" resolve="ConstraintRoot" />
+      <node concept="Ekkdu" id="7pCqlJiNifs" role="gmrTS">
+        <node concept="Vvv9j" id="7pCqlJiNifu" role="VuCqe">
+          <ref role="Vvshh" to="oyym:7pCqlJiMKeZ" resolve="child" />
+          <node concept="ggAI9" id="7pCqlJiNifD" role="VvvGQ" />
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="7pCqlJiNhTS" role="gmrQt" />
     <node concept="gmrQT" id="af0_0Edt5x" role="gmrQt">
       <ref role="3JBHV4" to="oyym:af0_0Ed7Xg" resolve="RecordMember" />
       <node concept="2Ln$92" id="af0_0ELaFb" role="gmrTS">

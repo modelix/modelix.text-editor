@@ -314,5 +314,57 @@
       <ref role="20lvS9" node="1XYAF4MuRQV" resolve="Type" />
     </node>
   </node>
+  <node concept="1TIwiD" id="7pCqlJiMr3E">
+    <property role="EcuMT" value="8532185337152778474" />
+    <property role="TrG5h" value="ConstraintRoot" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="19KtqR" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="1TJgyj" id="7pCqlJiMKeZ" role="1TKVEi">
+      <property role="IQ2ns" value="8532185337152865215" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="child" />
+      <ref role="20lvS9" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMr3F">
+    <property role="EcuMT" value="8532185337152778475" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintChild" />
+    <property role="R5$K7" value="true" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMr3G">
+    <property role="EcuMT" value="8532185337152778476" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintOkChild1" />
+    <property role="34LRSv" value="child1" />
+    <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMr3H">
+    <property role="EcuMT" value="8532185337152778477" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintOkChild2" />
+    <property role="34LRSv" value="child2" />
+    <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMr3I">
+    <property role="EcuMT" value="8532185337152778478" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintCannotBeChild" />
+    <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMshO">
+    <property role="EcuMT" value="8532185337152783476" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintChildCannotBeParent" />
+    <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
+  <node concept="1TIwiD" id="7pCqlJiMtWS">
+    <property role="EcuMT" value="8532185337152790328" />
+    <property role="3GE5qa" value="constraints" />
+    <property role="TrG5h" value="ConstraintChildCannotBeAncestor" />
+    <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
 </model>
 

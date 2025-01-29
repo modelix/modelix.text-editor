@@ -23,6 +23,7 @@
         <property id="3230484732390135530" name="a" index="2yIMDl" />
         <child id="3230484732390143835" name="children" index="2yIKJ$" />
       </concept>
+      <concept id="8532185337152778474" name="ReactDemoLanguage.structure.ConstraintRoot" flags="ng" index="2$CtAL" />
       <concept id="184368653074202448" name="ReactDemoLanguage.structure.RecordMember" flags="ng" index="CIRO0">
         <child id="184368653074206030" name="type" index="CISWu" />
       </concept>
@@ -3725,5 +3726,6 @@
     </node>
     <node concept="CIRO0" id="XLt1rGAu_a" role="CITQ8" />
   </node>
+  <node concept="2$CtAL" id="7pCqlJiMKeY" />
 </model>
 
