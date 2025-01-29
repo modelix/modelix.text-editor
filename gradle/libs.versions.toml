@@ -10,7 +10,7 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 [versions]
 modelixCore = "11.2.1"
-modelixBuildtools="1.7.5"
+modelixBuildtools="1.8.1"
 kotlin = "2.1.10"
 
 [libraries]
