@@ -1973,6 +1973,7 @@
     </node>
   </node>
   <node concept="24kQdi" id="af0_0CS$L2">
+    <property role="3GE5qa" value="widgets" />
     <ref role="1XX52x" to="zaxg:af0_0CR$4e" resolve="CreateDeleteRenderChild" />
     <node concept="3EZMnI" id="af0_0CSANh" role="2wV5jI">
       <node concept="2iRkQZ" id="af0_0CSANi" role="2iSdaV" />
@@ -2010,6 +2011,7 @@
     </node>
   </node>
   <node concept="24kQdi" id="af0_0ERTgR">
+    <property role="3GE5qa" value="widgets" />
     <ref role="1XX52x" to="zaxg:af0_0ERAHe" resolve="CreateDeleteRenderChildList" />
     <node concept="3EZMnI" id="af0_0ERTzr" role="2wV5jI">
       <node concept="2iRkQZ" id="af0_0ERTzs" role="2iSdaV" />
@@ -2098,6 +2100,22 @@
         <ref role="1NtTu8" to="zaxg:4fhsnyrYW$$" resolve="concepts" />
         <node concept="2iRfu4" id="4fhsnyrYYlp" role="2czzBx" />
       </node>
+    </node>
+  </node>
+  <node concept="24kQdi" id="7pCqlJj5Wjx">
+    <property role="3GE5qa" value="action" />
+    <ref role="1XX52x" to="zaxg:7pCqlJj5Wjv" resolve="DeleteThisNodeButton" />
+    <node concept="PMmxH" id="7pCqlJj5Wjz" role="2wV5jI">
+      <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+      <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
+    </node>
+  </node>
+  <node concept="24kQdi" id="7pCqlJj7_mj">
+    <property role="3GE5qa" value="action" />
+    <ref role="1XX52x" to="zaxg:7pCqlJj7_mh" resolve="ButtonsPlaceholder" />
+    <node concept="PMmxH" id="7pCqlJj7_ml" role="2wV5jI">
+      <ref role="PMmxG" to="tpco:2wZex4PafBj" resolve="alias" />
+      <ref role="1k5W1q" to="vpip:2vPZMAnOoz_" resolve="RComponent" />
     </node>
   </node>
 </model>

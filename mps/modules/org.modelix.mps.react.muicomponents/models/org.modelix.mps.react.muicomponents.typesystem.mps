@@ -1009,6 +1009,7 @@
   </node>
   <node concept="1YbPZF" id="af0_0ERTYl">
     <property role="TrG5h" value="typeof_CreateDeleteRenderChildList" />
+    <property role="3GE5qa" value="widgets" />
     <node concept="3clFbS" id="af0_0ERTYm" role="18ibNy">
       <node concept="3clFbJ" id="af0_0ERUgY" role="3cqZAp">
         <node concept="3fqX7Q" id="af0_0ERUgZ" role="3clFbw">
@@ -1050,6 +1051,7 @@
   </node>
   <node concept="18kY7G" id="af0_0ERKQv">
     <property role="TrG5h" value="check_CreateDeleteRenderChild" />
+    <property role="3GE5qa" value="widgets" />
     <node concept="3clFbS" id="af0_0ERKQw" role="18ibNy">
       <node concept="3clFbJ" id="af0_0ERLrT" role="3cqZAp">
         <node concept="3fqX7Q" id="af0_0ERSul" role="3clFbw">

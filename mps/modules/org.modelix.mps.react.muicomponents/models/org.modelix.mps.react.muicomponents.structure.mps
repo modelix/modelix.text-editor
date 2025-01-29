@@ -524,7 +524,7 @@
   </node>
   <node concept="25R3W" id="cqTc8J2hI7">
     <property role="3F6X1D" value="223742654172175239" />
-    <property role="TrG5h" value="HorizontalAligment" />
+    <property role="TrG5h" value="AligmentHorizontal" />
     <property role="3GE5qa" value="util" />
     <ref role="1H5jkz" node="cqTc8J2hI8" resolve="left" />
     <node concept="25R33" id="cqTc8J2hI8" role="25R1y">
@@ -1126,6 +1126,7 @@
     <property role="EcuMT" value="184368653051773198" />
     <property role="TrG5h" value="CreateDeleteRenderChild" />
     <property role="34LRSv" value="create-delete-render" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="af0_0CSvbY" role="PzmwI">
       <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
@@ -1244,6 +1245,7 @@
     <property role="EcuMT" value="184368653085338446" />
     <property role="TrG5h" value="CreateDeleteRenderChildList" />
     <property role="34LRSv" value="create-delete-render-list" />
+    <property role="3GE5qa" value="widgets" />
     <ref role="1TJDcQ" to="tpck:gw2VY9q" />
     <node concept="PrWs8" id="af0_0ERB$P" role="PzmwI">
       <ref role="PrY4T" node="af0_0CSxPf" resolve="IChildWidget" />
@@ -1253,6 +1255,26 @@
       <property role="20lmBu" value="fLJjDmT/aggregation" />
       <property role="20kJfa" value="conceptSelector" />
       <ref role="20lvS9" node="4fhsnyrYNP6" resolve="ConceptSelector" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="7pCqlJj5Wjv">
+    <property role="EcuMT" value="8532185337157895391" />
+    <property role="TrG5h" value="DeleteThisNodeButton" />
+    <property role="34LRSv" value="delete-node-button" />
+    <property role="3GE5qa" value="action" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="7pCqlJj5Wjw" role="PzmwI">
+      <ref role="PrY4T" node="2vPZMAmYEO7" resolve="IMUIAction" />
+    </node>
+  </node>
+  <node concept="1TIwiD" id="7pCqlJj7_mh">
+    <property role="EcuMT" value="8532185337158325649" />
+    <property role="3GE5qa" value="action" />
+    <property role="TrG5h" value="ButtonsPlaceholder" />
+    <property role="34LRSv" value="buttons-placeholder" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="7pCqlJj7_mi" role="PzmwI">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
   </node>
 </model>

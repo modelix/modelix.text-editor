@@ -1785,6 +1785,7 @@
     </node>
   </node>
   <node concept="13h7C7" id="af0_0CTpco">
+    <property role="3GE5qa" value="widgets" />
     <ref role="13h7C2" to="zaxg:af0_0CR$4e" resolve="CreateDeleteRenderChild" />
     <node concept="13hLZK" id="af0_0CTpcp" role="13h7CW">
       <node concept="3clFbS" id="af0_0CTpcq" role="2VODD2" />
