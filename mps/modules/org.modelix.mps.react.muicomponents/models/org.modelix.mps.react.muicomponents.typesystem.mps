@@ -34,6 +34,7 @@
       <concept id="1070533707846" name="jetbrains.mps.baseLanguage.structure.StaticFieldReference" flags="nn" index="10M0yZ">
         <reference id="1144433057691" name="classifier" index="1PxDUh" />
       </concept>
+      <concept id="1070534058343" name="jetbrains.mps.baseLanguage.structure.NullLiteral" flags="nn" index="10Nm6u" />
       <concept id="1068431474542" name="jetbrains.mps.baseLanguage.structure.VariableDeclaration" flags="ng" index="33uBYm">
         <child id="1068431790190" name="initializer" index="33vP2m" />
       </concept>
@@ -79,6 +80,7 @@
         <child id="1081773367579" name="rightExpression" index="3uHU7w" />
         <child id="1081773367580" name="leftExpression" index="3uHU7B" />
       </concept>
+      <concept id="1073239437375" name="jetbrains.mps.baseLanguage.structure.NotEqualsExpression" flags="nn" index="3y3z36" />
     </language>
     <language id="3a13115c-633c-4c5c-bbcc-75c4219e9555" name="jetbrains.mps.lang.quotation">
       <concept id="5455284157994012186" name="jetbrains.mps.lang.quotation.structure.NodeBuilderInitLink" flags="ng" index="2pIpSj">
@@ -1089,6 +1091,52 @@
     <node concept="1YaCAy" id="af0_0ERKQy" role="1YuTPh">
       <property role="TrG5h" value="cdrc" />
       <ref role="1YaFvo" to="zaxg:af0_0CR$4e" resolve="CreateDeleteRenderChild" />
+    </node>
+  </node>
+  <node concept="1YbPZF" id="41X6w8MF83N">
+    <property role="TrG5h" value="typeof_Button" />
+    <property role="3GE5qa" value="action" />
+    <node concept="3clFbS" id="41X6w8MF83O" role="18ibNy">
+      <node concept="3clFbJ" id="41X6w8MF848" role="3cqZAp">
+        <node concept="3y3z36" id="41X6w8MF8KX" role="3clFbw">
+          <node concept="10Nm6u" id="41X6w8MF8QX" role="3uHU7w" />
+          <node concept="2OqwBi" id="41X6w8MF8hh" role="3uHU7B">
+            <node concept="1YBJjd" id="41X6w8MF84h" role="2Oq$k0">
+              <ref role="1YBMHb" node="41X6w8MF83Q" resolve="button" />
+            </node>
+            <node concept="3TrEf2" id="41X6w8MF8zI" role="2OqNvi">
+              <ref role="3Tt5mk" to="zaxg:41X6w8MEl71" resolve="tooltip" />
+            </node>
+          </node>
+        </node>
+        <node concept="3clFbS" id="41X6w8MF84a" role="3clFbx">
+          <node concept="1ZobV4" id="41X6w8MF9EX" role="3cqZAp">
+            <node concept="mw_s8" id="41X6w8MF9F9" role="1ZfhKB">
+              <node concept="2pJPEk" id="41X6w8MF9F5" role="mwGJk">
+                <node concept="2pJPED" id="41X6w8MF9F7" role="2pJPEn">
+                  <ref role="2pJxaS" to="tpee:hP7QB7G" resolve="StringType" />
+                </node>
+              </node>
+            </node>
+            <node concept="mw_s8" id="41X6w8MF9F0" role="1ZfhK$">
+              <node concept="1Z2H0r" id="41X6w8MF8RK" role="mwGJk">
+                <node concept="2OqwBi" id="41X6w8MF8U6" role="1Z2MuG">
+                  <node concept="1YBJjd" id="41X6w8MF8TF" role="2Oq$k0">
+                    <ref role="1YBMHb" node="41X6w8MF83Q" resolve="button" />
+                  </node>
+                  <node concept="3TrEf2" id="41X6w8MF8W2" role="2OqNvi">
+                    <ref role="3Tt5mk" to="zaxg:41X6w8MEl71" resolve="tooltip" />
+                  </node>
+                </node>
+              </node>
+            </node>
+          </node>
+        </node>
+      </node>
+    </node>
+    <node concept="1YaCAy" id="41X6w8MF83Q" role="1YuTPh">
+      <property role="TrG5h" value="button" />
+      <ref role="1YaFvo" to="zaxg:2vPZMAmYEO_" resolve="Button" />
     </node>
   </node>
 </model>

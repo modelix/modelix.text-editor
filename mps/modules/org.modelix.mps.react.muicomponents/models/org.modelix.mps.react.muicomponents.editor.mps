@@ -521,6 +521,10 @@
       <node concept="3F1sOY" id="2vPZMAneuaU" role="3EZMnx">
         <ref role="1NtTu8" to="zaxg:2vPZMAneuaN" resolve="command" />
       </node>
+      <node concept="3F1sOY" id="41X6w8MEl75" role="3EZMnx">
+        <property role="1$x2rV" value="&lt;tooltip&gt;" />
+        <ref role="1NtTu8" to="zaxg:41X6w8MEl71" resolve="tooltip" />
+      </node>
     </node>
   </node>
   <node concept="24kQdi" id="2vPZMAn8wH8">

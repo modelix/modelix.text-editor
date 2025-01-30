@@ -31,14 +31,8 @@
         <child id="184368653074210776" name="members" index="CITQ8" />
       </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
-      <concept id="2269421348088158746" name="ReactDemoLanguage.structure.BoolType" flags="ng" index="H1g2F" />
-      <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
-      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW">
-        <child id="2269421348088149062" name="inner" index="H1uVR" />
-      </concept>
-      <concept id="2269421348088144220" name="ReactDemoLanguage.structure.Inner" flags="ng" index="H1vJH">
-        <child id="2269421348088162409" name="type" index="H1jbo" />
-      </concept>
+      <concept id="2269421348088153904" name="ReactDemoLanguage.structure.StringType" flags="ng" index="H1hQ1" />
+      <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW" />
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
         <property id="2879488090881171741" name="c" index="2K1lSO" />
@@ -48,9 +42,6 @@
         <property id="2879488090879969357" name="a" index="2KaVt$" />
         <property id="2879488090895352643" name="b" index="2ZffLE" />
         <child id="2879488090872081362" name="children" index="2K$1jV" />
-      </concept>
-      <concept id="2879488090856546774" name="ReactDemoLanguage.structure.Element" flags="ng" index="2LzhVZ">
-        <property id="2879488090856546775" name="label" index="2LzhVY" />
       </concept>
       <concept id="3693585498076077970" name="ReactDemoLanguage.structure.ErrorChecking" flags="ng" index="3r6pZy">
         <property id="8719348500657695438" name="s" index="3vy3ed" />
@@ -63,25 +54,10 @@
         <property id="2646768005436040852" name="text" index="1EmlfI" />
         <property id="2646768005436051745" name="number" index="1Emqhr" />
       </concept>
-      <concept id="3030577733520086760" name="ReactDemoLanguage.structure.ReactRoot" flags="ng" index="1WCD2c">
-        <child id="2879488090856546776" name="elements" index="2LzhVL" />
-      </concept>
     </language>
   </registry>
-  <node concept="1WCD2c" id="2vPZMAn5iOK">
-    <property role="TrG5h" value="Example" />
-    <node concept="2LzhVZ" id="2vPZMAnqKH2" role="2LzhVL">
-      <property role="2LzhVY" value="added" />
-    </node>
-    <node concept="2LzhVZ" id="2vPZMAnqKH3" role="2LzhVL">
-      <property role="2LzhVY" value="ChangeTheName" />
-    </node>
-    <node concept="2LzhVZ" id="2vPZMAnqKH4" role="2LzhVL">
-      <property role="2LzhVY" value="added" />
-    </node>
-  </node>
   <node concept="2K$1jT" id="2vPZMAnpySp">
-    <property role="TrG5h" value="N1" />
+    <property role="TrG5h" value="OldTree" />
     <property role="2KaVt$" value="12" />
     <property role="2ZffLE" value="b14" />
     <node concept="2K$1jT" id="2vPZMAnpySr" role="2K$1jV">
@@ -102,7 +78,7 @@
   </node>
   <node concept="GbXW8" id="cqTc8Jdncm" />
   <node concept="3yDxjl" id="2NkZbYeu4Ux">
-    <property role="TrG5h" value="Tree" />
+    <property role="TrG5h" value="NewTree" />
     <node concept="2yINhj" id="2NkZbYeu4Uy" role="2yILaD">
       <property role="TrG5h" value="A" />
       <property role="2yIMDl" value="a" />
@@ -3710,27 +3686,19 @@
     <ref role="xBl70" node="5KtU3pXwkrs" resolve="R1" />
   </node>
   <node concept="3r6pZy" id="3d2g73Cnh77">
-    <property role="TrG5h" value="bla" />
+    <property role="TrG5h" value="ErrorChecking" />
     <property role="3vy3ed" value="error" />
   </node>
   <node concept="H1sAW" id="af0_0Da16s">
-    <property role="TrG5h" value="AnOuter" />
-    <node concept="H1vJH" id="7thXQ5cbckD" role="H1uVR">
-      <property role="TrG5h" value="dasdasdasdasffsdfsd" />
-      <node concept="H1g2F" id="7thXQ5cbckE" role="H1jbo" />
-    </node>
+    <property role="TrG5h" value="Outer" />
   </node>
   <node concept="CITj3" id="af0_0EddMs">
-    <property role="TrG5h" value="Address" />
+    <property role="TrG5h" value="AddressRecord" />
     <node concept="CIRO0" id="af0_0EQ8vS" role="CITQ8">
       <property role="TrG5h" value="zip" />
-      <node concept="H1gZI" id="af0_0EQ95j" role="CISWu" />
+      <node concept="H1hQ1" id="41X6w8NDmCt" role="CISWu" />
     </node>
-    <node concept="CIRO0" id="1DF9TaQDg$D" role="CITQ8">
-      <property role="TrG5h" value="fgfsdfsdfsdfsdfsdfds" />
-      <node concept="H1g2F" id="XLt1rGAt4R" role="CISWu" />
-    </node>
-    <node concept="CIRO0" id="XLt1rGAu_a" role="CITQ8" />
+    <node concept="CIRO0" id="41X6w8NDmCu" role="CITQ8" />
   </node>
   <node concept="2$CtAL" id="7pCqlJiMKeY" />
 </model>
