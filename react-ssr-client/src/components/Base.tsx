@@ -1,4 +1,4 @@
-import React, {Attributes} from 'react'
+import React from 'react'
 import {IViewModel} from "../ViewModel.ts";
 
 export interface IComponent extends IComponentContainer {
@@ -19,21 +19,6 @@ export interface IComponentOrText {
 
 export interface IComponentWrapper {
     component: IComponent
-}
-
-export abstract class ComponentBase<S = {}, SS = any> extends React.Component<IComponentWrapper, S, SS>  {
-    protected renderChildComponents(): (JSX.Element | string)[] {
-        return renderChildComponents(this.props.component)
-    }
-}
-
-function convertComponent(component: IComponent): IComponent {
-    const convertedProps = jsonToProps(component.properties)
-    if (convertedProps === component.properties) return component
-    return {
-        ...component,
-        properties: convertedProps
-    }
 }
 
 function jsonToProps(json: Record<string, any> | undefined): Record<string, any> | undefined {
@@ -63,20 +48,21 @@ function jsonToProps(json: Record<string, any> | undefined): Record<string, any>
     return result
 }
 
-export function createComponentFromJson(component: IComponent | string) {
+export function createComponentFromJson(component: IComponent | string): React.ReactNode {
     if (typeof component == "string") {
         return component
     } else {
         const renderer = componentConstructors.get(component.type);
         if (renderer) {
-            return React.createElement(renderer, { component: convertComponent(component), key: component.key } as IComponentWrapper & Attributes)
+            let convertedProps = jsonToProps(component.properties) ?? {}
+            return React.createElement(renderer, { ...convertedProps, key: component.key }, ...renderChildComponents(component))
         } else {
             return (<span>Unknown component type: "{component.type}"</span>);
         }
     }
 }
 
-function renderChildComponents(parent: IComponentContainer) {
+function renderChildComponents(parent: IComponentContainer): React.ReactNode[] {
     if (parent.children) {
         return parent.children.map(componentData => createComponentFromJson(componentData.component ?? componentData.text!!));
     } else {
@@ -86,13 +72,6 @@ function renderChildComponents(parent: IComponentContainer) {
 
 export function renderViewModel(model: IViewModel) {
     return <div>{renderChildComponents(model)}</div>
-}
-
-export class ViewModelRenderer extends React.Component<{ model: IViewModel }> {
-
-    render() {
-        return <>{renderChildComponents(this.props.model)}</>;
-    }
 }
 
 export const componentConstructors: Map<string, any> = new Map();
