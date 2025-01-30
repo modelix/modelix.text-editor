@@ -10,7 +10,9 @@
       <classes generated="true" path="${module}/classes_gen" />
     </facet>
   </facets>
-  <accessoryModels />
+  <accessoryModels>
+    <model modelUID="r:124b74ee-0d47-4037-b8eb-4bd3c9cd1d35(org.modelix.mps.react.muicomponents.stdlib)" />
+  </accessoryModels>
   <generators>
     <generator alias="main" namespace="org.modelix.mps.react.muicomponents.generator" uuid="12c2b0c9-17f2-4fe0-b18a-e5977e5e68ca">
       <models>
@@ -157,6 +159,8 @@
     <language slang="l:c7fb639f-be78-4307-89b0-b5959c3fa8c8:jetbrains.mps.lang.text" version="0" />
     <language slang="l:9ded098b-ad6a-4657-bfd9-48636cfe8bc3:jetbrains.mps.lang.traceable" version="0" />
     <language slang="l:7a5dda62-9140-4668-ab76-d5ed1746f2b2:jetbrains.mps.lang.typesystem" version="5" />
+    <language slang="l:67accce2-9676-4728-9e9c-8b15ea30d924:org.modelix.mps.react" version="0" />
+    <language slang="l:09a61cec-0c2d-4a90-b590-25e493b12f35:org.modelix.mps.react.muicomponents" version="0" />
   </languageVersions>
   <dependencyVersions>
     <module reference="3f233e7f-b8a6-46d2-a57f-795d56775243(Annotations)" version="0" />

@@ -31,6 +31,7 @@
     <import index="7923" ref="r:2c5a8407-fd65-4ea4-b95e-a8f8fee129c0(org.modelix.mps.react.muicomponents.behavior)" />
     <import index="wyt6" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.lang(JDK/)" />
     <import index="tpee" ref="r:00000000-0000-4000-0000-011c895902ca(jetbrains.mps.baseLanguage.structure)" implicit="true" />
+    <import index="evcv" ref="r:124b74ee-0d47-4037-b8eb-4bd3c9cd1d35(org.modelix.mps.react.muicomponents.stdlib)" implicit="true" />
     <import index="guwi" ref="6354ebe7-c22a-4a0f-ac54-50b52ab9b065/java:java.io(JDK/)" implicit="true" />
   </imports>
   <registry>
@@ -329,7 +330,9 @@
       <concept id="4886811833500799733" name="org.modelix.mps.react.muicomponents.structure.SubconceptsConceptSelector" flags="ng" index="3obeed">
         <child id="4886811833500803356" name="parentConcept" index="3obd1$" />
       </concept>
-      <concept id="793519207813113972" name="org.modelix.mps.react.muicomponents.structure.TypographyRef" flags="ng" index="3z9kRR" />
+      <concept id="793519207813113972" name="org.modelix.mps.react.muicomponents.structure.TypographyRef" flags="ng" index="3z9kRR">
+        <reference id="793519207813113973" name="typography" index="3z9kRQ" />
+      </concept>
     </language>
     <language id="b401a680-8325-4110-8fd3-84331ff25bef" name="jetbrains.mps.lang.generator">
       <concept id="1114706874351" name="jetbrains.mps.lang.generator.structure.CopySrcNodeMacro" flags="ln" index="29HgVG">
@@ -5244,7 +5247,9 @@
               </node>
               <node concept="raruj" id="2NkZbYfbr3m" role="lGtFl" />
               <node concept="2Lk9xs" id="2NkZbYfuE0I" role="gn1nJ">
-                <node concept="3z9kRR" id="2NkZbYfuE0J" role="3z8GDl" />
+                <node concept="3z9kRR" id="2NkZbYfuE0J" role="3z8GDl">
+                  <ref role="3z9kRQ" to="evcv:1LliyakInqe" resolve="default" />
+                </node>
                 <node concept="Xl_RD" id="2NkZbYfuEkD" role="2Lk3Fj">
                   <property role="Xl_RC" value="Test" />
                 </node>
@@ -5775,6 +5780,9 @@
                       </node>
                     </node>
                   </node>
+                </node>
+                <node concept="3z9kRR" id="6uxgi3FSB3F" role="3z8GDl">
+                  <ref role="3z9kRQ" to="evcv:1LliyakInqe" resolve="default" />
                 </node>
               </node>
               <node concept="gn1nE" id="2vPZMAnzL2R" role="gn1nH">
