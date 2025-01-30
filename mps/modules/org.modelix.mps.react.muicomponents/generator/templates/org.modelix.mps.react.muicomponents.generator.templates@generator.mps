@@ -173,6 +173,7 @@
       <concept id="1513279640923991009" name="jetbrains.mps.baseLanguage.structure.IGenericClassCreator" flags="ngI" index="366HgL">
         <property id="1513279640906337053" name="inferTypeParams" index="373rjd" />
       </concept>
+      <concept id="1092119917967" name="jetbrains.mps.baseLanguage.structure.MulExpression" flags="nn" index="17qRlL" />
       <concept id="1068498886296" name="jetbrains.mps.baseLanguage.structure.VariableReference" flags="nn" index="37vLTw">
         <reference id="1068581517664" name="variableDeclaration" index="3cqZAo" />
       </concept>
@@ -185,6 +186,9 @@
       <concept id="1225271546410" name="jetbrains.mps.baseLanguage.structure.TrimOperation" flags="nn" index="17S1cR" />
       <concept id="4972933694980447171" name="jetbrains.mps.baseLanguage.structure.BaseVariableDeclaration" flags="ng" index="19Szcq">
         <child id="5680397130376446158" name="type" index="1tU5fm" />
+      </concept>
+      <concept id="1111509017652" name="jetbrains.mps.baseLanguage.structure.FloatingPointConstant" flags="nn" index="3b6qkQ">
+        <property id="1113006610751" name="value" index="$nhwW" />
       </concept>
       <concept id="1068580123132" name="jetbrains.mps.baseLanguage.structure.BaseMethodDeclaration" flags="ng" index="3clF44">
         <child id="1068580123133" name="returnType" index="3clF45" />
@@ -561,6 +565,57 @@
   </registry>
   <node concept="bUwia" id="2vPZMAmvnIA">
     <property role="TrG5h" value="main" />
+    <node concept="3aamgX" id="41X6w8NVSzR" role="3acgRq">
+      <ref role="30HIoZ" to="zaxg:41X6w8NUU_U" resolve="VerticalSpace" />
+      <node concept="1Koe21" id="41X6w8NW7Nn" role="1lVwrX">
+        <node concept="gmrQT" id="41X6w8NW7Nr" role="1Koe22">
+          <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
+          <node concept="gmrTC" id="41X6w8NW84e" role="gmrTS">
+            <property role="gmPZ6" value="mui.Box" />
+            <node concept="gn1nE" id="41X6w8NW84g" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NW84i" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NW84k" role="gjbx_">
+                  <property role="gjbwO" value="mt" />
+                  <node concept="ghjhU" id="41X6w8NW84n" role="gjbwM">
+                    <node concept="3cpWs3" id="41X6w8OADhW" role="ghjhc">
+                      <node concept="Xl_RD" id="41X6w8OADhZ" role="3uHU7w">
+                        <property role="Xl_RC" value="px" />
+                      </node>
+                      <node concept="1eOMI4" id="41X6w8NWhMl" role="3uHU7B">
+                        <node concept="17qRlL" id="41X6w8NWet_" role="1eOMHV">
+                          <node concept="3b6qkQ" id="41X6w8NWetM" role="3uHU7w">
+                            <property role="$nhwW" value="0.5" />
+                            <node concept="29HgVG" id="41X6w8NWfeT" role="lGtFl">
+                              <node concept="3NFfHV" id="41X6w8NWffg" role="3NFExx">
+                                <node concept="3clFbS" id="41X6w8NWffh" role="2VODD2">
+                                  <node concept="3clFbF" id="41X6w8NWg1C" role="3cqZAp">
+                                    <node concept="2OqwBi" id="41X6w8NWgfL" role="3clFbG">
+                                      <node concept="30H73N" id="41X6w8NWg1B" role="2Oq$k0" />
+                                      <node concept="3TrEf2" id="41X6w8NWgvE" role="2OqNvi">
+                                        <ref role="3Tt5mk" to="zaxg:41X6w8NUU_Z" resolve="factor" />
+                                      </node>
+                                    </node>
+                                  </node>
+                                </node>
+                              </node>
+                            </node>
+                          </node>
+                          <node concept="3cmrfG" id="41X6w8NWa3B" role="3uHU7B">
+                            <property role="3cmrfH" value="56" />
+                          </node>
+                        </node>
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
+            <node concept="raruj" id="41X6w8NWfey" role="lGtFl" />
+          </node>
+        </node>
+      </node>
+    </node>
     <node concept="3aamgX" id="7pCqlJj5WzB" role="3acgRq">
       <ref role="30HIoZ" to="zaxg:7pCqlJj5Wjv" resolve="DeleteThisNodeButton" />
       <node concept="1Koe21" id="7pCqlJj68$c" role="1lVwrX">
@@ -1718,6 +1773,19 @@
           <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
           <node concept="gmrTC" id="5KtU3pYbPqL" role="gmrTS">
             <property role="gmPZ6" value="modelix.Dropdown" />
+            <node concept="gn1nE" id="41X6w8NKLxy" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NKLxz" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKLx$" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKLx_" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKLxA" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
             <node concept="gn1nE" id="5KtU3pYbPqM" role="gn1nH">
               <property role="gn1nW" value="onChange" />
               <node concept="ghf20" id="5KtU3pYbPqN" role="gn1nU">
@@ -2380,6 +2448,19 @@
           <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
           <node concept="gmrTC" id="1XshCcKyvjX" role="gmrTS">
             <property role="gmPZ6" value="modelix.Dropdown" />
+            <node concept="gn1nE" id="41X6w8NKOBf" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NKOBg" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKOBh" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKOBi" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKOBj" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
             <node concept="gn1nE" id="1XshCcL1v6e" role="gn1nH">
               <property role="gn1nW" value="onChange" />
               <node concept="ghf20" id="1XshCcL1v6f" role="gn1nU">
@@ -5758,6 +5839,19 @@
           <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
           <node concept="gmrTC" id="2iVdnDeSv2Y" role="gmrTS">
             <property role="gmPZ6" value="mui.Checkbox" />
+            <node concept="gn1nE" id="41X6w8NKPZZ" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NKQ00" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKQ01" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKQ02" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKQ03" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
             <node concept="gn1nE" id="2iVdnDeSv2Z" role="gn1nH">
               <property role="gn1nW" value="onChange" />
               <node concept="ghf20" id="2iVdnDeSv30" role="gn1nU">
@@ -5878,6 +5972,19 @@
           <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
           <node concept="gmrTC" id="2vPZMAm$k0a" role="gmrTS">
             <property role="gmPZ6" value="modelix.TextField" />
+            <node concept="gn1nE" id="41X6w8NKQfn" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NKQfo" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKQfp" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKQfq" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKQfr" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
             <node concept="gn1nE" id="2vPZMAmuLZ0" role="gn1nH">
               <property role="gn1nW" value="onChange" />
               <node concept="ghf20" id="2vPZMAmuLZ1" role="gn1nU">
@@ -6141,6 +6248,19 @@
           <ref role="3JBHV4" to="tpee:fz12cDA" resolve="ClassConcept" />
           <node concept="gmrTC" id="1LliyalbmlN" role="gmrTS">
             <property role="gmPZ6" value="mui.TextField" />
+            <node concept="gn1nE" id="41X6w8NKQLd" role="gn1nH">
+              <property role="gn1nW" value="sx" />
+              <node concept="gjbvi" id="41X6w8NKQLe" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKQLf" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKQLg" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKQLh" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
+              </node>
+            </node>
             <node concept="gn1nE" id="1LliyalbmlO" role="gn1nH">
               <property role="gn1nW" value="onChange" />
               <node concept="ghf20" id="1LliyalbmlP" role="gn1nU">
@@ -7096,6 +7216,14 @@
             <node concept="gn1nE" id="5KtU3pZrtlh" role="gn1nH">
               <property role="gn1nW" value="sx" />
               <node concept="gjbvi" id="5KtU3pZrucu" role="gn1nU">
+                <node concept="gjbwy" id="41X6w8NKGUr" role="gjbx_">
+                  <property role="gjbwO" value="height" />
+                  <node concept="ghjhU" id="41X6w8NKGUu" role="gjbwM">
+                    <node concept="Xl_RD" id="41X6w8NKGUt" role="ghjhc">
+                      <property role="Xl_RC" value="56px" />
+                    </node>
+                  </node>
+                </node>
                 <node concept="gjbwy" id="5KtU3pZruv2" role="gjbx_">
                   <property role="gjbwO" value="display" />
                   <node concept="ghjhU" id="5KtU3pZruLB" role="gjbwM">
@@ -7337,8 +7465,8 @@
                   </node>
                 </node>
               </node>
-              <node concept="raruj" id="5KtU3pZAaAL" role="lGtFl" />
             </node>
+            <node concept="raruj" id="41X6w8NPGZT" role="lGtFl" />
           </node>
         </node>
       </node>
@@ -7472,6 +7600,19 @@
             </node>
             <node concept="gmrTC" id="41X6w8MFuGN" role="gn1nJ">
               <property role="gmPZ6" value="mui.Button" />
+              <node concept="gn1nE" id="41X6w8NKI7j" role="gn1nH">
+                <property role="gn1nW" value="sx" />
+                <node concept="gjbvi" id="41X6w8NKI8Z" role="gn1nU">
+                  <node concept="gjbwy" id="41X6w8NKI91" role="gjbx_">
+                    <property role="gjbwO" value="height" />
+                    <node concept="ghjhU" id="41X6w8NKI92" role="gjbwM">
+                      <node concept="Xl_RD" id="41X6w8NKI93" role="ghjhc">
+                        <property role="Xl_RC" value="56px" />
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
               <node concept="gn1nE" id="41X6w8MFuGO" role="gn1nH">
                 <property role="gn1nW" value="variant" />
                 <node concept="ghjhU" id="41X6w8MFuGP" role="gn1nU">
@@ -7609,6 +7750,19 @@
             </node>
             <node concept="gmrTC" id="2vPZMAn9K7z" role="gn1nJ">
               <property role="gmPZ6" value="mui.Button" />
+              <node concept="gn1nE" id="41X6w8NKI$8" role="gn1nH">
+                <property role="gn1nW" value="sx" />
+                <node concept="gjbvi" id="41X6w8NKI$9" role="gn1nU">
+                  <node concept="gjbwy" id="41X6w8NKI$a" role="gjbx_">
+                    <property role="gjbwO" value="height" />
+                    <node concept="ghjhU" id="41X6w8NKI$b" role="gjbwM">
+                      <node concept="Xl_RD" id="41X6w8NKI$c" role="ghjhc">
+                        <property role="Xl_RC" value="56px" />
+                      </node>
+                    </node>
+                  </node>
+                </node>
+              </node>
               <node concept="gn1nE" id="2vPZMAnf3Bb" role="gn1nH">
                 <property role="gn1nW" value="onClick" />
                 <node concept="ghf20" id="2vPZMAnf3Bc" role="gn1nU">

@@ -1283,5 +1283,29 @@
       <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
     </node>
   </node>
+  <node concept="1TIwiD" id="41X6w8NUU_U">
+    <property role="EcuMT" value="4646898987279559034" />
+    <property role="3GE5qa" value="layout" />
+    <property role="TrG5h" value="VerticalSpace" />
+    <property role="34LRSv" value="vertical space" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
+    <node concept="PrWs8" id="41X6w8NUU_Y" role="PzmwI">
+      <ref role="PrY4T" node="41X6w8NUU_W" resolve="IWhitespace" />
+    </node>
+    <node concept="1TJgyj" id="41X6w8NUU_Z" role="1TKVEi">
+      <property role="IQ2ns" value="4646898987279559039" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="factor" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" to="tpee:fz3vP1J" resolve="Expression" />
+    </node>
+  </node>
+  <node concept="PlHQZ" id="41X6w8NUU_W">
+    <property role="EcuMT" value="4646898987279559036" />
+    <property role="TrG5h" value="IWhitespace" />
+    <node concept="PrWs8" id="41X6w8NUU_X" role="PrDN$">
+      <ref role="PrY4T" to="8xo1:7GLg2tFqfT1" resolve="IReactComponent" />
+    </node>
+  </node>
 </model>
 

@@ -218,6 +218,13 @@
       <property role="TrG5h" value="s" />
       <ref role="AX2Wp" to="tpck:fKAOsGN" resolve="string" />
     </node>
+    <node concept="1TJgyj" id="6uxgi3FLyFj" role="1TKVEi">
+      <property role="IQ2ns" value="7467321266807384787" />
+      <property role="20lmBu" value="fLJjDmT/aggregation" />
+      <property role="20kJfa" value="child" />
+      <property role="20lbJX" value="fLJekj4/_1" />
+      <ref role="20lvS9" node="6uxgi3FLyFh" resolve="RequiredChild" />
+    </node>
   </node>
   <node concept="1TIwiD" id="1XYAF4MuPcd">
     <property role="EcuMT" value="2269421348088140557" />
@@ -365,6 +372,11 @@
     <property role="3GE5qa" value="constraints" />
     <property role="TrG5h" value="ConstraintChildCannotBeAncestor" />
     <ref role="1TJDcQ" node="7pCqlJiMr3F" resolve="ConstraintChild" />
+  </node>
+  <node concept="1TIwiD" id="6uxgi3FLyFh">
+    <property role="EcuMT" value="7467321266807384785" />
+    <property role="TrG5h" value="RequiredChild" />
+    <ref role="1TJDcQ" to="tpck:gw2VY9q" />
   </node>
 </model>
 

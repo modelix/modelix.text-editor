@@ -31,7 +31,8 @@
         <child id="184368653074210776" name="members" index="CITQ8" />
       </concept>
       <concept id="223742654175067082" name="ReactDemoLanguage.structure.Blank" flags="ng" index="GbXW8" />
-      <concept id="2269421348088153904" name="ReactDemoLanguage.structure.StringType" flags="ng" index="H1hQ1" />
+      <concept id="2269421348088158746" name="ReactDemoLanguage.structure.BoolType" flags="ng" index="H1g2F" />
+      <concept id="2269421348088157535" name="ReactDemoLanguage.structure.IntType" flags="ng" index="H1gZI" />
       <concept id="2269421348088140557" name="ReactDemoLanguage.structure.Outer" flags="ng" index="H1sAW" />
       <concept id="2879488090880630244" name="ReactDemoLanguage.structure.ReadOrEdit" flags="ng" index="2K7qbd">
         <property id="2879488090881171739" name="a" index="2K1lSM" />
@@ -3686,8 +3687,8 @@
     <ref role="xBl70" node="5KtU3pXwkrs" resolve="R1" />
   </node>
   <node concept="3r6pZy" id="3d2g73Cnh77">
-    <property role="TrG5h" value="ErrorChecking" />
-    <property role="3vy3ed" value="error" />
+    <property role="TrG5h" value="error" />
+    <property role="3vy3ed" value="x" />
   </node>
   <node concept="H1sAW" id="af0_0Da16s">
     <property role="TrG5h" value="Outer" />
@@ -3695,10 +3696,17 @@
   <node concept="CITj3" id="af0_0EddMs">
     <property role="TrG5h" value="AddressRecord" />
     <node concept="CIRO0" id="af0_0EQ8vS" role="CITQ8">
-      <property role="TrG5h" value="zip" />
-      <node concept="H1hQ1" id="41X6w8NDmCt" role="CISWu" />
+      <property role="TrG5h" value="zipm,nmnmn" />
+      <node concept="H1gZI" id="41X6w8NUU_T" role="CISWu" />
     </node>
-    <node concept="CIRO0" id="41X6w8NDmCu" role="CITQ8" />
+    <node concept="CIRO0" id="41X6w8NDmCu" role="CITQ8">
+      <property role="TrG5h" value="fsdfsd" />
+      <node concept="H1g2F" id="41X6w8OFY9B" role="CISWu" />
+    </node>
+    <node concept="CIRO0" id="41X6w8OFY9_" role="CITQ8">
+      <property role="TrG5h" value="fTestfffffffffsdfsdfasdfasdfsdfasd" />
+      <node concept="H1g2F" id="41X6w8OKUUp" role="CISWu" />
+    </node>
   </node>
   <node concept="2$CtAL" id="7pCqlJiMKeY" />
 </model>

@@ -83,6 +83,9 @@
       <concept id="4972933694980447171" name="jetbrains.mps.baseLanguage.structure.BaseVariableDeclaration" flags="ng" index="19Szcq">
         <child id="5680397130376446158" name="type" index="1tU5fm" />
       </concept>
+      <concept id="1111509017652" name="jetbrains.mps.baseLanguage.structure.FloatingPointConstant" flags="nn" index="3b6qkQ">
+        <property id="1113006610751" name="value" index="$nhwW" />
+      </concept>
       <concept id="1068580123155" name="jetbrains.mps.baseLanguage.structure.ExpressionStatement" flags="nn" index="3clFbF">
         <child id="1068580123156" name="expression" index="3clFbG" />
       </concept>
@@ -234,6 +237,9 @@
       <concept id="3046380775495572233" name="org.modelix.mps.react.muicomponents.structure.Dropdown" flags="ng" index="3JIf0_">
         <child id="3046380775495981661" name="choices" index="3GgF5L" />
       </concept>
+      <concept id="4646898987279559034" name="org.modelix.mps.react.muicomponents.structure.VerticalSpace" flags="ng" index="1N_FdS">
+        <child id="4646898987279559039" name="factor" index="1N_FdX" />
+      </concept>
     </language>
     <language id="fd392034-7849-419d-9071-12563d152375" name="jetbrains.mps.baseLanguage.closures">
       <concept id="2524418899405758586" name="jetbrains.mps.baseLanguage.closures.structure.InferredClosureParameterDeclaration" flags="ig" index="gl6BB" />
@@ -290,41 +296,6 @@
   </registry>
   <node concept="gl9ry" id="41X6w8NDo8Z">
     <property role="TrG5h" value="Constraints" />
-    <node concept="GuJNq" id="41X6w8NDo90" role="gmrQt">
-      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
-      <property role="TrG5h" value="label" />
-    </node>
-    <node concept="GuJNq" id="41X6w8NDo91" role="gmrQt">
-      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
-      <property role="TrG5h" value="accTitle" />
-      <node concept="GuJNr" id="41X6w8NDo92" role="GuJNp">
-        <property role="GuJNo" value="cccccc" />
-      </node>
-    </node>
-    <node concept="GuJNq" id="41X6w8NDo93" role="gmrQt">
-      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
-      <property role="TrG5h" value="title" />
-      <property role="3z7dGt" value="20px" />
-      <node concept="GuJNr" id="41X6w8NDo94" role="GuJNp">
-        <property role="GuJNo" value="ffffff" />
-      </node>
-    </node>
-    <node concept="GuJNq" id="41X6w8NDo95" role="gmrQt">
-      <property role="TrG5h" value="tree" />
-      <property role="3z6gAX" value="2vPZMAn_7Nn/bold" />
-      <node concept="GuJNr" id="41X6w8NDo96" role="GuJNp">
-        <property role="GuJNo" value="777777" />
-      </node>
-    </node>
-    <node concept="3ywjYg" id="41X6w8NDo97" role="gmrQt" />
-    <node concept="3y96$F" id="41X6w8NDo98" role="gmrQt">
-      <property role="TrG5h" value="greyBox" />
-      <property role="3y94Ox" value="5px 20px" />
-      <node concept="GuJNr" id="41X6w8NDo99" role="3y95Dd">
-        <property role="GuJNo" value="cccccc" />
-      </node>
-    </node>
-    <node concept="3ywjYg" id="41X6w8NDo9a" role="gmrQt" />
     <node concept="3ywjYg" id="41X6w8NDo9l" role="gmrQt" />
     <node concept="gmrQT" id="41X6w8NDo9m" role="gmrQt">
       <ref role="3JBHV4" to="oyym:7pCqlJiMr3F" resolve="ConstraintChild" />
@@ -459,6 +430,11 @@
               <ref role="2Ly3GY" to="tpck:h0TrG11" resolve="name" />
               <node concept="ggAI9" id="af0_0Edo5$" role="2Ly3GZ" />
             </node>
+          </node>
+        </node>
+        <node concept="1N_FdS" id="41X6w8NVJdh" role="2Ln$9p">
+          <node concept="3b6qkQ" id="41X6w8NVL6s" role="1N_FdX">
+            <property role="$nhwW" value="0.5" />
           </node>
         </node>
         <node concept="Ckm$u" id="4BdHBArysQf" role="2Ln$9p">
@@ -761,6 +737,18 @@
   </node>
   <node concept="gl9ry" id="41X6w8NDtGj">
     <property role="TrG5h" value="ErrorChecking" />
+    <node concept="gmrQT" id="6uxgi3FOMUu" role="gmrQt">
+      <ref role="3JBHV4" to="oyym:6uxgi3FLyFh" resolve="RequiredChild" />
+      <node concept="2Lk9xs" id="6uxgi3FOMUx" role="gmrTS">
+        <node concept="3z9kRR" id="6uxgi3FOMUy" role="3z8GDl">
+          <ref role="3z9kRQ" node="2NkZbYfIWum" resolve="tree" />
+        </node>
+        <node concept="Xl_RD" id="6uxgi3FOMUA" role="2Lk3Fj">
+          <property role="Xl_RC" value="Child" />
+        </node>
+      </node>
+    </node>
+    <node concept="3ywjYg" id="6uxgi3FOMUs" role="gmrQt" />
     <node concept="gmrQT" id="3d2g73CnjgD" role="gmrQt">
       <ref role="3JBHV4" to="oyym:3d2g73CmXYi" resolve="ErrorChecking" />
       <node concept="2LhRxX" id="2xzaHpfVnt$" role="gmrTS">
@@ -816,6 +804,31 @@
           <node concept="zfOWx" id="2xzaHpfVo4e" role="zfIJF">
             <property role="zfPxE" value="4" />
             <node concept="2Lfa6Z" id="2xzaHpfVo4f" role="2Kjlbk" />
+          </node>
+          <node concept="zfOWx" id="6uxgi3FLyGI" role="zfIJF">
+            <property role="zfPxE" value="4" />
+            <node concept="2Lk9xs" id="6uxgi3FLyGJ" role="2Kjlbk">
+              <node concept="3z9kRR" id="6uxgi3FLyGK" role="3z8GDl">
+                <ref role="3z9kRQ" to="6g1h:1LliyakInqe" resolve="default" />
+              </node>
+              <node concept="Xl_RD" id="6uxgi3FLyGL" role="2Lk3Fj">
+                <property role="Xl_RC" value="Field 2" />
+              </node>
+            </node>
+          </node>
+          <node concept="zfOWx" id="6uxgi3FLyGD" role="zfIJF">
+            <property role="zfPxE" value="4" />
+            <node concept="Ekkdu" id="6uxgi3FLyI6" role="2Kjlbk">
+              <node concept="Vvv9j" id="6uxgi3FLyI7" role="VuCqe">
+                <ref role="Vvshh" to="oyym:6uxgi3FLyFj" resolve="child" />
+                <node concept="ggAI9" id="6uxgi3FLyIg" role="VvvGQ" />
+              </node>
+              <node concept="1ByCY7" id="6uxgi3FLyIL" role="lGtFl" />
+            </node>
+          </node>
+          <node concept="zfOWx" id="6uxgi3FLyGB" role="zfIJF">
+            <property role="zfPxE" value="4" />
+            <node concept="2Lfa6Z" id="6uxgi3FLyGC" role="2Kjlbk" />
           </node>
           <node concept="1ByCY7" id="69AB$B3ar63" role="lGtFl">
             <property role="1G2pi4" value="true" />
