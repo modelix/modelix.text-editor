@@ -1,9 +1,11 @@
 import {componentConstructors, registerComponentConstructor} from "./Base.tsx";
 import * as mui from "@mui/material";
+import * as icons from "@mui/icons-material";
 import * as joy from "@mui/joy";
 import * as joyStyles from "@mui/joy/styles";
 import * as antd from "antd";
-import * as icons from "@mui/icons-material";
+import * as primeComponents from "./PrimeReactComponents.ts";
+import * as primeIcons from "./PrimeReactIcons.ts";
 import { DataGrid } from '@mui/x-data-grid';
 import Grid2 from "@mui/material/Unstable_Grid2"
 import { SimpleTreeView, RichTreeView, TreeItem, TreeItem2 } from '@mui/x-tree-view';
@@ -81,6 +83,8 @@ export function registerDefaultComponents() {
     registerAllComponents(joy, "joy.")
     registerAllComponents(joyStyles, "joy.styles.")
     registerAllComponents(antd, "antd.")
+    registerAllComponents(primeComponents, "primereact.")
+    registerAllComponents(primeIcons, "primereact.icons.")
 
     registerComponentConstructor("mui.DataGrid", DataGrid)
     registerComponentConstructor("mui.Grid2", Grid2)
