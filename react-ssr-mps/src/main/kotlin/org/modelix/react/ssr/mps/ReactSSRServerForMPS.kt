@@ -105,7 +105,7 @@ class ReactSSRServerForMPS : Disposable {
     }
 
     private fun getRootNode(): INode {
-        return MPSRepositoryAsNode(getRepository())
+        return MPSRepositoryAsNode(getRepository()).asLegacyNode()
     }
 
     fun ensureStarted() {

@@ -24,6 +24,7 @@ import org.modelix.metamodel.untyped
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.INodeReference
+import org.modelix.model.api.IWritableNode
 import kotlin.jvm.JvmName
 
 abstract class CellTemplate(val concept: IConcept) {
@@ -114,6 +115,7 @@ abstract class CellTemplate(val concept: IConcept) {
         is INodeReference -> createCellReference(node)
         is INode -> createCellReference(node)
         is ITypedNode -> createCellReference(node)
+        is IWritableNode -> createCellReference(node.asLegacyNode())
         else -> throw IllegalArgumentException("Unsupported node type: $node")
     }
     fun createCellReference(nodeRef: INodeReference) = TemplateCellReference(getReference(), nodeRef)

@@ -1,17 +1,21 @@
 package org.modelix.editor
 
 import org.modelix.model.api.IChildLink
+import org.modelix.model.api.IChildLinkDefinition
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
-import org.modelix.model.api.NullChildLink
+import org.modelix.model.api.IReadableNode
+import org.modelix.model.api.NullChildLinkReference
 import org.modelix.model.api.index
 import org.modelix.model.api.isInstanceOf
 import org.modelix.model.api.remove
+import org.modelix.model.api.tryResolveChildLink
+import org.modelix.model.api.upcast
 
 interface INonExistingNode {
     fun getExistingAncestor(): INode?
     fun getParent(): INonExistingNode?
-    fun getContainmentLink(): IChildLink?
+    fun getContainmentLink(): IChildLinkDefinition?
     fun index(): Int
     fun replaceNode(subConcept: IConcept?): INode
     fun getOrCreateNode(subConcept: IConcept? = null): INode
@@ -46,7 +50,7 @@ data class NodeReplacement(val nodeToReplace: INonExistingNode, val replacementC
 
     override fun getParent(): INonExistingNode? = nodeToReplace.getParent()
 
-    override fun getContainmentLink(): IChildLink? = nodeToReplace.getContainmentLink()
+    override fun getContainmentLink(): IChildLinkDefinition? = nodeToReplace.getContainmentLink()
 
     override fun index(): Int = nodeToReplace.index()
 
@@ -88,15 +92,19 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
 
     override fun getParent(): INonExistingNode? = node.parent?.let { ExistingNode(it) }
 
-    override fun getContainmentLink() = node.getContainmentLink()
+    override fun getContainmentLink() = node.asWritableNode().getContainmentLinkDefinition()
 
     override fun index() = node.index()
 
     override fun replaceNode(subConcept: IConcept?): INode {
         val parent = node.parent ?: throw RuntimeException("cannot replace the root node")
-        val newNode = parent.addNewChild(node.getContainmentLink() ?: NullChildLink, node.index(), coerceOutputConcept(subConcept))
+        val newNode = parent.asWritableNode().addNewChild(
+            node.asWritableNode().getContainmentLink(),
+            node.index(),
+            coerceOutputConcept(subConcept)?.getReference().upcast()
+        )
         node.remove()
-        return newNode
+        return newNode.asLegacyNode()
     }
 
     override fun getOrCreateNode(subConcept: IConcept?): INode {
@@ -114,7 +122,7 @@ data class ExistingNode(private val node: INode) : INonExistingNode {
     }
 
     override fun expectedConcept(): IConcept? {
-        return node.getContainmentLink()?.targetConcept
+        return node.asWritableNode().getContainmentLinkDefinition()?.targetConcept
     }
 }
 
@@ -175,5 +183,14 @@ data class NonExistingNode(val concept: IConcept) : INonExistingNode {
 
     override fun expectedConcept(): IConcept {
         return concept
+    }
+}
+
+fun IReadableNode.getContainmentLinkDefinition(): IChildLinkDefinition? {
+    val linkRef = getContainmentLink()
+    if (linkRef is NullChildLinkReference) return null
+    val parentConcept = (getParent() ?: return null).getConcept()
+    return checkNotNull(parentConcept.tryResolveChildLink(linkRef)) {
+        "Link $linkRef not found in $parentConcept"
     }
 }

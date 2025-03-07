@@ -66,10 +66,12 @@ import org.modelix.editor.ancestors
 import org.modelix.editor.ssr.server.ModelixSSRServer
 import org.modelix.model.api.BuiltinLanguages
 import org.modelix.model.api.IChildLink
+import org.modelix.model.api.IChildLinkDefinition
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
 import org.modelix.model.api.IProperty
 import org.modelix.model.api.IReferenceLink
+import org.modelix.model.api.IWritableNode
 import org.modelix.model.api.NodeReference
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.mpsadapters.MPSChildLink
@@ -79,6 +81,7 @@ import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
+import org.modelix.model.mpsadapters.MPSWritableNode
 import org.modelix.scopes.IScope
 import org.modelix.scopes.IScopeProvider
 import java.net.URLEncoder
@@ -123,7 +126,7 @@ class ModelixSSRServerForMPS : Disposable {
 
     private fun getRootNode(): INode? {
         return getMPSProjects().asSequence().map {
-            MPSRepositoryAsNode(it.repository)
+            MPSRepositoryAsNode(it.repository).asLegacyNode()
         }.firstOrNull()
     }
 
@@ -264,7 +267,7 @@ class ModelixSSRServerForMPSStartupActivity : ProjectActivity {
 
 object MPSScopeProvider : IScopeProvider {
     override fun getScope(sourceNode: INonExistingNode, link: IReferenceLink): IScope {
-        val mpsSourceNode = sourceNode.getNode() as? MPSNode
+        val mpsSourceNode = sourceNode.getNode()?.asWritableNode() as? MPSWritableNode
         val descriptor = if (mpsSourceNode == null) {
             val contextNode: SNode = sourceNode.getExistingAncestor().toMPS()!!
             val containmentLink: SContainmentLink = sourceNode.getContainmentLink().toMPS()!!
@@ -353,8 +356,10 @@ object MPSConstraints : IConstraintsChecker {
     }
 }
 
-fun INode?.toMPS(): SNode? = if (this is MPSNode) this.node else null
+fun INode?.toMPS(): SNode? = this?.asWritableNode().toMPS()
+fun IWritableNode?.toMPS(): SNode? = if (this is MPSWritableNode) this.node else null
 fun IChildLink?.toMPS(): SContainmentLink? = if (this is MPSChildLink) this.link else null
+fun IChildLinkDefinition?.toMPS(): SContainmentLink? = if (this is MPSChildLink) this.link else null
 fun IReferenceLink?.toMPS(): SReferenceLink? = if (this is MPSReferenceLink) this.link else null
 fun IProperty?.toMPS(): SProperty? = if (this is MPSProperty) this.property else null
 fun IConcept?.toMPS(): SAbstractConcept? = if (this is MPSConcept) this.concept else null

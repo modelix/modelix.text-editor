@@ -51,7 +51,7 @@ import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
 import org.modelix.model.area.IArea
 import org.modelix.model.mpsadapters.MPSArea
-import org.modelix.model.mpsadapters.MPSNode
+import org.modelix.model.mpsadapters.MPSWritableNode
 import org.modelix.model.mpsadapters.tomps.ModelixNodeAsMPSNode
 import svg.svg.EditorToImage
 import svg.util.AWTExtensions
@@ -380,7 +380,7 @@ class RenderSession @JvmOverloads constructor(
                 if (nodeRefString != null) {
                     area.executeRead {
                         val nodeRef: INodeReference = NodeReference(nodeRefString)
-                        val node: SNode = (nodeRef.resolveIn(area)!! as MPSNode).node
+                        val node: SNode = (nodeRef.resolveIn(area)!!.asWritableNode() as MPSWritableNode).node
                         rootNode = node
                         updateEditorId()
                         this@RenderSession.editorComponent.editNode(node)

@@ -28,7 +28,7 @@ import org.modelix.model.api.getAllConcepts
 import org.modelix.model.mpsadapters.MPSArea
 import org.modelix.model.mpsadapters.MPSChildLink
 import org.modelix.model.mpsadapters.MPSConcept
-import org.modelix.model.mpsadapters.MPSNode
+import org.modelix.model.mpsadapters.MPSWritableNode
 import org.modelix.model.mpsadapters.tomps.ModelixNodeAsMPSNode
 import org.modelix.mps.react.N_ChildrenComponent
 import org.modelix.mps.react.N_ComponentNodeExpression
@@ -116,7 +116,7 @@ class InterpretedMPSRenderer(
         try {
             when (component) {
                 is N_ChildrenComponent -> {
-                    val link = MPSChildLink(MetaAdapterByDeclaration.getContainmentLink((component.link.untyped() as MPSNode).node))
+                    val link = MPSChildLink(MetaAdapterByDeclaration.getContainmentLink((component.link.untyped().asWritableNode() as MPSWritableNode).node))
                     node.getChildren(link).map(::renderMPSNode)
                 }
                 is N_TextComponent -> {
@@ -211,5 +211,5 @@ class InterpretedMPSRenderer(
 }
 
 fun N_AbstractConceptDeclaration.asConceptReference(): ConceptReference {
-    return MPSConcept(MetaAdapterByDeclaration.getConcept((this.untyped() as MPSNode).node)).getReference()
+    return MPSConcept(MetaAdapterByDeclaration.getConcept((this.untyped().asWritableNode() as MPSWritableNode).node)).getReference()
 }
