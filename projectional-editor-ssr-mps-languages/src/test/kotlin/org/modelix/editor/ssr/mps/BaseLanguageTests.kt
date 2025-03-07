@@ -24,7 +24,7 @@ import org.modelix.editor.lastLeaf
 import org.modelix.editor.layoutable
 import org.modelix.incremental.IncrementalEngine
 import org.modelix.model.api.INode
-import org.modelix.model.mpsadapters.MPSNode
+import org.modelix.model.mpsadapters.MPSWritableNode
 
 /**
  * Test editor for MPS baseLanguage ClassConcept
@@ -35,7 +35,7 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     lateinit var mpsIntegration: EditorIntegrationForMPS
     lateinit var editorEngine: EditorEngine
     lateinit var incrementalEngine: IncrementalEngine
-    lateinit var classNode: MPSNode
+    lateinit var classNode: MPSWritableNode
 
     override fun setUp() {
         super.setUp()
@@ -43,14 +43,14 @@ class BaseLanguageTests : TestBase("SimpleProject") {
         readAction {
             val solution = mpsProject.projectModules.first { it.moduleName == "Solution1" }
             val model = solution.models.first()
-            classNode = model.rootNodes.first().let { MPSNode(it) }
+            classNode = model.rootNodes.first().let { MPSWritableNode(it) }
         }
 
         incrementalEngine = IncrementalEngine()
         editorEngine = EditorEngine(incrementalEngine)
         mpsIntegration = EditorIntegrationForMPS(editorEngine)
         mpsIntegration.init(mpsProject.repository)
-        editor = editorEngine.editNode(classNode)
+        editor = editorEngine.editNode(classNode.asLegacyNode())
     }
 
     override fun tearDown() {
@@ -135,8 +135,8 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     }
 
     fun `test inserting new line into class`() {
-        val lastMember = readAction { classNode.allChildren.last { it.getContainmentLink()?.getSimpleName() == "member" } }
-        placeCaretAtEnd(lastMember)
+        val lastMember = readAction { classNode.getAllChildren().last { it.getContainmentLink().getSimpleName() == "member" } }
+        placeCaretAtEnd(lastMember.asLegacyNode())
         pressEnter()
         assertFinalEditorText("""
             public class Class1 {
@@ -464,16 +464,18 @@ class BaseLanguageTests : TestBase("SimpleProject") {
     private fun runParsingTest(input: String) = runParsingTest(input, false)
     private fun runCompletionTest(input: String) = runParsingTest(input, true)
     private fun runParsingTest(input: String, completion: Boolean) {
-        println("Running test ...")
-        placeCaretIntoCellWithText("<no statement>")
+        readAction {
+            println("Running test ...")
+            placeCaretIntoCellWithText("<no statement>")
 
-        val layoutable = (editor.getSelection() as CaretSelection).layoutable
-        val node = layoutable.cell.ancestors(true)
-            .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
+            val layoutable = (editor.getSelection() as CaretSelection).layoutable
+            val node = layoutable.cell.ancestors(true)
+                .mapNotNull { it.getProperty(CommonCellProperties.node) }.first()
 
-        val parser = ParserForEditor(editorEngine).getParser(node.expectedConcept()!!, forCodeCompletion = completion)
-        val parseTree = parser.parse(input)
-        println(parseTree)
+            val parser = ParserForEditor(editorEngine).getParser(node.expectedConcept()!!, forCodeCompletion = completion)
+            val parseTree = parser.parse(input)
+            println(parseTree)
+        }
     }
     private fun runClassParsingTest(input: String, completion: Boolean) {
         println("Running test ...")

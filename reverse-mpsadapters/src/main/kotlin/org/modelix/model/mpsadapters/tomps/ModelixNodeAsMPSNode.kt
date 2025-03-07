@@ -26,6 +26,7 @@ import org.modelix.model.mpsadapters.MPSConcept
 import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSProperty
 import org.modelix.model.mpsadapters.MPSReferenceLink
+import org.modelix.model.mpsadapters.MPSWritableNode
 
 data class ModelixNodeAsMPSNode(val node: INode) : SNode {
     companion object {
@@ -43,17 +44,15 @@ data class ModelixNodeAsMPSNode(val node: INode) : SNode {
         }
 
         private fun unwrapMPSNode(node: SNode): SNode {
-            return if (node is ModelixNodeAsMPSNode && node.node is MPSNode) {
-                return node.node.node
-            } else {
-                node
-            }
+            return ((node as? ModelixNodeAsMPSNode)?.node?.asWritableNode() as? MPSWritableNode)?.node
+                ?: node
         }
 
         private fun forceUnwrapMPSNode(node: SNode): SNode {
             return if (node is ModelixNodeAsMPSNode) {
-                if (node.node is MPSNode) {
-                    node.node.node
+                val writableNode = node.node.asWritableNode()
+                if (writableNode is MPSWritableNode) {
+                    writableNode.node
                 } else {
                     throw UnsupportedOperationException("Not an MPS node: $node")
                 }

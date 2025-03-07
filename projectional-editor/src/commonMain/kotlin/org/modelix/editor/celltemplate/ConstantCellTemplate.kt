@@ -21,6 +21,7 @@ import org.modelix.editor.withMatchingText
 import org.modelix.model.api.IChildLink
 import org.modelix.model.api.IConcept
 import org.modelix.model.api.INode
+import org.modelix.model.api.upcast
 import org.modelix.parser.ConstantSymbol
 import org.modelix.parser.ISymbol
 import org.modelix.parser.Token
@@ -64,10 +65,11 @@ class ConstantCellTemplate(concept: IConcept, val text: String) : CellTemplate(c
         override fun getMatchingText(): String = text
         override fun getDescription(): String = concept.getShortName()
         override fun execute(editor: EditorComponent): CaretPositionPolicy? {
-            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).addNewChild(nodeToWrap.getContainmentLink()!!, nodeToWrap.index(), concept)
-            wrapper.moveChild(wrappingLink, 0, nodeToWrap.getOrCreateNode(null))
-            return CaretPositionPolicy(wrapper)
-                .avoid(ChildNodeCellReference(wrapper.reference, wrappingLink))
+            val wrapper = nodeToWrap.getParent()!!.getOrCreateNode(null).asWritableNode()
+                .addNewChild(nodeToWrap.getContainmentLink()?.toReference()!!, nodeToWrap.index(), concept.getReference().upcast())
+            wrapper.moveChild(wrappingLink.toReference(), 0, nodeToWrap.getOrCreateNode(null).asWritableNode())
+            return CaretPositionPolicy(wrapper.asLegacyNode())
+                .avoid(ChildNodeCellReference(wrapper.getNodeReference(), wrappingLink))
                 .avoid(createCellReference(wrapper))
         }
 

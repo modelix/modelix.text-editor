@@ -35,8 +35,8 @@ import org.modelix.model.api.NodeReference
 import org.modelix.model.api.resolveIn
 import org.modelix.model.api.runSynchronized
 import org.modelix.model.mpsadapters.MPSArea
-import org.modelix.model.mpsadapters.MPSNode
 import org.modelix.model.mpsadapters.MPSRepositoryAsNode
+import org.modelix.model.mpsadapters.MPSWritableNode
 import org.modelix.model.mpsadapters.tomps.ModelixNodeAsMPSNode
 import svg.plugin.RenderSession
 import svg.plugin.optBoolean
@@ -96,7 +96,7 @@ class ImageEditorForMPS : Disposable {
     }
 
     private fun getRootNode(): INode {
-        return MPSRepositoryAsNode(getRepository())
+        return MPSRepositoryAsNode(getRepository()).asLegacyNode()
     }
 
     fun ensureStarted() {
@@ -149,7 +149,9 @@ class ImageEditorForMPS : Disposable {
 
     private suspend fun handleWebsocketSession(session: DefaultWebSocketServerSession, nodeRef: NodeReference) {
         val repository = getMPSProjects().firstOrNull()?.repository
-        val rootNode = repository?.modelAccess?.computeRead { (MPSArea(repository).let { nodeRef.resolveIn(it) } as? MPSNode)?.node }
+        val rootNode = repository?.modelAccess?.computeRead {
+            (MPSArea(repository).let { nodeRef.resolveIn(it) }?.asWritableNode() as? MPSWritableNode)?.node
+        }
         require(rootNode !is ModelixNodeAsMPSNode) { "MPS node without Modelix wrapper expected" }
         var inspectorEditorSession: RenderSession? = null
         val mainEditorSession = RenderSession(getMPSProjects().first(), session, "unknown user", isInspector = false, { inspectorEditorSession }, rootNode)
