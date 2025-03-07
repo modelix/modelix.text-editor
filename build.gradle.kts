@@ -40,12 +40,21 @@ fun computeVersion(): Any {
         version = "$version-SNAPSHOT"
     }
 
+    // A common case where the git-version plugin generates a version that is incompatible to NPM
+    version = version.replace(".dirty-", "-dirty-")
+
     // NPM requires a valid semantic version
     try {
         Version.parse(version)
     } catch (_: IllegalArgumentException) {
         version = "0.0.0-$version"
     }
+
+    // NPM is even stricter about the version format
+    if (!version.matches("""\d+\.\d+.\d+-.*""".toRegex())) {
+        version = "0.0.0-$version"
+    }
+
     versionFile.writeText(version)
 
     return version
