@@ -2,7 +2,7 @@ import org.jetbrains.intellij.tasks.BuildPluginTask
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.KotlinMultiplatformPluginWrapper
-import org.jetbrains.kotlin.gradle.plugin.KotlinPlatformJvmPlugin
+import org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnLockMismatchReport
 import org.jetbrains.kotlin.gradle.targets.js.yarn.YarnRootExtension
 import org.modelix.copyMps
@@ -114,7 +114,7 @@ subprojects {
         }
     }
 
-    plugins.withType<KotlinPlatformJvmPlugin> {
+    plugins.withType<KotlinPluginWrapper> {
         extensions.configure<KotlinJvmProjectExtension> {
             jvmToolchain(17)
             sourceSets.all {
