@@ -98,7 +98,7 @@ data class PendingNode(
     val children: MutableMap<IChildLink, MutableList<IPendingNode>> = LinkedHashMap(),
     val properties: MutableMap<IProperty, String> = LinkedHashMap(),
     val references: MutableMap<IReferenceLink, INode> = LinkedHashMap(),
-) : PendingNodeBase(), INodeReference {
+) : PendingNodeBase() {
 
     override fun flattenFirstAmbiguousNode(): List<INode> {
         val allChildren: List<Pair<IChildLink, IPendingNode>> = children.flatMap { childrenInRole -> childrenInRole.value.map { childrenInRole.key to it } }
@@ -158,7 +158,7 @@ data class PendingNode(
         return children[link] ?: emptyList()
     }
 
-    override val reference: INodeReference get() = this
+    override val reference: INodeReference get() = TODO()
 
     override fun setPropertyValue(property: IProperty, value: String?) {
         if (value == null) {
